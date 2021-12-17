@@ -9,19 +9,34 @@ export default class Scene {
     mouse = {};
     static SPACE = 300;
     score;
+    widthHall;
     constructor(canvas, game) {
         this.canvas = canvas;
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
         this.game = game;
         this.ctx = this.canvas.getContext('2d');
+        this.widthHall = 40;
         this.score = 0;
         this.borders = [];
-        for (let i = 0; i < 5; i++) {
-            const x = Math.random() * this.canvas.width;
-            const y = Math.random() * this.canvas.height;
-            const x2 = Math.random() * this.canvas.width;
-            const y2 = Math.random() * this.canvas.height;
+        const level1 = [[0, 0, this.canvas.width, 0],
+            [0, 0, 0, this.canvas.height],
+            [this.canvas.width, 0, this.canvas.width, this.canvas.height],
+            [0, this.canvas.height, this.canvas.width, this.canvas.height],
+            [100, 100, this.canvas.width / 2, 100],
+            [this.canvas.width / 2, 100, this.canvas.width / 2, 300],
+            [100, 100 + this.widthHall, (this.canvas.width / 2) - this.widthHall, 100 + this.widthHall],
+            [(this.canvas.width / 2) - this.widthHall, 100 + this.widthHall, (this.canvas.width / 2) - this.widthHall, 300],
+            [(this.canvas.width / 2) - 2 * this.widthHall, 300, (this.canvas.width / 2) - this.widthHall, 300],
+            [(this.canvas.width / 2) - 3 * this.widthHall, 300 + this.widthHall, (this.canvas.width / 2) + 2 * this.widthHall, 300 + this.widthHall],
+            [(this.canvas.width / 2) - 3 * this.widthHall, 200, (this.canvas.width / 2) - 3 * this.widthHall, 300],
+            [(this.canvas.width / 2) - 2 * this.widthHall, 200, (this.canvas.width / 2) - 2 * this.widthHall, 300]
+        ];
+        for (let i = 0; i < level1.length; i++) {
+            const x = level1[i][0];
+            const y = level1[i][1];
+            const x2 = level1[i][2];
+            const y2 = level1[i][3];
             this.borders.push(new Border(x, y, x2, y2, this.ctx));
         }
         this.particle = new Particle(100, 100, this.ctx);
