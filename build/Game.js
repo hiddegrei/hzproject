@@ -1,16 +1,20 @@
-import GameLoop from "./GameLoop.js";
-import Scene from "./Scene.js";
+import GameLoop from './GameLoop.js';
+import Scene from './Scene.js';
+import TimeLimit from './TimeLimit.js';
 export default class Game {
     canvas;
     gameLoop;
     scene;
+    timeLimit;
     constructor(canvas) {
         this.canvas = canvas;
         this.scene = new Scene(this.canvas, this);
+        this.timeLimit = new TimeLimit('ZwakWW');
         this.gameLoop = new GameLoop(this);
     }
     start() {
-        console.log("starting");
+        console.log('starting');
+        console.log(`Time limit: ${this.timeLimit.timeLimit}`);
         this.gameLoop.start();
     }
     processInput() {

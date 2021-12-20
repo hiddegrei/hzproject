@@ -1,48 +1,76 @@
-import GameLoop from "./GameLoop.js";
+import GameLoop from './GameLoop.js';
 
-import Scene from "./Scene.js";
+import Scene from './Scene.js';
+
+import TimeLimit from './TimeLimit.js';
 
 export default class Game {
-    public canvas: HTMLCanvasElement;
-    public gameLoop: GameLoop;
-    public scene: Scene;
+  public canvas: HTMLCanvasElement;
 
-    constructor(canvas: HTMLElement) {
-        this.canvas = canvas as HTMLCanvasElement;
-        this.scene = new Scene(this.canvas, this);
+  public gameLoop: GameLoop;
 
-        this.gameLoop = new GameLoop(this);
+  public scene: Scene;
 
-    }
-    public start() {
-        console.log("starting");
-        this.gameLoop.start();
-    }
+  private timeLimit: TimeLimit;
 
-    public processInput() {
+  /**
+   * @param canvas
+   */
+  constructor(canvas: HTMLElement) {
+    this.canvas = canvas as HTMLCanvasElement;
+    this.scene = new Scene(this.canvas, this);
+    this.timeLimit = new TimeLimit('ZwakWW');
 
-        this.scene.processInput();
+    this.gameLoop = new GameLoop(this);
+  }
 
-    }
-    public update(elapsed: number) {
+  /**
+   *
+   */
+  public start() {
+    console.log('starting');
+    console.log(`Time limit: ${this.timeLimit.timeLimit}`);
+    this.gameLoop.start();
+  }
 
-        this.scene.update();
+  /**
+   *
+   */
+  public processInput() {
+    this.scene.processInput();
+  }
 
-        return false;
-    }
+  /**
+   * @param elapsed
+   */
+  public update(elapsed: number) {
+    this.scene.update();
 
-    public render() {
+    return false;
+  }
 
-        this.scene.render();
+  /**
+   *
+   */
+  public render() {
+    this.scene.render();
+  }
 
-    }
-    static loadNewImage(source: string) {
-        const img = new Image();
-        img.src = source;
-        return img;
-    }
-    static randomNumber(min: number, max: number) {
-        return Math.round(Math.random() * (max - min) + min);
-    }
+  /**
+   * @param source
+   */
+  static loadNewImage(source: string) {
+    const img = new Image();
+    img.src = source;
+    return img;
+  }
+
+  /**
+   * @param min
+   * @param max
+   */
+  static randomNumber(min: number, max: number) {
+    return Math.round(Math.random() * (max - min) + min);
+  }
 }
-//# sourceMappingURL=Game.js.map
+// # sourceMappingURL=Game.js.map

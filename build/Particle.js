@@ -64,6 +64,8 @@ export default class Particle {
         }
     }
     show() {
+        this.ctx.lineWidth = 1;
+        this.ctx.strokeStyle = '#000000';
         this.ctx.beginPath();
         this.ctx.arc(this.pos.x, this.pos.y, this.radius, 0, 2 * Math.PI);
         this.ctx.stroke();

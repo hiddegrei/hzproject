@@ -20,6 +20,8 @@ export default class Ray {
     }
 
     show() {
+        this.ctx.lineWidth = 1;
+        this.ctx.strokeStyle = '#000000';
         this.ctx.beginPath();
         this.ctx.moveTo(this.pos.x, this.pos.y);
         this.ctx.lineTo(this.pos.x + this.dir.x, this.pos.y + this.dir.y);

@@ -2,8 +2,13 @@ body {
     overflow: hidden;
 }
 
-canvas{
+canvas {
     background-color: lightgray;
     margin: 0 auto;
     display: block;
+}
+
+.progressBar {
+    height: 2%;
+    width: 80%;
 }

@@ -14,11 +14,11 @@ export default class Border {
     }
 
     show() {
-        this.ctx.strokeStyle = "#000000"
+        this.ctx.strokeStyle = "#000000";
+        this.ctx.lineWidth = 1;
         this.ctx.beginPath();
         this.ctx.moveTo(this.a.x, this.a.y);
         this.ctx.lineTo(this.b.x, this.b.y);
         this.ctx.stroke();
-
     }
 }

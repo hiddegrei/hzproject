@@ -2,14 +2,20 @@ import Border from "./Border.js";
 import Ray from "./Ray.js";
 import Scene from "./Scene.js"
 export default class Particle {
-
     public ctx: CanvasRenderingContext2D;
+
     public pos = <any>{};
+
     public rays: Array<any> = []
+
     public radius: number;
+
     public speed: number;
+
     public dir = <any>{};
+
     public mouse = <any>{};
+
     public angleView: number;
 
     constructor(x: number, y: number, ctx: CanvasRenderingContext2D) {
@@ -115,6 +121,8 @@ export default class Particle {
 
     }
     show() {
+        this.ctx.lineWidth = 1;
+        this.ctx.strokeStyle = '#000000';
         this.ctx.beginPath();
         this.ctx.arc(this.pos.x, this.pos.y, this.radius, 0, 2 * Math.PI);
         this.ctx.stroke();
