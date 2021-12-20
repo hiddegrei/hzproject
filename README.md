@@ -6,3 +6,7 @@ De tijdslimiet wordt bepaald aan de hand van de sterkte van het wacthwoord dat d
 
 Probeer de agenten te ontwijken in de bank om zoveel mogelijk punten te verzamelen om de bank binnen de tijdslimiet te kraken
 
+#BELANGRIJK
+
+Eerst git pull voordat je verder gaat met het project!
+
