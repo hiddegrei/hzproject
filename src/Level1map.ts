@@ -9,7 +9,7 @@ export default class Level1map {
     public canvas: HTMLCanvasElement
 
     constructor(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
-        this.widthHall = 40;
+        this.widthHall = 50;
         this.ctx = ctx;
         this.canvas = canvas
 
@@ -22,14 +22,32 @@ export default class Level1map {
 
 
             [100, 100, this.canvas.width / 2, 100],
-            [100, 100 + this.widthHall, (this.canvas.width / 2) - this.widthHall, 100 + this.widthHall],
+           [100, 100 + this.widthHall, (this.canvas.width / 2) - this.widthHall, 100 + this.widthHall],
 
             [this.canvas.width / 2, 100, this.canvas.width / 2, 300],
             [(this.canvas.width / 2) - this.widthHall, 100 + this.widthHall, (this.canvas.width / 2) - this.widthHall, 300],
 
             [(this.canvas.width / 2) - 2 * this.widthHall, 300, (this.canvas.width / 2) - this.widthHall, 300],
-            [(this.canvas.width / 2) - 3 * this.widthHall, 200, (this.canvas.width / 2) - 3 * this.widthHall, 300],
-            [(this.canvas.width / 2) - 2 * this.widthHall, 200, (this.canvas.width / 2) - 2 * this.widthHall, 300],
+            [(this.canvas.width / 2) - 3 * this.widthHall, 200+this.widthHall, (this.canvas.width / 2) - 3 * this.widthHall, 300],
+            [(this.canvas.width / 2) - 2 * this.widthHall, 200+this.widthHall, (this.canvas.width / 2) - 2 * this.widthHall, 300],
+
+            
+            this.turnRD((this.canvas.width / 2) - 4 * this.widthHall,100 + 2*this.widthHall)[0],
+            this.turnRD((this.canvas.width / 2) - 4 * this.widthHall,100 +2*this.widthHall)[1],
+            this.turnRD((this.canvas.width / 2) - 4 * this.widthHall,100 +2*this.widthHall)[2],
+            this.turnRD((this.canvas.width / 2) - 4 * this.widthHall,100 +2*this.widthHall)[3],
+            this.makeHallH((this.canvas.width / 2) - 9 * this.widthHall,100 + 2*this.widthHall,5*this.widthHall)[0],
+            this.makeHallH((this.canvas.width / 2) - 9 * this.widthHall,100 + 2*this.widthHall,5*this.widthHall)[1],
+
+            this.makeHallV((this.canvas.width / 2) - 10 * this.widthHall,100 + 3*this.widthHall,2*this.widthHall)[0],
+            this.makeHallV((this.canvas.width / 2) - 10 * this.widthHall,100 + 3*this.widthHall,2*this.widthHall)[1],
+
+            this.makeHallV((this.canvas.width / 2) - 10 * this.widthHall,100 + 6*this.widthHall,this.widthHall)[0],
+            this.makeHallV((this.canvas.width / 2) - 10 * this.widthHall,100 + 6*this.widthHall,this.widthHall)[1],
+
+            [(this.canvas.width / 2) - 9 * this.widthHall,100 + 4*this.widthHall, (this.canvas.width / 2) - 7 * this.widthHall, 100 + 4*this.widthHall],
+            [(this.canvas.width / 2) - 9 * this.widthHall,100 + 6*this.widthHall, (this.canvas.width / 2) - 7 * this.widthHall, 100 + 6*this.widthHall],
+            [(this.canvas.width / 2) - 7 * this.widthHall, 100 + 4*this.widthHall, (this.canvas.width / 2) - 7 * this.widthHall, 100 + 6*this.widthHall],
 
             //central hub
             [(this.canvas.width / 2) - 4 * this.widthHall, 300 + this.widthHall, (this.canvas.width / 2) , 300 + this.widthHall],
@@ -89,6 +107,23 @@ export default class Level1map {
         let l1=[x,y,x,y+h];
         let l2=[x+this.widthHall,y,x+this.widthHall,y+h]
         return [l1,l2]
+
+    }
+    public turnRD(x:number,y:number){
+        let l1=[x,y,x+2*this.widthHall,y];
+        let l2=[x,y+this.widthHall,x+this.widthHall,y+this.widthHall]
+        let l3=[x+this.widthHall,y+this.widthHall,x+this.widthHall,y+2*this.widthHall]
+        let l4=[x+2*this.widthHall,y,x+2*this.widthHall,y+2*this.widthHall]
+        return [l1,l2,l3,l4]
+
+    }
+
+    public turnLD(x:number,y:number){
+        let l1=[x,y,x-2*this.widthHall,y];
+        let l2=[x,y+this.widthHall,x-this.widthHall,y+this.widthHall]
+        let l3=[x-this.widthHall,y+this.widthHall,x-this.widthHall,y+2*this.widthHall]
+        let l4=[x-2*this.widthHall,y,x-2*this.widthHall,y+2*this.widthHall]
+        return [l1,l2,l3,l4]
 
     }
     public writeTextToCanvas(
