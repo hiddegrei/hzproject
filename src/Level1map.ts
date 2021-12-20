@@ -1,4 +1,5 @@
 import Scene from "./Scene.js"
+<<<<<<< HEAD
 export default class Level1map{
 
     public level1;
@@ -13,6 +14,22 @@ export default class Level1map{
         this.ctx=ctx;
         this.canvas=canvas
        
+=======
+export default class Level1map {
+
+    public level1: Array<any>=[];
+    public ctx: CanvasRenderingContext2D;
+    public widthHall: number;
+    public widthCentralHub: number;
+    public heightCentralHub: number;
+    public canvas: HTMLCanvasElement
+
+    constructor(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
+        this.widthHall = 50;
+        this.ctx = ctx;
+        this.canvas = canvas
+
+>>>>>>> ce6b3a71bc15463757364ffa38e104a583bba99c
         this.level1 = [//side borders
             [0, 0, this.canvas.width, 0],
             [0, 0, 0, this.canvas.height],
@@ -22,12 +39,17 @@ export default class Level1map{
 
 
             [100, 100, this.canvas.width / 2, 100],
+<<<<<<< HEAD
             [100, 100 + this.widthHall, (this.canvas.width / 2) - this.widthHall, 100 + this.widthHall],
+=======
+           [100, 100 + this.widthHall, (this.canvas.width / 2) - this.widthHall, 100 + this.widthHall],
+>>>>>>> ce6b3a71bc15463757364ffa38e104a583bba99c
 
             [this.canvas.width / 2, 100, this.canvas.width / 2, 300],
             [(this.canvas.width / 2) - this.widthHall, 100 + this.widthHall, (this.canvas.width / 2) - this.widthHall, 300],
 
             [(this.canvas.width / 2) - 2 * this.widthHall, 300, (this.canvas.width / 2) - this.widthHall, 300],
+<<<<<<< HEAD
             [(this.canvas.width / 2) - 3 * this.widthHall, 200, (this.canvas.width / 2) - 3 * this.widthHall, 300],
             [(this.canvas.width / 2) - 2 * this.widthHall, 200, (this.canvas.width / 2) - 2 * this.widthHall, 300],
 
@@ -42,4 +64,118 @@ export default class Level1map{
         
         }
     
+=======
+            [(this.canvas.width / 2) - 3 * this.widthHall, 200+this.widthHall, (this.canvas.width / 2) - 3 * this.widthHall, 300],
+            [(this.canvas.width / 2) - 2 * this.widthHall, 200+this.widthHall, (this.canvas.width / 2) - 2 * this.widthHall, 300],
+
+            
+            this.turnRD((this.canvas.width / 2) - 4 * this.widthHall,100 + 2*this.widthHall)[0],
+            this.turnRD((this.canvas.width / 2) - 4 * this.widthHall,100 +2*this.widthHall)[1],
+            this.turnRD((this.canvas.width / 2) - 4 * this.widthHall,100 +2*this.widthHall)[2],
+            this.turnRD((this.canvas.width / 2) - 4 * this.widthHall,100 +2*this.widthHall)[3],
+            this.makeHallH((this.canvas.width / 2) - 9 * this.widthHall,100 + 2*this.widthHall,5*this.widthHall)[0],
+            this.makeHallH((this.canvas.width / 2) - 9 * this.widthHall,100 + 2*this.widthHall,5*this.widthHall)[1],
+
+            this.makeHallV((this.canvas.width / 2) - 10 * this.widthHall,100 + 3*this.widthHall,2*this.widthHall)[0],
+            this.makeHallV((this.canvas.width / 2) - 10 * this.widthHall,100 + 3*this.widthHall,2*this.widthHall)[1],
+
+            this.makeHallV((this.canvas.width / 2) - 10 * this.widthHall,100 + 6*this.widthHall,this.widthHall)[0],
+            this.makeHallV((this.canvas.width / 2) - 10 * this.widthHall,100 + 6*this.widthHall,this.widthHall)[1],
+
+            [(this.canvas.width / 2) - 9 * this.widthHall,100 + 4*this.widthHall, (this.canvas.width / 2) - 7 * this.widthHall, 100 + 4*this.widthHall],
+            [(this.canvas.width / 2) - 9 * this.widthHall,100 + 6*this.widthHall, (this.canvas.width / 2) - 7 * this.widthHall, 100 + 6*this.widthHall],
+            [(this.canvas.width / 2) - 7 * this.widthHall, 100 + 4*this.widthHall, (this.canvas.width / 2) - 7 * this.widthHall, 100 + 6*this.widthHall],
+
+            //central hub
+            [(this.canvas.width / 2) - 4 * this.widthHall, 300 + this.widthHall, (this.canvas.width / 2) , 300 + this.widthHall],
+            [(this.canvas.width / 2) +  this.widthHall, 300 + this.widthHall, (this.canvas.width / 2) + 3 * this.widthHall, 300 + this.widthHall],
+            [(this.canvas.width / 2) - 4 * this.widthHall, 300 + 5 * this.widthHall, (this.canvas.width / 2) + 3 * this.widthHall, 300 + 5 * this.widthHall],
+            [(this.canvas.width / 2) - 4 * this.widthHall, 300 + this.widthHall, (this.canvas.width / 2) - 4 * this.widthHall, 300 + 5 * this.widthHall],
+            [(this.canvas.width / 2) + 3 * this.widthHall, 300 + this.widthHall, (this.canvas.width / 2) + 3 * this.widthHall, 300 + 5 * this.widthHall],
+
+            [this.canvas.width / 2, 300, (this.canvas.width / 2)+4*this.widthHall,300],
+            //rechts van hub
+            [(this.canvas.width / 2)+4*this.widthHall,300, (this.canvas.width / 2)+4*this.widthHall,300+5 * this.widthHall],
+            //links van hub
+            [(this.canvas.width / 2) - 5 * this.widthHall, 300, (this.canvas.width / 2) - 3 * this.widthHall, 300],
+            [(this.canvas.width / 2) - 5 * this.widthHall,300, (this.canvas.width / 2) - 5 * this.widthHall,300+3 * this.widthHall],
+            [(this.canvas.width / 2) - 9 * this.widthHall,300+3 * this.widthHall, (this.canvas.width / 2) - 5 * this.widthHall,300+3 * this.widthHall],
+            [(this.canvas.width / 2) - 9 * this.widthHall,300+4 * this.widthHall, (this.canvas.width / 2) - 5 * this.widthHall,300+4 * this.widthHall],
+            [(this.canvas.width / 2) - 5 * this.widthHall,300+4 * this.widthHall, (this.canvas.width / 2) - 5 * this.widthHall,300+6 * this.widthHall],
+
+            [(this.canvas.width / 2) - 5 * this.widthHall,300+6 * this.widthHall, (this.canvas.width / 2) - 2 * this.widthHall,300+6 * this.widthHall],
+            [(this.canvas.width / 2) - 2 * this.widthHall,300+6 * this.widthHall, (this.canvas.width / 2) - 2 * this.widthHall,300+8 * this.widthHall],
+            [(this.canvas.width / 2) - 5 * this.widthHall,300+8 * this.widthHall, (this.canvas.width / 2) - 2 * this.widthHall,300+8 * this.widthHall],
+            [(this.canvas.width / 2) - 5 * this.widthHall,300+9 * this.widthHall, (this.canvas.width / 2) - 2 * this.widthHall,300+9 * this.widthHall],
+            [(this.canvas.width / 2) - 8 * this.widthHall,300+9 * this.widthHall, (this.canvas.width / 2) - 6 * this.widthHall,300+9 * this.widthHall],
+            [(this.canvas.width / 2) - 7 * this.widthHall,300+9 * this.widthHall, (this.canvas.width / 2) - 7 * this.widthHall,300+11 * this.widthHall],
+            [(this.canvas.width / 2) - 3 * this.widthHall,300+9 * this.widthHall, (this.canvas.width / 2) - 3 * this.widthHall,300+11 * this.widthHall],
+            [(this.canvas.width / 2) - 7 * this.widthHall,300+11 * this.widthHall, (this.canvas.width / 2) - 3 * this.widthHall,300+11 * this.widthHall],
+
+            [(this.canvas.width / 2) -   this.widthHall,300+6 * this.widthHall, (this.canvas.width / 2) -  this.widthHall,300+8 * this.widthHall],
+            [(this.canvas.width / 2) -   this.widthHall,300+6 * this.widthHall, (this.canvas.width / 2) +4* this.widthHall,300+6 * this.widthHall],
+            [(this.canvas.width / 2) +4* this.widthHall,300+6 * this.widthHall, (this.canvas.width / 2) +4* this.widthHall,300+8 * this.widthHall],
+
+            this.makeHallH((this.canvas.width / 2) -   this.widthHall,300+8 * this.widthHall,5*this.widthHall)[0],
+            this.makeHallH((this.canvas.width / 2) -  this.widthHall,300+8 * this.widthHall,5*this.widthHall)[1],
+
+            this.makeHallV((this.canvas.width / 2) -   2*this.widthHall,300+9 * this.widthHall,3*this.widthHall)[0],
+            this.makeHallV((this.canvas.width / 2) -   2*this.widthHall,300+9 * this.widthHall,3*this.widthHall)[1],
+
+            this.makeHallH((this.canvas.width / 2) -   5*this.widthHall,300+12 * this.widthHall,3*this.widthHall)[0],
+            this.makeHallH((this.canvas.width / 2) -  5*this.widthHall,300+12 * this.widthHall,3*this.widthHall)[1],
+
+
+            
+            
+
+        ]
+    
+        
+    }
+
+    public makeHallH(x:number,y:number,w:number){
+        let l1=[x,y,x+w,y];
+        let l2=[x,y+this.widthHall,x+w,y+this.widthHall]
+        return [l1,l2]
+
+    }
+    public makeHallV(x:number,y:number,h:number){
+        let l1=[x,y,x,y+h];
+        let l2=[x+this.widthHall,y,x+this.widthHall,y+h]
+        return [l1,l2]
+
+    }
+    public turnRD(x:number,y:number){
+        let l1=[x,y,x+2*this.widthHall,y];
+        let l2=[x,y+this.widthHall,x+this.widthHall,y+this.widthHall]
+        let l3=[x+this.widthHall,y+this.widthHall,x+this.widthHall,y+2*this.widthHall]
+        let l4=[x+2*this.widthHall,y,x+2*this.widthHall,y+2*this.widthHall]
+        return [l1,l2,l3,l4]
+
+    }
+
+    public turnLD(x:number,y:number){
+        let l1=[x,y,x-2*this.widthHall,y];
+        let l2=[x,y+this.widthHall,x-this.widthHall,y+this.widthHall]
+        let l3=[x-this.widthHall,y+this.widthHall,x-this.widthHall,y+2*this.widthHall]
+        let l4=[x-2*this.widthHall,y,x-2*this.widthHall,y+2*this.widthHall]
+        return [l1,l2,l3,l4]
+
+    }
+    public writeTextToCanvas(
+        text: string,
+        fontSize: number = 20,
+        xCoordinate: number,
+        yCoordinate: number,
+        alignment: CanvasTextAlign = 'center',
+        color: string = 'red',
+      ): void {
+        this.ctx.font = `${fontSize}px sans-serif`;
+        this.ctx.fillStyle = color;
+        this.ctx.textAlign = alignment;
+        this.ctx.fillText(text, xCoordinate, yCoordinate);
+      }
+
+>>>>>>> ce6b3a71bc15463757364ffa38e104a583bba99c
 }
