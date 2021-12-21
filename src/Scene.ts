@@ -39,10 +39,10 @@ export default class Scene {
    */
   constructor(canvas: HTMLCanvasElement, game: Game) {
     this.canvas = canvas;
-    // this.canvas.width=1920;
-    // this.canvas.height=969
-    this.canvas.width = window.innerWidth;
-    this.canvas.height = window.innerHeight;
+    this.canvas.width=1920;
+    this.canvas.height=969
+    // this.canvas.width = window.innerWidth;
+    // this.canvas.height = window.innerHeight;
 
     this.game = game;
     this.ctx = this.canvas.getContext('2d');
