@@ -123,7 +123,7 @@ export default class Scene {
 
   public checkScaling(){
     let ret={x:0,y:0}
-    if(window.innerWidth<=this.canvas.width&&window.innerHeight<=this.canvas.height){
+    if(window.innerWidth>=this.canvas.width&&window.innerHeight>=this.canvas.height){
       return {x:0,y:0}
     }else{
 
