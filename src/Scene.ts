@@ -101,47 +101,7 @@ export default class Scene {
   }
 
 
-  createMatrix(x: number, y: number, scale: number, rotate: number) {
-    // var m = this.matrix; // just to make it easier to type and read
-    // var im = this.invMatrix; // just to make it easier to type and read
-
-    // create the rotation and scale parts of the matrix
-    this.matrix[3] = this.matrix[0] = Math.cos(rotate) * scale;
-    this.matrix[2] = -(this.matrix[1] = Math.sin(rotate) * scale);
-
-    // add the translation
-    this.matrix[4] = x;
-    this.matrix[5] = y;
-
-
-    // calculate the inverse transformation
-
-    // first get the cross product of x axis and y axis
-    let cross = this.matrix[0] * this.matrix[3] - this.matrix[1] * this.matrix[2];
-
-    // now get the inverted axis
-    if (cross != 0) {
-      this.invMatrix[0] = this.matrix[3] / cross;
-      this.invMatrix[1] = -this.matrix[1] / cross;
-      this.invMatrix[2] = -this.matrix[2] / cross;
-      this.invMatrix[3] = this.matrix[0] / cross;
-    } else {
-      this.invMatrix = [1, 0, 0, 1]
-    }
-  }
-
-  toWorld(x: number, y: number) {
-
-    var xx, yy, m, result;
-    m = this.invMatrix;
-    xx = x - this.matrix[4];     // remove the translation 
-    yy = y - this.matrix[5];     // by subtracting the origin
-    // return the point {x:?,y:?} by multiplying xx,yy by the inverse matrix
-    return {
-      x: xx * this.invMatrix[0] + yy * this.invMatrix[2],
-      y: xx * this.invMatrix[1] + yy * this.invMatrix[3]
-    }
-  }
+  
 
   /**
    *
@@ -203,6 +163,48 @@ export default class Scene {
       return ret
     }
 
+  }
+
+  createMatrix(x: number, y: number, scale: number, rotate: number) {
+    // var m = this.matrix; // just to make it easier to type and read
+    // var im = this.invMatrix; // just to make it easier to type and read
+
+    // create the rotation and scale parts of the matrix
+    this.matrix[3] = this.matrix[0] = Math.cos(rotate) * scale;
+    this.matrix[2] = -(this.matrix[1] = Math.sin(rotate) * scale);
+
+    // add the translation
+    this.matrix[4] = x;
+    this.matrix[5] = y;
+
+
+    // calculate the inverse transformation
+
+    // first get the cross product of x axis and y axis
+    let cross = this.matrix[0] * this.matrix[3] - this.matrix[1] * this.matrix[2];
+
+    // now get the inverted axis
+    if (cross != 0) {
+      this.invMatrix[0] = this.matrix[3] / cross;
+      this.invMatrix[1] = -this.matrix[1] / cross;
+      this.invMatrix[2] = -this.matrix[2] / cross;
+      this.invMatrix[3] = this.matrix[0] / cross;
+    } else {
+      this.invMatrix = [1, 0, 0, 1]
+    }
+  }
+
+  toWorld(x: number, y: number) {
+
+    var xx, yy, m, result;
+    m = this.invMatrix;
+    xx = x - this.matrix[4];     // remove the translation 
+    yy = y - this.matrix[5];     // by subtracting the origin
+    // return the point {x:?,y:?} by multiplying xx,yy by the inverse matrix
+    return {
+      x: xx * this.invMatrix[0] + yy * this.invMatrix[2],
+      y: xx * this.invMatrix[1] + yy * this.invMatrix[3]
+    }
   }
 
   /**
