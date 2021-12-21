@@ -81,8 +81,14 @@ export default class Scene {
             if (this.particle.pos.x > window.innerWidth / 2 && this.particle.pos.x < window.innerWidth / 2 + offsetX) {
                 ret.x = -(window.innerWidth / 2 + offsetX - this.particle.pos.x);
             }
+            if (this.particle.pos.x > window.innerWidth / 2 + offsetX) {
+                ret.x = -(offsetX);
+            }
             if (this.particle.pos.y > window.innerHeight / 2 && this.particle.pos.y < window.innerHeight / 2 + offsetY) {
                 ret.y = -(window.innerHeight / 2 + offsetY - this.particle.pos.y);
+            }
+            if (this.particle.pos.y > window.innerHeight / 2 + offsetY) {
+                ret.y = -(offsetY);
             }
             return ret;
         }
