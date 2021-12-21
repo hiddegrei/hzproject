@@ -1,1 +1,1 @@
-{"version":3,"file":"HighScore.js","sourceRoot":"","sources":["../src/HighScore.ts"],"names":[],"mappings":"AAAA,OAAO,WAAW,MAAM,yBAAyB,CAAC;AAElD,MAAM,CAAC,OAAO,OAAO,SAAU,SAAQ,WAAW;IACxC,SAAS,CAAW;IAO5B,YAAmB,MAAyB;QAC1C,KAAK,CAAC,MAAM,CAAC,CAAC;IAChB,CAAC;CACF"}
+{"version":3,"file":"HighScore.js","sourceRoot":"","sources":["../src/HighScore.ts"],"names":[],"mappings":"AAAA,OAAO,OAAO,MAAM,cAAc,CAAC;AAEnC,MAAM,CAAC,OAAO,OAAO,SAAU,SAAQ,OAAO;IACpC,SAAS,CAAW;IAO5B,YAAmB,MAAyB;QAC1C,KAAK,CAAC,MAAM,CAAC,CAAC;IAChB,CAAC;CACF"}

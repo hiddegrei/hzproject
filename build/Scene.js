@@ -3,7 +3,11 @@ import Particle from './Particle.js';
 import Level1map from './Level1map.js';
 import Progression from './Progression.js';
 import Score from './Score.js';
+<<<<<<< HEAD
+import EndGame from './EndGame.js';
+=======
 import Vector from './Vector.js';
+>>>>>>> af0b55938b24729b567259b4bd08b14c062af3a9
 export default class Scene {
     canvas;
     ctx;
@@ -18,10 +22,17 @@ export default class Scene {
     widthHall;
     progression;
     count;
+<<<<<<< HEAD
+    endGame;
+    condition;
+=======
     currentTrans;
     matrix = [];
     invMatrix = [];
+>>>>>>> af0b55938b24729b567259b4bd08b14c062af3a9
     constructor(canvas, game) {
+        this.condition = 1;
+        console.log(this.condition);
         this.canvas = canvas;
         this.canvas.width = 1920;
         this.canvas.height = 969;
@@ -56,6 +67,9 @@ export default class Scene {
     }
     update() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+<<<<<<< HEAD
+        this.progression.writeTextToCanvas('progress: ', this.canvas.width / 10 * 6.5, 20);
+=======
         this.ctx.setTransform(1, 0, 0, 1, 0, 0);
         let trans = this.checkScaling();
         this.createMatrix(trans.x, trans.y, 0, 0);
@@ -65,17 +79,27 @@ export default class Scene {
         this.particle.move(this.mouse.x, this.mouse.y, this.borders);
         this.count += 1;
         this.progression.writeTextToCanvas('progress: ', 850, 20);
+>>>>>>> af0b55938b24729b567259b4bd08b14c062af3a9
         if (this.count >= 100) {
-            this.writeTextToCanvas(`${this.progression.getProgression()}%`, 20, 1050 + this.progression.getProgression(), 20);
+            this.writeTextToCanvas(`${this.progression.getProgression()}%`, 20, this.canvas.width / 10 * 9, 20);
             this.progression.setXEnd();
             if (this.count === 100) {
                 this.score.forEach((element) => { this.totalScore += element.getScore(); });
             }
         }
         else {
-            this.writeTextToCanvas(`${this.progression.getProgression()}%`, 20, 1050, 20);
+            this.writeTextToCanvas(`${this.progression.getProgression()}%`, 20, this.canvas.width / 10 * 9, 20);
         }
         this.progression.pBar(this.ctx);
+<<<<<<< HEAD
+        this.score[0].writeTextToCanvas(`Score: ${this.totalScore}`, this.canvas.width / 2, 20);
+        if (this.count === 500) {
+            this.endGame = new EndGame(this.canvas);
+        }
+        document.onmousemove = this.mouseDown.bind(this);
+        this.particle.move(this.mouse.x, this.mouse.y, this.borders);
+        this.count += 1;
+=======
         this.score[0].writeTextToCanvas(`Score: ${this.totalScore}`, 500, 20);
     }
     checkScaling() {
@@ -126,6 +150,7 @@ export default class Scene {
             x: xx * this.invMatrix[0] + yy * this.invMatrix[2],
             y: xx * this.invMatrix[1] + yy * this.invMatrix[3]
         };
+>>>>>>> af0b55938b24729b567259b4bd08b14c062af3a9
     }
     render() {
         this.particle.show();

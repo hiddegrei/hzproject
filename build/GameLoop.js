@@ -15,10 +15,12 @@ export default class GameLoop {
     frameCount;
     fps;
     load;
+    condition;
     constructor(game, mode = GameLoop.NORMAL_MODE) {
         this.state = GameLoop.STATE_IDLE;
         this.mode = mode;
         this.game = game;
+        this.condition = true;
     }
     start() {
         if (this.state === GameLoop.STATE_IDLE) {
