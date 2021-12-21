@@ -79,13 +79,13 @@ export default class Scene {
             let offsetX = this.canvas.width - window.innerWidth;
             let offsetY = this.canvas.height - window.innerHeight;
             if (this.particle.pos.x > window.innerWidth / 2 && this.particle.pos.x < window.innerWidth / 2 + offsetX) {
-                ret.x = -(window.innerWidth / 2 + offsetX - this.particle.pos.x);
+                ret.x = -(offsetX - (window.innerWidth / 2 + offsetX - this.particle.pos.x));
             }
             if (this.particle.pos.x > window.innerWidth / 2 + offsetX) {
                 ret.x = -(offsetX);
             }
             if (this.particle.pos.y > window.innerHeight / 2 && this.particle.pos.y < window.innerHeight / 2 + offsetY) {
-                ret.y = -(window.innerHeight / 2 + offsetY - this.particle.pos.y);
+                ret.y = -(offsetY - (window.innerHeight / 2 + offsetY - this.particle.pos.y));
             }
             if (this.particle.pos.y > window.innerHeight / 2 + offsetY) {
                 ret.y = -(offsetY);
