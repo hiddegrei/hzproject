@@ -65,13 +65,12 @@ export default class Particle {
     }
     show() {
         this.ctx.lineWidth = 1;
-        this.ctx.strokeStyle = '#000000';
+        this.ctx.fillStyle = "rgb(255,255,255)";
         this.ctx.beginPath();
         this.ctx.arc(this.pos.x, this.pos.y, this.radius, 0, 2 * Math.PI);
         this.ctx.stroke();
-        for (let i = 0; i < this.rays.length; i++) {
-            this.rays[i].show();
-        }
+        this.ctx.closePath();
+        this.ctx.fill();
     }
     look(borders) {
         for (let ray of this.rays) {
@@ -98,9 +97,10 @@ export default class Particle {
             }
         }
     }
-    writeTextToCanvas(text, xCoordinate, yCoordinate, fontSize = 20, color = 'red', alignment = 'center') {
+    writeTextToCanvas(text, fontSize = 20, xCoordinate, yCoordinate, alignment = 'center', color = 'white') {
         this.ctx.font = `${fontSize}px sans-serif`;
         this.ctx.fillStyle = color;
+        this.ctx.textAlign = alignment;
         this.ctx.fillText(text, xCoordinate, yCoordinate);
     }
 }

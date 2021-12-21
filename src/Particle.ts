@@ -122,10 +122,12 @@ export default class Particle {
     }
     show() {
         this.ctx.lineWidth = 1;
-        this.ctx.strokeStyle = '#000000';
+        this.ctx.fillStyle = "rgb(255,255,255)";
         this.ctx.beginPath();
         this.ctx.arc(this.pos.x, this.pos.y, this.radius, 0, 2 * Math.PI);
         this.ctx.stroke();
+        this.ctx.closePath()
+        this.ctx.fill()
 
         //this.writeTextToCanvas(`${this.angle}`,this.pos.x,this.pos.y+20)
 
@@ -135,9 +137,9 @@ export default class Particle {
         //     this.ctx.lineTo(this.pos.x+(this.dir.x)*this.speed, this.pos.y+(this.dir.y)*this.speed);
         //     this.ctx.stroke();
 
-        for (let i = 0; i < this.rays.length; i++) {
-            this.rays[i].show()
-        }
+        // for (let i = 0; i < this.rays.length; i++) {
+        //     this.rays[i].show()
+        // }
         // const a=this.pos.x-this.pos.x+this.dir.x
         // const b=this.pos.y-this.pos.y+this.dir.y
         // const radians=Math.atan2(a,b)
@@ -201,11 +203,17 @@ export default class Particle {
         }
 
     }
-    writeTextToCanvas(text: string, xCoordinate: number, yCoordinate: number, fontSize = 20, color = 'red', alignment = 'center') {
-
+    public writeTextToCanvas(
+        text: string,
+        fontSize: number = 20,
+        xCoordinate: number,
+        yCoordinate: number,
+        alignment: CanvasTextAlign = 'center',
+        color: string = 'white',
+      ): void {
         this.ctx.font = `${fontSize}px sans-serif`;
         this.ctx.fillStyle = color;
-        //this.ctx.textAlign = alignment;
+        this.ctx.textAlign = alignment;
         this.ctx.fillText(text, xCoordinate, yCoordinate);
-    }
+      }
 }

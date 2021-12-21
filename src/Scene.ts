@@ -85,10 +85,10 @@ export default class Scene {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.progression.writeTextToCanvas('progress: ', 850, 20);
     if (this.count >= 100) {
-      this.writeTextToCanvas(`${this.progression.getProgression()}%`, 1050 + this.progression.getProgression(), 20);
+      this.writeTextToCanvas(`${this.progression.getProgression()}%`,20, 1050 + this.progression.getProgression(), 20);
       this.progression.setXEnd();
     } else {
-      this.writeTextToCanvas(`${this.progression.getProgression()}%`, 1050, 20);
+      this.writeTextToCanvas(`${this.progression.getProgression()}%`,20, 1050, 20);
     }
     this.progression.pBar(this.ctx);
 
@@ -113,6 +113,8 @@ export default class Scene {
       this.borders[i].show();
     }
     this.particle.look(this.borders);
+
+    this.writeTextToCanvas("Central hub",20,this.canvas.width/2,400)
   }
 
   /**
@@ -123,12 +125,18 @@ export default class Scene {
    * @param color
    * @param alignment
    */
-  public writeTextToCanvas(text: string, xCoordinate: number, yCoordinate: number, fontSize = 20, color = 'red', alignment = 'center') {
-    const ctx = this.canvas.getContext('2d');
-    ctx.font = `${fontSize}px sans-serif`;
-    ctx.fillStyle = color;
-    // ctx.textAlign = alignment;
-    ctx.fillText(text, xCoordinate, yCoordinate);
+   public writeTextToCanvas(
+    text: string,
+    fontSize: number = 20,
+    xCoordinate: number,
+    yCoordinate: number,
+    alignment: CanvasTextAlign = 'center',
+    color: string = 'red',
+  ): void {
+    this.ctx.font = `${fontSize}px sans-serif`;
+    this.ctx.fillStyle = color;
+    this.ctx.textAlign = alignment;
+    this.ctx.fillText(text, xCoordinate, yCoordinate);
   }
 }
 // # sourceMappingURL=Scene.js.map
