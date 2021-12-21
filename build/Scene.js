@@ -19,11 +19,15 @@ export default class Scene {
     progression;
     count;
     currentTrans;
+    matrix = [];
+    invMatrix = [];
     constructor(canvas, game) {
         this.canvas = canvas;
         this.canvas.width = 1920;
         this.canvas.height = 969;
         this.currentTrans = new Vector(0, 0);
+        this.matrix = [1, 0, 0, 1, 0, 0];
+        this.invMatrix = [1, 0, 0, 1];
         this.game = game;
         this.ctx = this.canvas.getContext('2d');
         this.progression = new Progression(this.canvas);
@@ -48,13 +52,39 @@ export default class Scene {
     processInput() {
     }
     mouseDown(e) {
-        this.mouse.x = e.clientX + this.currentTrans.x;
-        this.mouse.y = e.clientY + this.currentTrans.y;
+        this.mouse = this.toWorld(e.clientX, e.clientY);
+    }
+    createMatrix(x, y, scale, rotate) {
+        this.matrix[3] = this.matrix[0] = Math.cos(rotate) * scale;
+        this.matrix[2] = -(this.matrix[1] = Math.sin(rotate) * scale);
+        this.matrix[4] = x;
+        this.matrix[5] = y;
+        let cross = this.matrix[0] * this.matrix[3] - this.matrix[1] * this.matrix[2];
+        if (cross != 0) {
+            this.invMatrix[0] = this.matrix[3] / cross;
+            this.invMatrix[1] = -this.matrix[1] / cross;
+            this.invMatrix[2] = -this.matrix[2] / cross;
+            this.invMatrix[3] = this.matrix[0] / cross;
+        }
+        else {
+            this.invMatrix = [1, 0, 0, 1];
+        }
+    }
+    toWorld(x, y) {
+        var xx, yy, m, result;
+        m = this.invMatrix;
+        xx = x - this.matrix[4];
+        yy = y - this.matrix[5];
+        return {
+            x: xx * this.invMatrix[0] + yy * this.invMatrix[2],
+            y: xx * this.invMatrix[1] + yy * this.invMatrix[3]
+        };
     }
     update() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.setTransform(1, 0, 0, 1, 0, 0);
         let trans = this.checkScaling();
+        this.createMatrix(trans.x, trans.y, 0, 0);
         this.currentTrans = { x: trans.x, y: trans.y };
         this.ctx.translate(trans.x, trans.y);
         document.onmousemove = this.mouseDown.bind(this);
