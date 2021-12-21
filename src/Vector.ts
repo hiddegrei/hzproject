@@ -1,5 +1,13 @@
 export default class Vector{
 
+    public x:number;
+    public y:number;
+
+    constructor(x:number,y:number){
+        this.x=x
+        this.y=y
+    }
+
     public static add(a: { x: any; y: any; },b: { x: any; y: any; }){
 
         return {x:a.x+b.x,y:a.y+b.y}

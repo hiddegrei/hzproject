@@ -3,7 +3,11 @@ import Particle from './Particle.js';
 import Level1map from './Level1map.js';
 import Progression from './Progression.js';
 import Score from './Score.js';
+<<<<<<< HEAD
 import EndGame from './EndGame.js';
+=======
+import Vector from './Vector.js';
+>>>>>>> af0b55938b24729b567259b4bd08b14c062af3a9
 export default class Scene {
     canvas;
     ctx;
@@ -18,19 +22,28 @@ export default class Scene {
     widthHall;
     progression;
     count;
+<<<<<<< HEAD
     endGame;
     condition;
+=======
+    currentTrans;
+    matrix = [];
+    invMatrix = [];
+>>>>>>> af0b55938b24729b567259b4bd08b14c062af3a9
     constructor(canvas, game) {
         this.condition = 1;
         console.log(this.condition);
         this.canvas = canvas;
-        this.canvas.width = window.innerWidth;
-        this.canvas.height = window.innerHeight;
+        this.canvas.width = 1920;
+        this.canvas.height = 969;
+        this.currentTrans = new Vector(0, 0);
+        this.matrix = [1, 0, 0, 1, 0, 0];
+        this.invMatrix = [1, 0, 0, 1];
         this.game = game;
         this.ctx = this.canvas.getContext('2d');
         this.progression = new Progression(this.canvas);
-        console.log("window widht:", this.canvas.width);
-        console.log("window height:", this.canvas.height);
+        console.log("window widht:", window.innerWidth);
+        console.log("window height:", window.innerHeight);
         this.score = [];
         this.score.push(new Score(0, this.canvas));
         this.totalScore = 0;
@@ -50,12 +63,23 @@ export default class Scene {
     processInput() {
     }
     mouseDown(e) {
-        this.mouse.x = e.clientX;
-        this.mouse.y = e.clientY;
+        this.mouse = this.toWorld(e.clientX, e.clientY);
     }
     update() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+<<<<<<< HEAD
         this.progression.writeTextToCanvas('progress: ', this.canvas.width / 10 * 6.5, 20);
+=======
+        this.ctx.setTransform(1, 0, 0, 1, 0, 0);
+        let trans = this.checkScaling();
+        this.createMatrix(trans.x, trans.y, 0, 0);
+        this.currentTrans = { x: trans.x, y: trans.y };
+        this.ctx.translate(trans.x, trans.y);
+        document.onmousemove = this.mouseDown.bind(this);
+        this.particle.move(this.mouse.x, this.mouse.y, this.borders);
+        this.count += 1;
+        this.progression.writeTextToCanvas('progress: ', 850, 20);
+>>>>>>> af0b55938b24729b567259b4bd08b14c062af3a9
         if (this.count >= 100) {
             this.writeTextToCanvas(`${this.progression.getProgression()}%`, 20, this.canvas.width / 10 * 9, 20);
             this.progression.setXEnd();
@@ -67,6 +91,7 @@ export default class Scene {
             this.writeTextToCanvas(`${this.progression.getProgression()}%`, 20, this.canvas.width / 10 * 9, 20);
         }
         this.progression.pBar(this.ctx);
+<<<<<<< HEAD
         this.score[0].writeTextToCanvas(`Score: ${this.totalScore}`, this.canvas.width / 2, 20);
         if (this.count === 500) {
             this.endGame = new EndGame(this.canvas);
@@ -74,6 +99,58 @@ export default class Scene {
         document.onmousemove = this.mouseDown.bind(this);
         this.particle.move(this.mouse.x, this.mouse.y, this.borders);
         this.count += 1;
+=======
+        this.score[0].writeTextToCanvas(`Score: ${this.totalScore}`, 500, 20);
+    }
+    checkScaling() {
+        let ret = { x: 0, y: 0 };
+        if (window.innerWidth >= this.canvas.width && window.innerHeight >= this.canvas.height) {
+            return { x: 0, y: 0 };
+        }
+        else {
+            let offsetX = this.canvas.width - window.innerWidth;
+            let offsetY = this.canvas.height - window.innerHeight;
+            if (this.particle.pos.x > window.innerWidth / 2 && this.particle.pos.x < window.innerWidth / 2 + offsetX) {
+                ret.x = -(offsetX - (window.innerWidth / 2 + offsetX - this.particle.pos.x));
+            }
+            if (this.particle.pos.x > window.innerWidth / 2 + offsetX) {
+                ret.x = -(offsetX);
+            }
+            if (this.particle.pos.y > window.innerHeight / 2 && this.particle.pos.y < window.innerHeight / 2 + offsetY) {
+                ret.y = -(offsetY - (window.innerHeight / 2 + offsetY - this.particle.pos.y));
+            }
+            if (this.particle.pos.y > window.innerHeight / 2 + offsetY) {
+                ret.y = -(offsetY);
+            }
+            return ret;
+        }
+    }
+    createMatrix(x, y, scale, rotate) {
+        this.matrix[3] = this.matrix[0] = Math.cos(rotate) * scale;
+        this.matrix[2] = -(this.matrix[1] = Math.sin(rotate) * scale);
+        this.matrix[4] = x;
+        this.matrix[5] = y;
+        let cross = this.matrix[0] * this.matrix[3] - this.matrix[1] * this.matrix[2];
+        if (cross != 0) {
+            this.invMatrix[0] = this.matrix[3] / cross;
+            this.invMatrix[1] = -this.matrix[1] / cross;
+            this.invMatrix[2] = -this.matrix[2] / cross;
+            this.invMatrix[3] = this.matrix[0] / cross;
+        }
+        else {
+            this.invMatrix = [1, 0, 0, 1];
+        }
+    }
+    toWorld(x, y) {
+        var xx, yy, m, result;
+        m = this.invMatrix;
+        xx = x - this.matrix[4];
+        yy = y - this.matrix[5];
+        return {
+            x: xx * this.invMatrix[0] + yy * this.invMatrix[2],
+            y: xx * this.invMatrix[1] + yy * this.invMatrix[3]
+        };
+>>>>>>> af0b55938b24729b567259b4bd08b14c062af3a9
     }
     render() {
         this.particle.show();
