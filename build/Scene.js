@@ -13,6 +13,7 @@ export default class Scene {
     level;
     static SPACE = 300;
     score;
+    totalScore;
     widthHall;
     progression;
     count;
@@ -23,7 +24,9 @@ export default class Scene {
         this.game = game;
         this.ctx = this.canvas.getContext('2d');
         this.progression = new Progression(this.canvas);
-        this.score = new Score(0, this.canvas);
+        this.score = [];
+        this.score.push(new Score(0, this.canvas));
+        this.totalScore = 0;
         this.borders = [];
         this.level = new Level1map(this.canvas, this.ctx);
         for (let i = 0; i < this.level.level1.length; i++) {
@@ -49,12 +52,15 @@ export default class Scene {
         if (this.count >= 100) {
             this.writeTextToCanvas(`${this.progression.getProgression()}%`, 20, 1050 + this.progression.getProgression(), 20);
             this.progression.setXEnd();
+            if (this.count === 100) {
+                this.score.forEach((element) => { this.totalScore += element.getScore(); });
+            }
         }
         else {
             this.writeTextToCanvas(`${this.progression.getProgression()}%`, 20, 1050, 20);
         }
         this.progression.pBar(this.ctx);
-        this.score.writeTextToCanvas(`Score: ${this.score.getScore()}`, 500, 20);
+        this.score[0].writeTextToCanvas(`Score: ${this.totalScore}`, 500, 20);
         document.onmousemove = this.mouseDown.bind(this);
         this.particle.move(this.mouse.x, this.mouse.y, this.borders);
         this.count += 1;
@@ -65,7 +71,7 @@ export default class Scene {
             this.borders[i].show();
         }
         this.particle.look(this.borders);
-        this.writeTextToCanvas("Central hub", 20, this.canvas.width / 2, 400);
+        this.writeTextToCanvas('Central hub', 20, this.canvas.width / 2, 400);
     }
     writeTextToCanvas(text, fontSize = 20, xCoordinate, yCoordinate, alignment = 'center', color = 'red') {
         this.ctx.font = `${fontSize}px sans-serif`;
