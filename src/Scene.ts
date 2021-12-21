@@ -91,6 +91,10 @@ export default class Scene {
    */
   update() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    document.onmousemove = this.mouseDown.bind(this);
+    this.particle.move(this.mouse.x, this.mouse.y, this.borders);
+    this.count += 1;
+
     this.progression.writeTextToCanvas('progress: ', 850, 20);
     if (this.count >= 100) {
       this.writeTextToCanvas(`${this.progression.getProgression()}%`, 20, 1050 + this.progression.getProgression(), 20);
@@ -108,10 +112,6 @@ export default class Scene {
     //      this.particle.rays[i].cast(this.border)
     //  }
     // this.ray.cast(this.border)
-
-    document.onmousemove = this.mouseDown.bind(this);
-    this.particle.move(this.mouse.x, this.mouse.y, this.borders);
-    this.count += 1;
   }
 
   /**
