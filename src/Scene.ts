@@ -5,6 +5,7 @@ import Particle from './Particle.js';
 import Level1map from './Level1map.js';
 import Progression from './Progression.js';
 import Score from './Score.js';
+import Vector from './Vector.js';
 
 export default class Scene {
   public canvas: HTMLCanvasElement;
@@ -33,6 +34,8 @@ export default class Scene {
 
   private count: number;
 
+  public currentTrans:Vector;
+
   /**
    * @param canvas
    * @param game
@@ -40,7 +43,8 @@ export default class Scene {
   constructor(canvas: HTMLCanvasElement, game: Game) {
     this.canvas = canvas;
     this.canvas.width=1920;
-    this.canvas.height=969
+    this.canvas.height=969;
+    this.currentTrans=new Vector(0,0)
     // this.canvas.width = window.innerWidth;
     // this.canvas.height = window.innerHeight;
 
@@ -84,8 +88,8 @@ export default class Scene {
    */
   mouseDown(e: MouseEvent) {
     // this.particle.update(window.event.clientX,window.event.clientY)
-    this.mouse.x = e.clientX;
-    this.mouse.y = e.clientY;
+    this.mouse.x = e.clientX+this.currentTrans.x;
+    this.mouse.y = e.clientY+this.currentTrans.y;
   }
 
   /**
@@ -95,6 +99,7 @@ export default class Scene {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.ctx.setTransform(1, 0, 0, 1, 0, 0);
     let trans=this.checkScaling()
+    this.currentTrans={x:trans.x,y:trans.y}
     this.ctx.translate(trans.x, trans.y)
     //this.ctx.translate(100,100)
 

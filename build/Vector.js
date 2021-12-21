@@ -1,4 +1,10 @@
 export default class Vector {
+    x;
+    y;
+    constructor(x, y) {
+        this.x = x;
+        this.y = y;
+    }
     static add(a, b) {
         return { x: a.x + b.x, y: a.y + b.y };
     }

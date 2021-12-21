@@ -3,6 +3,7 @@ import Particle from './Particle.js';
 import Level1map from './Level1map.js';
 import Progression from './Progression.js';
 import Score from './Score.js';
+import Vector from './Vector.js';
 export default class Scene {
     canvas;
     ctx;
@@ -17,10 +18,12 @@ export default class Scene {
     widthHall;
     progression;
     count;
+    currentTrans;
     constructor(canvas, game) {
         this.canvas = canvas;
         this.canvas.width = 1920;
         this.canvas.height = 969;
+        this.currentTrans = new Vector(0, 0);
         this.game = game;
         this.ctx = this.canvas.getContext('2d');
         this.progression = new Progression(this.canvas);
@@ -45,13 +48,14 @@ export default class Scene {
     processInput() {
     }
     mouseDown(e) {
-        this.mouse.x = e.clientX;
-        this.mouse.y = e.clientY;
+        this.mouse.x = e.clientX + this.currentTrans.x;
+        this.mouse.y = e.clientY + this.currentTrans.y;
     }
     update() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.setTransform(1, 0, 0, 1, 0, 0);
         let trans = this.checkScaling();
+        this.currentTrans = { x: trans.x, y: trans.y };
         this.ctx.translate(trans.x, trans.y);
         document.onmousemove = this.mouseDown.bind(this);
         this.particle.move(this.mouse.x, this.mouse.y, this.borders);
