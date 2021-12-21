@@ -63,6 +63,42 @@ export default class Level1map {
             this.makeHallV((this.canvas.width / 2) - 2 * this.widthHall, 300 + 9 * this.widthHall, 3 * this.widthHall)[1],
             this.makeHallH((this.canvas.width / 2) - 5 * this.widthHall, 300 + 12 * this.widthHall, 3 * this.widthHall)[0],
             this.makeHallH((this.canvas.width / 2) - 5 * this.widthHall, 300 + 12 * this.widthHall, 3 * this.widthHall)[1],
+            this.makeBlock((this.canvas.width / 2) + 5 * this.widthHall, 300 + 6 * this.widthHall, 3 * this.widthHall, 2 * this.widthHall)[0],
+            this.makeBlock((this.canvas.width / 2) + 5 * this.widthHall, 300 + 6 * this.widthHall, 3 * this.widthHall, 2 * this.widthHall)[1],
+            this.makeBlock((this.canvas.width / 2) + 5 * this.widthHall, 300 + 6 * this.widthHall, 3 * this.widthHall, 2 * this.widthHall)[2],
+            this.makeBlock((this.canvas.width / 2) + 5 * this.widthHall, 300 + 6 * this.widthHall, 3 * this.widthHall, 2 * this.widthHall)[3],
+            this.makeRoomDR((this.canvas.width / 2) + 9 * this.widthHall, 300 + 8 * this.widthHall, 3 * this.widthHall, 2 * this.widthHall)[0],
+            this.makeRoomDR((this.canvas.width / 2) + 9 * this.widthHall, 300 + 8 * this.widthHall, 3 * this.widthHall, 2 * this.widthHall)[1],
+            this.makeRoomDR((this.canvas.width / 2) + 9 * this.widthHall, 300 + 8 * this.widthHall, 3 * this.widthHall, 2 * this.widthHall)[2],
+            this.makeRoomDR((this.canvas.width / 2) + 9 * this.widthHall, 300 + 8 * this.widthHall, 3 * this.widthHall, 2 * this.widthHall)[3],
+            this.makeHallH((this.canvas.width / 2) - this.widthHall, 300 + 12 * this.widthHall, 1 * this.widthHall)[0],
+            this.makeHallH((this.canvas.width / 2) - this.widthHall, 300 + 12 * this.widthHall, 1 * this.widthHall)[1],
+            [(this.canvas.width / 2) - 2 * this.widthHall, 300 + 13 * this.widthHall, (this.canvas.width / 2) - this.widthHall, 300 + 13 * this.widthHall],
+            this.turnRU((this.canvas.width / 2), 300 + 12 * this.widthHall)[0],
+            this.turnRU((this.canvas.width / 2), 300 + 12 * this.widthHall)[1],
+            this.turnRU((this.canvas.width / 2), 300 + 12 * this.widthHall)[2],
+            this.turnRU((this.canvas.width / 2), 300 + 12 * this.widthHall)[3],
+            this.turnUR((this.canvas.width / 2) + this.widthHall, 300 + 12 * this.widthHall)[0],
+            this.turnUR((this.canvas.width / 2) + this.widthHall, 300 + 12 * this.widthHall)[1],
+            this.turnUR((this.canvas.width / 2) + this.widthHall, 300 + 12 * this.widthHall)[2],
+            this.turnUR((this.canvas.width / 2) + this.widthHall, 300 + 12 * this.widthHall)[3],
+            this.makeHallH((this.canvas.width / 2) + 3 * this.widthHall, 300 + 10 * this.widthHall, 1 * this.widthHall)[0],
+            this.makeHallH((this.canvas.width / 2) + 3 * this.widthHall, 300 + 10 * this.widthHall, 1 * this.widthHall)[1],
+            [(this.canvas.width / 2) + 4 * this.widthHall, 300 + 11 * this.widthHall, (this.canvas.width / 2) + 4 * this.widthHall, 300 + 12 * this.widthHall],
+            [(this.canvas.width / 2) + 2 * this.widthHall, 300 + 13 * this.widthHall, (this.canvas.width / 2) + 4 * this.widthHall, 300 + 13 * this.widthHall],
+            [(this.canvas.width / 2) + 4 * this.widthHall, 300 + 13 * this.widthHall, (this.canvas.width / 2) + 5 * this.widthHall, 300 + 13 * this.widthHall],
+            this.makeHallH((this.canvas.width / 2) + 5 * this.widthHall, 300 + 10 * this.widthHall, 3 * this.widthHall)[0],
+            this.makeHallH((this.canvas.width / 2) + 5 * this.widthHall, 300 + 10 * this.widthHall, 3 * this.widthHall)[1],
+            [(this.canvas.width / 2) + 5 * this.widthHall, 300 + 11 * this.widthHall, (this.canvas.width / 2) + 5 * this.widthHall, 300 + 12 * this.widthHall],
+            [(this.canvas.width / 2) + 4 * this.widthHall, 300 + 9 * this.widthHall, (this.canvas.width / 2) + 4 * this.widthHall, 300 + 10 * this.widthHall],
+            this.makeHallH((this.canvas.width / 2) + 5 * this.widthHall, 300 + 12 * this.widthHall, 3 * this.widthHall)[0],
+            this.makeHallH((this.canvas.width / 2) + 5 * this.widthHall, 300 + 12 * this.widthHall, 3 * this.widthHall)[1],
+            this.makeHallH((this.canvas.width / 2) + 8 * this.widthHall, 300 + 11 * this.widthHall, this.widthHall)[0],
+            this.makeHallH((this.canvas.width / 2) + 8 * this.widthHall, 300 + 11 * this.widthHall, this.widthHall)[1],
+            this.turnRU((this.canvas.width / 2) + 8 * this.widthHall, 300 + 12 * this.widthHall)[0],
+            this.turnRU((this.canvas.width / 2) + 8 * this.widthHall, 300 + 12 * this.widthHall)[1],
+            this.turnRU((this.canvas.width / 2) + 8 * this.widthHall, 300 + 12 * this.widthHall)[2],
+            this.turnRU((this.canvas.width / 2) + 8 * this.widthHall, 300 + 12 * this.widthHall)[3],
         ];
     }
     makeHallH(x, y, w) {
@@ -75,11 +111,52 @@ export default class Level1map {
         let l2 = [x + this.widthHall, y, x + this.widthHall, y + h];
         return [l1, l2];
     }
+    makeBlock(x, y, w, h) {
+        let l1 = [x, y, x, y + h];
+        let l2 = [x, y, x + w, y];
+        let l3 = [x + w, y, x + w, y + h];
+        let l4 = [x, y + h, x + w, y + h];
+        return [l1, l2, l3, l4];
+    }
+    makeRoomDR(x, y, w, h) {
+        let l1 = [x, y, x, y + h];
+        let l2 = [x, y, x + w, y];
+        let l4 = [x, y + h, x + w, y + h];
+        let l3;
+        let l5 = null;
+        if (h % (3 * this.widthHall) === 0) {
+            l3 = [x + w, y, x + w, y + this.widthHall];
+            l5 = [x + w, y + 2 * this.widthHall, x + w, y + h];
+        }
+        else {
+            l3 = [x + w, y, x + w, y + h - this.widthHall];
+        }
+        if (l5 != null) {
+            return [l1, l2, l3, l4, l5];
+        }
+        else {
+            return [l1, l2, l3, l4];
+        }
+    }
     turnRD(x, y) {
         let l1 = [x, y, x + 2 * this.widthHall, y];
         let l2 = [x, y + this.widthHall, x + this.widthHall, y + this.widthHall];
         let l3 = [x + this.widthHall, y + this.widthHall, x + this.widthHall, y + 2 * this.widthHall];
         let l4 = [x + 2 * this.widthHall, y, x + 2 * this.widthHall, y + 2 * this.widthHall];
+        return [l1, l2, l3, l4];
+    }
+    turnUR(x, y) {
+        let l1 = [x, y, x, y - 2 * this.widthHall];
+        let l2 = [x, y - 2 * this.widthHall, x + 2 * this.widthHall, y - 2 * this.widthHall];
+        let l3 = [x + this.widthHall, y - this.widthHall, x + 2 * this.widthHall, y - this.widthHall];
+        let l4 = [x + this.widthHall, y, x + this.widthHall, y - this.widthHall];
+        return [l1, l2, l3, l4];
+    }
+    turnRU(x, y) {
+        let l1 = [x, y, x + this.widthHall, y];
+        let l2 = [x, y + this.widthHall, x + 2 * this.widthHall, y + this.widthHall];
+        let l3 = [x + this.widthHall, y, x + this.widthHall, y - this.widthHall];
+        let l4 = [x + 2 * this.widthHall, y + this.widthHall, x + 2 * this.widthHall, y - 1 * this.widthHall];
         return [l1, l2, l3, l4];
     }
     turnLD(x, y) {
