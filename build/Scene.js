@@ -19,11 +19,13 @@ export default class Scene {
     count;
     constructor(canvas, game) {
         this.canvas = canvas;
-        this.canvas.width = window.innerWidth;
-        this.canvas.height = window.innerHeight;
+        this.canvas.width = 1920;
+        this.canvas.height = 969;
         this.game = game;
         this.ctx = this.canvas.getContext('2d');
         this.progression = new Progression(this.canvas);
+        console.log("window widht:", this.canvas.width);
+        console.log("window height:", this.canvas.height);
         this.score = [];
         this.score.push(new Score(0, this.canvas));
         this.totalScore = 0;
