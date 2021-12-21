@@ -4,6 +4,7 @@ import Ray from './Ray.js';
 import Particle from './Particle.js';
 import Level1map from './Level1map.js';
 import Progression from './Progression.js';
+import Score from './Score.js';
 
 export default class Scene {
   public canvas: HTMLCanvasElement;
@@ -22,7 +23,7 @@ export default class Scene {
 
   static SPACE = 300;
 
-  public score: number;
+  private score: Score;
 
   public widthHall: number;
 
@@ -42,7 +43,7 @@ export default class Scene {
     this.ctx = this.canvas.getContext('2d');
     this.progression = new Progression(this.canvas);
 
-    this.score = 0;
+    this.score = new Score(0, this.canvas);
     this.borders = [];
     this.level = new Level1map(this.canvas, this.ctx);
 
@@ -91,6 +92,7 @@ export default class Scene {
       this.writeTextToCanvas(`${this.progression.getProgression()}%`, 1050, 20);
     }
     this.progression.pBar(this.ctx);
+    this.score.writeTextToCanvas(`Score: ${this.score.getScore()}`, 500, 20);
 
     //  for(let i=0;i<this.particle.rays.length;i++){
     //      this.particle.rays[i].cast(this.border)

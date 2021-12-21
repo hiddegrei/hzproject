@@ -135,9 +135,9 @@ export default class Particle {
         //     this.ctx.lineTo(this.pos.x+(this.dir.x)*this.speed, this.pos.y+(this.dir.y)*this.speed);
         //     this.ctx.stroke();
 
-        for (let i = 0; i < this.rays.length; i++) {
-            this.rays[i].show()
-        }
+        // for (let i = 0; i < this.rays.length; i++) {
+        //     this.rays[i].show()
+        // }
         // const a=this.pos.x-this.pos.x+this.dir.x
         // const b=this.pos.y-this.pos.y+this.dir.y
         // const radians=Math.atan2(a,b)

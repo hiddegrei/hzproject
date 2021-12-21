@@ -2,6 +2,7 @@ import Border from './Border.js';
 import Particle from './Particle.js';
 import Level1map from './Level1map.js';
 import Progression from './Progression.js';
+import Score from './Score.js';
 export default class Scene {
     canvas;
     ctx;
@@ -22,7 +23,7 @@ export default class Scene {
         this.game = game;
         this.ctx = this.canvas.getContext('2d');
         this.progression = new Progression(this.canvas);
-        this.score = 0;
+        this.score = new Score(0, this.canvas);
         this.borders = [];
         this.level = new Level1map(this.canvas, this.ctx);
         for (let i = 0; i < this.level.level1.length; i++) {
@@ -53,6 +54,7 @@ export default class Scene {
             this.writeTextToCanvas(`${this.progression.getProgression()}%`, 1050, 20);
         }
         this.progression.pBar(this.ctx);
+        this.score.writeTextToCanvas(`Score: ${this.score.getScore()}`, 500, 20);
         document.onmousemove = this.mouseDown.bind(this);
         this.particle.move(this.mouse.x, this.mouse.y, this.borders);
         this.count += 1;
