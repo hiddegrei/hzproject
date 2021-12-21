@@ -69,11 +69,8 @@ export default class Particle {
         this.ctx.beginPath();
         this.ctx.arc(this.pos.x, this.pos.y, this.radius, 0, 2 * Math.PI);
         this.ctx.stroke();
-<<<<<<< HEAD
-=======
         this.ctx.closePath();
         this.ctx.fill();
->>>>>>> 6439b09fbe20d7c2ee94bdf9e1f0ac71ce47124d
     }
     look(borders) {
         for (let ray of this.rays) {
