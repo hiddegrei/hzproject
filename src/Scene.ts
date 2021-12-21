@@ -47,8 +47,8 @@ export default class Scene {
     this.game = game;
     this.ctx = this.canvas.getContext('2d');
     this.progression = new Progression(this.canvas);
-    // console.log("window widht:",this.canvas.width)
-    // console.log("window height:",this.canvas.height)
+    console.log("window widht:",window.innerWidth)
+    console.log("window height:",window.innerHeight)
 
     this.score = [];
     this.score.push(new Score(0, this.canvas));
@@ -96,6 +96,7 @@ export default class Scene {
     this.ctx.setTransform(1, 0, 0, 1, 0, 0);
     let trans=this.checkScaling()
     this.ctx.translate(trans.x, trans.y)
+    //this.ctx.translate(100,100)
 
     document.onmousemove = this.mouseDown.bind(this);
     this.particle.move(this.mouse.x, this.mouse.y, this.borders);
@@ -130,10 +131,10 @@ export default class Scene {
    let offsetX=this.canvas.width-window.innerWidth;
    let offsetY=this.canvas.height-window.innerHeight;
    if(this.particle.pos.x>window.innerWidth/2&&this.particle.pos.x<window.innerWidth/2+offsetX){
-     ret.x=window.innerWidth/2+offsetX-this.particle.pos.x
+     ret.x=-(window.innerWidth/2+offsetX-this.particle.pos.x)
    }
    if(this.particle.pos.y>window.innerHeight/2&&this.particle.pos.y<window.innerHeight/2+offsetY){
-    ret.y=window.innerHeight/2+offsetY-this.particle.pos.y
+    ret.y=-(window.innerHeight/2+offsetY-this.particle.pos.y)
   }
   return ret
     }
