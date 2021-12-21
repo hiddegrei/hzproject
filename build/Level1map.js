@@ -99,6 +99,12 @@ export default class Level1map {
             this.turnRU((this.canvas.width / 2) + 8 * this.widthHall, 300 + 12 * this.widthHall)[1],
             this.turnRU((this.canvas.width / 2) + 8 * this.widthHall, 300 + 12 * this.widthHall)[2],
             this.turnRU((this.canvas.width / 2) + 8 * this.widthHall, 300 + 12 * this.widthHall)[3],
+            [(this.canvas.width / 2) + 10 * this.widthHall, 300 + 11 * this.widthHall, (this.canvas.width / 2) + 11 * this.widthHall, 300 + 11 * this.widthHall],
+            this.makeRoomDT((this.canvas.width / 2) + 11 * this.widthHall, 300 + 11 * this.widthHall, 3 * this.widthHall, 2 * this.widthHall)[0],
+            this.makeRoomDT((this.canvas.width / 2) + 11 * this.widthHall, 300 + 11 * this.widthHall, 3 * this.widthHall, 2 * this.widthHall)[1],
+            this.makeRoomDT((this.canvas.width / 2) + 11 * this.widthHall, 300 + 11 * this.widthHall, 3 * this.widthHall, 2 * this.widthHall)[2],
+            this.makeRoomDT((this.canvas.width / 2) + 11 * this.widthHall, 300 + 11 * this.widthHall, 3 * this.widthHall, 2 * this.widthHall)[3],
+            this.makeRoomDT((this.canvas.width / 2) + 11 * this.widthHall, 300 + 11 * this.widthHall, 3 * this.widthHall, 2 * this.widthHall)[4],
         ];
     }
     makeHallH(x, y, w) {
@@ -130,6 +136,26 @@ export default class Level1map {
         }
         else {
             l3 = [x + w, y, x + w, y + h - this.widthHall];
+        }
+        if (l5 != null) {
+            return [l1, l2, l3, l4, l5];
+        }
+        else {
+            return [l1, l2, l3, l4];
+        }
+    }
+    makeRoomDT(x, y, w, h) {
+        let l1 = [x, y, x, y + h];
+        let l2;
+        let l3 = [x + w, y, x + w, y + h];
+        let l4 = [x, y + h, x + w, y + h];
+        let l5 = null;
+        if (w % (3 * this.widthHall) === 0) {
+            l2 = [x, y, x + this.widthHall, y];
+            l5 = [x + 2 * this.widthHall, y, x + w, y];
+        }
+        else {
+            l2 = [x, y, x + w, y];
         }
         if (l5 != null) {
             return [l1, l2, l3, l4, l5];
