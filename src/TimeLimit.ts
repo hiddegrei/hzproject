@@ -19,7 +19,7 @@ export default class TimeLimit {
     return this.passwordProperty;
   }
 
-  public get timeLimit(): any {
+  public get timeLimit(): number {
     return 5 * this.passwordStrengthProperty;
   }
 }
