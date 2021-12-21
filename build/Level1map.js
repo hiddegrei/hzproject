@@ -6,7 +6,7 @@ export default class Level1map {
     heightCentralHub;
     canvas;
     constructor(canvas, ctx) {
-        this.widthHall = 50;
+        this.widthHall = 40;
         this.ctx = ctx;
         this.canvas = canvas;
         this.level1 = [

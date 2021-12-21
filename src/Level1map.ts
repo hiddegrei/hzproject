@@ -9,7 +9,7 @@ export default class Level1map {
     public canvas: HTMLCanvasElement
 
     constructor(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
-        this.widthHall = 50;
+        this.widthHall = 40;
         this.ctx = ctx;
         this.canvas = canvas
 
