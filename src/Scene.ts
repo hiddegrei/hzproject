@@ -5,6 +5,7 @@ import Particle from './Particle.js';
 import Level1map from './Level1map.js';
 import Progression from './Progression.js';
 import Score from './Score.js';
+import EndGame from './EndGame.js';
 
 export default class Scene {
   public canvas: HTMLCanvasElement;
@@ -33,11 +34,17 @@ export default class Scene {
 
   private count: number;
 
+  private endGame: EndGame;
+
+  private condition: number;
+
   /**
    * @param canvas
    * @param game
    */
   constructor(canvas: HTMLCanvasElement, game: Game) {
+    this.condition = 1;
+    console.log(this.condition);
     this.canvas = canvas;
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
@@ -87,28 +94,31 @@ export default class Scene {
   }
 
   /**
-   *
+   *@param condition boolean
    */
-  update() {
+  update(): void {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    this.progression.writeTextToCanvas('progress: ', 850, 20);
+    this.progression.writeTextToCanvas('progress: ', this.canvas.width / 10 * 6.5, 20);
     if (this.count >= 100) {
-      this.writeTextToCanvas(`${this.progression.getProgression()}%`, 20, 1050 + this.progression.getProgression(), 20);
+      this.writeTextToCanvas(`${this.progression.getProgression()}%`, 20, this.canvas.width / 10 * 9, 20);
       this.progression.setXEnd();
       if (this.count === 100) {
         this.score.forEach((element) => { this.totalScore += element.getScore(); });
       }
     } else {
-      this.writeTextToCanvas(`${this.progression.getProgression()}%`, 20, 1050, 20);
+      this.writeTextToCanvas(`${this.progression.getProgression()}%`, 20, this.canvas.width / 10 * 9, 20);
     }
     this.progression.pBar(this.ctx);
-    this.score[0].writeTextToCanvas(`Score: ${this.totalScore}`, 500, 20);
+    this.score[0].writeTextToCanvas(`Score: ${this.totalScore}`, this.canvas.width / 2, 20);
+
+    if (this.count === 500) {
+      this.endGame = new EndGame(this.canvas);
+    }
 
     //  for(let i=0;i<this.particle.rays.length;i++){
     //      this.particle.rays[i].cast(this.border)
     //  }
     // this.ray.cast(this.border)
-
     document.onmousemove = this.mouseDown.bind(this);
     this.particle.move(this.mouse.x, this.mouse.y, this.borders);
     this.count += 1;

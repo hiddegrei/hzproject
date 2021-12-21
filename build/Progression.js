@@ -10,13 +10,13 @@ export default class Progression extends InfoDisplay {
     constructor(canvas) {
         super(canvas);
         this.canvas = canvas;
-        this.writeTextToCanvas('progress: ', 850, 20);
-        this.xStart = 900;
-        this.xEnd = Progression.BEGINXCOORDINATE;
+        this.writeTextToCanvas('progress: ', this.canvas.width / 10 * 5, 20);
+        this.xStart = this.canvas.width / 10 * 7;
+        this.xEnd = this.canvas.width / 10 * 8;
         this.yStart = 15;
         this.yEnd = 15;
         this.progression = 100;
-        this.writeTextToCanvas(`${this.progression}%`, Progression.BEGINXCOORDINATE + 50, 20);
+        this.writeTextToCanvas(`${this.progression}%`, this.canvas.width / 10 * 9, 20);
     }
     pBar(ctx) {
         ctx.strokeStyle = '#800080';
@@ -27,7 +27,7 @@ export default class Progression extends InfoDisplay {
         ctx.stroke();
     }
     setXEnd() {
-        this.xEnd = Progression.BEGINXCOORDINATE + this.progression;
+        this.xEnd = this.canvas.width / 10 * 8 + this.progression;
     }
     getProgression() {
         return this.progression;

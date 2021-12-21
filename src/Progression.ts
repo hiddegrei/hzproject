@@ -23,13 +23,13 @@ export default class Progression extends InfoDisplay {
   public constructor(canvas: HTMLCanvasElement) {
     super(canvas);
     this.canvas = canvas;
-    this.writeTextToCanvas('progress: ', 850, 20);
-    this.xStart = 900;
-    this.xEnd = Progression.BEGINXCOORDINATE;
+    this.writeTextToCanvas('progress: ', this.canvas.width / 10 * 5, 20);
+    this.xStart = this.canvas.width / 10 * 7;
+    this.xEnd = this.canvas.width / 10 * 8;
     this.yStart = 15;
     this.yEnd = 15;
     this.progression = 100;
-    this.writeTextToCanvas(`${this.progression}%`, Progression.BEGINXCOORDINATE + 50, 20);
+    this.writeTextToCanvas(`${this.progression}%`, this.canvas.width / 10 * 9, 20);
   }
 
   /**
@@ -50,7 +50,7 @@ export default class Progression extends InfoDisplay {
    * set the progressbar
    */
   public setXEnd(): void {
-    this.xEnd = Progression.BEGINXCOORDINATE + this.progression;
+    this.xEnd = this.canvas.width / 10 * 8 + this.progression;
   }
 
   /**
