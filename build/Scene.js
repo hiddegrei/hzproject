@@ -51,6 +51,9 @@ export default class Scene {
         this.ctx.setTransform(1, 0, 0, 1, 0, 0);
         let trans = this.checkScaling();
         this.ctx.translate(trans.x, trans.y);
+        document.onmousemove = this.mouseDown.bind(this);
+        this.particle.move(this.mouse.x, this.mouse.y, this.borders);
+        this.count += 1;
         this.progression.writeTextToCanvas('progress: ', 850, 20);
         if (this.count >= 100) {
             this.writeTextToCanvas(`${this.progression.getProgression()}%`, 20, 1050 + this.progression.getProgression(), 20);
@@ -64,9 +67,6 @@ export default class Scene {
         }
         this.progression.pBar(this.ctx);
         this.score[0].writeTextToCanvas(`Score: ${this.totalScore}`, 500, 20);
-        document.onmousemove = this.mouseDown.bind(this);
-        this.particle.move(this.mouse.x, this.mouse.y, this.borders);
-        this.count += 1;
     }
     checkScaling() {
         let ret = { x: 0, y: 0 };

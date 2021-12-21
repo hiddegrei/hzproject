@@ -97,7 +97,9 @@ export default class Scene {
     let trans=this.checkScaling()
     this.ctx.translate(trans.x, trans.y)
 
-
+    document.onmousemove = this.mouseDown.bind(this);
+    this.particle.move(this.mouse.x, this.mouse.y, this.borders);
+    this.count += 1;
     
     this.progression.writeTextToCanvas('progress: ', 850, 20);
     if (this.count >= 100) {
@@ -116,10 +118,6 @@ export default class Scene {
     //      this.particle.rays[i].cast(this.border)
     //  }
     // this.ray.cast(this.border)
-
-    document.onmousemove = this.mouseDown.bind(this);
-    this.particle.move(this.mouse.x, this.mouse.y, this.borders);
-    this.count += 1;
   }
 
   public checkScaling(){
