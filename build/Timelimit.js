@@ -1,17 +1,16 @@
+import PasswordMeter from './PasswordStrengthChecker.js';
 export default class TimeLimit {
     passwordProperty;
-    timeLimitProperty;
+    passwordStrengthProperty;
     constructor(password) {
         this.passwordProperty = password;
+        this.passwordStrengthProperty = new PasswordMeter().getResult(password).score;
+    }
+    get password() {
+        return this.passwordProperty;
     }
     get timeLimit() {
-        return 10 * this.calculatePasswordStrength();
-    }
-    set timeLimit(timeLimit) {
-        this.timeLimitProperty = timeLimit;
-    }
-    calculatePasswordStrength() {
-        return this.passwordProperty.length;
+        return 5 * this.passwordStrengthProperty;
     }
 }
 //# sourceMappingURL=TimeLimit.js.map

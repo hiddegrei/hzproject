@@ -9,7 +9,7 @@ export default class Game {
     constructor(canvas) {
         this.canvas = canvas;
         this.scene = new Scene(this.canvas, this);
-        this.timeLimit = new TimeLimit('ZwakWW');
+        this.timeLimit = new TimeLimit('zwakww');
         this.gameLoop = new GameLoop(this);
     }
     start() {
