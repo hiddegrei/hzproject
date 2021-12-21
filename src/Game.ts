@@ -19,8 +19,7 @@ export default class Game {
   constructor(canvas: HTMLElement) {
     this.canvas = canvas as HTMLCanvasElement;
     this.scene = new Scene(this.canvas, this);
-    this.timeLimit = new TimeLimit('ZwakWW');
-
+    this.timeLimit = new TimeLimit('zwakww');
     this.gameLoop = new GameLoop(this);
   }
 

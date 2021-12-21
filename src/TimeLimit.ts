@@ -1,31 +1,25 @@
+import PasswordMeter from './PasswordStrengthChecker.js';
+
 export default class TimeLimit {
   private passwordProperty: string;
 
-  private timeLimitProperty: number;
+  private passwordStrengthProperty: number;
 
   /**
    * Constructs...
    *
    * @param password the password.
    */
-  constructor(password: string) {
+  public constructor(password: string) {
     this.passwordProperty = password;
+    this.passwordStrengthProperty = new PasswordMeter().getResult(password).score;
   }
 
-  public get timeLimit(): number {
-    return 10 * this.calculatePasswordStrength();
+  public get password(): string {
+    return this.passwordProperty;
   }
 
-  private set timeLimit(timeLimit: number) {
-    this.timeLimitProperty = timeLimit;
-  }
-
-  /**
-   * Method that calculates the strength of a password
-   *
-   * @returns the strength of the password
-   */
-  private calculatePasswordStrength(): number {
-    return this.passwordProperty.length;
+  public get timeLimit(): any {
+    return 5 * this.passwordStrengthProperty;
   }
 }
