@@ -1,9 +1,9 @@
-export default class Progression {
+import InfoDisplay from './InformationDisplay.js';
+
+export default class Progression extends InfoDisplay {
   private static readonly BEGINXCOORDINATE = 1000;
 
   private time: number;
-
-  private canvas: HTMLCanvasElement;
 
   private progression: number;
 
@@ -21,6 +21,7 @@ export default class Progression {
    * @param canvas canvas
    */
   public constructor(canvas: HTMLCanvasElement) {
+    super(canvas);
     this.canvas = canvas;
     this.writeTextToCanvas('progress: ', 850, 20);
     this.xStart = 900;
@@ -29,31 +30,6 @@ export default class Progression {
     this.yEnd = 15;
     this.progression = 100;
     this.writeTextToCanvas(`${this.progression}%`, Progression.BEGINXCOORDINATE + 50, 20);
-  }
-
-  /**
-   * Writes text to the canvas
-   *
-   * @param text - Text to write
-   * @param xCoordinate - Horizontal coordinate in pixels
-   * @param yCoordinate - Vertical coordinate in pixels
-   * @param fontSize - Font size in pixels
-   * @param color - The color of the text
-   * @param alignment - Where to align the text
-   */
-  public writeTextToCanvas(
-    text: string,
-    xCoordinate: number,
-    yCoordinate: number,
-    fontSize: number = 20,
-    color: string = 'red',
-    alignment: CanvasTextAlign = 'center',
-  ): void {
-    const ctx = this.canvas.getContext('2d');
-    ctx.font = `${fontSize}px sans-serif`;
-    ctx.fillStyle = color;
-    ctx.textAlign = alignment;
-    ctx.fillText(text, xCoordinate, yCoordinate);
   }
 
   /**

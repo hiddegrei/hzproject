@@ -1,13 +1,14 @@
-export default class Progression {
+import InfoDisplay from './InformationDisplay.js';
+export default class Progression extends InfoDisplay {
     static BEGINXCOORDINATE = 1000;
     time;
-    canvas;
     progression;
     xStart;
     xEnd;
     yStart;
     yEnd;
     constructor(canvas) {
+        super(canvas);
         this.canvas = canvas;
         this.writeTextToCanvas('progress: ', 850, 20);
         this.xStart = 900;
@@ -16,13 +17,6 @@ export default class Progression {
         this.yEnd = 15;
         this.progression = 100;
         this.writeTextToCanvas(`${this.progression}%`, Progression.BEGINXCOORDINATE + 50, 20);
-    }
-    writeTextToCanvas(text, xCoordinate, yCoordinate, fontSize = 20, color = 'red', alignment = 'center') {
-        const ctx = this.canvas.getContext('2d');
-        ctx.font = `${fontSize}px sans-serif`;
-        ctx.fillStyle = color;
-        ctx.textAlign = alignment;
-        ctx.fillText(text, xCoordinate, yCoordinate);
     }
     pBar(ctx) {
         ctx.strokeStyle = '#800080';

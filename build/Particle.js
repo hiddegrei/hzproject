@@ -16,7 +16,7 @@ export default class Particle {
         this.speed = 3;
         this.dir = { x: 0, y: 0 };
         this.mouse = { x: 0, y: 0 };
-        this.angleView = 15;
+        this.angleView = 18;
     }
     getAngleDeg(ax, ay, bx, by) {
         var angleRad = Math.atan((ay - by) / (ax - bx));
@@ -26,14 +26,16 @@ export default class Particle {
     move(mx, my, borders) {
         let walk = true;
         if (this.rays.length > 0) {
-            for (let i = 0; i < borders.length; i++) {
-                let pt = this.rays[15].cast(borders[i]);
-                if (pt) {
-                    let a = pt.x - this.pos.x;
-                    let b = pt.y - this.pos.y;
-                    let d = Math.sqrt(a * a + b * b);
-                    if (d < 5) {
-                        walk = false;
+            for (let j = 0; j < this.rays.length; j++) {
+                for (let i = 0; i < borders.length; i++) {
+                    let pt = this.rays[j].cast(borders[i]);
+                    if (pt) {
+                        let a = pt.x - this.pos.x;
+                        let b = pt.y - this.pos.y;
+                        let d = Math.sqrt(a * a + b * b);
+                        if (d < this.radius + 5) {
+                            walk = false;
+                        }
                     }
                 }
             }
@@ -48,12 +50,11 @@ export default class Particle {
             degrees -= 360;
         while (degrees < 0)
             degrees += 360;
-        this.angleView = degrees;
         this.rays = [];
-        for (let i = degrees - 15; i < degrees; i++) {
+        for (let i = degrees - this.angleView; i < degrees; i++) {
             this.rays.push(new Ray(this.pos, i, this.ctx));
         }
-        for (let i = degrees; i < degrees + 15; i++) {
+        for (let i = degrees; i < degrees + this.angleView; i++) {
             this.rays.push(new Ray(this.pos, i, this.ctx));
         }
         this.dir.x = (this.dir.x / d) * this.speed;
@@ -65,13 +66,12 @@ export default class Particle {
     }
     show() {
         this.ctx.lineWidth = 1;
-        this.ctx.strokeStyle = '#000000';
+        this.ctx.fillStyle = "rgb(255,255,255)";
         this.ctx.beginPath();
         this.ctx.arc(this.pos.x, this.pos.y, this.radius, 0, 2 * Math.PI);
         this.ctx.stroke();
-        for (let i = 0; i < this.rays.length; i++) {
-            this.rays[i].show();
-        }
+        this.ctx.closePath();
+        this.ctx.fill();
     }
     look(borders) {
         for (let ray of this.rays) {
@@ -98,9 +98,10 @@ export default class Particle {
             }
         }
     }
-    writeTextToCanvas(text, xCoordinate, yCoordinate, fontSize = 20, color = 'red', alignment = 'center') {
+    writeTextToCanvas(text, fontSize = 20, xCoordinate, yCoordinate, alignment = 'center', color = 'white') {
         this.ctx.font = `${fontSize}px sans-serif`;
         this.ctx.fillStyle = color;
+        this.ctx.textAlign = alignment;
         this.ctx.fillText(text, xCoordinate, yCoordinate);
     }
 }

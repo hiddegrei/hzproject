@@ -4,6 +4,7 @@ import Ray from './Ray.js';
 import Particle from './Particle.js';
 import Level1map from './Level1map.js';
 import Progression from './Progression.js';
+import Score from './Score.js';
 
 export default class Scene {
   public canvas: HTMLCanvasElement;
@@ -22,7 +23,9 @@ export default class Scene {
 
   static SPACE = 300;
 
-  public score: number;
+  private score: Score[];
+
+  private totalScore: number;
 
   public widthHall: number;
 
@@ -38,11 +41,16 @@ export default class Scene {
     this.canvas = canvas;
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
+
     this.game = game;
     this.ctx = this.canvas.getContext('2d');
     this.progression = new Progression(this.canvas);
+    console.log("window widht:",this.canvas.width)
+    console.log("window height:",this.canvas.height)
 
-    this.score = 0;
+    this.score = [];
+    this.score.push(new Score(0, this.canvas));
+    this.totalScore = 0;
     this.borders = [];
     this.level = new Level1map(this.canvas, this.ctx);
 
@@ -85,12 +93,16 @@ export default class Scene {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.progression.writeTextToCanvas('progress: ', 850, 20);
     if (this.count >= 100) {
-      this.writeTextToCanvas(`${this.progression.getProgression()}%`, 1050 + this.progression.getProgression(), 20);
+      this.writeTextToCanvas(`${this.progression.getProgression()}%`, 20, 1050 + this.progression.getProgression(), 20);
       this.progression.setXEnd();
+      if (this.count === 100) {
+        this.score.forEach((element) => { this.totalScore += element.getScore(); });
+      }
     } else {
-      this.writeTextToCanvas(`${this.progression.getProgression()}%`, 1050, 20);
+      this.writeTextToCanvas(`${this.progression.getProgression()}%`, 20, 1050, 20);
     }
     this.progression.pBar(this.ctx);
+    this.score[0].writeTextToCanvas(`Score: ${this.totalScore}`, 500, 20);
 
     //  for(let i=0;i<this.particle.rays.length;i++){
     //      this.particle.rays[i].cast(this.border)
@@ -113,6 +125,8 @@ export default class Scene {
       this.borders[i].show();
     }
     this.particle.look(this.borders);
+
+    this.writeTextToCanvas('Central hub', 20, this.canvas.width / 2, 400);
   }
 
   /**
@@ -123,12 +137,18 @@ export default class Scene {
    * @param color
    * @param alignment
    */
-  public writeTextToCanvas(text: string, xCoordinate: number, yCoordinate: number, fontSize = 20, color = 'red', alignment = 'center') {
-    const ctx = this.canvas.getContext('2d');
-    ctx.font = `${fontSize}px sans-serif`;
-    ctx.fillStyle = color;
-    // ctx.textAlign = alignment;
-    ctx.fillText(text, xCoordinate, yCoordinate);
+  public writeTextToCanvas(
+    text: string,
+    fontSize: number = 20,
+    xCoordinate: number,
+    yCoordinate: number,
+    alignment: CanvasTextAlign = 'center',
+    color: string = 'red',
+  ): void {
+    this.ctx.font = `${fontSize}px sans-serif`;
+    this.ctx.fillStyle = color;
+    this.ctx.textAlign = alignment;
+    this.ctx.fillText(text, xCoordinate, yCoordinate);
   }
 }
 // # sourceMappingURL=Scene.js.map

@@ -26,10 +26,10 @@ export default class Particle {
         this.speed = 3
         this.dir = { x: 0, y: 0 }
         this.mouse = { x: 0, y: 0 }
-        this.angleView = 15
+        this.angleView = 18
 
-        //  for(let i=0;i<360;i+=10){
-        //      this.rays.push( new Ray(this.pos,(i/360)*2*Math.PI,this.ctx))
+        //  for(let i=0;i<360;i+=1){
+        //      this.rays.push( new Ray(this.pos,i,this.ctx))
         //  }
 
 
@@ -47,18 +47,20 @@ export default class Particle {
         let walk = true
 
         if (this.rays.length > 0) {
+            for (let j = 0; j < this.rays.length; j++) {
             for (let i = 0; i < borders.length; i++) {
-                let pt = this.rays[15].cast(borders[i])
+                let pt = this.rays[j].cast(borders[i])
                 if (pt) {
                     let a = pt.x - this.pos.x
                     let b = pt.y - this.pos.y
                     let d = Math.sqrt(a * a + b * b)
-                    if (d < 5) {
+                    if (d < this.radius+5) {
                         walk = false
 
                     }
                 }
             }
+        }
         }
 
 
@@ -76,17 +78,17 @@ export default class Particle {
         while (degrees >= 360) degrees -= 360;
         while (degrees < 0) degrees += 360;
 
-        this.angleView = degrees
+       // this.angleView = degrees
 
 
 
         this.rays = []
 
-        for (let i = degrees - 15; i < degrees; i++) {
+        for (let i = degrees - this.angleView; i < degrees; i++) {
             this.rays.push(new Ray(this.pos, i, this.ctx))
 
         }
-        for (let i = degrees; i < degrees + 15; i++) {
+        for (let i = degrees; i < degrees + this.angleView; i++) {
             this.rays.push(new Ray(this.pos, i, this.ctx))
 
         }
@@ -122,10 +124,12 @@ export default class Particle {
     }
     show() {
         this.ctx.lineWidth = 1;
-        this.ctx.strokeStyle = '#000000';
+        this.ctx.fillStyle = "rgb(255,255,255)";
         this.ctx.beginPath();
         this.ctx.arc(this.pos.x, this.pos.y, this.radius, 0, 2 * Math.PI);
         this.ctx.stroke();
+        this.ctx.closePath()
+        this.ctx.fill()
 
         //this.writeTextToCanvas(`${this.angle}`,this.pos.x,this.pos.y+20)
 
@@ -135,9 +139,9 @@ export default class Particle {
         //     this.ctx.lineTo(this.pos.x+(this.dir.x)*this.speed, this.pos.y+(this.dir.y)*this.speed);
         //     this.ctx.stroke();
 
-        for (let i = 0; i < this.rays.length; i++) {
-            this.rays[i].show()
-        }
+        // for (let i = 0; i < this.rays.length; i++) {
+        //     this.rays[i].show()
+        // }
         // const a=this.pos.x-this.pos.x+this.dir.x
         // const b=this.pos.y-this.pos.y+this.dir.y
         // const radians=Math.atan2(a,b)
@@ -201,11 +205,17 @@ export default class Particle {
         }
 
     }
-    writeTextToCanvas(text: string, xCoordinate: number, yCoordinate: number, fontSize = 20, color = 'red', alignment = 'center') {
-
+    public writeTextToCanvas(
+        text: string,
+        fontSize: number = 20,
+        xCoordinate: number,
+        yCoordinate: number,
+        alignment: CanvasTextAlign = 'center',
+        color: string = 'white',
+      ): void {
         this.ctx.font = `${fontSize}px sans-serif`;
         this.ctx.fillStyle = color;
-        //this.ctx.textAlign = alignment;
+        this.ctx.textAlign = alignment;
         this.ctx.fillText(text, xCoordinate, yCoordinate);
-    }
+      }
 }
