@@ -16,7 +16,7 @@ export default class Game {
 
   private endGame:EndGame;
 
-  public isEnd:boolean
+  public isEnd:boolean;
 
   /**
    * @param canvas
@@ -26,7 +26,7 @@ export default class Game {
     this.scene = new Scene(this.canvas, this);
     this.timeLimit = new TimeLimit('zwakww');
     this.gameLoop = new GameLoop(this);
-    this.endGame=new EndGame(this.canvas)
+    this.endGame = new EndGame(this.canvas);
   }
 
   /**
@@ -49,13 +49,12 @@ export default class Game {
    * @param elapsed
    */
   public update(elapsed: number) {
-    // if(this.isEnd){
-    //   this.endGame.update()
-    // }else{
-    //   this.scene.update();
-    // }
-    this.scene.update()
-    
+    if (this.isEnd) {
+      this.endGame.update();
+    } else {
+      this.scene.update();
+    }
+    // this.scene.update()
 
     return false;
   }
@@ -64,13 +63,12 @@ export default class Game {
    *
    */
   public render() {
-    // if(this.isEnd){
-    //   this.endGame.render()
-    // }else{
-    //   this.scene.render();
-    // }
-    this.scene.render();
-    
+    if (this.isEnd) {
+      this.endGame.render();
+    } else {
+      this.scene.render();
+    }
+    // this.scene.render();
   }
 
   /**
