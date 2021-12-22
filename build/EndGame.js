@@ -1,17 +1,24 @@
 import Game from './Game.js';
 import InfoDisplay from './InformationDisplay.js';
+import KeyboardListener from './KeyboardListener.js';
 export default class EndGame extends InfoDisplay {
     scene;
     game;
     image;
     img;
     ctx;
-    constructor(canvas) {
+    keyboard;
+    constructor(canvas, game) {
         super(canvas);
         this.ctx = this.canvas.getContext('2d');
+        this.keyboard = new KeyboardListener();
+        this.game = game;
     }
     update() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        if (this.keyboard.isKeyDown(32)) {
+            this.game.isEnd = false;
+        }
     }
     render() {
         this.drawImageScaled(this.ctx, './assets/img/background/product_image_bank-heist-4d_175f1d92e0631561ada7c2b1e91a2bde84ef47c112abba5b443d0f36fab4a134_opti.png', 1, 1, 0, 0);

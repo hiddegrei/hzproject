@@ -29,7 +29,7 @@ export default class Game {
     this.canvas = canvas as HTMLCanvasElement;
     this.scene = new Scene(this.canvas, this);
     this.gameLoop = new GameLoop(this);
-    this.endGame=new EndGame(this.canvas)
+    this.endGame=new EndGame(this.canvas,this)
     this.username = new URLSearchParams(document.location.search).get('username');
     this.password = new URLSearchParams(document.location.search).get('password');
     this.timeLimit = new TimeLimit(this.password);

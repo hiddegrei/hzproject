@@ -1,5 +1,6 @@
 import Game from './Game.js';
 import InfoDisplay from './InformationDisplay.js';
+import KeyboardListener from './KeyboardListener.js';
 import Scene from './Scene.js';
 
 export default class EndGame extends InfoDisplay {
@@ -13,14 +14,18 @@ export default class EndGame extends InfoDisplay {
 
   private ctx: CanvasRenderingContext2D;
 
+  private keyboard:KeyboardListener;
+
   /**
    * constructor
    *
    * @param canvas canvas
    */
-  public constructor(canvas: HTMLCanvasElement) {
+  public constructor(canvas: HTMLCanvasElement,game:Game) {
     super(canvas);
     this.ctx = this.canvas.getContext('2d');
+    this.keyboard=new KeyboardListener()
+    this.game=game
     // ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
   }
 
@@ -29,6 +34,11 @@ export default class EndGame extends InfoDisplay {
    */
   public update(): void {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    //spacebar to go back to game
+   if(this.keyboard.isKeyDown(32)){
+     this.game.isEnd=false
+   }
+    
   }
 
   /**
