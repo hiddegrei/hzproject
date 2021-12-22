@@ -80,9 +80,12 @@ export default class Scene {
         }
         this.progression.pBar(this.ctx);
         this.score[0].writeTextToCanvas(`Score: ${this.totalScore}`, this.canvas.width / 2, 20);
-        if (this.count === 500) {
+        if (this.count >= 100) {
             this.game.isEnd = true;
         }
+        document.onmousemove = this.mouseDown.bind(this);
+        this.particle.move(this.mouse.x, this.mouse.y, this.borders);
+        this.count += 1;
     }
     checkScaling() {
         let ret = { x: 0, y: 0 };

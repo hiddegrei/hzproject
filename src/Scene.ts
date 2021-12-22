@@ -35,14 +35,16 @@ export default class Scene {
   private progression: Progression;
 
   private count: number;
+
   private endGame: EndGame;
 
   private condition: number;
 
   public currentTrans: Vector;
 
-  public matrix: Array<number> = []
-  public invMatrix: Array<number> = []
+  public matrix: Array<number> = [];
+
+  public invMatrix: Array<number> = [];
 
   /**
    * @param canvas
@@ -118,9 +120,9 @@ export default class Scene {
     let trans = this.checkScaling()
     this.createMatrix(trans.x, trans.y, 0, 0)
 
-   // this.currentTrans = { x: trans.x, y: trans.y }
+    // this.currentTrans = { x: trans.x, y: trans.y }
     this.ctx.translate(trans.x, trans.y)
-    //this.ctx.translate(100,100)
+    // this.ctx.translate(100,100)
     this.progression.writeTextToCanvas('progress: ', this.canvas.width / 10 * 6.5, 20);
 
     document.onmousemove = this.mouseDown.bind(this);
@@ -128,6 +130,7 @@ export default class Scene {
     this.count += 1;
 
     this.progression.writeTextToCanvas('progress: ', 850, 20);
+    // this.progression.writeTextToCanvas('progress: ', 850, 20);
     //this.progression.writeTextToCanvas('progress: ', 850, 20);
     if (this.count >= 100) {
       this.writeTextToCanvas(`${this.progression.getProgression()}%`, 20, this.canvas.width / 10 * 9, 20);
@@ -141,15 +144,18 @@ export default class Scene {
     this.progression.pBar(this.ctx);
     this.score[0].writeTextToCanvas(`Score: ${this.totalScore}`, this.canvas.width / 2, 20);
 
-    if (this.count === 500) {
+    if (this.count >= 100) {
       // this.endGame = new EndGame(this.canvas);
-      this.game.isEnd=true
+      this.game.isEnd = true;
     }
 
     //  for(let i=0;i<this.particle.rays.length;i++){
     //      this.particle.rays[i].cast(this.border)
     //  }
     // this.ray.cast(this.border)
+    document.onmousemove = this.mouseDown.bind(this);
+    this.particle.move(this.mouse.x, this.mouse.y, this.borders);
+    this.count += 1;
     
    
   }

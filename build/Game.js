@@ -6,15 +6,19 @@ export default class Game {
     canvas;
     gameLoop;
     scene;
-    timeLimit;
     endGame;
     isEnd;
+    username;
+    password;
+    timeLimit;
     constructor(canvas) {
         this.canvas = canvas;
         this.scene = new Scene(this.canvas, this);
-        this.timeLimit = new TimeLimit('zwakww');
         this.gameLoop = new GameLoop(this);
         this.endGame = new EndGame(this.canvas);
+        this.username = new URLSearchParams(document.location.search).get('username');
+        this.password = new URLSearchParams(document.location.search).get('password');
+        this.timeLimit = new TimeLimit(this.password);
     }
     start() {
         console.log('starting');
