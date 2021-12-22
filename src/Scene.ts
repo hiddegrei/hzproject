@@ -208,4 +208,8 @@ export default class Scene {
     this.ctx.fillText(text, xCoordinate, yCoordinate);
   }
 }
+<<<<<<< HEAD
 // # sourceMappingURL=Scene.js.map
+=======
+// # sourceMappingURL=Scene.js.map
+>>>>>>> 34e2b9eb99676272c416cf0c8f5a3c0bebb8994d
