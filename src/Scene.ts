@@ -5,6 +5,10 @@ import Particle from './Particle.js';
 import Level1map from './Level1map.js';
 import Progression from './Progression.js';
 import Score from './Score.js';
+<<<<<<< HEAD
+=======
+import EndGame from './EndGame.js';
+>>>>>>> 20265188231541f724eef15b9c18a900d1dc3e81
 import Vector from './Vector.js';
 
 export default class Scene {
@@ -33,6 +37,12 @@ export default class Scene {
   private progression: Progression;
 
   private count: number;
+<<<<<<< HEAD
+=======
+  private endGame: EndGame;
+
+  private condition: number;
+>>>>>>> 20265188231541f724eef15b9c18a900d1dc3e81
 
   public currentTrans: Vector;
 
@@ -108,20 +118,28 @@ export default class Scene {
    */
   update(): void {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+<<<<<<< HEAD
     this.progression.writeTextToCanvas('progress: ', this.canvas.width / 10 * 6.5, 20);
+=======
+>>>>>>> 20265188231541f724eef15b9c18a900d1dc3e81
     this.ctx.setTransform(1, 0, 0, 1, 0, 0);
     let trans = this.checkScaling()
     this.createMatrix(trans.x, trans.y, 0, 0)
 
-    this.currentTrans = { x: trans.x, y: trans.y }
+   // this.currentTrans = { x: trans.x, y: trans.y }
     this.ctx.translate(trans.x, trans.y)
     //this.ctx.translate(100,100)
+    this.progression.writeTextToCanvas('progress: ', this.canvas.width / 10 * 6.5, 20);
 
     document.onmousemove = this.mouseDown.bind(this);
     this.particle.move(this.mouse.x, this.mouse.y, this.borders);
     this.count += 1;
 
+<<<<<<< HEAD
     this.progression.writeTextToCanvas('progress: ', 850, 20);
+=======
+    //this.progression.writeTextToCanvas('progress: ', 850, 20);
+>>>>>>> 20265188231541f724eef15b9c18a900d1dc3e81
     if (this.count >= 100) {
       this.writeTextToCanvas(`${this.progression.getProgression()}%`, 20, this.canvas.width / 10 * 9, 20);
       this.progression.setXEnd();
@@ -138,9 +156,13 @@ export default class Scene {
     //      this.particle.rays[i].cast(this.border)
     //  }
     // this.ray.cast(this.border)
+<<<<<<< HEAD
     document.onmousemove = this.mouseDown.bind(this);
     this.particle.move(this.mouse.x, this.mouse.y, this.borders);
     this.count += 1;
+=======
+   
+>>>>>>> 20265188231541f724eef15b9c18a900d1dc3e81
   }
 
   public checkScaling() {
