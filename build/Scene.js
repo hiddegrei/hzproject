@@ -80,7 +80,7 @@ export default class Scene {
         }
         this.progression.pBar(this.ctx);
         this.score[0].writeTextToCanvas(`Score: ${this.totalScore}`, this.canvas.width / 2, 20);
-        if (this.count === 500) {
+        if (this.count >= 100) {
             this.game.isEnd = true;
         }
         document.onmousemove = this.mouseDown.bind(this);
