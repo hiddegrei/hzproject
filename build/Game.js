@@ -6,15 +6,19 @@ export default class Game {
     canvas;
     gameLoop;
     scene;
-    timeLimit;
     endGame;
     isEnd;
+    username;
+    password;
+    timeLimit;
     constructor(canvas) {
         this.canvas = canvas;
         this.scene = new Scene(this.canvas, this);
-        this.timeLimit = new TimeLimit('zwakww');
         this.gameLoop = new GameLoop(this);
         this.endGame = new EndGame(this.canvas);
+        this.username = new URLSearchParams(document.location.search).get('username');
+        this.password = new URLSearchParams(document.location.search).get('password');
+        this.timeLimit = new TimeLimit(this.password);
     }
     start() {
         console.log('starting');
@@ -25,21 +29,11 @@ export default class Game {
         this.scene.processInput();
     }
     update(elapsed) {
-        if (this.isEnd) {
-            this.endGame.update();
-        }
-        else {
-            this.scene.update();
-        }
+        this.scene.update();
         return false;
     }
     render() {
-        if (this.isEnd) {
-            this.endGame.render();
-        }
-        else {
-            this.scene.render();
-        }
+        this.scene.render();
     }
     static loadNewImage(source) {
         const img = new Image();
