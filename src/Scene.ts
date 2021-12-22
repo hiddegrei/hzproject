@@ -141,7 +141,8 @@ export default class Scene {
     this.score[0].writeTextToCanvas(`Score: ${this.totalScore}`, this.canvas.width / 2, 20);
 
     if (this.count === 500) {
-      this.endGame = new EndGame(this.canvas);
+      // this.endGame = new EndGame(this.canvas);
+      this.game.isEnd=true
     }
 
     //  for(let i=0;i<this.particle.rays.length;i++){

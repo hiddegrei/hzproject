@@ -9,6 +9,11 @@ export default class EndGame extends InfoDisplay {
         const ctx = this.canvas.getContext('2d');
         this.draw(ctx);
     }
+    update() {
+    }
+    render() {
+        this.writeTextToCanvas("hello", 200, 200);
+    }
     draw(ctx) {
         this.image = Game.loadNewImage('./assets/img/objects/4541104.png');
         ctx.drawImage(this.image, this.canvas.width / 2, this.canvas.height / 2);

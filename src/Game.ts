@@ -1,3 +1,4 @@
+import EndGame from './EndGame.js';
 import GameLoop from './GameLoop.js';
 
 import Scene from './Scene.js';
@@ -13,6 +14,10 @@ export default class Game {
 
   private timeLimit: TimeLimit;
 
+  private endGame:EndGame;
+
+  public isEnd:boolean
+
   /**
    * @param canvas
    */
@@ -21,6 +26,7 @@ export default class Game {
     this.scene = new Scene(this.canvas, this);
     this.timeLimit = new TimeLimit('zwakww');
     this.gameLoop = new GameLoop(this);
+    this.endGame=new EndGame(this.canvas)
   }
 
   /**
@@ -43,7 +49,12 @@ export default class Game {
    * @param elapsed
    */
   public update(elapsed: number) {
-    this.scene.update();
+    if(this.isEnd){
+      this.endGame.update()
+    }else{
+      this.scene.update();
+    }
+    
 
     return false;
   }
@@ -52,7 +63,12 @@ export default class Game {
    *
    */
   public render() {
-    this.scene.render();
+    if(this.isEnd){
+      this.endGame.render()
+    }else{
+      this.scene.render();
+    }
+    
   }
 
   /**

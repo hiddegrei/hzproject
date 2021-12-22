@@ -3,7 +3,6 @@ import Particle from './Particle.js';
 import Level1map from './Level1map.js';
 import Progression from './Progression.js';
 import Score from './Score.js';
-import EndGame from './EndGame.js';
 import Vector from './Vector.js';
 export default class Scene {
     canvas;
@@ -82,7 +81,7 @@ export default class Scene {
         this.progression.pBar(this.ctx);
         this.score[0].writeTextToCanvas(`Score: ${this.totalScore}`, this.canvas.width / 2, 20);
         if (this.count === 500) {
-            this.endGame = new EndGame(this.canvas);
+            this.game.isEnd = true;
         }
     }
     checkScaling() {

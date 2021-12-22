@@ -21,6 +21,16 @@ export default class EndGame extends InfoDisplay {
     // ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
   }
 
+  public update(){
+
+  }
+
+  
+
+  public render(){
+    this.writeTextToCanvas("hello",200,200)
+  }
+
   private draw(ctx:CanvasRenderingContext2D): void {
     this.image = Game.loadNewImage('./assets/img/objects/4541104.png');
     ctx.drawImage(this.image, this.canvas.width / 2, this.canvas.height / 2);
