@@ -82,7 +82,7 @@ export default class Scene {
     }
     // this.border= new Border(300,50,300,200,this.ctx)
     // this.ray=new Ray(50,150, this.ctx)
-    this.particle = new Particle(100, 100, this.ctx);
+    this.particle = new Particle(100, 100+0.5*this.level.widthHall, this.ctx);
     this.mouse = { x: 0, y: 0 };
 
     // window.addEventListener("mousemove",this.mouseDown.bind(this), false)
@@ -265,4 +265,8 @@ export default class Scene {
     this.ctx.fillText(text, xCoordinate, yCoordinate);
   }
 }
+<<<<<<< HEAD
 // # sourceMappingURL=Scene.js.map
+=======
+// # sourceMappingURL=Scene.js.map
+>>>>>>> 34e2b9eb99676272c416cf0c8f5a3c0bebb8994d
