@@ -26,7 +26,7 @@ export default class EndGame extends InfoDisplay {
     this.ctx = this.canvas.getContext('2d');
     this.keyboard=new KeyboardListener()
     this.game=game;
-    this.ctx.setTransform(1, 0, 0, 1, 0, 0);
+    
     // ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
   }
 
@@ -35,6 +35,7 @@ export default class EndGame extends InfoDisplay {
    */
   public update(): void {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    this.ctx.setTransform(1, 0, 0, 1, 0, 0);
     //spacebar to go back to game
    if(this.keyboard.isKeyDown(32)){
      this.game.isEnd=false
