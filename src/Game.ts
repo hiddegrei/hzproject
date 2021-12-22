@@ -49,11 +49,12 @@ export default class Game {
    * @param elapsed
    */
   public update(elapsed: number) {
-    if(this.isEnd){
-      this.endGame.update()
-    }else{
-      this.scene.update();
-    }
+    // if(this.isEnd){
+    //   this.endGame.update()
+    // }else{
+    //   this.scene.update();
+    // }
+    this.scene.update()
     
 
     return false;
@@ -63,11 +64,12 @@ export default class Game {
    *
    */
   public render() {
-    if(this.isEnd){
-      this.endGame.render()
-    }else{
-      this.scene.render();
-    }
+    // if(this.isEnd){
+    //   this.endGame.render()
+    // }else{
+    //   this.scene.render();
+    // }
+    this.scene.render();
     
   }
 
