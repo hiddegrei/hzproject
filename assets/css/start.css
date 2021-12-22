@@ -9,7 +9,6 @@ body {
 input {
     border-color: white;
     margin: 10px;
-    color:white;
 }
 
 button {
@@ -20,4 +19,14 @@ button {
 
 h1 {
     font-size: 6em;
+}
+
+#start{
+    background-color: rgb(255, 255, 255, 0.7);
+    width: 60%;
+    position: absolute;
+    left: 20%;
+    right: 20%;
+    border-radius: 20px;
+    border: 10px ridge turquoise;
 }
