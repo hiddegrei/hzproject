@@ -24,8 +24,6 @@ export default class Scene {
     matrix = [];
     invMatrix = [];
     constructor(canvas, game) {
-        this.condition = 1;
-        console.log(this.condition);
         this.canvas = canvas;
         this.canvas.width = 1920;
         this.canvas.height = 969;
@@ -60,6 +58,7 @@ export default class Scene {
     }
     update() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.progression.writeTextToCanvas('progress: ', this.canvas.width / 10 * 6.5, 20);
         this.ctx.setTransform(1, 0, 0, 1, 0, 0);
         let trans = this.checkScaling();
         this.createMatrix(trans.x, trans.y, 0, 0);
@@ -68,6 +67,7 @@ export default class Scene {
         document.onmousemove = this.mouseDown.bind(this);
         this.particle.move(this.mouse.x, this.mouse.y, this.borders);
         this.count += 1;
+        this.progression.writeTextToCanvas('progress: ', 850, 20);
         if (this.count >= 100) {
             this.writeTextToCanvas(`${this.progression.getProgression()}%`, 20, this.canvas.width / 10 * 9, 20);
             this.progression.setXEnd();

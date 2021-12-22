@@ -8,6 +8,7 @@ import Score from './Score.js';
 import EndGame from './EndGame.js';
 import Vector from './Vector.js';
 
+
 export default class Scene {
   public canvas: HTMLCanvasElement;
 
@@ -48,8 +49,6 @@ export default class Scene {
    * @param game
    */
   constructor(canvas: HTMLCanvasElement, game: Game) {
-    this.condition = 1;
-    console.log(this.condition);
     this.canvas = canvas;
     this.canvas.width = 1920;
     this.canvas.height = 969;
@@ -114,6 +113,7 @@ export default class Scene {
    */
   update(): void {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    this.progression.writeTextToCanvas('progress: ', this.canvas.width / 10 * 6.5, 20);
     this.ctx.setTransform(1, 0, 0, 1, 0, 0);
     let trans = this.checkScaling()
     this.createMatrix(trans.x, trans.y, 0, 0)
@@ -127,6 +127,7 @@ export default class Scene {
     this.particle.move(this.mouse.x, this.mouse.y, this.borders);
     this.count += 1;
 
+    this.progression.writeTextToCanvas('progress: ', 850, 20);
     //this.progression.writeTextToCanvas('progress: ', 850, 20);
     if (this.count >= 100) {
       this.writeTextToCanvas(`${this.progression.getProgression()}%`, 20, this.canvas.width / 10 * 9, 20);
@@ -149,6 +150,7 @@ export default class Scene {
     //      this.particle.rays[i].cast(this.border)
     //  }
     // this.ray.cast(this.border)
+    
    
   }
 

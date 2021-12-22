@@ -12,7 +12,5 @@ export default class HighScore extends EndGame {
     super(canvas);
   }
 
-  public test(){
-    
-  }
+  
 }
