@@ -47,7 +47,7 @@ export default class Scene {
             const y2 = this.level.level1[i][3];
             this.borders.push(new Border(x, y, x2, y2, this.ctx));
         }
-        this.particle = new Particle(100, 100, this.ctx);
+        this.particle = new Particle(100, 100 + 0.5 * this.level.widthHall, this.ctx);
         this.mouse = { x: 0, y: 0 };
         this.count = 0;
     }
