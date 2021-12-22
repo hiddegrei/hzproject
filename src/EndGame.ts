@@ -35,9 +35,10 @@ export default class EndGame extends InfoDisplay {
    * Render the endscreen
    */
   public render(): void {
-    this.drawImageScaled(this.ctx, './assets/img/background/product_image_bank-heist-4d_175f1d92e0631561ada7c2b1e91a2bde84ef47c112abba5b443d0f36fab4a134_opti.png');
+    this.drawImageScaled(this.ctx, './assets/img/background/product_image_bank-heist-4d_175f1d92e0631561ada7c2b1e91a2bde84ef47c112abba5b443d0f36fab4a134_opti.png', 1, 1, 0, 0);
     this.draw(this.ctx, './assets/img/objects/4541104.png', this.canvas.width / 25, this.canvas.height / 4.8);
-    this.writeTextToCanvas('Kraak de kluis', this.canvas.width / 5, this.canvas.height / 10, 100, 'black');
+    this.drawImageScaled(this.ctx, './assets/img/background/the-button-859351_960_720.png', 0.34, 0.3, this.canvas.width / 30, -80);
+    this.writeTextToCanvas('Kraak de kluis', this.canvas.width / 6, this.canvas.height / 15, 70, 'black');
     this.writeTextToCanvas('HighScore List', this.canvas.width / 6, this.canvas.height / 2.9, 25, 'black');
     this.writeTextToCanvas('1#   BugSlayer - 300 points', this.canvas.width / 6, this.canvas.height / 2.6);
   }
@@ -47,24 +48,23 @@ export default class EndGame extends InfoDisplay {
     ctx.drawImage(this.image, xPos, yPos);
   }
 
-  private drawImageScaled(ctx: CanvasRenderingContext2D, img: string) {
+  private drawImageScaled(ctx: CanvasRenderingContext2D,
+    img: string,
+    imgWidth: number,
+    imgHeight: number,
+    xPos: number,
+    yPos: number) {
     this.img = Game.loadNewImage(img);
-    const canvass = ctx.canvas;
-    const hRatio = canvass.width / this.img.width;
-    const vRatio = canvass.height / this.img.height;
-    const ratio = Math.min(hRatio, vRatio);
-    // const centerShiftX = (canvass.width - this.img.width * ratio) / 2;
-    // const centerShiftY = (canvass.height - this.img.height * ratio) / 2;
     ctx.drawImage(
       this.img,
       0,
       0,
-      this.img.width,
-      this.img.height,
-      0,
-      0,
-      this.img.width * ratio,
-      this.img.height * ratio,
+      this.img.width / imgWidth,
+      this.img.height / imgHeight,
+      xPos,
+      yPos,
+      window.innerWidth,
+      window.innerHeight,
     );
   }
 }
