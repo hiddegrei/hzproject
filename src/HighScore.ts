@@ -11,4 +11,6 @@ export default class HighScore extends EndGame {
   public constructor(canvas: HTMLCanvasElement) {
     super(canvas);
   }
+
+  
 }
