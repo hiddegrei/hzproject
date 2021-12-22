@@ -29,11 +29,21 @@ export default class Game {
         this.scene.processInput();
     }
     update(elapsed) {
-        this.scene.update();
+        if (this.isEnd) {
+            this.endGame.update();
+        }
+        else {
+            this.scene.update();
+        }
         return false;
     }
     render() {
-        this.scene.render();
+        if (this.isEnd) {
+            this.endGame.render();
+        }
+        else {
+            this.scene.render();
+        }
     }
     static loadNewImage(source) {
         const img = new Image();

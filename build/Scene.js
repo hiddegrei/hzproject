@@ -4,6 +4,8 @@ import Level1map from './Level1map.js';
 import Progression from './Progression.js';
 import Score from './Score.js';
 import Vector from './Vector.js';
+import KeyboardListener from './KeyboardListener.js';
+import Camera from './Camera.js';
 export default class Scene {
     canvas;
     ctx;
@@ -21,15 +23,15 @@ export default class Scene {
     endGame;
     condition;
     currentTrans;
-    matrix = [];
-    invMatrix = [];
+    keyboard;
+    camera;
     constructor(canvas, game) {
         this.canvas = canvas;
         this.canvas.width = 1920;
         this.canvas.height = 969;
+        this.camera = new Camera();
         this.currentTrans = new Vector(0, 0);
-        this.matrix = [1, 0, 0, 1, 0, 0];
-        this.invMatrix = [1, 0, 0, 1];
+        this.keyboard = new KeyboardListener();
         this.game = game;
         this.ctx = this.canvas.getContext('2d');
         this.progression = new Progression(this.canvas);
@@ -54,14 +56,14 @@ export default class Scene {
     processInput() {
     }
     mouseDown(e) {
-        this.mouse = this.toWorld(e.clientX, e.clientY);
+        this.mouse = this.camera.toWorld(e.clientX, e.clientY);
     }
     update() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.progression.writeTextToCanvas('progress: ', this.canvas.width / 10 * 6.5, 20);
         this.ctx.setTransform(1, 0, 0, 1, 0, 0);
-        let trans = this.checkScaling();
-        this.createMatrix(trans.x, trans.y, 0, 0);
+        let trans = this.camera.checkScaling(this.canvas, this.particle);
+        this.camera.createMatrix(trans.x, trans.y, 0, 0);
         this.ctx.translate(trans.x, trans.y);
         this.progression.writeTextToCanvas('progress: ', this.canvas.width / 10 * 6.5, 20);
         document.onmousemove = this.mouseDown.bind(this);
@@ -80,61 +82,12 @@ export default class Scene {
         }
         this.progression.pBar(this.ctx);
         this.score[0].writeTextToCanvas(`Score: ${this.totalScore}`, this.canvas.width / 2, 20);
-        if (this.count >= 100) {
+        if (this.keyboard.isKeyDown(82)) {
             this.game.isEnd = true;
         }
         document.onmousemove = this.mouseDown.bind(this);
         this.particle.move(this.mouse.x, this.mouse.y, this.borders);
         this.count += 1;
-    }
-    checkScaling() {
-        let ret = { x: 0, y: 0 };
-        if (window.innerWidth >= this.canvas.width && window.innerHeight >= this.canvas.height) {
-            return { x: 0, y: 0 };
-        }
-        else {
-            let offsetX = this.canvas.width - window.innerWidth;
-            let offsetY = this.canvas.height - window.innerHeight;
-            if (this.particle.pos.x > window.innerWidth / 2 && this.particle.pos.x < window.innerWidth / 2 + offsetX) {
-                ret.x = -(offsetX - (window.innerWidth / 2 + offsetX - this.particle.pos.x));
-            }
-            if (this.particle.pos.x > window.innerWidth / 2 + offsetX) {
-                ret.x = -(offsetX);
-            }
-            if (this.particle.pos.y > window.innerHeight / 2 && this.particle.pos.y < window.innerHeight / 2 + offsetY) {
-                ret.y = -(offsetY - (window.innerHeight / 2 + offsetY - this.particle.pos.y));
-            }
-            if (this.particle.pos.y > window.innerHeight / 2 + offsetY) {
-                ret.y = -(offsetY);
-            }
-            return ret;
-        }
-    }
-    createMatrix(x, y, scale, rotate) {
-        this.matrix[3] = this.matrix[0] = Math.cos(rotate) * scale;
-        this.matrix[2] = -(this.matrix[1] = Math.sin(rotate) * scale);
-        this.matrix[4] = x;
-        this.matrix[5] = y;
-        let cross = this.matrix[0] * this.matrix[3] - this.matrix[1] * this.matrix[2];
-        if (cross != 0) {
-            this.invMatrix[0] = this.matrix[3] / cross;
-            this.invMatrix[1] = -this.matrix[1] / cross;
-            this.invMatrix[2] = -this.matrix[2] / cross;
-            this.invMatrix[3] = this.matrix[0] / cross;
-        }
-        else {
-            this.invMatrix = [1, 0, 0, 1];
-        }
-    }
-    toWorld(x, y) {
-        var xx, yy, m, result;
-        m = this.invMatrix;
-        xx = x - this.matrix[4];
-        yy = y - this.matrix[5];
-        return {
-            x: xx * this.invMatrix[0] + yy * this.invMatrix[2],
-            y: xx * this.invMatrix[1] + yy * this.invMatrix[3]
-        };
     }
     render() {
         this.particle.show();
