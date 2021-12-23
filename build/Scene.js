@@ -26,6 +26,7 @@ export default class Scene {
     condition;
     currentTrans;
     agent;
+    timeArray;
     keyboard;
     camera;
     username;
@@ -34,13 +35,13 @@ export default class Scene {
     time;
     timeLeft;
     constructor(canvas, game) {
+        this.timeArray = [Date.now()];
         this.canvas = canvas;
         this.canvas.width = 1920;
         this.canvas.height = 969;
         this.camera = new Camera();
         this.currentTrans = new Vector(0, 0);
         this.keyboard = new KeyboardListener();
-        this.agent = new Agent(this.canvas.width / 2, 350, this.ctx);
         this.game = game;
         this.ctx = this.canvas.getContext('2d');
         this.progression = new Progression(this.canvas);
@@ -56,17 +57,25 @@ export default class Scene {
             const y = this.level.level1[i][1];
             const x2 = this.level.level1[i][2];
             const y2 = this.level.level1[i][3];
-            this.borders.push(new Border(x, y, x2, y2, this.ctx));
+            this.borders.push(new Border(x, y, x2, y2, this.ctx, "normal"));
+        }
+        for (let i = 0; i < this.level.agentBorders.length; i++) {
+            const x = this.level.agentBorders[i][0];
+            const y = this.level.agentBorders[i][1];
+            const x2 = this.level.agentBorders[i][2];
+            const y2 = this.level.agentBorders[i][3];
+            this.borders.push(new Border(x, y, x2, y2, this.ctx, "agent"));
         }
         this.particle = new Particle(100, 100 + 0.5 * this.level.widthHall, this.ctx);
         this.mouse = { x: 0, y: 0 };
+        this.agent = new Agent(1.5 * this.level.widthHall, 100 + 0.5 * this.level.widthHall, this.ctx, this.level.widthHall);
         this.count = 0;
         this.username = localStorage.getItem('username');
         this.password = localStorage.getItem('password');
         this.timeLimit = new TimeLimit(this.password);
         this.timeLeft = this.timeLimit.timeLimit;
         this.time = 0;
-        console.log(this.username);
+        console.log("username: ", this.username);
     }
     processInput() {
     }
@@ -75,7 +84,6 @@ export default class Scene {
     }
     update(elapsed) {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.progression.writeTextToCanvas('progress: ', this.canvas.width / 10 * 6.5, 20);
         this.ctx.setTransform(1, 0, 0, 1, 0, 0);
         let trans = this.camera.checkScaling(this.canvas, this.particle);
         this.camera.createMatrix(trans.x, trans.y, 0, 0);
@@ -112,6 +120,7 @@ export default class Scene {
         this.particle.move(this.mouse.x, this.mouse.y, this.borders);
         this.agent.update(this.mouse.x, this.mouse.y, this.borders);
         this.agent.move();
+        this.agent.inSight(this.particle, this.ctx);
     }
     render() {
         this.particle.show();
@@ -120,8 +129,9 @@ export default class Scene {
         }
         this.particle.look(this.borders);
         this.writeTextToCanvas('Central hub', 20, this.canvas.width / 2, 400);
-        this.writeTextToCanvas("Timelimit: " + this.timeLeft, 20, 100, 20);
-        this.agent.show();
+        this.writeTextToCanvas("Timelimit: " + this.timeLeft, 20, this.canvas.width / 3, 20);
+        this.agent.show(this.ctx);
+        this.agent.look(this.borders, this.ctx);
     }
     writeTextToCanvas(text, fontSize = 20, xCoordinate, yCoordinate, alignment = 'center', color = 'red') {
         this.ctx.font = `${fontSize}px sans-serif`;

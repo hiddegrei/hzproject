@@ -1,4 +1,4 @@
-import Vector from "./Vector";
+import Vector from "./Vector.js";
 
 export default class Ray {
 
@@ -7,8 +7,10 @@ export default class Ray {
     public dir = <any>{};
     public ctx: CanvasRenderingContext2D;
     public p = <any>{};
+    public angle:number
 
     constructor(pos: Vector, angle: number, ctx: CanvasRenderingContext2D) {
+        this.angle=angle
         this.pos = pos;
         this.lenghtDir = 50
         this.dir = { x: Math.cos((angle / 360) * 2 * Math.PI), y: Math.sin((angle / 360) * 2 * Math.PI) };
@@ -23,13 +25,12 @@ export default class Ray {
 
     show() {
         this.ctx.lineWidth = 1;
-        this.ctx.strokeStyle = '#000000';
+        this.ctx.strokeStyle = "rgb(255,0,0)";
         this.ctx.beginPath();
         this.ctx.moveTo(this.pos.x, this.pos.y);
         this.ctx.lineTo(this.pos.x + this.dir.x, this.pos.y + this.dir.y);
         this.ctx.stroke();
-
-        // this.writeTextToCanvas("x: " +this.dir.x+" y: "+this.dir.y,this.pos.x,this.pos.y+20)
+        
 
 
     }
@@ -39,7 +40,7 @@ export default class Ray {
         this.dir.y = my - this.pos.y
     }
 
-    cast(border: { a: { x: any; y: any; }; b: { x: any; y: any; }; }) {
+    cast(border: { a: Vector; b: Vector; }) {
         const x1 = border.a.x
         const y1 = border.a.y
         const x2 = border.b.x

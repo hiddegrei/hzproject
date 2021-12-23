@@ -48,6 +48,7 @@ export default class Scene {
 
   public agent:Agent;
  
+  private timeArray: number[];
 
   private keyboard:KeyboardListener;
 
@@ -64,6 +65,7 @@ export default class Scene {
    * @param game
    */
   constructor(canvas: HTMLCanvasElement, game: Game) {
+    this.timeArray = [Date.now()];
     this.canvas = canvas;
     this.canvas.width = 1920;
     this.canvas.height = 969;
@@ -72,8 +74,7 @@ export default class Scene {
     // this.canvas.width = window.innerWidth;
     // this.canvas.height = window.innerHeight;
     this.keyboard=new KeyboardListener()
-   this.agent=new Agent(this.canvas.width/2,350,this.ctx)
-    
+   
 
     this.game = game;
     this.ctx = this.canvas.getContext('2d');
@@ -92,12 +93,22 @@ export default class Scene {
       const y = this.level.level1[i][1];
       const x2 = this.level.level1[i][2];
       const y2 = this.level.level1[i][3];
-      this.borders.push(new Border(x, y, x2, y2, this.ctx));
+      this.borders.push(new Border(x, y, x2, y2, this.ctx,"normal"));
+    }
+    for (let i = 0; i < this.level.agentBorders.length; i++) {
+      const x = this.level.agentBorders[i][0];
+      const y = this.level.agentBorders[i][1];
+      const x2 = this.level.agentBorders[i][2];
+      const y2 = this.level.agentBorders[i][3];
+      this.borders.push(new Border(x, y, x2, y2, this.ctx,"agent"));
+
     }
     // this.border= new Border(300,50,300,200,this.ctx)
     // this.ray=new Ray(50,150, this.ctx)
     this.particle = new Particle(100, 100+0.5*this.level.widthHall, this.ctx);
     this.mouse = { x: 0, y: 0 };
+    this.agent=new Agent(1.5*this.level.widthHall, 100+0.5*this.level.widthHall, this.ctx,this.level.widthHall)
+    
 
     // window.addEventListener("mousemove",this.mouseDown.bind(this), false)
     this.count = 0;
@@ -110,7 +121,7 @@ export default class Scene {
 
     this.time=0
 
-    console.log(this.username)
+    console.log("username: ",this.username)
   }
 
   
@@ -139,14 +150,14 @@ export default class Scene {
   /**
    *@param condition boolean
    */
-  update(elapsed:number): void {
+  update(elapsed: number): void {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    this.progression.writeTextToCanvas('progress: ', this.canvas.width / 10 * 6.5, 20);
+    
+
+    // this.currentTrans = { x: trans.x, y: trans.y }
     this.ctx.setTransform(1, 0, 0, 1, 0, 0);
     let trans = this.camera.checkScaling(this.canvas,this.particle)
     this.camera.createMatrix(trans.x, trans.y, 0, 0)
-
-    // this.currentTrans = { x: trans.x, y: trans.y }
     this.ctx.translate(trans.x, trans.y)
     // this.ctx.translate(100,100)
     this.progression.writeTextToCanvas('progress: ', this.canvas.width / 10 * 6.5, 20);
@@ -193,6 +204,10 @@ export default class Scene {
 
     this.agent.update(this.mouse.x, this.mouse.y, this.borders);
     this.agent.move()
+    // if(this.timeLeft<1){
+    //   this.game.isEnd=true
+    // }
+    this.agent.inSight(this.particle,this.ctx)
     
    
   }
@@ -217,9 +232,10 @@ export default class Scene {
 
     this.writeTextToCanvas('Central hub', 20, this.canvas.width / 2, 400);
 
-    this.writeTextToCanvas("Timelimit: "+this.timeLeft,20,100,20)
+    this.writeTextToCanvas("Timelimit: "+this.timeLeft,20,this.canvas.width / 3,20)
 
-    this.agent.show()
+    this.agent.show(this.ctx)
+    this.agent.look(this.borders,this.ctx)
 
     
   }
@@ -246,5 +262,4 @@ export default class Scene {
     this.ctx.fillText(text, xCoordinate, yCoordinate);
   }
 }
-// # sourceMappingURL=Scene.js.map
 // # sourceMappingURL=Scene.js.map

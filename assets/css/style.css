@@ -8,7 +8,35 @@ canvas {
     display: block;
 }
 
-.progressBar {
+div.hud {
+    color: black;
+    background-color: rgb(255, 255, 255);
+    padding: 5px;
+    position: fixed;
+    /* border: 1px;
+    border-radius: 0px 0px 5px 0px; */
+    width: max-content;
+    height: max-content;
+}
+
+div#timeLimit.hud {
+    top: 0px;
+    left: 0px;
+}
+
+div#score.hud {
+    top: 0px;
+    right: 0px;
+}
+
+div#pregress.progressBar {
+    top: 0px;
+    right: 0px;
     height: 2%;
     width: 80%;
+}
+
+div#prograss.hud {
+    bottom: 0px;
+    left: 0px;
 }

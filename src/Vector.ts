@@ -12,6 +12,10 @@ export default class Vector{
         this.x+=a.x;
         this.y+=a.y;
     }
+    public sub(a:Vector){
+        this.x-=a.x;
+        this.y-=a.y;
+    }
 
     public static add(a: { x: any; y: any; },b: { x: any; y: any; }){
 
@@ -20,12 +24,16 @@ export default class Vector{
     }
     public limit(lim: number){
 
+
         let lengthV=Math.sqrt(this.x*this.x+this.y*this.y)
-        if(lengthV<=lim){
+        if(lengthV<=lim||lengthV===0){
             
         }else{
-            this.x=this.x/lengthV;
-            this.y=this.y/lengthV;
+            let newx=this.x/lengthV;
+            let newy=this.y/lengthV;
+            this.x=newx*lim
+            this.y=newy*lim
+            
             
         }
 
@@ -47,11 +55,12 @@ export default class Vector{
 
     public setMag(mag: number){
         let lengthV=Math.sqrt(this.x*this.x+this.y*this.y)
-        
-        this.x=this.x/lengthV;
-        this.y=this.y/lengthV;
-            this.x=this.x*mag;
-            this.y=this.y*mag
+        if(lengthV!=0){
+        let newx=this.x/lengthV;
+        let newy=this.y/lengthV;
+            this.x=newx*mag;
+            this.y=newy*mag
+        }
         
 
     }

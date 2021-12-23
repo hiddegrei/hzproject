@@ -6,7 +6,8 @@ export default class Level1map {
     public widthHall: number;
     public widthCentralHub: number;
     public heightCentralHub: number;
-    public canvas: HTMLCanvasElement
+    public canvas: HTMLCanvasElement;
+    public agentBorders: Array<any>=[];
 
     constructor(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
         this.widthHall = 50;
@@ -435,7 +436,7 @@ export default class Level1map {
 
         ]
     
-        
+        this.loadAgentBoard()
     }
 
     public makeHallH(x:number,y:number,w:number){
@@ -604,6 +605,34 @@ export default class Level1map {
         this.ctx.fillStyle = color;
         this.ctx.textAlign = alignment;
         this.ctx.fillText(text, xCoordinate, yCoordinate);
+      }
+
+
+      public loadAgentBoard(){
+          this.agentBorders=[
+              [(this.canvas.width/2)-9*this.widthHall,100+5*this.widthHall,(this.canvas.width/2)-9*this.widthHall,100+6*this.widthHall],
+              [(this.canvas.width/2)-12*this.widthHall,100+4*this.widthHall,(this.canvas.width/2)-12*this.widthHall,100+5*this.widthHall],
+              [(this.canvas.width/2)-15*this.widthHall,100+5*this.widthHall,(this.canvas.width/2)-15*this.widthHall,100+6*this.widthHall],
+              [(this.canvas.width/2)-15*this.widthHall,100+13*this.widthHall,(this.canvas.width/2)-14*this.widthHall,100+13*this.widthHall],
+              [(this.canvas.width/2)-6*this.widthHall,100+13*this.widthHall,(this.canvas.width/2)-5*this.widthHall,100+13*this.widthHall],
+              [(this.canvas.width/2)-8*this.widthHall,100+14*this.widthHall,(this.canvas.width/2)-8*this.widthHall,100+15*this.widthHall],
+              [(this.canvas.width/2)-6*this.widthHall,100+11*this.widthHall,(this.canvas.width/2)-5*this.widthHall,100+11*this.widthHall],
+              [(this.canvas.width/2)+4*this.widthHall,100+16*this.widthHall,(this.canvas.width/2)+4*this.widthHall,100+17*this.widthHall],
+              [(this.canvas.width/2)+12*this.widthHall,100+15*this.widthHall,(this.canvas.width/2)+13*this.widthHall,100+15*this.widthHall],
+              [(this.canvas.width/2)+12*this.widthHall,100+13*this.widthHall,(this.canvas.width/2)+12*this.widthHall,100+14*this.widthHall],
+              [(this.canvas.width/2)+17*this.widthHall,100+10*this.widthHall,(this.canvas.width/2)+18*this.widthHall,100+10*this.widthHall],
+              [(this.canvas.width/2)+12*this.widthHall,100+7*this.widthHall,(this.canvas.width/2)+13*this.widthHall,100+7*this.widthHall],
+              [(this.canvas.width/2)+10*this.widthHall,100+this.widthHall,(this.canvas.width/2)+11*this.widthHall,100+this.widthHall],
+              [(this.canvas.width/2)+7*this.widthHall,100+4*this.widthHall,(this.canvas.width/2)+8*this.widthHall,100+4*this.widthHall],
+              [(this.canvas.width/2)+4*this.widthHall,100+2*this.widthHall,(this.canvas.width/2)+4*this.widthHall,100+3*this.widthHall],
+              [(this.canvas.width/2),100+5*this.widthHall,(this.canvas.width/2)+this.widthHall,100+5*this.widthHall],
+              [(this.canvas.width/2)-19*this.widthHall,100+13*this.widthHall,(this.canvas.width/2)-18*this.widthHall,100+13*this.widthHall],
+              [(this.canvas.width/2)-10*this.widthHall,100+7*this.widthHall,(this.canvas.width/2)-10*this.widthHall,100+8*this.widthHall],
+
+              [(this.canvas.width/2)-14*this.widthHall,100+9*this.widthHall,(this.canvas.width/2)-14*this.widthHall,100+10*this.widthHall],
+              [(this.canvas.width/2)+11*this.widthHall,100,(this.canvas.width/2)+11*this.widthHall,100+this.widthHall],
+              [(this.canvas.width/2)-8*this.widthHall,100+15*this.widthHall,(this.canvas.width/2)-7*this.widthHall,100+15*this.widthHall],
+          ]
       }
 
 }
