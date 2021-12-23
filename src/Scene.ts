@@ -215,7 +215,16 @@ export default class Scene {
     } else {
       this.time += elapsed
     }
+<<<<<<< HEAD
     }
+=======
+
+    if(this.timeLeft<1){
+      this.game.isEnd=true
+    }
+    
+   
+>>>>>>> 0fa5ee9d277c136d4c840cac97fed672ec0880a4
   }
 
   /**
@@ -232,7 +241,7 @@ export default class Scene {
 
     this.writeTextToCanvas('Central hub', 20, this.canvas.width / 2, 400);
 
-    this.writeTextToCanvas("Timelimit: "+this.timeLeft,20,100,20)
+    this.writeTextToCanvas("Timelimit: "+this.timeLeft,20,this.canvas.width / 3,20)
 
     
   }
