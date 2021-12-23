@@ -67,9 +67,8 @@ export default class Scene {
             this.borders.push(new Border(x, y, x2, y2, this.ctx, "agent"));
         }
         this.particle = new Particle(100, 100 + 0.5 * this.level.widthHall, this.ctx);
-        this.agent = new Agent(1.5 * this.level.widthHall, 100 + 0.5 * this.level.widthHall, this.ctx, this.level.widthHall);
+        this.agent = new Agent(1.5 * this.level.widthHall, 100 + 0.5 * this.level.widthHall, this.ctx, this.level.widthHall, "random");
         this.mouse = { x: 0, y: 0 };
-        this.agent = new Agent(1.5 * this.level.widthHall, 100 + 0.5 * this.level.widthHall, this.ctx, this.level.widthHall);
         this.count = 0;
         this.username = localStorage.getItem('username');
         this.password = localStorage.getItem('password');

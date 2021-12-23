@@ -18,8 +18,10 @@ export default class Agent {
     lastAngle;
     viewRays;
     sight;
-    constructor(x, y, ctx, widthHall) {
+    mode;
+    constructor(x, y, ctx, widthHall, mode) {
         this.ctx = ctx;
+        this.mode = mode;
         this.pos = new Vector(x, y);
         this.rays = [];
         this.radius = 10;
@@ -165,7 +167,7 @@ export default class Agent {
                 ctx.fillStyle = "#FF0000";
                 let rv = new Vector(closest.x, closest.y);
                 rv.sub(this.pos);
-                rv.setMag(this.sight);
+                rv.limit(this.sight);
                 ctx.beginPath();
                 ctx.moveTo(this.pos.x, this.pos.y);
                 ctx.lineTo(this.pos.x + rv.x, this.pos.y + rv.y);

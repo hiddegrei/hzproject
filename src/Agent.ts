@@ -31,10 +31,13 @@ export default class Agent{
     public lastAngle:number;
 
     public viewRays:Array<Ray>;
-    public sight:number
+    public sight:number;
 
-    constructor(x: number, y: number, ctx: CanvasRenderingContext2D, widthHall:number) {
-        this.ctx = ctx
+    public mode:string;
+
+    constructor(x: number, y: number, ctx: CanvasRenderingContext2D, widthHall:number,mode:string) {
+        this.ctx = ctx;
+        this.mode=mode
         this.pos = new Vector(x,y)
         this.rays = []
         this.radius = 10
@@ -276,7 +279,7 @@ export default class Agent{
                  let rv=new Vector(closest.x,closest.y)
                  rv.sub(this.pos)
 
-                 rv.setMag(this.sight)
+                 rv.limit(this.sight)
                 ctx.beginPath();
                 ctx.moveTo(this.pos.x, this.pos.y);
                 ctx.lineTo(this.pos.x+rv.x, this.pos.y+rv.y);
