@@ -49,6 +49,7 @@ export default class Particle {
         if (this.rays.length > 0) {
             for (let j = 0; j < this.rays.length; j++) {
             for (let i = 0; i < borders.length; i++) {
+                if(borders[i].type==="normal"){
                 let pt = this.rays[j].cast(borders[i])
                 if (pt) {
                     let a = pt.x - this.pos.x
@@ -59,6 +60,7 @@ export default class Particle {
 
                     }
                 }
+            }
             }
         }
         }
@@ -188,7 +190,7 @@ export default class Particle {
 
             }
             if (closest.x != -1) {
-                // this.ctx.fillStyle = "#FF0000";
+                this.ctx.fillStyle = "#FF0000";
                 // this.ctx.fillRect(closest.x, closest.y, 10, 10);
 
 
@@ -196,6 +198,8 @@ export default class Particle {
                 this.ctx.moveTo(this.pos.x, this.pos.y);
                 this.ctx.lineTo(closest.x, closest.y);
                 this.ctx.stroke();
+                this.ctx.closePath()
+                this.ctx.fill()
 
 
 

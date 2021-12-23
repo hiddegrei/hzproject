@@ -5,8 +5,27 @@ export default class Vector {
         this.x = x;
         this.y = y;
     }
+    add(a) {
+        this.x += a.x;
+        this.y += a.y;
+    }
+    sub(a) {
+        this.x -= a.x;
+        this.y -= a.y;
+    }
     static add(a, b) {
         return { x: a.x + b.x, y: a.y + b.y };
+    }
+    limit(lim) {
+        let lengthV = Math.sqrt(this.x * this.x + this.y * this.y);
+        if (lengthV <= lim || lengthV === 0) {
+        }
+        else {
+            let newx = this.x / lengthV;
+            let newy = this.y / lengthV;
+            this.x = newx * lim;
+            this.y = newy * lim;
+        }
     }
     static limit(a, lim) {
         let lengthV = Math.sqrt(a.x * a.x + a.y * a.y);
@@ -17,6 +36,15 @@ export default class Vector {
             let newx = a.x / lengthV;
             let newy = a.y / lengthV;
             return { x: newx * lim, y: newy * lim };
+        }
+    }
+    setMag(mag) {
+        let lengthV = Math.sqrt(this.x * this.x + this.y * this.y);
+        if (lengthV != 0) {
+            let newx = this.x / lengthV;
+            let newy = this.y / lengthV;
+            this.x = newx * mag;
+            this.y = newy * mag;
         }
     }
     static setMag(a, mag) {

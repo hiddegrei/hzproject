@@ -4,7 +4,9 @@ export default class Ray {
     dir = {};
     ctx;
     p = {};
+    angle;
     constructor(pos, angle, ctx) {
+        this.angle = angle;
         this.pos = pos;
         this.lenghtDir = 50;
         this.dir = { x: Math.cos((angle / 360) * 2 * Math.PI), y: Math.sin((angle / 360) * 2 * Math.PI) };
@@ -16,7 +18,7 @@ export default class Ray {
     }
     show() {
         this.ctx.lineWidth = 1;
-        this.ctx.strokeStyle = '#000000';
+        this.ctx.strokeStyle = "rgb(255,0,0)";
         this.ctx.beginPath();
         this.ctx.moveTo(this.pos.x, this.pos.y);
         this.ctx.lineTo(this.pos.x + this.dir.x, this.pos.y + this.dir.y);

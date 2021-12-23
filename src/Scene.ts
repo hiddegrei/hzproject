@@ -10,6 +10,7 @@ import Vector from './Vector.js';
 import KeyboardListener from './KeyboardListener.js';
 import Camera from './Camera.js';
 import TimeLimit from './TimeLimit.js';
+import Agent from './Agent.js';
 
 
 export default class Scene {
@@ -45,11 +46,15 @@ export default class Scene {
 
   public currentTrans: Vector;
 
+  
+ 
   private timeArray: number[];
 
   private keyboard:KeyboardListener;
 
   private camera:Camera;
+
+  private agent:Agent;
 
   private username:string;
   private password:string;
@@ -71,9 +76,10 @@ export default class Scene {
     // this.canvas.width = window.innerWidth;
     // this.canvas.height = window.innerHeight;
     this.keyboard=new KeyboardListener()
+   
+
 
     
-
     this.game = game;
     this.ctx = this.canvas.getContext('2d');
     this.progression = new Progression(this.canvas);
@@ -91,12 +97,24 @@ export default class Scene {
       const y = this.level.level1[i][1];
       const x2 = this.level.level1[i][2];
       const y2 = this.level.level1[i][3];
-      this.borders.push(new Border(x, y, x2, y2, this.ctx));
+      this.borders.push(new Border(x, y, x2, y2, this.ctx,"normal"));
+    }
+
+    for (let i = 0; i < this.level.agentBorders.length; i++) {
+      const x = this.level.agentBorders[i][0];
+      const y = this.level.agentBorders[i][1];
+      const x2 = this.level.agentBorders[i][2];
+      const y2 = this.level.agentBorders[i][3];
+      this.borders.push(new Border(x, y, x2, y2, this.ctx,"agent"));
+
     }
     // this.border= new Border(300,50,300,200,this.ctx)
     // this.ray=new Ray(50,150, this.ctx)
     this.particle = new Particle(100, 100+0.5*this.level.widthHall, this.ctx);
+    this.agent=new Agent(1.5*this.level.widthHall, 100+0.5*this.level.widthHall, this.ctx,this.level.widthHall)
     this.mouse = { x: 0, y: 0 };
+    this.agent=new Agent(1.5*this.level.widthHall, 100+0.5*this.level.widthHall, this.ctx,this.level.widthHall)
+    
 
     // window.addEventListener("mousemove",this.mouseDown.bind(this), false)
     this.count = 0;
@@ -139,51 +157,46 @@ export default class Scene {
    *@param condition boolean
    */
   update(elapsed: number): void {
-    
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     
 
-      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-      // this.progression.writeTextToCanvas('progress: ', this.canvas.width / 10 * 6.5, 20);
-      this.ctx.setTransform(1, 0, 0, 1, 0, 0);
-      let trans = this.camera.checkScaling(this.canvas,this.particle)
-      this.camera.createMatrix(trans.x, trans.y, 0, 0)
-  
-      // this.currentTrans = { x: trans.x, y: trans.y }
-      this.ctx.translate(trans.x, trans.y)
-      // this.ctx.translate(100,100)
-       this.progression.writeTextToCanvas('progress: ', this.canvas.width / 10 * 6.5, 20);
-  
-      document.onmousemove = this.mouseDown.bind(this);
-      this.particle.move(this.mouse.x, this.mouse.y, this.borders);
-      this.count += 1;
-  
-      // this.progression.writeTextToCanvas('progress: ', 850, 20);
-      // this.progression.writeTextToCanvas('progress: ', 850, 20);
-      //this.progression.writeTextToCanvas('progress: ', 850, 20);
-      if (this.count >= 100) {
-        this.writeTextToCanvas(`${this.progression.getProgression()}%`, 20, this.canvas.width / 10 * 9, 20);
-        this.progression.setXEnd();
-        if (this.count === 100) {
-          this.score.forEach((element) => { this.totalScore += element.getScore(); });
-        }
-      } else {
-        this.writeTextToCanvas(`${this.progression.getProgression()}%`, 20, this.canvas.width / 10 * 9, 20);
+    // this.currentTrans = { x: trans.x, y: trans.y }
+    this.ctx.setTransform(1, 0, 0, 1, 0, 0);
+    let trans = this.camera.checkScaling(this.canvas,this.particle)
+    this.camera.createMatrix(trans.x, trans.y, 0, 0)
+    this.ctx.translate(trans.x, trans.y)
+    // this.ctx.translate(100,100)
+    this.progression.writeTextToCanvas('progress: ', this.canvas.width / 10 * 6.5, 20);
+
+    document.onmousemove = this.mouseDown.bind(this);
+
+   
+    this.count += 1;
+
+    this.progression.writeTextToCanvas('progress: ', 850, 20);
+    // this.progression.writeTextToCanvas('progress: ', 850, 20);
+    //this.progression.writeTextToCanvas('progress: ', 850, 20);
+    if (this.count >= 100) {
+      this.writeTextToCanvas(`${this.progression.getProgression()}%`, 20, this.canvas.width / 10 * 9, 20);
+      this.progression.setXEnd();
+      if (this.count === 100) {
+        this.score.forEach((element) => { this.totalScore += element.getScore(); });
       }
-      this.progression.pBar(this.ctx);
-      // this.score[0].writeTextToCanvas(`Score: ${this.totalScore}`, this.canvas.width / 2, 20);
-  
-      if (this.keyboard.isKeyDown(82)) {
-        // this.endGame = new EndGame(this.canvas);
-        this.game.isEnd = true;
-      }
-  
-      
-      document.onmousemove = this.mouseDown.bind(this);
-      this.particle.move(this.mouse.x, this.mouse.y, this.borders);
-      this.count += 1;
-    
-    
-    
+    } else {
+      this.writeTextToCanvas(`${this.progression.getProgression()}%`, 20, this.canvas.width / 10 * 9, 20);
+    }
+    this.progression.pBar(this.ctx);
+    this.score[0].writeTextToCanvas(`Score: ${this.totalScore}`, this.canvas.width / 2, 20);
+
+    if (this.keyboard.isKeyDown(82)) {
+      // this.endGame = new EndGame(this.canvas);
+      this.game.isEnd = true;
+    }
+
+   
+    document.onmousemove = this.mouseDown.bind(this);
+    this.particle.move(this.mouse.x, this.mouse.y, this.borders);
+    this.count += 1;
 
     if (this.time > 1000) {
       this.timeLeft-=1
@@ -193,9 +206,16 @@ export default class Scene {
       this.time += elapsed
     }
 
+    this.particle.move(this.mouse.x, this.mouse.y, this.borders);
+
+    this.agent.update(this.mouse.x, this.mouse.y, this.borders);
+    this.agent.move()
     // if(this.timeLeft<1){
     //   this.game.isEnd=true
     // }
+    this.agent.inSight(this.particle,this.ctx)
+    this.agent.update(this.mouse.x, this.mouse.y, this.borders);
+    this.agent.move()
     
    
   }
@@ -221,6 +241,9 @@ export default class Scene {
     this.writeTextToCanvas('Central hub', 20, this.canvas.width / 2, 400);
 
     this.writeTextToCanvas("Timelimit: "+this.timeLeft,20,this.canvas.width / 3,20)
+
+    this.agent.show(this.ctx)
+    this.agent.look(this.borders,this.ctx)
 
     
   }
