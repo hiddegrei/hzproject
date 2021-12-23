@@ -16,6 +16,7 @@ export default class Game {
         this.scene = new Scene(this.canvas, this);
         this.gameLoop = new GameLoop(this);
         this.endGame = new EndGame(this.canvas, this);
+<<<<<<< HEAD
         this.username = new URLSearchParams(document.location.search).get('username');
         this.password = new URLSearchParams(document.location.search).get('password');
         this.timeLimit = new TimeLimit(this.password).timeLimit;
@@ -23,6 +24,11 @@ export default class Game {
     start() {
         console.log('starting');
         console.log(`Time limit: ${this.timeLimit}`);
+=======
+        this.timeLimit = new TimeLimit(this.password);
+    }
+    start() {
+>>>>>>> 0fa9840f56b9933e23de798fd329d1719d88e8ff
         this.gameLoop.start();
     }
     processInput() {
@@ -33,7 +39,7 @@ export default class Game {
             this.endGame.update();
         }
         else {
-            this.scene.update();
+            this.scene.update(elapsed);
         }
         return false;
     }

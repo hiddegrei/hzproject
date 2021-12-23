@@ -9,6 +9,7 @@ import EndGame from './EndGame.js';
 import Vector from './Vector.js';
 import KeyboardListener from './KeyboardListener.js';
 import Camera from './Camera.js';
+import TimeLimit from './TimeLimit.js';
 
 
 export default class Scene {
@@ -49,6 +50,12 @@ export default class Scene {
   private keyboard:KeyboardListener;
 
   private camera:Camera;
+
+  private username:string;
+  private password:string;
+  private timeLimit: TimeLimit;
+  private time:number;
+  private timeLeft:number
 
   /**
    * @param canvas
@@ -93,7 +100,19 @@ export default class Scene {
 
     // window.addEventListener("mousemove",this.mouseDown.bind(this), false)
     this.count = 0;
+
+    this.username = localStorage.getItem('username');
+    this.password = localStorage.getItem('password');
+
+    this.timeLimit = new TimeLimit(this.password);
+    this.timeLeft=this.timeLimit.timeLimit
+
+    this.time=0
+
+    console.log(this.username)
   }
+
+  
 
   /**
    *
@@ -119,7 +138,8 @@ export default class Scene {
   /**
    *@param condition boolean
    */
-  update(): void {
+  update(elapsed: number): void {
+    console.log(elapsed);
     this.timeArray.push(Date.now());
     if (this.game.timeLimit - (Date.now() - this.timeArray[0]) < 0) {
       this.game.isEnd = true;
@@ -173,6 +193,22 @@ export default class Scene {
       this.count += 1;
     }
       
+    //  for(let i=0;i<this.particle.rays.length;i++){
+    //      this.particle.rays[i].cast(this.border)
+    //  }
+    // this.ray.cast(this.border)
+    document.onmousemove = this.mouseDown.bind(this);
+    this.particle.move(this.mouse.x, this.mouse.y, this.borders);
+    this.count += 1;
+
+    if (this.time > 1000) {
+      this.timeLeft-=1
+
+      this.time = 0
+    } else {
+      this.time += elapsed
+    }
+    
    
   }
 
@@ -195,6 +231,10 @@ export default class Scene {
     this.particle.look(this.borders);
 
     this.writeTextToCanvas('Central hub', 20, this.canvas.width / 2, 400);
+
+    this.writeTextToCanvas("Timelimit: "+this.timeLeft,20,100,20)
+
+    
   }
 
   /**

@@ -39,8 +39,8 @@ export default class Game {
    *
    */
   public start() {
-    console.log('starting');
-    console.log(`Time limit: ${this.timeLimit}`);
+    // console.log('starting');
+    // console.log(`Time limit: ${this.timeLimit.timeLimit}`);
     this.gameLoop.start();
   }
 
@@ -58,7 +58,7 @@ export default class Game {
     if (this.isEnd) {
       this.endGame.update();
     } else {
-      this.scene.update();
+      this.scene.update(elapsed);
     }
     // this.scene.update()
 

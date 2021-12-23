@@ -1,20 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-
     <link rel="stylesheet" href="./assets/css/normalize.css">
-    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="./assets/css/start.css">
 
-    <title>HZ project- compilers</title>
+    <title>Start</title>
 </head>
+
 <body>
-    <canvas id="canvas"></canvas>
-    <div class="hud" id="timeLimit">Tijd resterend: <span></span> seconden</div>
-    <div class="hud" id="progress">Voortgang: <span></span></div>
-    <div class="hud" id="score">Score: <span></span></div>
-    <script type="module" src="./build/main.js"></script>
+    <div id="start">
+        <h1>BankKraker</h1>
+        <form action="./start.html">
+            <label for="username">Naam</label>
+            <input type="text" id="username" name="username" required placeholder="Vul hier uw gebruikersnaam in"><br>
+            <label for="password">Wachtwoord</label>
+            <input type="text" id="password" name="password" required placeholder="Vul hier uw wachtwoord in"><br>
+            
+                <button type="submit" id="start-btn">Start</button>
+           
+        </form>
+       
+
+    </div>
+
+    <script type="module" src="./build/Start.js"></script>
 </body>
+
 </html>
