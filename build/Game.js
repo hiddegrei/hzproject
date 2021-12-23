@@ -16,7 +16,9 @@ export default class Game {
         this.scene = new Scene(this.canvas, this);
         this.gameLoop = new GameLoop(this);
         this.endGame = new EndGame(this.canvas, this);
-        this.timeLimit = new TimeLimit(this.password);
+        this.username = new URLSearchParams(document.location.search).get('username');
+        this.password = new URLSearchParams(document.location.search).get('password');
+        this.timeLimit = new TimeLimit(this.password).timeLimit;
     }
     start() {
         this.gameLoop.start();

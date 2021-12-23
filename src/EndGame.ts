@@ -1,4 +1,5 @@
 import Game from './Game.js';
+import GameLoop from './GameLoop.js';
 import InfoDisplay from './InformationDisplay.js';
 import KeyboardListener from './KeyboardListener.js';
 import Scene from './Scene.js';
@@ -15,6 +16,8 @@ export default class EndGame extends InfoDisplay {
   private ctx: CanvasRenderingContext2D;
 
   private keyboard:KeyboardListener;
+
+  private gameloop: GameLoop;
 
   /**
    * constructor
@@ -34,12 +37,11 @@ export default class EndGame extends InfoDisplay {
    * update the endscreen
    */
   public update(): void {
+    console.log(document.querySelectorAll('div.hud'));
+    // document.querySelectorAll('div.hud').forEach((element) => {element.innerHTML = '' } )
+    document.querySelectorAll('div.hud').forEach((element) => {element.remove() } )
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.ctx.setTransform(1, 0, 0, 1, 0, 0);
-    //spacebar to go back to game
-   if(this.keyboard.isKeyDown(32)){
-     this.game.isEnd=false
-   }
     
   }
 
@@ -58,6 +60,7 @@ export default class EndGame extends InfoDisplay {
   private draw(ctx:CanvasRenderingContext2D, image: string, xPos: number, yPos: number): void {
     this.image = Game.loadNewImage(image);
     ctx.drawImage(this.image, xPos, yPos);
+    // this.gameloop.stop;
   }
 
   private drawImageScaled(ctx: CanvasRenderingContext2D,
