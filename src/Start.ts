@@ -9,7 +9,7 @@ function start(param: any) {
     let myStorage = window.localStorage;
     localStorage.setItem('username', username)
     localStorage.setItem('password', pass)
-    window.location.href = `./?
-    username=${document.querySelector<HTMLInputElement>('input[name="username"]').value}&
-    password=${document.querySelector<HTMLInputElement>('input[name="password"]').value}`;
+    // window.location.href = `./?
+    // username=${document.querySelector<HTMLInputElement>('input[name="username"]').value}&
+    // password=${document.querySelector<HTMLInputElement>('input[name="password"]').value}`;
 }

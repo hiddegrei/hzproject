@@ -7,8 +7,5 @@ function start(param) {
     let myStorage = window.localStorage;
     localStorage.setItem('username', username);
     localStorage.setItem('password', pass);
-    window.location.href = `./?
-    username=${document.querySelector('input[name="username"]').value}&
-    password=${document.querySelector('input[name="password"]').value}`;
 }
 //# sourceMappingURL=Start.js.map
