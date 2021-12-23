@@ -42,6 +42,10 @@ export default class EndGame extends InfoDisplay {
     document.querySelectorAll('div.hud').forEach((element) => {element.remove() } )
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.ctx.setTransform(1, 0, 0, 1, 0, 0);
+
+    if(this.keyboard.isKeyDown(32)){
+      this.game.isEnd=false
+    }
     
   }
 
