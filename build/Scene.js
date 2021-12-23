@@ -28,7 +28,7 @@ export default class Scene {
     timeArray;
     keyboard;
     camera;
-    agent;
+    agents = [];
     username;
     password;
     timeLimit;
@@ -67,7 +67,8 @@ export default class Scene {
             this.borders.push(new Border(x, y, x2, y2, this.ctx, "agent"));
         }
         this.particle = new Particle(100, 100 + 0.5 * this.level.widthHall, this.ctx);
-        this.agent = new Agent(1.5 * this.level.widthHall, 100 + 0.5 * this.level.widthHall, this.ctx, this.level.widthHall, "random");
+        this.agents.push(new Agent(1.5 * this.level.widthHall, 100 + 0.5 * this.level.widthHall, this.ctx, this.level.widthHall, "random"));
+        this.agents.push(new Agent((this.canvas.width / 2) - (0.5 * this.level.widthHall), 100 + 3 * this.level.widthHall, this.ctx, this.level.widthHall, "search"));
         this.mouse = { x: 0, y: 0 };
         this.count = 0;
         this.username = localStorage.getItem('username');
@@ -118,11 +119,11 @@ export default class Scene {
             this.time += elapsed;
         }
         this.particle.move(this.mouse.x, this.mouse.y, this.borders);
-        this.agent.update(this.mouse.x, this.mouse.y, this.borders);
-        this.agent.move();
-        this.agent.inSight(this.particle, this.ctx);
-        this.agent.update(this.mouse.x, this.mouse.y, this.borders);
-        this.agent.move();
+        for (let i = 0; i < this.agents.length; i++) {
+            this.agents[i].inSight(this.particle, this.ctx);
+            this.agents[i].update(this.particle, this.borders);
+            this.agents[i].move();
+        }
     }
     render() {
         this.particle.show();
@@ -132,8 +133,10 @@ export default class Scene {
         this.particle.look(this.borders);
         this.writeTextToCanvas('Central hub', 20, this.canvas.width / 2, 400);
         this.writeTextToCanvas("Timelimit: " + this.timeLeft, 20, this.canvas.width / 3, 20);
-        this.agent.show(this.ctx);
-        this.agent.look(this.borders, this.ctx);
+        for (let i = 0; i < this.agents.length; i++) {
+            this.agents[i].show(this.ctx);
+            this.agents[i].look(this.borders, this.ctx);
+        }
     }
     writeTextToCanvas(text, fontSize = 20, xCoordinate, yCoordinate, alignment = 'center', color = 'red') {
         this.ctx.font = `${fontSize}px sans-serif`;
