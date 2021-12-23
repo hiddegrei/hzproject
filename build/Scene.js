@@ -72,31 +72,11 @@ export default class Scene {
     mouseDown(e) {
         this.mouse = this.camera.toWorld(e.clientX, e.clientY);
     }
-<<<<<<< HEAD
-    update() {
+    update(elapsed) {
+        console.log(elapsed);
         this.timeArray.push(Date.now());
         if (this.game.timeLimit - (Date.now() - this.timeArray[0]) < 0) {
             this.game.isEnd = true;
-=======
-    update(elapsed) {
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.progression.writeTextToCanvas('progress: ', this.canvas.width / 10 * 6.5, 20);
-        this.ctx.setTransform(1, 0, 0, 1, 0, 0);
-        let trans = this.camera.checkScaling(this.canvas, this.particle);
-        this.camera.createMatrix(trans.x, trans.y, 0, 0);
-        this.ctx.translate(trans.x, trans.y);
-        this.progression.writeTextToCanvas('progress: ', this.canvas.width / 10 * 6.5, 20);
-        document.onmousemove = this.mouseDown.bind(this);
-        this.particle.move(this.mouse.x, this.mouse.y, this.borders);
-        this.count += 1;
-        this.progression.writeTextToCanvas('progress: ', 850, 20);
-        if (this.count >= 100) {
-            this.writeTextToCanvas(`${this.progression.getProgression()}%`, 20, this.canvas.width / 10 * 9, 20);
-            this.progression.setXEnd();
-            if (this.count === 100) {
-                this.score.forEach((element) => { this.totalScore += element.getScore(); });
-            }
->>>>>>> 0fa9840f56b9933e23de798fd329d1719d88e8ff
         }
         else {
             this.game.timeLimit -= (Date.now() - this.timeArray[0]);
@@ -128,8 +108,6 @@ export default class Scene {
             this.particle.move(this.mouse.x, this.mouse.y, this.borders);
             this.count += 1;
         }
-<<<<<<< HEAD
-=======
         document.onmousemove = this.mouseDown.bind(this);
         this.particle.move(this.mouse.x, this.mouse.y, this.borders);
         this.count += 1;
@@ -140,7 +118,6 @@ export default class Scene {
         else {
             this.time += elapsed;
         }
->>>>>>> 0fa9840f56b9933e23de798fd329d1719d88e8ff
     }
     render() {
         this.particle.show();
