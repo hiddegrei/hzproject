@@ -7,6 +7,7 @@ import Vector from './Vector.js';
 import KeyboardListener from './KeyboardListener.js';
 import Camera from './Camera.js';
 import TimeLimit from './TimeLimit.js';
+import Agent from './Agent.js';
 export default class Scene {
     canvas;
     ctx;
@@ -24,6 +25,7 @@ export default class Scene {
     endGame;
     condition;
     currentTrans;
+    agent;
     keyboard;
     camera;
     username;
@@ -38,6 +40,7 @@ export default class Scene {
         this.camera = new Camera();
         this.currentTrans = new Vector(0, 0);
         this.keyboard = new KeyboardListener();
+        this.agent = new Agent(this.canvas.width / 2, 350, this.ctx);
         this.game = game;
         this.ctx = this.canvas.getContext('2d');
         this.progression = new Progression(this.canvas);
@@ -79,7 +82,6 @@ export default class Scene {
         this.ctx.translate(trans.x, trans.y);
         this.progression.writeTextToCanvas('progress: ', this.canvas.width / 10 * 6.5, 20);
         document.onmousemove = this.mouseDown.bind(this);
-        this.particle.move(this.mouse.x, this.mouse.y, this.borders);
         this.count += 1;
         this.progression.writeTextToCanvas('progress: ', 850, 20);
         if (this.count >= 100) {
@@ -107,6 +109,9 @@ export default class Scene {
         else {
             this.time += elapsed;
         }
+        this.particle.move(this.mouse.x, this.mouse.y, this.borders);
+        this.agent.update(this.mouse.x, this.mouse.y, this.borders);
+        this.agent.move();
     }
     render() {
         this.particle.show();
@@ -116,6 +121,7 @@ export default class Scene {
         this.particle.look(this.borders);
         this.writeTextToCanvas('Central hub', 20, this.canvas.width / 2, 400);
         this.writeTextToCanvas("Timelimit: " + this.timeLeft, 20, 100, 20);
+        this.agent.show();
     }
     writeTextToCanvas(text, fontSize = 20, xCoordinate, yCoordinate, alignment = 'center', color = 'red') {
         this.ctx.font = `${fontSize}px sans-serif`;

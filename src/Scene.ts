@@ -10,6 +10,7 @@ import Vector from './Vector.js';
 import KeyboardListener from './KeyboardListener.js';
 import Camera from './Camera.js';
 import TimeLimit from './TimeLimit.js';
+import Agent from './Agent.js';
 
 
 export default class Scene {
@@ -45,6 +46,7 @@ export default class Scene {
 
   public currentTrans: Vector;
 
+  public agent:Agent;
  
 
   private keyboard:KeyboardListener;
@@ -70,7 +72,7 @@ export default class Scene {
     // this.canvas.width = window.innerWidth;
     // this.canvas.height = window.innerHeight;
     this.keyboard=new KeyboardListener()
-
+   this.agent=new Agent(this.canvas.width/2,350,this.ctx)
     
 
     this.game = game;
@@ -150,7 +152,8 @@ export default class Scene {
     this.progression.writeTextToCanvas('progress: ', this.canvas.width / 10 * 6.5, 20);
 
     document.onmousemove = this.mouseDown.bind(this);
-    this.particle.move(this.mouse.x, this.mouse.y, this.borders);
+
+   
     this.count += 1;
 
     this.progression.writeTextToCanvas('progress: ', 850, 20);
@@ -173,10 +176,7 @@ export default class Scene {
       this.game.isEnd = true;
     }
 
-    //  for(let i=0;i<this.particle.rays.length;i++){
-    //      this.particle.rays[i].cast(this.border)
-    //  }
-    // this.ray.cast(this.border)
+   
     document.onmousemove = this.mouseDown.bind(this);
     this.particle.move(this.mouse.x, this.mouse.y, this.borders);
     this.count += 1;
@@ -188,6 +188,11 @@ export default class Scene {
     } else {
       this.time += elapsed
     }
+
+    this.particle.move(this.mouse.x, this.mouse.y, this.borders);
+
+    this.agent.update(this.mouse.x, this.mouse.y, this.borders);
+    this.agent.move()
     
    
   }
@@ -213,6 +218,8 @@ export default class Scene {
     this.writeTextToCanvas('Central hub', 20, this.canvas.width / 2, 400);
 
     this.writeTextToCanvas("Timelimit: "+this.timeLeft,20,100,20)
+
+    this.agent.show()
 
     
   }
