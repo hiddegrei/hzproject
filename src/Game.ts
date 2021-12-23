@@ -58,7 +58,7 @@ export default class Game {
     if (this.isEnd) {
       this.endGame.update();
     } else {
-      this.scene.update();
+      this.scene.update(elapsed);
     }
     // this.scene.update()
 

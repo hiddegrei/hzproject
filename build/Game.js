@@ -33,7 +33,7 @@ export default class Game {
             this.endGame.update();
         }
         else {
-            this.scene.update();
+            this.scene.update(elapsed);
         }
         return false;
     }

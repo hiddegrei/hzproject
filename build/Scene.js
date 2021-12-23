@@ -6,6 +6,7 @@ import Score from './Score.js';
 import Vector from './Vector.js';
 import KeyboardListener from './KeyboardListener.js';
 import Camera from './Camera.js';
+import TimeLimit from './TimeLimit.js';
 export default class Scene {
     canvas;
     ctx;
@@ -25,6 +26,11 @@ export default class Scene {
     currentTrans;
     keyboard;
     camera;
+    username;
+    password;
+    timeLimit;
+    time;
+    timeLeft;
     constructor(canvas, game) {
         this.canvas = canvas;
         this.canvas.width = 1920;
@@ -52,13 +58,19 @@ export default class Scene {
         this.particle = new Particle(100, 100 + 0.5 * this.level.widthHall, this.ctx);
         this.mouse = { x: 0, y: 0 };
         this.count = 0;
+        this.username = localStorage.getItem('username');
+        this.password = localStorage.getItem('password');
+        this.timeLimit = new TimeLimit(this.password);
+        this.timeLeft = this.timeLimit.timeLimit;
+        this.time = 0;
+        console.log(this.username);
     }
     processInput() {
     }
     mouseDown(e) {
         this.mouse = this.camera.toWorld(e.clientX, e.clientY);
     }
-    update() {
+    update(elapsed) {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.progression.writeTextToCanvas('progress: ', this.canvas.width / 10 * 6.5, 20);
         this.ctx.setTransform(1, 0, 0, 1, 0, 0);
@@ -88,6 +100,13 @@ export default class Scene {
         document.onmousemove = this.mouseDown.bind(this);
         this.particle.move(this.mouse.x, this.mouse.y, this.borders);
         this.count += 1;
+        if (this.time > 1000) {
+            this.timeLeft -= 1;
+            this.time = 0;
+        }
+        else {
+            this.time += elapsed;
+        }
     }
     render() {
         this.particle.show();
@@ -96,6 +115,7 @@ export default class Scene {
         }
         this.particle.look(this.borders);
         this.writeTextToCanvas('Central hub', 20, this.canvas.width / 2, 400);
+        this.writeTextToCanvas("Timelimit: " + this.timeLeft, 20, 100, 20);
     }
     writeTextToCanvas(text, fontSize = 20, xCoordinate, yCoordinate, alignment = 'center', color = 'red') {
         this.ctx.font = `${fontSize}px sans-serif`;
