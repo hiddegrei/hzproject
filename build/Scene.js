@@ -107,6 +107,9 @@ export default class Scene {
         else {
             this.time += elapsed;
         }
+        if (this.timeLeft < 1) {
+            this.game.isEnd = true;
+        }
     }
     render() {
         this.particle.show();
@@ -115,7 +118,7 @@ export default class Scene {
         }
         this.particle.look(this.borders);
         this.writeTextToCanvas('Central hub', 20, this.canvas.width / 2, 400);
-        this.writeTextToCanvas("Timelimit: " + this.timeLeft, 20, 100, 20);
+        this.writeTextToCanvas("Timelimit: " + this.timeLeft, 20, this.canvas.width / 3, 20);
     }
     writeTextToCanvas(text, fontSize = 20, xCoordinate, yCoordinate, alignment = 'center', color = 'red') {
         this.ctx.font = `${fontSize}px sans-serif`;
