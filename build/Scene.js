@@ -23,9 +23,11 @@ export default class Scene {
     endGame;
     condition;
     currentTrans;
+    timeArray;
     keyboard;
     camera;
     constructor(canvas, game) {
+        this.timeArray = [Date.now()];
         this.canvas = canvas;
         this.canvas.width = 1920;
         this.canvas.height = 969;
@@ -59,35 +61,40 @@ export default class Scene {
         this.mouse = this.camera.toWorld(e.clientX, e.clientY);
     }
     update() {
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.progression.writeTextToCanvas('progress: ', this.canvas.width / 10 * 6.5, 20);
-        this.ctx.setTransform(1, 0, 0, 1, 0, 0);
-        let trans = this.camera.checkScaling(this.canvas, this.particle);
-        this.camera.createMatrix(trans.x, trans.y, 0, 0);
-        this.ctx.translate(trans.x, trans.y);
-        this.progression.writeTextToCanvas('progress: ', this.canvas.width / 10 * 6.5, 20);
-        document.onmousemove = this.mouseDown.bind(this);
-        this.particle.move(this.mouse.x, this.mouse.y, this.borders);
-        this.count += 1;
-        this.progression.writeTextToCanvas('progress: ', 850, 20);
-        if (this.count >= 100) {
-            this.writeTextToCanvas(`${this.progression.getProgression()}%`, 20, this.canvas.width / 10 * 9, 20);
-            this.progression.setXEnd();
-            if (this.count === 100) {
-                this.score.forEach((element) => { this.totalScore += element.getScore(); });
-            }
-        }
-        else {
-            this.writeTextToCanvas(`${this.progression.getProgression()}%`, 20, this.canvas.width / 10 * 9, 20);
-        }
-        this.progression.pBar(this.ctx);
-        this.score[0].writeTextToCanvas(`Score: ${this.totalScore}`, this.canvas.width / 2, 20);
-        if (this.keyboard.isKeyDown(82)) {
+        this.timeArray.push(Date.now());
+        if (this.game.timeLimit - (Date.now() - this.timeArray[0]) < 0) {
             this.game.isEnd = true;
         }
-        document.onmousemove = this.mouseDown.bind(this);
-        this.particle.move(this.mouse.x, this.mouse.y, this.borders);
-        this.count += 1;
+        else {
+            this.game.timeLimit -= (Date.now() - this.timeArray[0]);
+            this.timeArray.shift();
+            document.querySelector('div#timeLimit.hud span').innerHTML = (JSON.stringify(Math.floor(this.game.timeLimit / 1000)));
+            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+            this.ctx.setTransform(1, 0, 0, 1, 0, 0);
+            let trans = this.camera.checkScaling(this.canvas, this.particle);
+            this.camera.createMatrix(trans.x, trans.y, 0, 0);
+            this.ctx.translate(trans.x, trans.y);
+            document.onmousemove = this.mouseDown.bind(this);
+            this.particle.move(this.mouse.x, this.mouse.y, this.borders);
+            this.count += 1;
+            if (this.count >= 100) {
+                this.writeTextToCanvas(`${this.progression.getProgression()}%`, 20, this.canvas.width / 10 * 9, 20);
+                this.progression.setXEnd();
+                if (this.count === 100) {
+                    this.score.forEach((element) => { this.totalScore += element.getScore(); });
+                }
+            }
+            else {
+                this.writeTextToCanvas(`${this.progression.getProgression()}%`, 20, this.canvas.width / 10 * 9, 20);
+            }
+            this.progression.pBar(this.ctx);
+            if (this.keyboard.isKeyDown(82)) {
+                this.game.isEnd = true;
+            }
+            document.onmousemove = this.mouseDown.bind(this);
+            this.particle.move(this.mouse.x, this.mouse.y, this.borders);
+            this.count += 1;
+        }
     }
     render() {
         this.particle.show();

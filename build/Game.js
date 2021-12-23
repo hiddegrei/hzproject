@@ -18,11 +18,11 @@ export default class Game {
         this.endGame = new EndGame(this.canvas, this);
         this.username = new URLSearchParams(document.location.search).get('username');
         this.password = new URLSearchParams(document.location.search).get('password');
-        this.timeLimit = new TimeLimit(this.password);
+        this.timeLimit = new TimeLimit(this.password).timeLimit;
     }
     start() {
         console.log('starting');
-        console.log(`Time limit: ${this.timeLimit.timeLimit}`);
+        console.log(`Time limit: ${this.timeLimit}`);
         this.gameLoop.start();
     }
     processInput() {

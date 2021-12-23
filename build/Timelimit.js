@@ -4,13 +4,13 @@ export default class TimeLimit {
     passwordStrengthProperty;
     constructor(password) {
         this.passwordProperty = password;
-        this.passwordStrengthProperty = new PasswordMeter().getResult(password).score;
+        this.passwordStrengthProperty = new PasswordMeter().getResult(password).score * 500;
     }
     get password() {
         return this.passwordProperty;
     }
     get timeLimit() {
-        return 5 * this.passwordStrengthProperty;
+        return this.passwordStrengthProperty;
     }
 }
 //# sourceMappingURL=TimeLimit.js.map

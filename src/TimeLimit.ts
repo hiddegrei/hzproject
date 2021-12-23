@@ -12,7 +12,7 @@ export default class TimeLimit {
    */
   public constructor(password: string) {
     this.passwordProperty = password;
-    this.passwordStrengthProperty = new PasswordMeter().getResult(password).score;
+    this.passwordStrengthProperty = new PasswordMeter().getResult(password).score * 500;
   }
 
   public get password(): string {
@@ -20,6 +20,6 @@ export default class TimeLimit {
   }
 
   public get timeLimit(): number {
-    return 5 * this.passwordStrengthProperty;
+    return this.passwordStrengthProperty;
   }
 }
