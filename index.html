@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,22 +7,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./assets/css/normalize.css">
     <link rel="stylesheet" href="./assets/css/start.css">
-    
+
     <title>Start</title>
 </head>
 
 <body>
-    <div id ="start" >
+    <div id="start">
         <h1>BankKraker</h1>
         <form>
             <label for="username">Naam</label>
-            <input type="text" id="username" name="username"><br>
+            <input type="text" id="username" name="username" required placeholder="Vul hier uw gebruikersnaam in"><br>
             <label for="password">Wachtwoord</label>
-            <input type="text" id="password" name="password"><br>
+            <input type="text" id="password" name="password" required placeholder="Vul hier uw wachtwoord in"><br>
+            <a href="./start.html">
+                <button type="submit" id="start-btn">Start</button>
+            </a>
         </form>
-        <a href="./start.html">
-            <button type="submit" id= "start-btn">Start</button>
-        </a>
+
     </div>
 
     <script type="module" src="./build/Start.js"></script>
