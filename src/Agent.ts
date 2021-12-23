@@ -205,7 +205,7 @@ export default class Agent{
     }
     show(ctx:CanvasRenderingContext2D) {
         ctx.lineWidth = 1;
-        ctx.fillStyle = "rgb(255,255,255)";
+        ctx.fillStyle = "rgb(0,0,255)";
         ctx.beginPath();
         ctx.arc(this.pos.x, this.pos.y, this.radius, 0, 2 * Math.PI);
         ctx.stroke();

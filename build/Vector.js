@@ -9,10 +9,13 @@ export default class Vector {
         this.x += a.x;
         this.y += a.y;
     }
+<<<<<<< HEAD
     sub(a) {
         this.x -= a.x;
         this.y -= a.y;
     }
+=======
+>>>>>>> 5e370bf32cae8830a0ebaf9516b247de1e757c20
     static add(a, b) {
         return { x: a.x + b.x, y: a.y + b.y };
     }

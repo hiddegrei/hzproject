@@ -29,6 +29,7 @@ export default class Scene {
     timeArray;
     keyboard;
     camera;
+    agent;
     username;
     password;
     timeLimit;
@@ -67,6 +68,7 @@ export default class Scene {
             this.borders.push(new Border(x, y, x2, y2, this.ctx, "agent"));
         }
         this.particle = new Particle(100, 100 + 0.5 * this.level.widthHall, this.ctx);
+        this.agent = new Agent(1.5 * this.level.widthHall, 100 + 0.5 * this.level.widthHall, this.ctx, this.level.widthHall);
         this.mouse = { x: 0, y: 0 };
         this.agent = new Agent(1.5 * this.level.widthHall, 100 + 0.5 * this.level.widthHall, this.ctx, this.level.widthHall);
         this.count = 0;
@@ -117,10 +119,15 @@ export default class Scene {
         else {
             this.time += elapsed;
         }
+<<<<<<< HEAD
         this.particle.move(this.mouse.x, this.mouse.y, this.borders);
         this.agent.update(this.mouse.x, this.mouse.y, this.borders);
         this.agent.move();
         this.agent.inSight(this.particle, this.ctx);
+=======
+        this.agent.update(this.mouse.x, this.mouse.y, this.borders);
+        this.agent.move();
+>>>>>>> 5e370bf32cae8830a0ebaf9516b247de1e757c20
     }
     render() {
         this.particle.show();

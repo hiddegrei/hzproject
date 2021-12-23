@@ -13,7 +13,8 @@ export default class Border {
     this.b = new Vector(x2,y2)
     this.type=type
 
-    this.ctx = ctx
+    this.ctx = ctx;
+    this.type=type
 
   }
 

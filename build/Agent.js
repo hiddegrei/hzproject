@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 import Border from "./Border.js";
+=======
+>>>>>>> 5e370bf32cae8830a0ebaf9516b247de1e757c20
 import Ray from "./Ray.js";
 import Vector from "./Vector.js";
 export default class Agent {
@@ -17,7 +20,10 @@ export default class Agent {
     target;
     lastAngle;
     viewRays;
+<<<<<<< HEAD
     sight;
+=======
+>>>>>>> 5e370bf32cae8830a0ebaf9516b247de1e757c20
     constructor(x, y, ctx, widthHall) {
         this.ctx = ctx;
         this.pos = new Vector(x, y);
@@ -37,7 +43,10 @@ export default class Agent {
         }
         this.target = new Vector(x, y);
         this.viewRays = [];
+<<<<<<< HEAD
         this.sight = 80;
+=======
+>>>>>>> 5e370bf32cae8830a0ebaf9516b247de1e757c20
     }
     applyforce(force) {
         this.acc.add(force);
@@ -137,7 +146,11 @@ export default class Agent {
     }
     show(ctx) {
         ctx.lineWidth = 1;
+<<<<<<< HEAD
         ctx.fillStyle = "rgb(255,255,255)";
+=======
+        ctx.fillStyle = "rgb(0,0,255)";
+>>>>>>> 5e370bf32cae8830a0ebaf9516b247de1e757c20
         ctx.beginPath();
         ctx.arc(this.pos.x, this.pos.y, this.radius, 0, 2 * Math.PI);
         ctx.stroke();
@@ -163,18 +176,26 @@ export default class Agent {
             }
             if (closest.x != -1) {
                 ctx.fillStyle = "#FF0000";
+<<<<<<< HEAD
                 let rv = new Vector(closest.x, closest.y);
                 rv.sub(this.pos);
                 rv.setMag(this.sight);
                 ctx.beginPath();
                 ctx.moveTo(this.pos.x, this.pos.y);
                 ctx.lineTo(this.pos.x + rv.x, this.pos.y + rv.y);
+=======
+                ctx.strokeStyle = "rgb(0,0,255)";
+                ctx.beginPath();
+                ctx.moveTo(this.pos.x, this.pos.y);
+                ctx.lineTo(closest.x, closest.y);
+>>>>>>> 5e370bf32cae8830a0ebaf9516b247de1e757c20
                 ctx.stroke();
                 ctx.closePath();
                 ctx.fill();
             }
         }
     }
+<<<<<<< HEAD
     inSight(particle, ctx) {
         let lines = [
             new Border(particle.pos.x, particle.pos.y - particle.radius, particle.pos.x, particle.pos.y + particle.radius, ctx, "particle"),
@@ -208,6 +229,8 @@ export default class Agent {
             this.writeTextToCanvas("!", 20, this.pos.x + rv.x, this.pos.y + rv.y, 'center', "red");
         }
     }
+=======
+>>>>>>> 5e370bf32cae8830a0ebaf9516b247de1e757c20
     writeTextToCanvas(text, fontSize = 20, xCoordinate, yCoordinate, alignment = 'center', color = 'white') {
         this.ctx.font = `${fontSize}px sans-serif`;
         this.ctx.fillStyle = color;

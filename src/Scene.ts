@@ -46,13 +46,15 @@ export default class Scene {
 
   public currentTrans: Vector;
 
-  public agent:Agent;
+  
  
   private timeArray: number[];
 
   private keyboard:KeyboardListener;
 
   private camera:Camera;
+
+  private agent:Agent;
 
   private username:string;
   private password:string;
@@ -76,6 +78,8 @@ export default class Scene {
     this.keyboard=new KeyboardListener()
    
 
+
+    
     this.game = game;
     this.ctx = this.canvas.getContext('2d');
     this.progression = new Progression(this.canvas);
@@ -95,6 +99,7 @@ export default class Scene {
       const y2 = this.level.level1[i][3];
       this.borders.push(new Border(x, y, x2, y2, this.ctx,"normal"));
     }
+
     for (let i = 0; i < this.level.agentBorders.length; i++) {
       const x = this.level.agentBorders[i][0];
       const y = this.level.agentBorders[i][1];
@@ -106,6 +111,7 @@ export default class Scene {
     // this.border= new Border(300,50,300,200,this.ctx)
     // this.ray=new Ray(50,150, this.ctx)
     this.particle = new Particle(100, 100+0.5*this.level.widthHall, this.ctx);
+    this.agent=new Agent(1.5*this.level.widthHall, 100+0.5*this.level.widthHall, this.ctx,this.level.widthHall)
     this.mouse = { x: 0, y: 0 };
     this.agent=new Agent(1.5*this.level.widthHall, 100+0.5*this.level.widthHall, this.ctx,this.level.widthHall)
     
@@ -208,6 +214,8 @@ export default class Scene {
     //   this.game.isEnd=true
     // }
     this.agent.inSight(this.particle,this.ctx)
+    this.agent.update(this.mouse.x, this.mouse.y, this.borders);
+    this.agent.move()
     
    
   }
