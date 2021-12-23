@@ -2,10 +2,12 @@ export default class Border {
     a = {};
     b = {};
     ctx;
-    constructor(x1, y1, x2, y2, ctx) {
+    type;
+    constructor(x1, y1, x2, y2, ctx, type) {
         this.a = { x: x1, y: y1 };
         this.b = { x: x2, y: y2 };
         this.ctx = ctx;
+        this.type = type;
     }
     show() {
         this.ctx.strokeStyle = "rgb(255,255,255)";

@@ -3,13 +3,15 @@ export default class Border {
   public a = <any>{};
   public b = <any>{};
   public ctx: CanvasRenderingContext2D;
+  public type:string
 
 
-  constructor(x1: number, y1: number, x2: number, y2: number, ctx: CanvasRenderingContext2D) {
+  constructor(x1: number, y1: number, x2: number, y2: number, ctx: CanvasRenderingContext2D,type:string) {
     this.a = { x: x1, y: y1 };
     this.b = { x: x2, y: y2 };
 
-    this.ctx = ctx
+    this.ctx = ctx;
+    this.type=type
 
   }
 

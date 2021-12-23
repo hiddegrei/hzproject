@@ -8,11 +8,33 @@ export default class Vector{
         this.y=y
     }
 
+    public add(a:Vector){
+        this.x+=a.x;
+        this.y+=a.y;
+    }
+
     public static add(a: { x: any; y: any; },b: { x: any; y: any; }){
 
         return {x:a.x+b.x,y:a.y+b.y}
 
     }
+    public limit(lim: number){
+
+
+        let lengthV=Math.sqrt(this.x*this.x+this.y*this.y)
+        if(lengthV<=lim||lengthV===0){
+            
+        }else{
+            let newx=this.x/lengthV;
+            let newy=this.y/lengthV;
+            this.x=newx*lim
+            this.y=newy*lim
+            
+            
+        }
+
+    }
+
 
     public static limit(a: { x: number; y: number; },lim: number){
 
@@ -26,6 +48,19 @@ export default class Vector{
         }
 
     }
+
+    public setMag(mag: number){
+        let lengthV=Math.sqrt(this.x*this.x+this.y*this.y)
+        if(lengthV!=0){
+        let newx=this.x/lengthV;
+        let newy=this.y/lengthV;
+            this.x=newx*mag;
+            this.y=newy*mag
+        }
+        
+
+    }
+
 
     public static setMag(a: { x: number; y: number; },mag: number){
         let lengthV=Math.sqrt(a.x*a.x+a.y*a.y)

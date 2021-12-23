@@ -10,6 +10,7 @@ import Vector from './Vector.js';
 import KeyboardListener from './KeyboardListener.js';
 import Camera from './Camera.js';
 import TimeLimit from './TimeLimit.js';
+import Agent from './Agent.js';
 
 
 export default class Scene {
@@ -51,6 +52,8 @@ export default class Scene {
 
   private camera:Camera;
 
+  private agent:Agent;
+
   private username:string;
   private password:string;
   private timeLimit: TimeLimit;
@@ -73,7 +76,6 @@ export default class Scene {
     this.keyboard=new KeyboardListener()
 
     
-
     this.game = game;
     this.ctx = this.canvas.getContext('2d');
     this.progression = new Progression(this.canvas);
@@ -91,11 +93,21 @@ export default class Scene {
       const y = this.level.level1[i][1];
       const x2 = this.level.level1[i][2];
       const y2 = this.level.level1[i][3];
-      this.borders.push(new Border(x, y, x2, y2, this.ctx));
+      this.borders.push(new Border(x, y, x2, y2, this.ctx,"normal"));
+    }
+
+    for (let i = 0; i < this.level.agentBorders.length; i++) {
+      const x = this.level.agentBorders[i][0];
+      const y = this.level.agentBorders[i][1];
+      const x2 = this.level.agentBorders[i][2];
+      const y2 = this.level.agentBorders[i][3];
+      this.borders.push(new Border(x, y, x2, y2, this.ctx,"agent"));
+
     }
     // this.border= new Border(300,50,300,200,this.ctx)
     // this.ray=new Ray(50,150, this.ctx)
     this.particle = new Particle(100, 100+0.5*this.level.widthHall, this.ctx);
+    this.agent=new Agent(1.5*this.level.widthHall, 100+0.5*this.level.widthHall, this.ctx,this.level.widthHall)
     this.mouse = { x: 0, y: 0 };
 
     // window.addEventListener("mousemove",this.mouseDown.bind(this), false)
@@ -196,6 +208,8 @@ export default class Scene {
     // if(this.timeLeft<1){
     //   this.game.isEnd=true
     // }
+    this.agent.update(this.mouse.x, this.mouse.y, this.borders);
+    this.agent.move()
     
    
   }
@@ -221,6 +235,9 @@ export default class Scene {
     this.writeTextToCanvas('Central hub', 20, this.canvas.width / 2, 400);
 
     this.writeTextToCanvas("Timelimit: "+this.timeLeft,20,this.canvas.width / 3,20)
+
+    this.agent.show(this.ctx)
+    this.agent.look(this.borders,this.ctx)
 
     
   }

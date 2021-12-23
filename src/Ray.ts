@@ -1,3 +1,5 @@
+import Vector from "./Vector";
+
 export default class Ray {
 
     public pos = <any>{};
@@ -6,7 +8,7 @@ export default class Ray {
     public ctx: CanvasRenderingContext2D;
     public p = <any>{};
 
-    constructor(pos: number, angle: number, ctx: CanvasRenderingContext2D) {
+    constructor(pos: Vector, angle: number, ctx: CanvasRenderingContext2D) {
         this.pos = pos;
         this.lenghtDir = 50
         this.dir = { x: Math.cos((angle / 360) * 2 * Math.PI), y: Math.sin((angle / 360) * 2 * Math.PI) };
