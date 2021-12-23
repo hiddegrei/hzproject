@@ -8,6 +8,7 @@ export default class EndGame extends InfoDisplay {
     img;
     ctx;
     keyboard;
+    gameloop;
     constructor(canvas, game) {
         super(canvas);
         this.ctx = this.canvas.getContext('2d');
@@ -15,11 +16,10 @@ export default class EndGame extends InfoDisplay {
         this.game = game;
     }
     update() {
+        console.log(document.querySelectorAll('div.hud'));
+        document.querySelectorAll('div.hud').forEach((element) => { element.remove(); });
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.setTransform(1, 0, 0, 1, 0, 0);
-        if (this.keyboard.isKeyDown(32)) {
-            this.game.isEnd = false;
-        }
     }
     render() {
         this.drawImageScaled(this.ctx, './assets/img/background/product_image_bank-heist-4d_175f1d92e0631561ada7c2b1e91a2bde84ef47c112abba5b443d0f36fab4a134_opti.png', 1, 1, 0, 0);

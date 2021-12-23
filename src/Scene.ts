@@ -45,7 +45,7 @@ export default class Scene {
 
   public currentTrans: Vector;
 
- 
+  private timeArray: number[];
 
   private keyboard:KeyboardListener;
 
@@ -62,6 +62,7 @@ export default class Scene {
    * @param game
    */
   constructor(canvas: HTMLCanvasElement, game: Game) {
+    this.timeArray = [Date.now()];
     this.canvas = canvas;
     this.canvas.width = 1920;
     this.canvas.height = 969;
@@ -137,39 +138,68 @@ export default class Scene {
   /**
    *@param condition boolean
    */
-  update(elapsed:number): void {
-    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    this.progression.writeTextToCanvas('progress: ', this.canvas.width / 10 * 6.5, 20);
-    this.ctx.setTransform(1, 0, 0, 1, 0, 0);
-    let trans = this.camera.checkScaling(this.canvas,this.particle)
-    this.camera.createMatrix(trans.x, trans.y, 0, 0)
+  update(elapsed: number): void {
+    console.log(elapsed);
+    this.timeArray.push(Date.now());
+    if (this.game.timeLimit - (Date.now() - this.timeArray[0]) < 0) {
+      this.game.isEnd = true;
+    } else {
+      this.game.timeLimit -= (Date.now() - this.timeArray[0]);
+      this.timeArray.shift();
+    }
 
-    // this.currentTrans = { x: trans.x, y: trans.y }
-    this.ctx.translate(trans.x, trans.y)
-    // this.ctx.translate(100,100)
-    this.progression.writeTextToCanvas('progress: ', this.canvas.width / 10 * 6.5, 20);
-
-    document.onmousemove = this.mouseDown.bind(this);
-    this.particle.move(this.mouse.x, this.mouse.y, this.borders);
-    this.count += 1;
+      document.querySelector('div#timeLimit.hud span').innerHTML = (JSON.stringify(Math.floor(this.game.timeLimit / 1000)));
+    
 
     if (this.count >= 100) {
       this.writeTextToCanvas(`${this.progression.getProgression()}%`, 20, this.canvas.width / 10 * 9, 20);
       this.progression.setXEnd();
       if (this.count === 100) {
         this.score.forEach((element) => { this.totalScore += element.getScore(); });
+      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      // this.progression.writeTextToCanvas('progress: ', this.canvas.width / 10 * 6.5, 20);
+      this.ctx.setTransform(1, 0, 0, 1, 0, 0);
+      let trans = this.camera.checkScaling(this.canvas,this.particle)
+      this.camera.createMatrix(trans.x, trans.y, 0, 0)
+  
+      // this.currentTrans = { x: trans.x, y: trans.y }
+      this.ctx.translate(trans.x, trans.y)
+      // this.ctx.translate(100,100)
+      // this.progression.writeTextToCanvas('progress: ', this.canvas.width / 10 * 6.5, 20);
+  
+      document.onmousemove = this.mouseDown.bind(this);
+      this.particle.move(this.mouse.x, this.mouse.y, this.borders);
+      this.count += 1;
+  
+      // this.progression.writeTextToCanvas('progress: ', 850, 20);
+      // this.progression.writeTextToCanvas('progress: ', 850, 20);
+      //this.progression.writeTextToCanvas('progress: ', 850, 20);
+      if (this.count >= 100) {
+        this.writeTextToCanvas(`${this.progression.getProgression()}%`, 20, this.canvas.width / 10 * 9, 20);
+        this.progression.setXEnd();
+        if (this.count === 100) {
+          this.score.forEach((element) => { this.totalScore += element.getScore(); });
+        }
+      } else {
+        this.writeTextToCanvas(`${this.progression.getProgression()}%`, 20, this.canvas.width / 10 * 9, 20);
       }
-    } else {
-      this.writeTextToCanvas(`${this.progression.getProgression()}%`, 20, this.canvas.width / 10 * 9, 20);
+      this.progression.pBar(this.ctx);
+      // this.score[0].writeTextToCanvas(`Score: ${this.totalScore}`, this.canvas.width / 2, 20);
+  
+      if (this.keyboard.isKeyDown(82)) {
+        // this.endGame = new EndGame(this.canvas);
+        this.game.isEnd = true;
+      }
+  
+      //  for(let i=0;i<this.particle.rays.length;i++){
+      //      this.particle.rays[i].cast(this.border)
+      //  }
+      // this.ray.cast(this.border)
+      document.onmousemove = this.mouseDown.bind(this);
+      this.particle.move(this.mouse.x, this.mouse.y, this.borders);
+      this.count += 1;
     }
-    this.progression.pBar(this.ctx);
-    this.score[0].writeTextToCanvas(`Score: ${this.totalScore}`, this.canvas.width / 2, 20);
-
-    if (this.keyboard.isKeyDown(82)) {
-      // this.endGame = new EndGame(this.canvas);
-      this.game.isEnd = true;
-    }
-
+      
     //  for(let i=0;i<this.particle.rays.length;i++){
     //      this.particle.rays[i].cast(this.border)
     //  }
@@ -185,20 +215,13 @@ export default class Scene {
     } else {
       this.time += elapsed
     }
-    
-   
+    }
   }
-
-  
-
-  
-
-  
 
   /**
    *
    */
-  render() {
+  public render() {
     // this.border.show()
     this.particle.show();
     // this.writeTextToCanvas("hi",100,100)
@@ -236,5 +259,4 @@ export default class Scene {
     this.ctx.fillText(text, xCoordinate, yCoordinate);
   }
 }
-// # sourceMappingURL=Scene.js.map
 // # sourceMappingURL=Scene.js.map
