@@ -45,7 +45,7 @@ export default class Scene {
 
   public currentTrans: Vector;
 
- 
+  private timeArray: number[];
 
   private keyboard:KeyboardListener;
 
@@ -62,6 +62,7 @@ export default class Scene {
    * @param game
    */
   constructor(canvas: HTMLCanvasElement, game: Game) {
+    this.timeArray = [Date.now()];
     this.canvas = canvas;
     this.canvas.width = 1920;
     this.canvas.height = 969;
@@ -150,8 +151,8 @@ export default class Scene {
       // this.currentTrans = { x: trans.x, y: trans.y }
       this.ctx.translate(trans.x, trans.y)
       // this.ctx.translate(100,100)
-      this.progression.writeTextToCanvas('progress: ', this.canvas.width / 10 * 6.5, 20);
-      this.progression.pBar(this.ctx);
+       this.progression.writeTextToCanvas('progress: ', this.canvas.width / 10 * 6.5, 20);
+  
       document.onmousemove = this.mouseDown.bind(this);
       this.particle.move(this.mouse.x, this.mouse.y, this.borders);
       this.count += 1;
@@ -168,8 +169,12 @@ export default class Scene {
       } else {
         this.writeTextToCanvas(`${this.progression.getProgression()}%`, 20, this.canvas.width / 10 * 9, 20);
       }
-      if (this.count >= 500) {
-        
+      this.progression.pBar(this.ctx);
+      // this.score[0].writeTextToCanvas(`Score: ${this.totalScore}`, this.canvas.width / 2, 20);
+  
+      if (this.keyboard.isKeyDown(82)) {
+        // this.endGame = new EndGame(this.canvas);
+        this.game.isEnd = true;
       }
   
       
@@ -215,7 +220,7 @@ export default class Scene {
 
     this.writeTextToCanvas('Central hub', 20, this.canvas.width / 2, 400);
 
-    this.writeTextToCanvas("Timelimit: "+this.timeLeft,20,100,20)
+    this.writeTextToCanvas("Timelimit: "+this.timeLeft,20,this.canvas.width / 3,20)
 
     
   }
@@ -242,5 +247,4 @@ export default class Scene {
     this.ctx.fillText(text, xCoordinate, yCoordinate);
   }
 }
-// # sourceMappingURL=Scene.js.map
 // # sourceMappingURL=Scene.js.map
