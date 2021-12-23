@@ -65,7 +65,7 @@ export default class Scene {
         this.timeLimit = new TimeLimit(this.password);
         this.timeLeft = this.timeLimit.timeLimit;
         this.time = 0;
-        console.log(this.username);
+        console.log("username: ", this.username);
     }
     processInput() {
     }
@@ -73,40 +73,28 @@ export default class Scene {
         this.mouse = this.camera.toWorld(e.clientX, e.clientY);
     }
     update(elapsed) {
-        console.log(elapsed);
-        this.timeArray.push(Date.now());
-        if (this.game.timeLimit - (Date.now() - this.timeArray[0]) < 0) {
-            this.game.isEnd = true;
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.ctx.setTransform(1, 0, 0, 1, 0, 0);
+        let trans = this.camera.checkScaling(this.canvas, this.particle);
+        this.camera.createMatrix(trans.x, trans.y, 0, 0);
+        this.ctx.translate(trans.x, trans.y);
+        this.progression.writeTextToCanvas('progress: ', this.canvas.width / 10 * 6.5, 20);
+        document.onmousemove = this.mouseDown.bind(this);
+        this.particle.move(this.mouse.x, this.mouse.y, this.borders);
+        this.count += 1;
+        if (this.count >= 100) {
+            this.writeTextToCanvas(`${this.progression.getProgression()}%`, 20, this.canvas.width / 10 * 9, 20);
+            this.progression.setXEnd();
+            if (this.count === 100) {
+                this.score.forEach((element) => { this.totalScore += element.getScore(); });
+            }
         }
         else {
-            this.game.timeLimit -= (Date.now() - this.timeArray[0]);
-            this.timeArray.shift();
-            document.querySelector('div#timeLimit.hud span').innerHTML = (JSON.stringify(Math.floor(this.game.timeLimit / 1000)));
-            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-            this.ctx.setTransform(1, 0, 0, 1, 0, 0);
-            let trans = this.camera.checkScaling(this.canvas, this.particle);
-            this.camera.createMatrix(trans.x, trans.y, 0, 0);
-            this.ctx.translate(trans.x, trans.y);
-            document.onmousemove = this.mouseDown.bind(this);
-            this.particle.move(this.mouse.x, this.mouse.y, this.borders);
-            this.count += 1;
-            if (this.count >= 100) {
-                this.writeTextToCanvas(`${this.progression.getProgression()}%`, 20, this.canvas.width / 10 * 9, 20);
-                this.progression.setXEnd();
-                if (this.count === 100) {
-                    this.score.forEach((element) => { this.totalScore += element.getScore(); });
-                }
-            }
-            else {
-                this.writeTextToCanvas(`${this.progression.getProgression()}%`, 20, this.canvas.width / 10 * 9, 20);
-            }
-            this.progression.pBar(this.ctx);
-            if (this.keyboard.isKeyDown(82)) {
-                this.game.isEnd = true;
-            }
-            document.onmousemove = this.mouseDown.bind(this);
-            this.particle.move(this.mouse.x, this.mouse.y, this.borders);
-            this.count += 1;
+            this.writeTextToCanvas(`${this.progression.getProgression()}%`, 20, this.canvas.width / 10 * 9, 20);
+        }
+        this.progression.pBar(this.ctx);
+        if (this.keyboard.isKeyDown(82)) {
+            this.game.isEnd = true;
         }
         document.onmousemove = this.mouseDown.bind(this);
         this.particle.move(this.mouse.x, this.mouse.y, this.borders);
@@ -117,9 +105,6 @@ export default class Scene {
         }
         else {
             this.time += elapsed;
-        }
-        if (this.timeLeft < 1) {
-            this.game.isEnd = true;
         }
     }
     render() {

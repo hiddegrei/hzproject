@@ -109,7 +109,7 @@ export default class Scene {
 
     this.time=0
 
-    console.log(this.username)
+    console.log("username: ",this.username)
   }
 
   
@@ -139,15 +139,8 @@ export default class Scene {
    *@param condition boolean
    */
   update(elapsed: number): void {
-    console.log(elapsed);
-    this.timeArray.push(Date.now());
-    if (this.game.timeLimit - (Date.now() - this.timeArray[0]) < 0) {
-      this.game.isEnd = true;
-    } else {
-      this.game.timeLimit -= (Date.now() - this.timeArray[0]);
-      this.timeArray.shift();
-
-      document.querySelector('div#timeLimit.hud span').innerHTML = (JSON.stringify(Math.floor(this.game.timeLimit / 1000)));
+    
+    
 
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
       // this.progression.writeTextToCanvas('progress: ', this.canvas.width / 10 * 6.5, 20);
@@ -158,7 +151,7 @@ export default class Scene {
       // this.currentTrans = { x: trans.x, y: trans.y }
       this.ctx.translate(trans.x, trans.y)
       // this.ctx.translate(100,100)
-      // this.progression.writeTextToCanvas('progress: ', this.canvas.width / 10 * 6.5, 20);
+       this.progression.writeTextToCanvas('progress: ', this.canvas.width / 10 * 6.5, 20);
   
       document.onmousemove = this.mouseDown.bind(this);
       this.particle.move(this.mouse.x, this.mouse.y, this.borders);
@@ -184,22 +177,13 @@ export default class Scene {
         this.game.isEnd = true;
       }
   
-      //  for(let i=0;i<this.particle.rays.length;i++){
-      //      this.particle.rays[i].cast(this.border)
-      //  }
-      // this.ray.cast(this.border)
+      
       document.onmousemove = this.mouseDown.bind(this);
       this.particle.move(this.mouse.x, this.mouse.y, this.borders);
       this.count += 1;
-    }
-      
-    //  for(let i=0;i<this.particle.rays.length;i++){
-    //      this.particle.rays[i].cast(this.border)
-    //  }
-    // this.ray.cast(this.border)
-    document.onmousemove = this.mouseDown.bind(this);
-    this.particle.move(this.mouse.x, this.mouse.y, this.borders);
-    this.count += 1;
+    
+    
+    
 
     if (this.time > 1000) {
       this.timeLeft-=1
@@ -209,9 +193,9 @@ export default class Scene {
       this.time += elapsed
     }
 
-    if(this.timeLeft<1){
-      this.game.isEnd=true
-    }
+    // if(this.timeLeft<1){
+    //   this.game.isEnd=true
+    // }
     
    
   }

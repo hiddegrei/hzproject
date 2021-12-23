@@ -1,16 +1,8 @@
 document.getElementById('start-btn').addEventListener('click', start);
 function start(param: any) {
-    let username = document.querySelector<HTMLInputElement>('input[name="username"]').value;
-    let password = document.querySelector<HTMLInputElement>('input[name="password"]').value;
-    if (username === '' && password === '') {
-        alert("Voer een gebruikersnaam en wachtwoord in!");
-    } else if (username === '') {
-        alert("Voer een gebruikersnaam in!");
-    } else if (password === '') {
-        alert("Voer een wachtwoord in!");
-    } else {
-        window.location.href = `./?username=${username}&password=${password}`;
-    }
+    let username = document.querySelector<HTMLInputElement>('input[id="username"]').value;
+    let password = document.querySelector<HTMLInputElement>('input[id="password"]').value;
+   
     
     let myStorage = window.localStorage;
     localStorage.setItem('username', username)
