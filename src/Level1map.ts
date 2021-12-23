@@ -612,7 +612,7 @@ export default class Level1map {
           this.agentBorders=[
               [(this.canvas.width/2)-9*this.widthHall,100+5*this.widthHall,(this.canvas.width/2)-9*this.widthHall,100+6*this.widthHall],
               [(this.canvas.width/2)-12*this.widthHall,100+4*this.widthHall,(this.canvas.width/2)-12*this.widthHall,100+5*this.widthHall],
-              [(this.canvas.width/2)-15*this.widthHall,100+5*this.widthHall,(this.canvas.width/2)-15*this.widthHall,100+6*this.widthHall],
+              [(this.canvas.width/2)-14*this.widthHall-10,100+5*this.widthHall,(this.canvas.width/2)-14*this.widthHall-10,100+6*this.widthHall],
               [(this.canvas.width/2)-15*this.widthHall,100+13*this.widthHall,(this.canvas.width/2)-14*this.widthHall,100+13*this.widthHall],
               [(this.canvas.width/2)-6*this.widthHall,100+13*this.widthHall,(this.canvas.width/2)-5*this.widthHall,100+13*this.widthHall],
               [(this.canvas.width/2)-8*this.widthHall,100+14*this.widthHall,(this.canvas.width/2)-8*this.widthHall,100+15*this.widthHall],
