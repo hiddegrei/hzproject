@@ -153,9 +153,6 @@ export default class Scene {
     this.particle.move(this.mouse.x, this.mouse.y, this.borders);
     this.count += 1;
 
-    this.progression.writeTextToCanvas('progress: ', 850, 20);
-    // this.progression.writeTextToCanvas('progress: ', 850, 20);
-    //this.progression.writeTextToCanvas('progress: ', 850, 20);
     if (this.count >= 100) {
       this.writeTextToCanvas(`${this.progression.getProgression()}%`, 20, this.canvas.width / 10 * 9, 20);
       this.progression.setXEnd();

@@ -81,12 +81,14 @@ export default class Scene {
         document.onmousemove = this.mouseDown.bind(this);
         this.particle.move(this.mouse.x, this.mouse.y, this.borders);
         this.count += 1;
-        this.progression.writeTextToCanvas('progress: ', 850, 20);
         if (this.count >= 100) {
             this.writeTextToCanvas(`${this.progression.getProgression()}%`, 20, this.canvas.width / 10 * 9, 20);
             this.progression.setXEnd();
             if (this.count === 100) {
                 this.score.forEach((element) => { this.totalScore += element.getScore(); });
+            }
+            if (this.count >= 500) {
+                this.count = 0;
             }
         }
         else {
