@@ -25,7 +25,6 @@ export default class Scene {
     endGame;
     condition;
     currentTrans;
-    agent;
     timeArray;
     keyboard;
     camera;
@@ -119,15 +118,12 @@ export default class Scene {
         else {
             this.time += elapsed;
         }
-<<<<<<< HEAD
         this.particle.move(this.mouse.x, this.mouse.y, this.borders);
         this.agent.update(this.mouse.x, this.mouse.y, this.borders);
         this.agent.move();
         this.agent.inSight(this.particle, this.ctx);
-=======
         this.agent.update(this.mouse.x, this.mouse.y, this.borders);
         this.agent.move();
->>>>>>> 5e370bf32cae8830a0ebaf9516b247de1e757c20
     }
     render() {
         this.particle.show();

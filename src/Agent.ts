@@ -42,7 +42,7 @@ export default class Agent{
         this.dir = { x: 0, y: 0 }
         this.mouse = { x: 0, y: 0 }
         this.angleView = 18;
-         this.maxspeed=1
+         this.maxspeed=0.5
         this.vel=new Vector(0,0)
         this.acc=new Vector(0,0)
         this.widthHall=widthHall
