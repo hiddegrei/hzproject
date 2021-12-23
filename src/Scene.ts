@@ -150,8 +150,8 @@ export default class Scene {
       // this.currentTrans = { x: trans.x, y: trans.y }
       this.ctx.translate(trans.x, trans.y)
       // this.ctx.translate(100,100)
-       this.progression.writeTextToCanvas('progress: ', this.canvas.width / 10 * 6.5, 20);
-  
+      this.progression.writeTextToCanvas('progress: ', this.canvas.width / 10 * 6.5, 20);
+      this.progression.pBar(this.ctx);
       document.onmousemove = this.mouseDown.bind(this);
       this.particle.move(this.mouse.x, this.mouse.y, this.borders);
       this.count += 1;
