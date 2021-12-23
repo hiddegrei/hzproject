@@ -16,7 +16,6 @@ export default class EndGame extends InfoDisplay {
         this.game = game;
     }
     update() {
-        console.log(document.querySelectorAll('div.hud'));
         document.querySelectorAll('div.hud').forEach((element) => { element.remove(); });
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.setTransform(1, 0, 0, 1, 0, 0);

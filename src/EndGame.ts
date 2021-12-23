@@ -37,7 +37,7 @@ export default class EndGame extends InfoDisplay {
    * update the endscreen
    */
   public update(): void {
-    console.log(document.querySelectorAll('div.hud'));
+    //console.log(document.querySelectorAll('div.hud'));
     // document.querySelectorAll('div.hud').forEach((element) => {element.innerHTML = '' } )
     document.querySelectorAll('div.hud').forEach((element) => {element.remove() } )
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);

@@ -65,7 +65,7 @@ export default class Scene {
         this.timeLimit = new TimeLimit(this.password);
         this.timeLeft = this.timeLimit.timeLimit;
         this.time = 0;
-        console.log(this.username);
+        console.log("username: ", this.username);
     }
     processInput() {
     }
@@ -73,12 +73,24 @@ export default class Scene {
         this.mouse = this.camera.toWorld(e.clientX, e.clientY);
     }
     update(elapsed) {
-        console.log(elapsed);
-        this.timeArray.push(Date.now());
-        if (this.game.timeLimit - (Date.now() - this.timeArray[0]) < 0) {
-            this.game.isEnd = true;
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.ctx.setTransform(1, 0, 0, 1, 0, 0);
+        let trans = this.camera.checkScaling(this.canvas, this.particle);
+        this.camera.createMatrix(trans.x, trans.y, 0, 0);
+        this.ctx.translate(trans.x, trans.y);
+        this.progression.writeTextToCanvas('progress: ', this.canvas.width / 10 * 6.5, 20);
+        document.onmousemove = this.mouseDown.bind(this);
+        this.particle.move(this.mouse.x, this.mouse.y, this.borders);
+        this.count += 1;
+        if (this.count >= 100) {
+            this.writeTextToCanvas(`${this.progression.getProgression()}%`, 20, this.canvas.width / 10 * 9, 20);
+            this.progression.setXEnd();
+            if (this.count === 100) {
+                this.score.forEach((element) => { this.totalScore += element.getScore(); });
+            }
         }
         else {
+<<<<<<< HEAD
             this.game.timeLimit -= (Date.now() - this.timeArray[0]);
             this.timeArray.shift();
         }
@@ -124,9 +136,23 @@ export default class Scene {
             else {
                 this.time += elapsed;
             }
+=======
+            this.writeTextToCanvas(`${this.progression.getProgression()}%`, 20, this.canvas.width / 10 * 9, 20);
         }
-        if (this.timeLeft < 1) {
+        this.progression.pBar(this.ctx);
+        if (this.keyboard.isKeyDown(82)) {
             this.game.isEnd = true;
+        }
+        document.onmousemove = this.mouseDown.bind(this);
+        this.particle.move(this.mouse.x, this.mouse.y, this.borders);
+        this.count += 1;
+        if (this.time > 1000) {
+            this.timeLeft -= 1;
+            this.time = 0;
+        }
+        else {
+            this.time += elapsed;
+>>>>>>> a2def5033d4daca4d62db64d9927f77f012ea448
         }
     }
     render() {
