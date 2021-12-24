@@ -60,7 +60,7 @@ export default class Agent{
          this.target=new Vector(x,y)
          this.viewRays=[]
          this.sight=80;
-         this.checkAngle=3;
+         this.checkAngle=5;
          
 
 
@@ -255,7 +255,7 @@ export default class Agent{
                 
             }
         }
-        if(record>this.widthHall+4&&this.inv(angle)!=this.lastAngle){
+        if(record>this.widthHall-5&&this.inv(angle)!=this.lastAngle){
             
         }else{
 return false

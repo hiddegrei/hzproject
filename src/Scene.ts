@@ -112,6 +112,7 @@ export default class Scene {
     // this.ray=new Ray(50,150, this.ctx)
     this.particle = new Particle(100, 100+0.5*this.level.widthHall, this.ctx);
     this.agents.push(new Agent(1.5*this.level.widthHall, 100+0.5*this.level.widthHall, this.ctx,this.level.widthHall,"random"))
+    this.agents.push(new Agent((this.canvas.width/2)+3.5*this.level.widthHall, 300+2*this.level.widthHall, this.ctx,this.level.widthHall,"random"))
     this.agents.push(new Agent((this.canvas.width/2)-(0.5*this.level.widthHall), 100+3*this.level.widthHall, this.ctx,this.level.widthHall,"search"))
     this.mouse = { x: 0, y: 0 };
     
