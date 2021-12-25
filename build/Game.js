@@ -7,17 +7,25 @@ export default class Game {
     scene;
     endGame;
     isEnd;
-    username;
-    password;
+    usernameProperty;
+    passwordProperty;
     constructor(canvas) {
         this.canvas = canvas;
         this.scene = new Scene(this.canvas, this);
         this.gameLoop = new GameLoop(this);
         this.endGame = new EndGame(this.canvas, this);
-        this.username = new URLSearchParams(document.location.search).get('username');
-        this.password = new URLSearchParams(document.location.search).get('password');
+        this.usernameProperty = localStorage.getItem('username');
+        this.passwordProperty = localStorage.getItem('password');
+    }
+    get username() {
+        return this.usernameProperty;
+    }
+    get password() {
+        return this.passwordProperty;
     }
     start() {
+        console.log(`Username: ${this.username}`);
+        console.log(`Password: ${this.password}`);
         this.gameLoop.start();
     }
     processInput() {

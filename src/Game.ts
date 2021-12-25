@@ -14,9 +14,9 @@ export default class Game {
 
   public isEnd:boolean;
 
-  private username: string;
+  private usernameProperty: string;
 
-  private password: string;
+  private passwordProperty: string;
 
   /**
    * @param canvas
@@ -26,14 +26,24 @@ export default class Game {
     this.scene = new Scene(this.canvas, this);
     this.gameLoop = new GameLoop(this);
     this.endGame=new EndGame(this.canvas,this)
-    this.username = new URLSearchParams(document.location.search).get('username');
-    this.password = new URLSearchParams(document.location.search).get('password');
+    this.usernameProperty = localStorage.getItem('username');
+    this.passwordProperty = localStorage.getItem('password');
+  }
+
+  public get username() {
+    return this.usernameProperty;
+  }
+
+  public get password() {
+    return this.passwordProperty;
   }
 
   /**
    *
    */
   public start() {
+    console.log(`Username: ${this.username}`);
+    console.log(`Password: ${this.password}`);
     this.gameLoop.start();
   }
 
