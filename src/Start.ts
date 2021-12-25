@@ -1,17 +1,12 @@
 document.getElementById('start-btn').addEventListener('click', start);
-function start(param: any) {  
-    console.log(`Username: ${document.querySelector<HTMLInputElement>('input[name="username"]')?.value}\n
-                 Password: ${document.querySelector<HTMLInputElement>('input[name="password"]')?.value}`);
-      
-    let username=document.querySelector<HTMLInputElement>('input[id="username"]')?.value
-    let pass=document.querySelector<HTMLInputElement>('input[id="password"]')?.value
-
-    // console.log(username)
+function start(param: any) {
+    let username=document.querySelector<HTMLInputElement>('input[id="username"]')?.value;
+    let password=document.querySelector<HTMLInputElement>('input[id="password"]')?.value;
+    let repeatPassword=document.querySelector<HTMLInputElement>('input[id="repeatPassword"]')?.value;
 
     let myStorage = window.localStorage;
-    localStorage.setItem('username', username)
-    localStorage.setItem('password', pass)
-    // window.location.href = `./?
-    // username=${document.querySelector<HTMLInputElement>('input[name="username"]').value}&
-    // password=${document.querySelector<HTMLInputElement>('input[name="password"]').value}`;
+    localStorage.setItem('username', username);
+    localStorage.setItem('password', password);
+    console.log(localStorage.getItem('username'));
+    console.log(localStorage.getItem('password'));
 }
