@@ -3,8 +3,6 @@ import GameLoop from './GameLoop.js';
 
 import Scene from './Scene.js';
 
-import TimeLimit from './TimeLimit.js';
-
 export default class Game {
   public canvas: HTMLCanvasElement;
 
@@ -20,8 +18,6 @@ export default class Game {
 
   private password: string;
 
-  public timeLimit: number;
-
   /**
    * @param canvas
    */
@@ -32,15 +28,12 @@ export default class Game {
     this.endGame=new EndGame(this.canvas,this)
     this.username = new URLSearchParams(document.location.search).get('username');
     this.password = new URLSearchParams(document.location.search).get('password');
-    this.timeLimit = new TimeLimit(this.password).timeLimit;
   }
 
   /**
    *
    */
   public start() {
-    // console.log('starting');
-    // console.log(`Time limit: ${this.timeLimit.timeLimit}`);
     this.gameLoop.start();
   }
 

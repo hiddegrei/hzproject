@@ -1,7 +1,6 @@
 import EndGame from './EndGame.js';
 import GameLoop from './GameLoop.js';
 import Scene from './Scene.js';
-import TimeLimit from './TimeLimit.js';
 export default class Game {
     canvas;
     gameLoop;
@@ -10,7 +9,6 @@ export default class Game {
     isEnd;
     username;
     password;
-    timeLimit;
     constructor(canvas) {
         this.canvas = canvas;
         this.scene = new Scene(this.canvas, this);
@@ -18,7 +16,6 @@ export default class Game {
         this.endGame = new EndGame(this.canvas, this);
         this.username = new URLSearchParams(document.location.search).get('username');
         this.password = new URLSearchParams(document.location.search).get('password');
-        this.timeLimit = new TimeLimit(this.password).timeLimit;
     }
     start() {
         this.gameLoop.start();
