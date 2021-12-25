@@ -156,6 +156,7 @@ export default class Scene {
    */
   update(elapsed: number): void {
     // console.log(this.timeLimit);
+    console.log(this.game.password);
     document.querySelector('div#timeLimit.hud span').innerHTML = (JSON.stringify(Math.floor(this.timeLeft / 1000)));
     document.querySelector('div#score.hud span').innerHTML = JSON.stringify(543210); //TODO goede score
     // this.progress.updateProgressBar();

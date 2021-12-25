@@ -23,11 +23,12 @@ export default class Game {
    */
   constructor(canvas: HTMLElement) {
     this.canvas = canvas as HTMLCanvasElement;
+    this.usernameProperty = localStorage.getItem('username');
+    this.passwordProperty = localStorage.getItem('password');
+    // Username and password properties must be initialized before an instance of the scene class is created!
     this.scene = new Scene(this.canvas, this);
     this.gameLoop = new GameLoop(this);
     this.endGame=new EndGame(this.canvas,this)
-    this.usernameProperty = localStorage.getItem('username');
-    this.passwordProperty = localStorage.getItem('password');
   }
 
   public get username() {

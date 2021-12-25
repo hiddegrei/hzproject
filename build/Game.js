@@ -11,11 +11,11 @@ export default class Game {
     passwordProperty;
     constructor(canvas) {
         this.canvas = canvas;
+        this.usernameProperty = localStorage.getItem('username');
+        this.passwordProperty = localStorage.getItem('password');
         this.scene = new Scene(this.canvas, this);
         this.gameLoop = new GameLoop(this);
         this.endGame = new EndGame(this.canvas, this);
-        this.usernameProperty = localStorage.getItem('username');
-        this.passwordProperty = localStorage.getItem('password');
     }
     get username() {
         return this.usernameProperty;

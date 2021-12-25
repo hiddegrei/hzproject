@@ -83,6 +83,7 @@ export default class Scene {
         this.mouse = this.camera.toWorld(e.clientX, e.clientY);
     }
     update(elapsed) {
+        console.log(this.game.password);
         document.querySelector('div#timeLimit.hud span').innerHTML = (JSON.stringify(Math.floor(this.timeLeft / 1000)));
         document.querySelector('div#score.hud span').innerHTML = JSON.stringify(543210);
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
