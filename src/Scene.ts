@@ -11,6 +11,7 @@ import KeyboardListener from './KeyboardListener.js';
 import Camera from './Camera.js';
 import TimeLimit from './TimeLimit.js';
 import Agent from './Agent.js';
+import Progress from './Progress.js';
 
 
 export default class Scene {
@@ -56,11 +57,10 @@ export default class Scene {
 
   private agents:Array<Agent>=[];
 
-  private username:string;
-  private password:string;
   private timeLimit: TimeLimit;
   private time:number;
   private timeLeft:number
+  private progress: Progress;
 
   /**
    * @param canvas
@@ -83,6 +83,7 @@ export default class Scene {
     this.game = game;
     this.ctx = this.canvas.getContext('2d');
     this.progression = new Progression(this.canvas);
+    this.progress = new Progress();
     console.log("window widht:", window.innerWidth)
     console.log("window height:", window.innerHeight)
 
@@ -121,15 +122,10 @@ export default class Scene {
     // window.addEventListener("mousemove",this.mouseDown.bind(this), false)
     this.count = 0;
 
-    this.username = localStorage.getItem('username');
-    this.password = localStorage.getItem('password');
+    this.timeLimit = new TimeLimit(this.game.password);
+    this.timeLeft = this.timeLimit.timeLimit
 
-    this.timeLimit = new TimeLimit(this.password);
-    this.timeLeft=this.timeLimit.timeLimit
-
-    this.time=0
-
-    console.log("username: ",this.username)
+    this.time=0;
   }
 
   
@@ -159,6 +155,11 @@ export default class Scene {
    *@param condition boolean
    */
   update(elapsed: number): void {
+    // console.log(this.timeLimit);
+    document.querySelector('div#timeLimit.hud span').innerHTML = (JSON.stringify(Math.floor(this.timeLeft / 1000)));
+    document.querySelector('div#score.hud span').innerHTML = JSON.stringify(543210); //TODO goede score
+    // this.progress.updateProgressBar();
+
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     
 
@@ -167,17 +168,11 @@ export default class Scene {
     let trans = this.camera.checkScaling(this.canvas,this.particle)
     this.camera.createMatrix(trans.x, trans.y, 0, 0)
     this.ctx.translate(trans.x, trans.y)
-    // this.ctx.translate(100,100)
-    this.progression.writeTextToCanvas('progress: ', this.canvas.width / 10 * 6.5, 20);
 
     document.onmousemove = this.mouseDown.bind(this);
 
    
     this.count += 1;
-
-    this.progression.writeTextToCanvas('progress: ', 850, 20);
-    // this.progression.writeTextToCanvas('progress: ', 850, 20);
-    //this.progression.writeTextToCanvas('progress: ', 850, 20);
     if (this.count >= 100) {
       this.writeTextToCanvas(`${this.progression.getProgression()}%`, 20, this.canvas.width / 10 * 9, 20);
       this.progression.setXEnd();
