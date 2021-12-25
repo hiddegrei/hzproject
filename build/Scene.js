@@ -83,46 +83,44 @@ export default class Scene {
         this.mouse = this.camera.toWorld(e.clientX, e.clientY);
     }
     update(elapsed) {
-        console.log(this.game.password);
-        document.querySelector('div#timeLimit.hud span').innerHTML = (JSON.stringify(Math.floor(this.timeLeft / 1000)));
-        document.querySelector('div#score.hud span').innerHTML = JSON.stringify(543210);
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.ctx.setTransform(1, 0, 0, 1, 0, 0);
-        let trans = this.camera.checkScaling(this.canvas, this.particle);
-        this.camera.createMatrix(trans.x, trans.y, 0, 0);
-        this.ctx.translate(trans.x, trans.y);
-        document.onmousemove = this.mouseDown.bind(this);
-        this.count += 1;
-        if (this.count >= 100) {
-            this.writeTextToCanvas(`${this.progression.getProgression()}%`, 20, this.canvas.width / 10 * 9, 20);
-            this.progression.setXEnd();
-            if (this.count === 100) {
-                this.score.forEach((element) => { this.totalScore += element.getScore(); });
-            }
-        }
-        else {
-            this.writeTextToCanvas(`${this.progression.getProgression()}%`, 20, this.canvas.width / 10 * 9, 20);
-        }
-        this.progression.pBar(this.ctx);
-        this.score[0].writeTextToCanvas(`Score: ${this.totalScore}`, this.canvas.width / 2, 20);
-        if (this.keyboard.isKeyDown(82)) {
+        if (this.timeLeft - elapsed < 0) {
             this.game.isEnd = true;
         }
-        document.onmousemove = this.mouseDown.bind(this);
-        this.particle.move(this.mouse.x, this.mouse.y, this.borders);
-        this.count += 1;
-        if (this.time > 1000) {
-            this.timeLeft -= 1;
-            this.time = 0;
-        }
         else {
-            this.time += elapsed;
-        }
-        this.particle.move(this.mouse.x, this.mouse.y, this.borders);
-        for (let i = 0; i < this.agents.length; i++) {
-            this.agents[i].inSight(this.particle, this.ctx);
-            this.agents[i].update(this.particle, this.borders);
-            this.agents[i].move();
+            this.timeLeft -= elapsed;
+            document.querySelector('div#timeLimit.hud span').innerHTML = (JSON.stringify(Math.floor(this.timeLeft / 1000)));
+            document.querySelector('div#score.hud span').innerHTML = JSON.stringify(this.totalScore);
+            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+            this.ctx.setTransform(1, 0, 0, 1, 0, 0);
+            let trans = this.camera.checkScaling(this.canvas, this.particle);
+            this.camera.createMatrix(trans.x, trans.y, 0, 0);
+            this.ctx.translate(trans.x, trans.y);
+            document.onmousemove = this.mouseDown.bind(this);
+            this.count += 1;
+            if (this.count >= 100) {
+                this.writeTextToCanvas(`${this.progression.getProgression()}%`, 20, this.canvas.width / 10 * 9, 20);
+                this.progression.setXEnd();
+                if (this.count === 100) {
+                    this.score.forEach((element) => { this.totalScore += element.getScore(); });
+                }
+            }
+            else {
+                this.writeTextToCanvas(`${this.progression.getProgression()}%`, 20, this.canvas.width / 10 * 9, 20);
+            }
+            this.progression.pBar(this.ctx);
+            this.score[0].writeTextToCanvas(`Score: ${this.totalScore}`, this.canvas.width / 2, 20);
+            if (this.keyboard.isKeyDown(82)) {
+                this.game.isEnd = true;
+            }
+            document.onmousemove = this.mouseDown.bind(this);
+            this.particle.move(this.mouse.x, this.mouse.y, this.borders);
+            this.count += 1;
+            this.particle.move(this.mouse.x, this.mouse.y, this.borders);
+            for (let i = 0; i < this.agents.length; i++) {
+                this.agents[i].inSight(this.particle, this.ctx);
+                this.agents[i].update(this.particle, this.borders);
+                this.agents[i].move();
+            }
         }
     }
     render() {

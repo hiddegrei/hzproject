@@ -155,69 +155,63 @@ export default class Scene {
    *@param condition boolean
    */
   update(elapsed: number): void {
-    // console.log(this.timeLimit);
-    console.log(this.game.password);
-    document.querySelector('div#timeLimit.hud span').innerHTML = (JSON.stringify(Math.floor(this.timeLeft / 1000)));
-    document.querySelector('div#score.hud span').innerHTML = JSON.stringify(543210); //TODO goede score
-    // this.progress.updateProgressBar();
-
-    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    
-
-    // this.currentTrans = { x: trans.x, y: trans.y }
-    this.ctx.setTransform(1, 0, 0, 1, 0, 0);
-    let trans = this.camera.checkScaling(this.canvas,this.particle)
-    this.camera.createMatrix(trans.x, trans.y, 0, 0)
-    this.ctx.translate(trans.x, trans.y)
-
-    document.onmousemove = this.mouseDown.bind(this);
-
-   
-    this.count += 1;
-    if (this.count >= 100) {
-      this.writeTextToCanvas(`${this.progression.getProgression()}%`, 20, this.canvas.width / 10 * 9, 20);
-      this.progression.setXEnd();
-      if (this.count === 100) {
-        this.score.forEach((element) => { this.totalScore += element.getScore(); });
-      }
-    } else {
-      this.writeTextToCanvas(`${this.progression.getProgression()}%`, 20, this.canvas.width / 10 * 9, 20);
-    }
-    this.progression.pBar(this.ctx);
-    this.score[0].writeTextToCanvas(`Score: ${this.totalScore}`, this.canvas.width / 2, 20);
-
-    if (this.keyboard.isKeyDown(82)) {
-      // this.endGame = new EndGame(this.canvas);
+    if (this.timeLeft - elapsed < 0) {
       this.game.isEnd = true;
-    }
-
-   
-    document.onmousemove = this.mouseDown.bind(this);
-    this.particle.move(this.mouse.x, this.mouse.y, this.borders);
-    this.count += 1;
-
-    if (this.time > 1000) {
-      this.timeLeft-=1
-
-      this.time = 0
     } else {
-      this.time += elapsed
-    }
+      this.timeLeft -= elapsed;
+      document.querySelector('div#timeLimit.hud span').innerHTML = (JSON.stringify(Math.floor(this.timeLeft / 1000)));
+      document.querySelector('div#score.hud span').innerHTML = JSON.stringify(this.totalScore); //TODO goede score
+      // this.progress.updateProgressBar();
 
-    this.particle.move(this.mouse.x, this.mouse.y, this.borders);
+      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      
+
+      // this.currentTrans = { x: trans.x, y: trans.y }
+      this.ctx.setTransform(1, 0, 0, 1, 0, 0);
+      let trans = this.camera.checkScaling(this.canvas,this.particle)
+      this.camera.createMatrix(trans.x, trans.y, 0, 0)
+      this.ctx.translate(trans.x, trans.y)
+
+      document.onmousemove = this.mouseDown.bind(this);
 
     
-   
-    // if(this.timeLeft<1){
-    //   this.game.isEnd=true
-    // }
-    for(let i=0;i<this.agents.length;i++){
-      this.agents[i].inSight(this.particle,this.ctx)
-      this.agents[i].update(this.particle, this.borders);
-      this.agents[i].move()
+      this.count += 1;
+      if (this.count >= 100) {
+        this.writeTextToCanvas(`${this.progression.getProgression()}%`, 20, this.canvas.width / 10 * 9, 20);
+        this.progression.setXEnd();
+        if (this.count === 100) {
+          this.score.forEach((element) => { this.totalScore += element.getScore(); });
+        }
+      } else {
+        this.writeTextToCanvas(`${this.progression.getProgression()}%`, 20, this.canvas.width / 10 * 9, 20);
+      }
+      this.progression.pBar(this.ctx);
+      this.score[0].writeTextToCanvas(`Score: ${this.totalScore}`, this.canvas.width / 2, 20);
 
+      if (this.keyboard.isKeyDown(82)) {
+        // this.endGame = new EndGame(this.canvas);
+        this.game.isEnd = true;
+      }
+
+    
+      document.onmousemove = this.mouseDown.bind(this);
+      this.particle.move(this.mouse.x, this.mouse.y, this.borders);
+      this.count += 1;
+
+      this.particle.move(this.mouse.x, this.mouse.y, this.borders);
+
+      
+    
+      // if(this.timeLeft<1){
+      //   this.game.isEnd=true
+      // }
+      for(let i=0;i<this.agents.length;i++){
+        this.agents[i].inSight(this.particle,this.ctx)
+        this.agents[i].update(this.particle, this.borders);
+        this.agents[i].move()
+
+      }
     }
-   
     
    
   }
