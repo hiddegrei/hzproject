@@ -162,6 +162,7 @@ export default class Scene {
       document.querySelector('div#timeLimit.hud span').innerHTML = (JSON.stringify(Math.floor(this.timeLeft / 1000)));
       document.querySelector('div#score.hud span').innerHTML = JSON.stringify(this.totalScore); //TODO goede score
       // this.progress.updateProgressBar();
+      this.progress.increaseProgress(1);
 
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
       
@@ -177,16 +178,16 @@ export default class Scene {
     
       this.count += 1;
       if (this.count >= 100) {
-        this.writeTextToCanvas(`${this.progression.getProgression()}%`, 20, this.canvas.width / 10 * 9, 20);
+        // this.writeTextToCanvas(`${this.progression.getProgression()}%`, 20, this.canvas.width / 10 * 9, 20);
         this.progression.setXEnd();
         if (this.count === 100) {
           this.score.forEach((element) => { this.totalScore += element.getScore(); });
         }
       } else {
-        this.writeTextToCanvas(`${this.progression.getProgression()}%`, 20, this.canvas.width / 10 * 9, 20);
+        // this.writeTextToCanvas(`${this.progression.getProgression()}%`, 20, this.canvas.width / 10 * 9, 20);
       }
-      this.progression.pBar(this.ctx);
-      this.score[0].writeTextToCanvas(`Score: ${this.totalScore}`, this.canvas.width / 2, 20);
+      // this.progression.pBar(this.ctx);
+      // this.score[0].writeTextToCanvas(`Score: ${this.totalScore}`, this.canvas.width / 2, 20);
 
       if (this.keyboard.isKeyDown(82)) {
         // this.endGame = new EndGame(this.canvas);
@@ -200,11 +201,6 @@ export default class Scene {
 
       this.particle.move(this.mouse.x, this.mouse.y, this.borders);
 
-      
-    
-      // if(this.timeLeft<1){
-      //   this.game.isEnd=true
-      // }
       for(let i=0;i<this.agents.length;i++){
         this.agents[i].inSight(this.particle,this.ctx)
         this.agents[i].update(this.particle, this.borders);
@@ -235,8 +231,6 @@ export default class Scene {
     this.particle.look(this.borders);
 
     this.writeTextToCanvas('Central hub', 20, this.canvas.width / 2, 400);
-
-    this.writeTextToCanvas("Timelimit: "+this.timeLeft,20,this.canvas.width / 3,20)
 
     for(let i=0;i<this.agents.length;i++){
     this.agents[i].show(this.ctx)

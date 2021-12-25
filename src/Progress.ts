@@ -14,6 +14,10 @@ export default class Progress {
         this.progressProperty = progress;
     }
 
+    public increaseProgress(dProgress: number) {
+        this.progress = this.progress + dProgress;
+    }
+
     public updateProgressBar(): void {
         document.getElementById('progressBar').style.background = `linear-gradient(90deg, rgb(0, 255, 0) 0%, rgba(0,255,0) ${this.progress}%, rgba(255,0,0) ${this.progress}%, rgba(255,0,0) 100%)`;
     }
