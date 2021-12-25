@@ -23,7 +23,7 @@ export default class Particle {
         this.pos = { x: x, y: y };
         this.rays = []
         this.radius = 10
-        this.speed = 1
+        this.speed = 5; // Temporarily increased speed
         this.dir = { x: 0, y: 0 }
         this.mouse = { x: 0, y: 0 }
         this.angleView = 18

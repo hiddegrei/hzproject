@@ -3,7 +3,6 @@ import Border from './Border.js';
 import Ray from './Ray.js';
 import Particle from './Particle.js';
 import Level1map from './Level1map.js';
-import Progression from './Progression.js';
 import Score from './Score.js';
 import EndGame from './EndGame.js';
 import Vector from './Vector.js';
@@ -36,8 +35,6 @@ export default class Scene {
   private totalScore: number;
 
   public widthHall: number;
-
-  private progression: Progression;
 
   private count: number;
 
@@ -82,13 +79,12 @@ export default class Scene {
     
     this.game = game;
     this.ctx = this.canvas.getContext('2d');
-    this.progression = new Progression(this.canvas);
     this.progress = new Progress();
     console.log("window widht:", window.innerWidth)
     console.log("window height:", window.innerHeight)
 
     this.score = [];
-    this.score.push(new Score(0, this.canvas));
+    this.score.push(new Score(0));
     this.totalScore = 0;
     this.borders = [];
     this.level = new Level1map(this.canvas, this.ctx);
@@ -162,7 +158,6 @@ export default class Scene {
       document.querySelector('div#timeLimit.hud span').innerHTML = (JSON.stringify(Math.floor(this.timeLeft / 1000)));
       document.querySelector('div#score.hud span').innerHTML = JSON.stringify(this.totalScore); //TODO goede score
       // this.progress.updateProgressBar();
-      this.progress.increaseProgress(1);
 
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
       
@@ -178,14 +173,11 @@ export default class Scene {
     
       this.count += 1;
       if (this.count >= 100) {
-        // this.writeTextToCanvas(`${this.progression.getProgression()}%`, 20, this.canvas.width / 10 * 9, 20);
-        this.progression.setXEnd();
         if (this.count === 100) {
-          this.score.forEach((element) => { this.totalScore += element.getScore(); });
+          this.score.forEach((element) => { this.totalScore += element.score; });
         }
-      } else {
-        // this.writeTextToCanvas(`${this.progression.getProgression()}%`, 20, this.canvas.width / 10 * 9, 20);
       }
+      // this.writeTextToCanvas(`${this.progression.getProgression()}%`, 20, this.canvas.width / 10 * 9, 20);
       // this.progression.pBar(this.ctx);
       // this.score[0].writeTextToCanvas(`Score: ${this.totalScore}`, this.canvas.width / 2, 20);
 

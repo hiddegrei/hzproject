@@ -8,6 +8,10 @@ export default class HighScores {
         this.highscoreArray.push(['Jos', 100, Date.now() - 1234, "qwertyuiop"]);
         this.highscoreArray.push(['Brent', 0, Date.now() - 123, "123"]);
         this.addHighscore('Jos', 400, "Test");
+        this.addHighscore('Jos', 400, "Test");
+        this.addHighscore('Jos', 400, "Test");
+        this.addHighscore('Jos', 400, "Test");
+        this.addHighscore('Jos', 400, "Test");
     }
     addHighscore(name, score, password) {
         for (let index = this.highscoreArray.length - 1; index >= 0; index--) {

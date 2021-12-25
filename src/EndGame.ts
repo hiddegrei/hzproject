@@ -42,8 +42,6 @@ export default class EndGame extends InfoDisplay {
    * update the endscreen
    */
   public update(): void {
-    //console.log(document.querySelectorAll('div.hud'));
-    // document.querySelectorAll('div.hud').forEach((element) => {element.innerHTML = '' } )
     document.querySelectorAll('div.hud').forEach((element) => {element.remove() } )
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.ctx.setTransform(1, 0, 0, 1, 0, 0);
@@ -73,7 +71,7 @@ export default class EndGame extends InfoDisplay {
       limit = this.highscores.highscores.length;
     }
     for (let index = 0; index < limit ; index++) {
-      this.writeTextToCanvas(`#${index + 1} - ${this.highscores.highscores[index][0]} - ${this.highscores.highscores[index][1]} points`, this.canvas.width / 6, (369 + ((666 - 369) / 10) * index));
+      this.writeTextToCanvas(`#${index + 1} - ${this.highscores.highscores[index][0]} - ${this.highscores.highscores[index][1]} points`, this.canvas.width / 5.85, ((this.canvas.height / 2.6) + (((this.canvas.height / 1.4) - (this.canvas.height / 2.6)) / 10) * index));
     }
   }
 

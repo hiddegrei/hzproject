@@ -1,14 +1,12 @@
-import InfoDisplay from './InformationDisplay.js';
-export default class Score extends InfoDisplay {
-    score;
-    constructor(score, canvas) {
-        super(canvas);
-        this.score = score;
+export default class Score {
+    scoreProperty;
+    constructor(score) {
+        this.scoreProperty = score;
     }
-    setScore(scoreChange) {
-        this.score += scoreChange;
+    set score(dScore) {
+        this.scoreProperty += dScore;
     }
-    getScore() {
+    get score() {
         return this.score;
     }
 }
