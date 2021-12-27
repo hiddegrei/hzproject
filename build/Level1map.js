@@ -6,10 +6,12 @@ export default class Level1map {
     heightCentralHub;
     canvas;
     agentBorders = [];
+    rooms;
     constructor(canvas, ctx) {
         this.widthHall = 50;
         this.ctx = ctx;
         this.canvas = canvas;
+        this.loadRooms();
         this.level1 = [
             [0, 0, this.canvas.width, 0],
             [0, 0, 0, this.canvas.height],
@@ -449,6 +451,27 @@ export default class Level1map {
             [(this.canvas.width / 2) - 14 * this.widthHall, 100 + 9 * this.widthHall, (this.canvas.width / 2) - 14 * this.widthHall, 100 + 10 * this.widthHall],
             [(this.canvas.width / 2) + 11 * this.widthHall, 100, (this.canvas.width / 2) + 11 * this.widthHall, 100 + this.widthHall],
             [(this.canvas.width / 2) - 8 * this.widthHall, 100 + 15 * this.widthHall, (this.canvas.width / 2) - 7 * this.widthHall, 100 + 15 * this.widthHall],
+            [(this.canvas.width / 2) + 12 * this.widthHall, 100 + 3 * this.widthHall, (this.canvas.width / 2) + 12 * this.widthHall, 100 + 4 * this.widthHall],
+        ];
+    }
+    loadRooms() {
+        this.rooms = [
+            [100 + 3 * this.widthHall - 10, 100 + 5 * this.widthHall + 20, "1"],
+            [100 + 5 * this.widthHall + 20, 100 + 4 * this.widthHall + 20, "2"],
+            [100 + 8 * this.widthHall + 20, 100 + 5 * this.widthHall + 20, "3"],
+            [100 + 11 * this.widthHall + 30, 100 + 10 * this.widthHall + 40, "4"],
+            [100 + 11 * this.widthHall + 30, 100 + 13 * this.widthHall + 20, "5"],
+            [100 + 3 * this.widthHall - 10, 100 + 13 * this.widthHall + 15, "6"],
+            [100 + 9 * this.widthHall, 100 + 14 * this.widthHall + 20, "7"],
+            [100 + 21 * this.widthHall, 100 + 16 * this.widthHall + 20, "8"],
+            [(this.canvas.width / 2) + 12 * this.widthHall + 25, 100 + 15 * this.widthHall + 10, "9"],
+            [(this.canvas.width / 2) + 12 * this.widthHall - 10, 100 + 13 * this.widthHall + 20, "10"],
+            [(this.canvas.width / 2) + 18 * this.widthHall - 20, 100 + 10 * this.widthHall + 15, "11"],
+            [(this.canvas.width / 2) + 12 * this.widthHall + 20, 100 + 7 * this.widthHall + 15, "12"],
+            [(this.canvas.width / 2) + 8 * this.widthHall - 20, 100 + 4 * this.widthHall + 15, "13"],
+            [(this.canvas.width / 2) + 11 * this.widthHall - 20, 100 + this.widthHall + 15, "14"],
+            [(this.canvas.width / 2) + 4 * this.widthHall - 10, 100 + 3 * this.widthHall - 25, "15"],
+            [(this.canvas.width / 2) + this.widthHall - 20, 100 + 5 * this.widthHall + 15, "c"],
         ];
     }
 }

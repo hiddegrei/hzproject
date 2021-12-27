@@ -60,7 +60,7 @@ export default class Agent{
          this.target=new Vector(x,y)
          this.viewRays=[]
          this.sight=80;
-         this.checkAngle=5;
+         this.checkAngle=6;
          
 
 

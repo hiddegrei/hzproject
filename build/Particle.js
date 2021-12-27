@@ -1,4 +1,5 @@
 import Ray from "./Ray.js";
+import Vector from "./Vector.js";
 export default class Particle {
     ctx;
     pos = {};
@@ -22,6 +23,14 @@ export default class Particle {
         var angleRad = Math.atan((ay - by) / (ax - bx));
         var angleDeg = angleRad * 180 / Math.PI;
         return (angleDeg);
+    }
+    isInRoom(rooms) {
+        for (let i = 0; i < rooms.length; i++) {
+            let roomV = { x: rooms[i][0], y: rooms[i][1] };
+            if (Vector.dist(this.pos, roomV) < this.radius * 2) {
+                console.log("im inside room: ", rooms[i][2]);
+            }
+        }
     }
     move(mx, my, borders) {
         let walk = true;

@@ -1,6 +1,7 @@
 import Border from "./Border.js";
 import Ray from "./Ray.js";
 import Scene from "./Scene.js"
+import Vector from "./Vector.js";
 export default class Particle {
     public ctx: CanvasRenderingContext2D;
 
@@ -40,6 +41,20 @@ export default class Particle {
         var angleDeg = angleRad * 180 / Math.PI;
 
         return (angleDeg);
+    }
+
+    isInRoom(rooms:Array<any>){
+        for(let i=0;i<rooms.length;i++){
+            let roomV={x:rooms[i][0],y:rooms[i][1]}
+
+       if(Vector.dist(this.pos,roomV)<this.radius*2){
+           console.log("im inside room: ",rooms[i][2])
+       }
+
+        }
+        
+
+
     }
 
     move(mx: number, my: number, borders: Array<Border>) {

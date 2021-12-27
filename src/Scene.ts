@@ -59,6 +59,8 @@ export default class Scene {
   private timeLeft:number
   private progress: Progress;
 
+  private roomsIds:Array<any>=[]
+
   /**
    * @param canvas
    * @param game
@@ -74,6 +76,7 @@ export default class Scene {
     // this.canvas.height = window.innerHeight;
     this.keyboard=new KeyboardListener()
    
+   
 
 
     
@@ -88,6 +91,7 @@ export default class Scene {
     this.totalScore = 0;
     this.borders = [];
     this.level = new Level1map(this.canvas, this.ctx);
+    this.roomsIds=this.level.rooms
 
     for (let i = 0; i < this.level.level1.length; i++) {
       const x = this.level.level1[i][0];
@@ -151,7 +155,8 @@ export default class Scene {
    *@param condition boolean
    */
   update(elapsed: number): void {
-    if (this.timeLeft - elapsed < 0) {
+    if(false){
+    //if (this.timeLeft - elapsed < 0) {
       this.game.isEnd = true;
     } else {
       this.timeLeft -= elapsed;
@@ -189,9 +194,10 @@ export default class Scene {
     
       document.onmousemove = this.mouseDown.bind(this);
       this.particle.move(this.mouse.x, this.mouse.y, this.borders);
+      this.particle.isInRoom(this.roomsIds);
       this.count += 1;
 
-      this.particle.move(this.mouse.x, this.mouse.y, this.borders);
+     
 
       for(let i=0;i<this.agents.length;i++){
         this.agents[i].inSight(this.particle,this.ctx)
@@ -227,6 +233,17 @@ export default class Scene {
     for(let i=0;i<this.agents.length;i++){
     this.agents[i].show(this.ctx)
     this.agents[i].look(this.borders,this.ctx)
+    }
+
+    for(let i=0;i<this.roomsIds.length;i++){
+      this.ctx.lineWidth = 1;
+        this.ctx.fillStyle = "rgb(255,0,0)";
+        this.ctx.beginPath();
+        this.ctx.arc(this.roomsIds[i][0], this.roomsIds[i][1], 10, 0, 2 * Math.PI);
+        this.ctx.stroke();
+        this.ctx.closePath()
+        this.ctx.fill()
+        this.writeTextToCanvas(this.roomsIds[i][2],20,this.roomsIds[i][0],this.roomsIds[i][1]-20)
     }
 
     
