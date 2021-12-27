@@ -29,8 +29,10 @@ export default class Particle {
             let roomV = { x: rooms[i][0], y: rooms[i][1] };
             if (Vector.dist(this.pos, roomV) < this.radius * 2) {
                 console.log("im inside room: ", rooms[i][2]);
+                return true;
             }
         }
+        return false;
     }
     move(mx, my, borders) {
         let walk = true;

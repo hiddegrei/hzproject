@@ -106,7 +106,9 @@ export default class Scene {
             }
             document.onmousemove = this.mouseDown.bind(this);
             this.particle.move(this.mouse.x, this.mouse.y, this.borders);
-            this.particle.isInRoom(this.roomsIds);
+            if (this.particle.isInRoom(this.roomsIds)) {
+            }
+            ;
             this.count += 1;
             for (let i = 0; i < this.agents.length; i++) {
                 this.agents[i].inSight(this.particle, this.ctx);

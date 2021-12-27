@@ -194,7 +194,9 @@ export default class Scene {
     
       document.onmousemove = this.mouseDown.bind(this);
       this.particle.move(this.mouse.x, this.mouse.y, this.borders);
-      this.particle.isInRoom(this.roomsIds);
+      if(this.particle.isInRoom(this.roomsIds)){
+        //player is inside a room or central hub
+      };
       this.count += 1;
 
      

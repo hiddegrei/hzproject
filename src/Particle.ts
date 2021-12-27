@@ -43,15 +43,17 @@ export default class Particle {
         return (angleDeg);
     }
 
-    isInRoom(rooms:Array<any>){
+    isInRoom(rooms:Array<any>):boolean{
         for(let i=0;i<rooms.length;i++){
             let roomV={x:rooms[i][0],y:rooms[i][1]}
 
        if(Vector.dist(this.pos,roomV)<this.radius*2){
            console.log("im inside room: ",rooms[i][2])
+           return true;
        }
 
         }
+        return false
         
 
 
