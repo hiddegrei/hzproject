@@ -8,6 +8,7 @@ import Camera from './Camera.js';
 import TimeLimit from './TimeLimit.js';
 import Agent from './Agent.js';
 import Progress from './Progress.js';
+import MiniGame from './MiniGame.js';
 export default class Scene {
     canvas;
     ctx;
@@ -24,6 +25,7 @@ export default class Scene {
     endGame;
     condition;
     currentTrans;
+    minigame;
     timeArray;
     keyboard;
     camera;
@@ -33,6 +35,8 @@ export default class Scene {
     timeLeft;
     progress;
     roomsIds = [];
+    insideRoom;
+    inRoomNum;
     constructor(canvas, game) {
         this.timeArray = [Date.now()];
         this.canvas = canvas;
@@ -41,9 +45,12 @@ export default class Scene {
         this.camera = new Camera();
         this.currentTrans = new Vector(0, 0);
         this.keyboard = new KeyboardListener();
+        this.insideRoom = false;
+        this.inRoomNum = -1;
         this.game = game;
         this.ctx = this.canvas.getContext('2d');
         this.progress = new Progress();
+        this.minigame = new MiniGame(0, this.ctx, this);
         console.log("window widht:", window.innerWidth);
         console.log("window height:", window.innerHeight);
         this.score = [];
@@ -85,6 +92,9 @@ export default class Scene {
         if (false) {
             this.game.isEnd = true;
         }
+        else if (this.insideRoom && this.minigame.visitedRooms[this.inRoomNum] != true) {
+            this.minigame.update();
+        }
         else {
             this.timeLeft -= elapsed;
             document.querySelector('div#timeLimit.hud span').innerHTML = (JSON.stringify(Math.floor(this.timeLeft / 1000)));
@@ -106,7 +116,11 @@ export default class Scene {
             }
             document.onmousemove = this.mouseDown.bind(this);
             this.particle.move(this.mouse.x, this.mouse.y, this.borders);
-            if (this.particle.isInRoom(this.roomsIds)) {
+            let roomNum = this.particle.isInRoom(this.roomsIds);
+            if (roomNum != 0) {
+                this.insideRoom = true;
+                this.inRoomNum = roomNum;
+                this.minigame.setRoomId(this.inRoomNum);
             }
             ;
             this.count += 1;
@@ -118,25 +132,33 @@ export default class Scene {
         }
     }
     render() {
-        this.particle.show();
-        for (let i = 0; i < this.borders.length; i++) {
-            this.borders[i].show();
+        if (false) {
+            this.game.isEnd = true;
         }
-        this.particle.look(this.borders);
-        this.writeTextToCanvas('Central hub', 20, this.canvas.width / 2, 400);
-        for (let i = 0; i < this.agents.length; i++) {
-            this.agents[i].show(this.ctx);
-            this.agents[i].look(this.borders, this.ctx);
+        else if (this.insideRoom && this.minigame.visitedRooms[this.inRoomNum] != true) {
+            this.minigame.render();
         }
-        for (let i = 0; i < this.roomsIds.length; i++) {
-            this.ctx.lineWidth = 1;
-            this.ctx.fillStyle = "rgb(255,0,0)";
-            this.ctx.beginPath();
-            this.ctx.arc(this.roomsIds[i][0], this.roomsIds[i][1], 10, 0, 2 * Math.PI);
-            this.ctx.stroke();
-            this.ctx.closePath();
-            this.ctx.fill();
-            this.writeTextToCanvas(this.roomsIds[i][2], 20, this.roomsIds[i][0], this.roomsIds[i][1] - 20);
+        else {
+            this.particle.show();
+            for (let i = 0; i < this.borders.length; i++) {
+                this.borders[i].show();
+            }
+            this.particle.look(this.borders);
+            this.writeTextToCanvas('Central hub', 20, this.canvas.width / 2, 400);
+            for (let i = 0; i < this.agents.length; i++) {
+                this.agents[i].show(this.ctx);
+                this.agents[i].look(this.borders, this.ctx);
+            }
+            for (let i = 0; i < this.roomsIds.length; i++) {
+                this.ctx.lineWidth = 1;
+                this.ctx.fillStyle = "rgb(255,0,0)";
+                this.ctx.beginPath();
+                this.ctx.arc(this.roomsIds[i][0], this.roomsIds[i][1], 10, 0, 2 * Math.PI);
+                this.ctx.stroke();
+                this.ctx.closePath();
+                this.ctx.fill();
+                this.writeTextToCanvas(this.roomsIds[i][2], 20, this.roomsIds[i][0], this.roomsIds[i][1] - 20);
+            }
         }
     }
     writeTextToCanvas(text, fontSize = 20, xCoordinate, yCoordinate, alignment = 'center', color = 'red') {

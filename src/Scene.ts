@@ -11,6 +11,7 @@ import Camera from './Camera.js';
 import TimeLimit from './TimeLimit.js';
 import Agent from './Agent.js';
 import Progress from './Progress.js';
+import MiniGame from './MiniGame.js';
 
 
 export default class Scene {
@@ -44,6 +45,8 @@ export default class Scene {
 
   public currentTrans: Vector;
 
+  private minigame:MiniGame;
+
   
  
   private timeArray: number[];
@@ -60,6 +63,9 @@ export default class Scene {
   private progress: Progress;
 
   private roomsIds:Array<any>=[]
+  public insideRoom:boolean;
+  private inRoomNum:number;
+
 
   /**
    * @param canvas
@@ -75,6 +81,10 @@ export default class Scene {
     // this.canvas.width = window.innerWidth;
     // this.canvas.height = window.innerHeight;
     this.keyboard=new KeyboardListener()
+    this.insideRoom=false;
+    this.inRoomNum=-1;
+   
+   
    
    
 
@@ -83,6 +93,7 @@ export default class Scene {
     this.game = game;
     this.ctx = this.canvas.getContext('2d');
     this.progress = new Progress();
+    this.minigame=new MiniGame(0,this.ctx,this)
     console.log("window widht:", window.innerWidth)
     console.log("window height:", window.innerHeight)
 
@@ -158,6 +169,10 @@ export default class Scene {
     if(false){
     //if (this.timeLeft - elapsed < 0) {
       this.game.isEnd = true;
+    }else if(this.insideRoom&&this.minigame.visitedRooms[this.inRoomNum]!=true){
+      this.minigame.update()
+
+
     } else {
       this.timeLeft -= elapsed;
       document.querySelector('div#timeLimit.hud span').innerHTML = (JSON.stringify(Math.floor(this.timeLeft / 1000)));
@@ -194,8 +209,14 @@ export default class Scene {
     
       document.onmousemove = this.mouseDown.bind(this);
       this.particle.move(this.mouse.x, this.mouse.y, this.borders);
-      if(this.particle.isInRoom(this.roomsIds)){
+      let roomNum=this.particle.isInRoom(this.roomsIds)
+      if(roomNum!=0){
         //player is inside a room or central hub
+        this.insideRoom=true;
+        this.inRoomNum=roomNum;
+        this.minigame.setRoomId(this.inRoomNum)
+        
+        
       };
       this.count += 1;
 
@@ -223,6 +244,15 @@ export default class Scene {
    */
   render() {
     // this.border.show()
+    if(false){
+      //if (this.timeLeft - elapsed < 0) {
+        this.game.isEnd = true;
+      }else if(this.insideRoom&&this.minigame.visitedRooms[this.inRoomNum]!=true){
+        this.minigame.render()
+  
+  
+      } else {
+
     this.particle.show();
     // this.writeTextToCanvas("hi",100,100)
     for (let i = 0; i < this.borders.length; i++) {
@@ -247,7 +277,7 @@ export default class Scene {
         this.ctx.fill()
         this.writeTextToCanvas(this.roomsIds[i][2],20,this.roomsIds[i][0],this.roomsIds[i][1]-20)
     }
-
+  }
     
   }
 
