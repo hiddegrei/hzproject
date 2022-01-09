@@ -66,6 +66,8 @@ export default class Scene {
   public insideRoom:boolean;
   private inRoomNum:number;
 
+  
+
 
   /**
    * @param canvas
@@ -83,6 +85,7 @@ export default class Scene {
     this.keyboard=new KeyboardListener()
     this.insideRoom=false;
     this.inRoomNum=-1;
+   
    
    
    
@@ -125,6 +128,7 @@ export default class Scene {
     this.particle = new Particle(100, 100+0.5*this.level.widthHall, this.ctx);
     this.agents.push(new Agent(1.5*this.level.widthHall, 100+0.5*this.level.widthHall, this.ctx,this.level.widthHall,"random"))
     this.agents.push(new Agent((this.canvas.width/2)+3.5*this.level.widthHall, 300+2*this.level.widthHall, this.ctx,this.level.widthHall,"random"))
+    this.agents.push(new Agent((this.canvas.width/2)+12.5*this.level.widthHall, 300+8*this.level.widthHall, this.ctx,this.level.widthHall,"random"))
     this.agents.push(new Agent((this.canvas.width/2)-(0.5*this.level.widthHall), 100+3*this.level.widthHall, this.ctx,this.level.widthHall,"search"))
     this.mouse = { x: 0, y: 0 };
     
@@ -208,7 +212,7 @@ export default class Scene {
 
     
       document.onmousemove = this.mouseDown.bind(this);
-      this.particle.move(this.mouse.x, this.mouse.y, this.borders);
+      
       let roomNum=this.particle.isInRoom(this.roomsIds)
       if(roomNum!=0){
         //player is inside a room or central hub
@@ -228,6 +232,9 @@ export default class Scene {
         this.agents[i].move()
 
       }
+
+      this.particle.update(this.mouse.x, this.mouse.y, this.borders);
+      this.particle.move()
     }
     
    
@@ -244,6 +251,7 @@ export default class Scene {
    */
   render() {
     // this.border.show()
+    
     if(false){
       //if (this.timeLeft - elapsed < 0) {
         this.game.isEnd = true;
@@ -254,6 +262,7 @@ export default class Scene {
       } else {
 
     this.particle.show();
+    this.particle.animate();
     // this.writeTextToCanvas("hi",100,100)
     for (let i = 0; i < this.borders.length; i++) {
       this.borders[i].show();
@@ -302,5 +311,7 @@ export default class Scene {
     this.ctx.textAlign = alignment;
     this.ctx.fillText(text, xCoordinate, yCoordinate);
   }
+
+  
 }
 // # sourceMappingURL=Scene.js.map

@@ -76,6 +76,7 @@ export default class Scene {
         this.particle = new Particle(100, 100 + 0.5 * this.level.widthHall, this.ctx);
         this.agents.push(new Agent(1.5 * this.level.widthHall, 100 + 0.5 * this.level.widthHall, this.ctx, this.level.widthHall, "random"));
         this.agents.push(new Agent((this.canvas.width / 2) + 3.5 * this.level.widthHall, 300 + 2 * this.level.widthHall, this.ctx, this.level.widthHall, "random"));
+        this.agents.push(new Agent((this.canvas.width / 2) + 12.5 * this.level.widthHall, 300 + 8 * this.level.widthHall, this.ctx, this.level.widthHall, "random"));
         this.agents.push(new Agent((this.canvas.width / 2) - (0.5 * this.level.widthHall), 100 + 3 * this.level.widthHall, this.ctx, this.level.widthHall, "search"));
         this.mouse = { x: 0, y: 0 };
         this.count = 0;
@@ -115,7 +116,6 @@ export default class Scene {
                 this.game.isEnd = true;
             }
             document.onmousemove = this.mouseDown.bind(this);
-            this.particle.move(this.mouse.x, this.mouse.y, this.borders);
             let roomNum = this.particle.isInRoom(this.roomsIds);
             if (roomNum != 0) {
                 this.insideRoom = true;
@@ -129,6 +129,8 @@ export default class Scene {
                 this.agents[i].update(this.particle, this.borders);
                 this.agents[i].move();
             }
+            this.particle.update(this.mouse.x, this.mouse.y, this.borders);
+            this.particle.move();
         }
     }
     render() {
@@ -140,6 +142,7 @@ export default class Scene {
         }
         else {
             this.particle.show();
+            this.particle.animate();
             for (let i = 0; i < this.borders.length; i++) {
                 this.borders[i].show();
             }
