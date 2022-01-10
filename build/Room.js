@@ -35,6 +35,8 @@ export default class Room {
     minigame12;
     minigame13;
     minigame14;
+    miniGameFinished;
+    answer;
     constructor(roomId, ctx, scene) {
         this.roomId = roomId;
         this.ctx = ctx;
@@ -55,12 +57,14 @@ export default class Room {
         this.minigame12 = new MiniGame12(this.ctx, this);
         this.minigame13 = new MiniGame13(this.ctx, this);
         this.minigame14 = new MiniGame14(this.ctx, this);
+        this.miniGameFinished = false;
+        this.answer = false;
         for (let i = 0; i < 16; i++) {
             this.visitedRooms[i] = false;
         }
     }
     update() {
-        if (this.keyboard.isKeyDown(32)) {
+        if (this.keyboard.isKeyDown(32) || this.miniGameFinished) {
             this.scene.insideRoom = false;
             this.visitsNew(this.roomId);
         }
