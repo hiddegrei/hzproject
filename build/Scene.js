@@ -149,16 +149,35 @@ export default class Scene {
             this.particle.update(this.mouse.x, this.mouse.y, this.borders);
             this.particle.hack(this.agents);
             this.particle.move();
-            if (this.timeHacking < 5000 && this.particle.hacking) {
+            let timeHack;
+            if (this.agents[this.particle.hackAgent].status === "yellow") {
+                timeHack = 5000;
+            }
+            else if (this.agents[this.particle.hackAgent].status === "orange") {
+                timeHack = 7000;
+            }
+            else if (this.agents[this.particle.hackAgent].status === "red") {
+                timeHack = 9000;
+            }
+            if (this.timeHacking < timeHack && this.particle.hacking) {
                 this.timeHacking += elapsed;
             }
             else if (!this.particle.hacking) {
                 this.timeHacking = 0;
             }
-            else if (this.timeHacking >= 5000) {
+            else if (this.timeHacking >= timeHack) {
                 let key = this.agents[this.particle.hackAgent].keyNum;
                 this.keys.keys[key] = true;
                 this.timeHacking = 0;
+                if (this.agents[this.particle.hackAgent].status === "yellow") {
+                    this.agents[this.particle.hackAgent].status = "orange";
+                }
+                else if (this.agents[this.particle.hackAgent].status === "orange") {
+                    this.agents[this.particle.hackAgent].status = "red";
+                }
+                else {
+                    this.agents[this.particle.hackAgent].mode = "search";
+                }
                 console.log("hacked room num:", key);
                 for (let i = 0; i < this.keys.keys.length; i++) {
                     if (!this.keys.inPossesion[i]) {
