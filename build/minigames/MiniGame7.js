@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import Room from "../Room";
 export default class MiniGame7 {
     ctx;
@@ -10,6 +11,14 @@ export default class MiniGame7 {
         this.roomId = 7;
         this.codeGenerator();
         this.generateStartPosition();
+=======
+import MGMain from "./MGMain.js";
+export default class MiniGame7 extends MGMain {
+    ctx;
+    constructor(ctx, room) {
+        super(7, room);
+        this.ctx = ctx;
+>>>>>>> 7a5bc8a12630df61406a1201cc6f8615c916d1b4
     }
     update() {
     }

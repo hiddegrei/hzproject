@@ -11,7 +11,6 @@ import Camera from './Camera.js';
 import TimeLimit from './TimeLimit.js';
 import Agent from './Agent.js';
 import Progress from './Progress.js';
-import MiniGame from './MiniGame.js';
 
 
 export default class Scene {

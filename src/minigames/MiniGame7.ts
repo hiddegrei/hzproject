@@ -1,20 +1,19 @@
-import Room from "../Room";
-import Scene from "../Scene";
-export default class MiniGame7 extends Room {
+import Room from "../Room.js";
+import MGMain from "./MGMain.js";
+export default class MiniGame7 extends MGMain {
+    private ctx: CanvasRenderingContext2D;
     private combination: number[];
     private locked: boolean;
     private wheels: number[];
     private wheel: number;
 
-    constructor(roomId:number, ctx:CanvasRenderingContext2D, scene:Scene){
-      super(roomId, ctx, scene)
-        this.ctx=ctx
-        this.roomId=7
-        this.locked = true;
-        this.codeGenerator();
-        this.generateStartPosition();
-        
-
+    constructor(ctx:CanvasRenderingContext2D,room:Room){
+      super(7,room)
+      this.ctx = ctx;
+      this.roomId=7
+      this.locked = true;
+      this.codeGenerator();
+      this.generateStartPosition();
     }
 
 
