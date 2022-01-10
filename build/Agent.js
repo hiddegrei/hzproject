@@ -186,7 +186,6 @@ export default class Agent {
         if (angle === 270) {
             return 90;
         }
-        console.log("yo");
         return angle;
     }
     move() {

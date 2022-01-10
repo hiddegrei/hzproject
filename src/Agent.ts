@@ -305,7 +305,7 @@ return false
         if(angle===270){
             return 90
         }
-        console.log("yo")
+        //console.log("yo")
         return angle
 
     }

@@ -30,8 +30,9 @@ export default class MiniGame0 extends MGMain {
         this.ctx.drawImage(this.imageBob, 100, 200);
         this.writeTextToCanvas("naam: Bob", 20, 110, 350);
         this.writeTextToCanvas("leeftijd: 17", 20, 110, 400);
-        this.writeTextToCanvas("woonplaats: Utrecht", 20, 110, 450);
-        this.writeTextToCanvas("Bob17Utrecht17", 20, 600, 210);
+        this.writeTextToCanvas("geboorte datum: 01/10/2001", 20, 110, 450);
+        this.writeTextToCanvas("woonplaats: Utrecht", 20, 110, 500);
+        this.writeTextToCanvas("Bob17Utrecht01", 20, 600, 210);
         this.writeTextToCanvas("press a", 20, 1200, 210);
         this.writeTextToCanvas("ABC54@#2as", 20, 600, 260);
         this.writeTextToCanvas("press b", 20, 1200, 260);
