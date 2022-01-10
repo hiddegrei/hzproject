@@ -18,6 +18,7 @@ export default class MiniGame1 extends MGMain{
 
 
     public update(){
+      this.ctx.clearRect(0, 0, this.room.canvas.width, this.room.canvas.height);
       if(this.keyboard.isKeyDown(65)){
         this.room.miniGameFinished=true
         this.room.answer=true
