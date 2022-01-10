@@ -41,6 +41,38 @@ export default class Border {
                 }
             }
             else {
+                if (this.b.y > this.a.y) {
+                    let diffy = Math.abs(this.b.y - this.a.y);
+                    if (diffy <= 100) {
+                        this.ctx.drawImage(this.imageV, 0, 0, 10, 100, this.a.x - 5, this.a.y, 10, diffy);
+                    }
+                    else {
+                        for (let i = 0; i < diffy; i += 50) {
+                            if (i + 50 > diffy) {
+                                this.ctx.drawImage(this.imageV, 0, 0, 10, 100, this.a.x - 5, this.a.y + i, 10, diffy - i);
+                            }
+                            else {
+                                this.ctx.drawImage(this.imageV, 0, 0, 10, 100, this.a.x - 5, this.a.y + i, 10, 50);
+                            }
+                        }
+                    }
+                }
+                else {
+                    let diffy = Math.abs(this.b.y - this.a.y);
+                    if (diffy <= 100) {
+                        this.ctx.drawImage(this.imageV, 0, 0, 10, 100, this.a.x - 5, this.b.y, 10, diffy);
+                    }
+                    else {
+                        for (let i = 0; i < diffy; i += 50) {
+                            if (i + 50 > diffy) {
+                                this.ctx.drawImage(this.imageV, 0, 0, 10, 100, this.a.x - 5, this.b.y + i, 10, diffy - i);
+                            }
+                            else {
+                                this.ctx.drawImage(this.imageV, 0, 0, 10, 100, this.a.x - 5, this.b.y + i, 10, 50);
+                            }
+                        }
+                    }
+                }
             }
         }
         else {
