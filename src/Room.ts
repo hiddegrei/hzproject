@@ -42,6 +42,8 @@ export default class Room{
     public answer:boolean
     public canvas:HTMLCanvasElement
 
+    private img: HTMLImageElement;
+
     
 
 
@@ -217,5 +219,25 @@ export default class Room{
     const img = new Image();
     img.src = source;
     return img;
+  }
+
+  static drawImageScaled(ctx: CanvasRenderingContext2D,
+    img: string,
+    imgWidth: number,
+    imgHeight: number,
+    xPos: number,
+    yPos: number) {
+    let image = Room.loadNewImage(img);
+    ctx.drawImage(
+      image,
+      0,
+      0,
+      image.width / imgWidth,
+      image.height / imgHeight,
+      xPos,
+      yPos,
+      window.innerWidth,
+      window.innerHeight,
+    );
   }
 }

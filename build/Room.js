@@ -38,6 +38,7 @@ export default class Room {
     miniGameFinished;
     answer;
     canvas;
+    img;
     constructor(roomId, ctx, scene, canvas) {
         this.roomId = roomId;
         this.ctx = ctx;
@@ -193,6 +194,10 @@ export default class Room {
         const img = new Image();
         img.src = source;
         return img;
+    }
+    static drawImageScaled(ctx, img, imgWidth, imgHeight, xPos, yPos) {
+        let image = Room.loadNewImage(img);
+        ctx.drawImage(image, 0, 0, image.width / imgWidth, image.height / imgHeight, xPos, yPos, window.innerWidth, window.innerHeight);
     }
 }
 //# sourceMappingURL=Room.js.map
