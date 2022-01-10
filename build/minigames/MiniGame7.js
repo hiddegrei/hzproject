@@ -7,6 +7,7 @@ export default class MiniGame7 extends MGMain {
     wheels;
     wheel;
     position;
+    lockImage;
     constructor(ctx, room) {
         super(7, room);
         this.ctx = ctx;
@@ -22,14 +23,18 @@ export default class MiniGame7 extends MGMain {
     update() {
         this.lockposition();
         this.locknumber();
+        this.render();
     }
     render() {
-        this.writeTextToCanvas(`this is room` + this.roomId, 20, 200, 200);
-        Room.loadNewImage('assets/img/objects/pngwing.com (2).png');
-        this.wheels.forEach((value, index) => this.writeTextToCanvas(`${value}`, 20, index * 10 + 100, 200));
+        this.explanation();
+        this.lockImage = Room.loadNewImage('assets/img/objects/pngwing.com (500).png');
+        this.ctx.drawImage(this.lockImage, window.innerWidth / 2, 100);
+        this.wheels.forEach((value, index) => {
+            this.writeTextToCanvas(`${value}`, 50, 1317 - (index * 54.5), 635);
+        });
     }
     codeGenerator() {
-        for (let i = 0; i < Room.randomNumber(0, 9); i++) {
+        for (let i = 0; i < Room.randomNumber(0, 5); i++) {
             this.combination.push(Room.randomNumber(0, 9));
         }
         console.log(this.combination);
@@ -67,6 +72,14 @@ export default class MiniGame7 extends MGMain {
             this.increment(this.wheel);
             this.check();
         }
+    }
+    explanation() {
+        this.writeTextToCanvas(`this is room` + this.roomId, 20, 200, 200);
+        this.writeTextToCanvas(`Try to unlock this lock using the arrow keys`, 20, 200, 300);
+        this.writeTextToCanvas(`Arrow up = number up`, 20, 200, 400);
+        this.writeTextToCanvas(`Arrow down = number down`, 20, 200, 450);
+        this.writeTextToCanvas(`Arrow left = position left`, 20, 200, 500);
+        this.writeTextToCanvas(`Arrow right = position right`, 20, 200, 550);
     }
     increment(wheel) {
         if (this.wheels[wheel] === 9) {
