@@ -5,16 +5,24 @@ export default class MiniGame7 extends MGMain {
     combination;
     locked;
     wheels;
-    wheel;
     position;
     lockImage;
-    constructor(ctx, room) {
+    canvas;
+    time;
+    positionKeyPressed;
+    numberKeyPressed;
+    constructor(ctx, room, canvas) {
         super(7, room);
+        this.canvas = canvas;
         this.ctx = ctx;
         this.roomId = 7;
         this.locked = true;
         this.combination = [];
         this.wheels = [];
+        this.position = 0;
+        this.time = 0;
+        this.positionKeyPressed = false;
+        this.numberKeyPressed = false;
         do {
             this.codeGenerator();
             this.generateStartPosition();
@@ -24,17 +32,29 @@ export default class MiniGame7 extends MGMain {
         this.lockposition();
         this.locknumber();
         this.render();
+        if (this.time >= 100) {
+            this.time = 0;
+            this.positionKeyPressed = false;
+            this.numberKeyPressed = false;
+        }
+        this.time++;
     }
     render() {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.explanation();
         this.lockImage = Room.loadNewImage('assets/img/objects/pngwing.com (500).png');
         this.ctx.drawImage(this.lockImage, window.innerWidth / 2, 100);
         this.wheels.forEach((value, index) => {
-            this.writeTextToCanvas(`${value}`, 50, 1317 - (index * 54.5), 635);
+            if (this.position === index) {
+                this.writeTextToCanvas(`[${value}]`, 50, 1317 - (index * 54.5), 635, 'center', 'green');
+            }
+            else {
+                this.writeTextToCanvas(`${value}`, 50, 1317 - (index * 54.5), 635);
+            }
         });
     }
     codeGenerator() {
-        for (let i = 0; i < Room.randomNumber(0, 5); i++) {
+        for (let i = 0; i < Room.randomNumber(1, 5); i++) {
             this.combination.push(Room.randomNumber(0, 9));
         }
         console.log(this.combination);
@@ -46,31 +66,39 @@ export default class MiniGame7 extends MGMain {
         console.log(this.wheels);
     }
     lockposition() {
-        if (this.keyboard.isKeyDown(37)) {
-            if (this.position === 0) {
-                this.position = this.wheels.length;
+        if (this.wheels.length !== 1) {
+            if (this.keyboard.isKeyDown(37) && this.positionKeyPressed === false) {
+                if (this.position === 0) {
+                    this.position = this.wheels.length - 1;
+                }
+                else {
+                    this.position--;
+                }
+                this.positionKeyPressed = true;
+                console.log(this.position);
             }
-            else {
-                this.position--;
-            }
-        }
-        else if (this.keyboard.isKeyDown(39)) {
-            if (this.position === this.wheels.length) {
-                this.position = 0;
-            }
-            else {
-                this.position++;
+            else if (this.keyboard.isKeyDown(39) && this.positionKeyPressed === false) {
+                if (this.position === this.wheels.length - 1) {
+                    this.position = 0;
+                }
+                else {
+                    this.position++;
+                }
+                this.positionKeyPressed = true;
+                console.log(this.position);
             }
         }
     }
     locknumber() {
-        if (this.keyboard.isKeyDown(40)) {
-            this.decrement(this.wheel);
+        if (this.keyboard.isKeyDown(40) && this.numberKeyPressed === false) {
+            this.decrement(this.wheels[this.position].valueOf());
             this.check();
+            this.numberKeyPressed = true;
         }
-        else if (this.keyboard.isKeyDown(38)) {
-            this.increment(this.wheel);
+        else if (this.keyboard.isKeyDown(38) && this.numberKeyPressed === false) {
+            this.increment(this.wheels[this.position].valueOf());
             this.check();
+            this.numberKeyPressed = true;
         }
     }
     explanation() {
@@ -88,6 +116,7 @@ export default class MiniGame7 extends MGMain {
         else {
             this.wheels[wheel]++;
         }
+        console.log(`increment: ${wheel}`);
     }
     decrement(wheel) {
         if (this.wheels[wheel] === 0) {

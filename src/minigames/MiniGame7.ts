@@ -1,21 +1,30 @@
 import Room from "../Room.js";
 import MGMain from "./MGMain.js";
+
 export default class MiniGame7 extends MGMain {
     private ctx: CanvasRenderingContext2D;
     private combination: number[];
     private locked: boolean;
     private wheels: number[];
-    private wheel: number;
     private position: number;
     private lockImage: HTMLImageElement;
+    private canvas: HTMLCanvasElement;
+    private time: number;
+    private positionKeyPressed: boolean;
+    private numberKeyPressed: boolean;
 
-    constructor(ctx:CanvasRenderingContext2D,room:Room){
+    constructor(ctx:CanvasRenderingContext2D,room:Room, canvas: HTMLCanvasElement){
       super(7,room)
+      this.canvas = canvas;
       this.ctx = ctx;
-      this.roomId=7
+      this.roomId=7;
       this.locked = true;
       this.combination = [];
       this.wheels = [];
+      this.position = 0;
+      this.time = 0;
+      this.positionKeyPressed = false;
+      this.numberKeyPressed = false;
       do {
         this.codeGenerator();
         this.generateStartPosition();
@@ -25,60 +34,86 @@ export default class MiniGame7 extends MGMain {
 
     public update(){
       this.lockposition();
-      this.locknumber()
-      this.render()
+      this.locknumber();
+      this.render();
+      if (this.time >= 100) {
+        this.time = 0;
+        this.positionKeyPressed = false;
+        this.numberKeyPressed = false;
+      }
+      this.time++;
     }
 
     public render(){
+      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
       this.explanation();
       this.lockImage = Room.loadNewImage('assets/img/objects/pngwing.com (500).png');
       this.ctx.drawImage(this.lockImage,window.innerWidth / 2, 100);
       this.wheels.forEach((value: number, index: number) => {
-        this.writeTextToCanvas(
-          `${value}`,
-          50, 1317 - (index * 54.5),
-          635,
-          )});
+        if (this.position === index) {
+          this.writeTextToCanvas(
+            `[${value}]`,
+            50, 1317 - (index * 54.5),
+            635,
+            'center',
+            'green',
+          )
+        } else {
+            this.writeTextToCanvas(
+              `${value}`,
+              50, 1317 - (index * 54.5),
+              635,
+            )
+          }
+        });
     }
 
     private codeGenerator(){
-      for (let i = 0; i < Room.randomNumber(0,5); i++) {
+      for (let i = 0; i < Room.randomNumber(1,5); i++) {
         this.combination.push(Room.randomNumber(0,9));
       }
       
-      console.log(this.combination)
+      console.log(this.combination);
     }
 
     private generateStartPosition(){
       for (let i = 0; i < this.combination.length; i++) {
         this.wheels[i] = 0;
       }
-      console.log(this.wheels)
+      console.log(this.wheels);
     }
 
     private lockposition(){
-      if (this.keyboard.isKeyDown(37)) {
-        if(this.position === 0){
-          this.position = this.wheels.length;
-        } else {
-          this.position--;
-        }
-      } else if (this.keyboard.isKeyDown(39)) {
-        if(this.position === this.wheels.length){
-          this.position = 0;
-        } else {
-          this.position++;
+      if (this.wheels.length !== 1) {
+        if (this.keyboard.isKeyDown(37) && this.positionKeyPressed === false) {
+          if(this.position === 0){
+            this.position = this.wheels.length - 1;
+          } else {
+            this.position--;
+          }
+          this.positionKeyPressed = true;
+          console.log(this.position);
+        } else if (this.keyboard.isKeyDown(39) && this.positionKeyPressed === false) {
+          if(this.position === this.wheels.length -1){
+            this.position = 0;
+          } else {
+            this.position++;
+          }
+          this.positionKeyPressed = true;
+          console.log(this.position)
         }
       }
     }
 
     private locknumber(){
-      if (this.keyboard.isKeyDown(40)) {
-        this.decrement(this.wheel);
+      if (this.keyboard.isKeyDown(40) && this.numberKeyPressed === false) {
+        this.decrement(this.wheels[this.position].valueOf());
         this.check();
-      } else if (this.keyboard.isKeyDown(38)) {
-        this.increment(this.wheel);
+        this.numberKeyPressed = true;
+      } else if (this.keyboard.isKeyDown(38) && this.numberKeyPressed === false) {
+        this.increment(this.wheels[this.position].valueOf());
         this.check();
+        this.numberKeyPressed = true;
       }
     }
 
@@ -101,6 +136,7 @@ export default class MiniGame7 extends MGMain {
       } else {
         this.wheels[wheel]++;
       }
+      console.log(`increment: ${wheel}`);
     }
 
     private decrement(wheel: number) {
