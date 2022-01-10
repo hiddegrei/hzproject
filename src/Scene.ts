@@ -72,6 +72,8 @@ export default class Scene {
 
   public timeHacking:number;
 
+  private showKeys:boolean
+
   
 
 
@@ -93,6 +95,7 @@ export default class Scene {
     this.inRoomNum=-1;
     this.keys=new Keys()
    this.timeHacking=0;
+   this.showKeys=false
    
    
    
@@ -195,6 +198,15 @@ export default class Scene {
       // this.progress.updateProgressBar();
 
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+      if(this.keyboard.kPressed(84)){
+        
+          this.showKeys=true
+        
+      }
+      if(this.keyboard.kPressed(89)){
+        this.showKeys=false
+      }
       
 
       // this.currentTrans = { x: trans.x, y: trans.y }
@@ -284,6 +296,7 @@ export default class Scene {
    */
   render() {
     // this.border.show()
+    this.writeTextToCanvas("press t to show keys, press y to hide keys",20,window.innerWidth/2,30)
     
     if(false){
       //if (this.timeLeft - elapsed < 0) {
@@ -318,6 +331,23 @@ export default class Scene {
         this.ctx.closePath()
         this.ctx.fill()
         this.writeTextToCanvas(this.roomsIds[i][2],20,this.roomsIds[i][0],this.roomsIds[i][1]-20)
+    }
+  }
+
+  if(this.showKeys){
+    let index=2
+    this.ctx.fillStyle = "rgb(255,255,255)";
+        this.ctx.beginPath();
+        this.ctx.rect(window.innerWidth/2-20,40,100,index*30);
+        this.ctx.stroke();
+        this.ctx.closePath()
+        this.ctx.fill()
+    
+    for(let i=0;i<this.keys.keys.length;i++){
+      if(this.keys.keys[i]){
+        this.writeTextToCanvas(`key: ${i}`,15,window.innerWidth/2,index*30)
+        index++
+      }
     }
   }
     

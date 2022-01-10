@@ -5,6 +5,8 @@ export default class KeyboardListener {
     static KEY_RIGHT = 39;
     static KEY_DOWN = 40;
     static KEY_R = 82;
+    static KEY_T = 84;
+    static KEY_Y = 89;
     keyCodeStates;
     constructor() {
         this.keyCodeStates = new Array();
