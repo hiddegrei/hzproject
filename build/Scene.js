@@ -9,6 +9,7 @@ import TimeLimit from './TimeLimit.js';
 import Agent from './Agent.js';
 import Progress from './Progress.js';
 import Room from './Room.js';
+import Keys from './Keys.js';
 export default class Scene {
     canvas;
     ctx;
@@ -37,6 +38,8 @@ export default class Scene {
     roomsIds = [];
     insideRoom;
     inRoomNum;
+    keys;
+    timeHacking;
     constructor(canvas, game) {
         this.timeArray = [Date.now()];
         this.canvas = canvas;
@@ -47,6 +50,8 @@ export default class Scene {
         this.keyboard = new KeyboardListener();
         this.insideRoom = false;
         this.inRoomNum = -1;
+        this.keys = new Keys();
+        this.timeHacking = 0;
         this.game = game;
         this.ctx = this.canvas.getContext('2d');
         this.progress = new Progress();
@@ -74,10 +79,10 @@ export default class Scene {
             this.borders.push(new Border(x, y, x2, y2, this.ctx, "agent"));
         }
         this.particle = new Particle(100, 100 + 0.5 * this.level.widthHall, this.ctx);
-        this.agents.push(new Agent(1.5 * this.level.widthHall, 100 + 0.5 * this.level.widthHall, this.ctx, this.level.widthHall, "random"));
-        this.agents.push(new Agent((this.canvas.width / 2) + 3.5 * this.level.widthHall, 300 + 2 * this.level.widthHall, this.ctx, this.level.widthHall, "random"));
-        this.agents.push(new Agent((this.canvas.width / 2) + 12.5 * this.level.widthHall, 300 + 8 * this.level.widthHall, this.ctx, this.level.widthHall, "random"));
-        this.agents.push(new Agent((this.canvas.width / 2) - (0.5 * this.level.widthHall), 100 + 3 * this.level.widthHall, this.ctx, this.level.widthHall, "search"));
+        this.agents.push(new Agent(1.5 * this.level.widthHall, 100 + 0.5 * this.level.widthHall, this.ctx, this.level.widthHall, "random", 1));
+        this.agents.push(new Agent((this.canvas.width / 2) + 3.5 * this.level.widthHall, 300 + 2 * this.level.widthHall, this.ctx, this.level.widthHall, "random", 2));
+        this.agents.push(new Agent((this.canvas.width / 2) + 12.5 * this.level.widthHall, 300 + 8 * this.level.widthHall, this.ctx, this.level.widthHall, "random", 3));
+        this.agents.push(new Agent((this.canvas.width / 2) - (0.5 * this.level.widthHall), 100 + 3 * this.level.widthHall, this.ctx, this.level.widthHall, "search", 4));
         this.mouse = { x: 0, y: 0 };
         this.count = 0;
         this.timeLimit = new TimeLimit(this.game.password);
@@ -117,7 +122,7 @@ export default class Scene {
             }
             document.onmousemove = this.mouseDown.bind(this);
             let roomNum = this.particle.isInRoom(this.roomsIds);
-            if (roomNum != 0) {
+            if (roomNum != 0 && this.keys.keys[roomNum]) {
                 this.insideRoom = true;
                 this.inRoomNum = roomNum;
                 this.room.setRoomId(this.inRoomNum);
@@ -130,7 +135,20 @@ export default class Scene {
                 this.agents[i].move();
             }
             this.particle.update(this.mouse.x, this.mouse.y, this.borders);
+            this.particle.hack(this.agents);
             this.particle.move();
+            if (this.timeHacking < 5000 && this.particle.hacking) {
+                this.timeHacking += elapsed;
+            }
+            else if (!this.particle.hacking) {
+                this.timeHacking = 0;
+            }
+            else if (this.timeHacking >= 5000) {
+                let key = this.agents[this.particle.hackAgent].keyNum;
+                this.keys.keys[key] = true;
+                this.timeHacking = 0;
+                console.log("hacked:", key);
+            }
         }
     }
     render() {

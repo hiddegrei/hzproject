@@ -13,6 +13,7 @@ import Agent from './Agent.js';
 import Progress from './Progress.js';
 import MiniGame from './Room.js';
 import Room from './Room.js';
+import Keys from './Keys.js';
 
 
 export default class Scene {
@@ -67,6 +68,10 @@ export default class Scene {
   public insideRoom:boolean;
   private inRoomNum:number;
 
+  public keys:Keys;
+
+  public timeHacking:number;
+
   
 
 
@@ -86,7 +91,8 @@ export default class Scene {
     this.keyboard=new KeyboardListener()
     this.insideRoom=false;
     this.inRoomNum=-1;
-   
+    this.keys=new Keys()
+   this.timeHacking=0;
    
    
    
@@ -127,10 +133,10 @@ export default class Scene {
     // this.border= new Border(300,50,300,200,this.ctx)
     // this.ray=new Ray(50,150, this.ctx)
     this.particle = new Particle(100, 100+0.5*this.level.widthHall, this.ctx);
-    this.agents.push(new Agent(1.5*this.level.widthHall, 100+0.5*this.level.widthHall, this.ctx,this.level.widthHall,"random"))
-    this.agents.push(new Agent((this.canvas.width/2)+3.5*this.level.widthHall, 300+2*this.level.widthHall, this.ctx,this.level.widthHall,"random"))
-    this.agents.push(new Agent((this.canvas.width/2)+12.5*this.level.widthHall, 300+8*this.level.widthHall, this.ctx,this.level.widthHall,"random"))
-    this.agents.push(new Agent((this.canvas.width/2)-(0.5*this.level.widthHall), 100+3*this.level.widthHall, this.ctx,this.level.widthHall,"search"))
+    this.agents.push(new Agent(1.5*this.level.widthHall, 100+0.5*this.level.widthHall, this.ctx,this.level.widthHall,"random",1))
+    this.agents.push(new Agent((this.canvas.width/2)+3.5*this.level.widthHall, 300+2*this.level.widthHall, this.ctx,this.level.widthHall,"random",2))
+    this.agents.push(new Agent((this.canvas.width/2)+12.5*this.level.widthHall, 300+8*this.level.widthHall, this.ctx,this.level.widthHall,"random",3))
+    this.agents.push(new Agent((this.canvas.width/2)-(0.5*this.level.widthHall), 100+3*this.level.widthHall, this.ctx,this.level.widthHall,"search",4))
     this.mouse = { x: 0, y: 0 };
     
     
@@ -215,11 +221,12 @@ export default class Scene {
       document.onmousemove = this.mouseDown.bind(this);
       
       let roomNum=this.particle.isInRoom(this.roomsIds)
-      if(roomNum!=0){
+      if(roomNum!=0&&this.keys.keys[roomNum]){
         //player is inside a room or central hub
         this.insideRoom=true;
         this.inRoomNum=roomNum;
         this.room.setRoomId(this.inRoomNum)
+
         
         
       };
@@ -235,7 +242,21 @@ export default class Scene {
       }
 
       this.particle.update(this.mouse.x, this.mouse.y, this.borders);
+      this.particle.hack(this.agents);
       this.particle.move()
+
+      if(this.timeHacking<5000&&this.particle.hacking){
+        this.timeHacking+=elapsed
+      
+      }else if(!this.particle.hacking){
+        this.timeHacking=0
+      }else if(this.timeHacking>=5000){
+        let key=this.agents[this.particle.hackAgent].keyNum
+        this.keys.keys[key]=true
+        this.timeHacking=0
+        console.log("hacked room num:" ,key)
+
+      }
     }
     
    

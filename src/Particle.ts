@@ -1,3 +1,4 @@
+import Agent from "./Agent.js";
 import Border from "./Border.js";
 import Game from "./Game.js";
 import Ray from "./Ray.js";
@@ -37,6 +38,10 @@ export default class Particle {
 
     public maxspeed:number;
 
+    public hacking:boolean;
+
+    public hackAgent:number;
+
     
 
     constructor(x: number, y: number, ctx: CanvasRenderingContext2D) {
@@ -59,6 +64,7 @@ export default class Particle {
         this.walk=false;
         this.vel=new Vector(0,0)
         this.acc=new Vector(0,0)
+        this.hacking=false
        
        
         
@@ -183,23 +189,29 @@ export default class Particle {
             this.vel.setMag(0)
             this.acc.setMag(0)
         }
+    }
+
+    hack(agents:Array<Agent>){
+        for(let i=0;i<agents.length;i++){
+            if(Vector.dist(this.pos,agents[i].pos)<100){
+                 this.ctx.lineWidth = 1;
+        this.ctx.fillStyle = "rgb(255,255,255)";
+        this.ctx.beginPath();
+        this.ctx.arc(this.pos.x, this.pos.y, this.radius, 0, 2 * Math.PI);
+        this.ctx.stroke();
+        this.ctx.closePath()
+        this.ctx.fill()
+
+        this.hacking=true
+        this.hackAgent=i
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+            }
+        }
+        
+        
     }
 
     animate(){

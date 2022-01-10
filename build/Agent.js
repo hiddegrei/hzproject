@@ -21,8 +21,10 @@ export default class Agent {
     mode;
     checkAngle;
     checkRays = [];
-    constructor(x, y, ctx, widthHall, mode) {
+    keyNum;
+    constructor(x, y, ctx, widthHall, mode, keyNum) {
         this.ctx = ctx;
+        this.keyNum = keyNum;
         this.mode = mode;
         this.pos = new Vector(x, y);
         this.rays = [];

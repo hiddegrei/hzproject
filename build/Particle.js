@@ -20,6 +20,8 @@ export default class Particle {
     vel;
     acc;
     maxspeed;
+    hacking;
+    hackAgent;
     constructor(x, y, ctx) {
         this.ctx = ctx;
         this.pos = new Vector(x, y);
@@ -40,6 +42,7 @@ export default class Particle {
         this.walk = false;
         this.vel = new Vector(0, 0);
         this.acc = new Vector(0, 0);
+        this.hacking = false;
     }
     applyforce(force) {
         this.acc.add(force);
@@ -110,6 +113,21 @@ export default class Particle {
         else {
             this.vel.setMag(0);
             this.acc.setMag(0);
+        }
+    }
+    hack(agents) {
+        for (let i = 0; i < agents.length; i++) {
+            if (Vector.dist(this.pos, agents[i].pos) < 100) {
+                this.ctx.lineWidth = 1;
+                this.ctx.fillStyle = "rgb(255,255,255)";
+                this.ctx.beginPath();
+                this.ctx.arc(this.pos.x, this.pos.y, this.radius, 0, 2 * Math.PI);
+                this.ctx.stroke();
+                this.ctx.closePath();
+                this.ctx.fill();
+                this.hacking = true;
+                this.hackAgent = i;
+            }
         }
     }
     animate() {

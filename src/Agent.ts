@@ -39,8 +39,11 @@ export default class Agent{
 
     public checkRays: Array<Ray>=[];
 
-    constructor(x: number, y: number, ctx: CanvasRenderingContext2D, widthHall:number,mode:string) {
+    public keyNum:number
+
+    constructor(x: number, y: number, ctx: CanvasRenderingContext2D, widthHall:number,mode:string,keyNum:number) {
         this.ctx = ctx;
+        this.keyNum=keyNum
         this.mode=mode
         this.pos = new Vector(x,y)
         this.rays = []
