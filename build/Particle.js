@@ -22,6 +22,8 @@ export default class Particle {
     maxspeed;
     hacking;
     hackAgent;
+    hackRange;
+    hackIndex;
     constructor(x, y, ctx) {
         this.ctx = ctx;
         this.pos = new Vector(x, y);
@@ -43,6 +45,8 @@ export default class Particle {
         this.vel = new Vector(0, 0);
         this.acc = new Vector(0, 0);
         this.hacking = false;
+        this.hackRange = 80;
+        this.hackIndex = 0;
     }
     applyforce(force) {
         this.acc.add(force);
@@ -60,7 +64,7 @@ export default class Particle {
                 return +rooms[i][2];
             }
         }
-        return 0;
+        return -1;
     }
     move() {
         this.pos.add(this.vel);
@@ -117,14 +121,7 @@ export default class Particle {
     }
     hack(agents) {
         for (let i = 0; i < agents.length; i++) {
-            if (Vector.dist(this.pos, agents[i].pos) < 100) {
-                this.ctx.lineWidth = 1;
-                this.ctx.fillStyle = "rgb(255,255,255)";
-                this.ctx.beginPath();
-                this.ctx.arc(this.pos.x, this.pos.y, this.radius, 0, 2 * Math.PI);
-                this.ctx.stroke();
-                this.ctx.closePath();
-                this.ctx.fill();
+            if (Vector.dist(this.pos, agents[i].pos) < this.hackRange) {
                 this.hacking = true;
                 this.hackAgent = i;
             }
@@ -132,8 +129,17 @@ export default class Particle {
     }
     animate() {
         this.imgIndex += 0.05;
+        this.hackIndex += 0.5;
     }
     show() {
+        if (this.hacking) {
+            this.ctx.lineWidth = 3;
+            this.ctx.strokeStyle = "rgb(0,255,0)";
+            this.ctx.beginPath();
+            this.ctx.arc(this.pos.x, this.pos.y, Math.ceil(this.hackIndex) % this.hackRange, 0, 2 * Math.PI);
+            this.ctx.stroke();
+            this.ctx.closePath();
+        }
         this.ctx.save();
         this.ctx.translate(this.pos.x, this.pos.y);
         this.ctx.rotate(-(this.dirAngle * Math.PI) / 180 + (0.5 * Math.PI));

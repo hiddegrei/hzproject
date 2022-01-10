@@ -1,11 +1,11 @@
 import KeyboardListener from "./KeyboardListener.js";
-import MiniGame1 from "./minigames/MiniGame1.js";
+import MiniGame0 from "./minigames/MiniGame0.js";
 import MiniGame10 from "./minigames/MiniGame10.js";
 import MiniGame11 from "./minigames/MiniGame11.js";
 import MiniGame12 from "./minigames/MiniGame12.js";
 import MiniGame13 from "./minigames/MiniGame13.js";
 import MiniGame14 from "./minigames/MiniGame14.js";
-import MiniGame15 from "./minigames/MiniGame15.js";
+import MiniGame1 from "./minigames/MiniGame1.js";
 import MiniGame2 from "./minigames/MiniGame2.js";
 import MiniGame3 from "./minigames/MiniGame3.js";
 import MiniGame4 from "./minigames/MiniGame4.js";
@@ -22,6 +22,7 @@ export default class Room{
     public ctx:CanvasRenderingContext2D;
     private keyboard:KeyboardListener;
     private scene:Scene;
+    private minigame0:MiniGame0
     private minigame1:MiniGame1
     private minigame2:MiniGame2
     private minigame3:MiniGame3
@@ -37,7 +38,7 @@ export default class Room{
     private minigame13:MiniGame13
     private minigame14:MiniGame14
 
-    private minigame15:MiniGame15
+    
 
 
     constructor(roomId:number,ctx:CanvasRenderingContext2D,scene:Scene){
@@ -46,6 +47,7 @@ export default class Room{
         this.ctx=ctx
         this.keyboard=new KeyboardListener()
         this.scene=scene
+        this.minigame0=new MiniGame0(this.ctx)
         this.minigame1=new MiniGame1(this.ctx)
         this.minigame2=new MiniGame2(this.ctx)
         this.minigame3=new MiniGame3(this.ctx)
@@ -60,7 +62,7 @@ export default class Room{
         this.minigame12=new MiniGame12(this.ctx)
         this.minigame13=new MiniGame13(this.ctx)
         this.minigame14=new MiniGame14(this.ctx)
-        this.minigame15=new MiniGame15(this.ctx)
+        
 
         for(let i=0;i<16;i++){
             this.visitedRooms[i]=false
@@ -72,6 +74,9 @@ export default class Room{
         if(this.keyboard.isKeyDown(32)){
           this.scene.insideRoom=false
           this.visitsNew(this.roomId)
+        }
+        else if(this.roomId===0){
+          this.minigame0.update()
         }else if(this.roomId===1){
           this.minigame1.update()
         }else if(this.roomId===2){
@@ -100,8 +105,6 @@ export default class Room{
           this.minigame13.update()
         }else if(this.roomId===14){
           this.minigame14.update()
-        }else if(this.roomId===15){
-          this.minigame15.update()
         }
 
     }
@@ -110,9 +113,12 @@ export default class Room{
         // this.writeTextToCanvas(`room: ${this.roomId}`,20,100,100)
         this.writeTextToCanvas("press spacebar to leave room",20,300,300)
 
-        if(this.roomId===1){
+        if(this.roomId===0){
+          this.minigame0.render()
+        }else if(this.roomId===1){
           this.minigame1.render()
-        }else if(this.roomId===2){
+        }
+        else if(this.roomId===2){
           this.minigame2.render()
         }else if(this.roomId===3){
           this.minigame3.render()
@@ -138,8 +144,6 @@ export default class Room{
           this.minigame13.render()
         }else if(this.roomId===14){
           this.minigame14.render()
-        }else if(this.roomId===15){
-          this.minigame15.render()
         }
 
     }

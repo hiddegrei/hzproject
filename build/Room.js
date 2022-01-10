@@ -1,11 +1,11 @@
 import KeyboardListener from "./KeyboardListener.js";
-import MiniGame1 from "./minigames/MiniGame1.js";
+import MiniGame0 from "./minigames/MiniGame0.js";
 import MiniGame10 from "./minigames/MiniGame10.js";
 import MiniGame11 from "./minigames/MiniGame11.js";
 import MiniGame12 from "./minigames/MiniGame12.js";
 import MiniGame13 from "./minigames/MiniGame13.js";
 import MiniGame14 from "./minigames/MiniGame14.js";
-import MiniGame15 from "./minigames/MiniGame15.js";
+import MiniGame1 from "./minigames/MiniGame1.js";
 import MiniGame2 from "./minigames/MiniGame2.js";
 import MiniGame3 from "./minigames/MiniGame3.js";
 import MiniGame4 from "./minigames/MiniGame4.js";
@@ -20,6 +20,7 @@ export default class Room {
     ctx;
     keyboard;
     scene;
+    minigame0;
     minigame1;
     minigame2;
     minigame3;
@@ -34,12 +35,12 @@ export default class Room {
     minigame12;
     minigame13;
     minigame14;
-    minigame15;
     constructor(roomId, ctx, scene) {
         this.roomId = roomId;
         this.ctx = ctx;
         this.keyboard = new KeyboardListener();
         this.scene = scene;
+        this.minigame0 = new MiniGame0(this.ctx);
         this.minigame1 = new MiniGame1(this.ctx);
         this.minigame2 = new MiniGame2(this.ctx);
         this.minigame3 = new MiniGame3(this.ctx);
@@ -54,7 +55,6 @@ export default class Room {
         this.minigame12 = new MiniGame12(this.ctx);
         this.minigame13 = new MiniGame13(this.ctx);
         this.minigame14 = new MiniGame14(this.ctx);
-        this.minigame15 = new MiniGame15(this.ctx);
         for (let i = 0; i < 16; i++) {
             this.visitedRooms[i] = false;
         }
@@ -63,6 +63,9 @@ export default class Room {
         if (this.keyboard.isKeyDown(32)) {
             this.scene.insideRoom = false;
             this.visitsNew(this.roomId);
+        }
+        else if (this.roomId === 0) {
+            this.minigame0.update();
         }
         else if (this.roomId === 1) {
             this.minigame1.update();
@@ -106,13 +109,13 @@ export default class Room {
         else if (this.roomId === 14) {
             this.minigame14.update();
         }
-        else if (this.roomId === 15) {
-            this.minigame15.update();
-        }
     }
     render() {
         this.writeTextToCanvas("press spacebar to leave room", 20, 300, 300);
-        if (this.roomId === 1) {
+        if (this.roomId === 0) {
+            this.minigame0.render();
+        }
+        else if (this.roomId === 1) {
             this.minigame1.render();
         }
         else if (this.roomId === 2) {
@@ -153,9 +156,6 @@ export default class Room {
         }
         else if (this.roomId === 14) {
             this.minigame14.render();
-        }
-        else if (this.roomId === 15) {
-            this.minigame15.render();
         }
     }
     setRoomId(roomId) {

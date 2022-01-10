@@ -133,10 +133,14 @@ export default class Scene {
     // this.border= new Border(300,50,300,200,this.ctx)
     // this.ray=new Ray(50,150, this.ctx)
     this.particle = new Particle(100, 100+0.5*this.level.widthHall, this.ctx);
-    this.agents.push(new Agent(1.5*this.level.widthHall, 100+0.5*this.level.widthHall, this.ctx,this.level.widthHall,"random",1))
-    this.agents.push(new Agent((this.canvas.width/2)+3.5*this.level.widthHall, 300+2*this.level.widthHall, this.ctx,this.level.widthHall,"random",2))
-    this.agents.push(new Agent((this.canvas.width/2)+12.5*this.level.widthHall, 300+8*this.level.widthHall, this.ctx,this.level.widthHall,"random",3))
-    this.agents.push(new Agent((this.canvas.width/2)-(0.5*this.level.widthHall), 100+3*this.level.widthHall, this.ctx,this.level.widthHall,"search",4))
+    this.agents.push(new Agent(1.5*this.level.widthHall, 100+0.5*this.level.widthHall, this.ctx,this.level.widthHall,"random",0))
+    this.agents.push(new Agent((this.canvas.width/2)+3.5*this.level.widthHall, 300+2*this.level.widthHall, this.ctx,this.level.widthHall,"random",1))
+    this.agents.push(new Agent((this.canvas.width/2)+12.5*this.level.widthHall, 300+8*this.level.widthHall, this.ctx,this.level.widthHall,"random",2))
+    this.agents.push(new Agent((this.canvas.width/2)-(0.5*this.level.widthHall), 100+3*this.level.widthHall, this.ctx,this.level.widthHall,"search",3))
+    this.keys.inPossesion[0]=true
+    this.keys.inPossesion[1]=true
+    this.keys.inPossesion[2]=true
+    this.keys.inPossesion[3]=true
     this.mouse = { x: 0, y: 0 };
     
     
@@ -221,7 +225,7 @@ export default class Scene {
       document.onmousemove = this.mouseDown.bind(this);
       
       let roomNum=this.particle.isInRoom(this.roomsIds)
-      if(roomNum!=0&&this.keys.keys[roomNum]){
+      if(roomNum!=-1&&this.keys.keys[roomNum]){
         //player is inside a room or central hub
         this.insideRoom=true;
         this.inRoomNum=roomNum;
@@ -255,6 +259,13 @@ export default class Scene {
         this.keys.keys[key]=true
         this.timeHacking=0
         console.log("hacked room num:" ,key)
+        for(let i=0;i<this.keys.keys.length;i++){
+          if(!this.keys.inPossesion[i]){
+            this.agents[this.particle.hackAgent].keyNum=i
+            this.keys.inPossesion[i]=true
+            break;
+          }
+        }
 
       }
     }

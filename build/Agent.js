@@ -181,6 +181,7 @@ export default class Agent {
         this.acc.setMag(0);
     }
     show(ctx) {
+        this.writeTextToCanvas(`${this.keyNum}`, 20, this.pos.x, this.pos.y - 35);
         if (this.mode === "random") {
             ctx.lineWidth = 1;
             ctx.fillStyle = "rgb(0,0,255)";

@@ -42,6 +42,10 @@ export default class Particle {
 
     public hackAgent:number;
 
+    private hackRange:number
+
+    private hackIndex:number
+
     
 
     constructor(x: number, y: number, ctx: CanvasRenderingContext2D) {
@@ -65,6 +69,8 @@ export default class Particle {
         this.vel=new Vector(0,0)
         this.acc=new Vector(0,0)
         this.hacking=false
+        this.hackRange=80
+        this.hackIndex=0
        
        
         
@@ -87,7 +93,7 @@ export default class Particle {
         return (angleDeg);
     }
 
-    isInRoom(rooms:Array<any>):number{
+    isInRoom(rooms:Array<any>): number {
         for(let i=0;i<rooms.length;i++){
             let roomV={x:rooms[i][0],y:rooms[i][1]}
 
@@ -97,7 +103,7 @@ export default class Particle {
        }
 
         }
-        return 0
+        return -1
         
 
 
@@ -193,14 +199,8 @@ export default class Particle {
 
     hack(agents:Array<Agent>){
         for(let i=0;i<agents.length;i++){
-            if(Vector.dist(this.pos,agents[i].pos)<100){
-                 this.ctx.lineWidth = 1;
-        this.ctx.fillStyle = "rgb(255,255,255)";
-        this.ctx.beginPath();
-        this.ctx.arc(this.pos.x, this.pos.y, this.radius, 0, 2 * Math.PI);
-        this.ctx.stroke();
-        this.ctx.closePath()
-        this.ctx.fill()
+            if(Vector.dist(this.pos,agents[i].pos)<this.hackRange){
+                 
 
         this.hacking=true
         this.hackAgent=i
@@ -216,6 +216,7 @@ export default class Particle {
 
     animate(){
         this.imgIndex+=0.05
+        this.hackIndex+=0.5
     }
 
 
@@ -227,6 +228,15 @@ export default class Particle {
         // this.ctx.stroke();
         // this.ctx.closePath()
         // this.ctx.fill()
+        if(this.hacking){
+            this.ctx.lineWidth = 3;
+        this.ctx.strokeStyle = "rgb(0,255,0)";
+        this.ctx.beginPath();
+        this.ctx.arc(this.pos.x, this.pos.y, Math.ceil(this.hackIndex)%this.hackRange, 0, 2 * Math.PI);
+        this.ctx.stroke();
+        this.ctx.closePath()
+       
+        }
 
       
 

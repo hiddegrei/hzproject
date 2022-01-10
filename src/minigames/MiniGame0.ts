@@ -1,10 +1,10 @@
-export default class MiniGame15{
+export default class MiniGame0{
     public ctx:CanvasRenderingContext2D;
     public roomId:number;
 
     constructor(ctx:CanvasRenderingContext2D){
         this.ctx=ctx
-        this.roomId=1
+        this.roomId=0
 
     }
 
