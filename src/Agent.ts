@@ -33,6 +33,7 @@ export default class Agent{
     public viewRays:Array<Ray>;
     public sight:number;
 
+    //random or searching blauw/groen sight
     public mode:string;
 
     public checkAngle:number;
@@ -41,7 +42,12 @@ export default class Agent{
 
     public keyNum:number
 
-    constructor(x: number, y: number, ctx: CanvasRenderingContext2D, widthHall:number,mode:string,keyNum:number) {
+    //moeilijkheidsgraad defense geel,oranje,rood
+    public status:string
+
+    public hackRange:number;
+
+    constructor(x: number, y: number, ctx: CanvasRenderingContext2D, widthHall:number,mode:string,keyNum:number,status:string) {
         this.ctx = ctx;
         this.keyNum=keyNum
         this.mode=mode
@@ -64,6 +70,15 @@ export default class Agent{
          this.viewRays=[]
          this.sight=80;
          this.checkAngle=6;
+         this.status=status
+
+         if(status==="yellow"){
+             this.hackRange=100
+         }else if(status==="orange"){
+             this.hackRange=80
+         }else if(status==="red"){
+             this.hackRange=60
+         }
          
 
 
@@ -303,9 +318,17 @@ return false
     }
     show(ctx:CanvasRenderingContext2D) {
         this.writeTextToCanvas(`${this.keyNum}`,20,this.pos.x,this.pos.y-35)
+        let color
+        if(this.status==="yellow"){
+            color="rgb(255,255,0)"
+        }else if(this.status==="orange"){
+            color="rgb(255, 165, 0)"
+        }else if(this.status==="red"){
+            color="rgb(255, 0, 0)"
+        }
         if(this.mode==="random"){
         ctx.lineWidth = 1;
-        ctx.fillStyle = "rgb(0,0,255)";
+        ctx.fillStyle = color;
         ctx.beginPath();
         ctx.arc(this.pos.x, this.pos.y, this.radius, 0, 2 * Math.PI);
         ctx.stroke();
@@ -313,7 +336,7 @@ return false
         ctx.fill()
     }else{
         ctx.lineWidth = 1;
-        ctx.fillStyle = "rgb(0,255,0)";
+        ctx.fillStyle = color;
         ctx.beginPath();
         ctx.arc(this.pos.x, this.pos.y, this.radius, 0, 2 * Math.PI);
         ctx.stroke();

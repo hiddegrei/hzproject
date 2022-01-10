@@ -81,10 +81,10 @@ export default class Scene {
             this.borders.push(new Border(x, y, x2, y2, this.ctx, "agent"));
         }
         this.particle = new Particle(100, 100 + 0.5 * this.level.widthHall, this.ctx);
-        this.agents.push(new Agent(1.5 * this.level.widthHall, 100 + 0.5 * this.level.widthHall, this.ctx, this.level.widthHall, "random", 0));
-        this.agents.push(new Agent((this.canvas.width / 2) + 3.5 * this.level.widthHall, 300 + 2 * this.level.widthHall, this.ctx, this.level.widthHall, "random", 1));
-        this.agents.push(new Agent((this.canvas.width / 2) + 12.5 * this.level.widthHall, 300 + 8 * this.level.widthHall, this.ctx, this.level.widthHall, "random", 2));
-        this.agents.push(new Agent((this.canvas.width / 2) - (0.5 * this.level.widthHall), 100 + 3 * this.level.widthHall, this.ctx, this.level.widthHall, "search", 3));
+        this.agents.push(new Agent(1.5 * this.level.widthHall, 100 + 0.5 * this.level.widthHall, this.ctx, this.level.widthHall, "random", 0, "yellow"));
+        this.agents.push(new Agent((this.canvas.width / 2) + 3.5 * this.level.widthHall, 300 + 2 * this.level.widthHall, this.ctx, this.level.widthHall, "random", 1, "orange"));
+        this.agents.push(new Agent((this.canvas.width / 2) + 12.5 * this.level.widthHall, 300 + 8 * this.level.widthHall, this.ctx, this.level.widthHall, "random", 2, "yellow"));
+        this.agents.push(new Agent((this.canvas.width / 2) - (0.5 * this.level.widthHall), 100 + 3 * this.level.widthHall, this.ctx, this.level.widthHall, "search", 3, "red"));
         this.keys.inPossesion[0] = true;
         this.keys.inPossesion[1] = true;
         this.keys.inPossesion[2] = true;
