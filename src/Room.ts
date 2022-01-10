@@ -208,4 +208,12 @@ export default class Room{
     return Math.round(Math.random() * (max - min) + min);
   }
    
+  /**
+   * @param source
+   */
+   static loadNewImage(source: string) {
+    const img = new Image();
+    img.src = source;
+    return img;
+  }
 }

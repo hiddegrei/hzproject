@@ -6,44 +6,72 @@ export default class MiniGame7 extends MGMain {
     private locked: boolean;
     private wheels: number[];
     private wheel: number;
+    private position: number;
 
     constructor(ctx:CanvasRenderingContext2D,room:Room){
       super(7,room)
       this.ctx = ctx;
       this.roomId=7
       this.locked = true;
-      this.codeGenerator();
-      this.generateStartPosition();
+      this.combination = [];
+      this.wheels = [];
+      do {
+        this.codeGenerator();
+        this.generateStartPosition();
+      } while (this.combination === this.wheels);
     }
 
 
     public update(){
-      this.lockposition()
+      this.lockposition();
+      this.locknumber()
     }
 
     public render(){
 
-        this.writeTextToCanvas(`this is room`+this.roomId,20,200,200)
-        
+      this.writeTextToCanvas(`this is room`+this.roomId,20,200,200);
+      Room.loadNewImage('assets/img/objects/pngwing.com (2).png');
+      this.wheels.forEach((value: number, index: number) => this.writeTextToCanvas(`${value}`, 20, index * 10 + 100, 200));
     }
 
     private codeGenerator(){
-      for (let i = 0; i < Math.round(Room.randomNumber(0,9)); i++) {
-        this.combination.push(Math.round(Room.randomNumber(0,9))) 
+      for (let i = 0; i < Room.randomNumber(0,9); i++) {
+        this.combination.push(Room.randomNumber(0,9));
       }
+      
+      console.log(this.combination)
     }
 
     private generateStartPosition(){
-      this.combination.forEach((index: number) => this.wheels.push(0));
+      for (let i = 0; i < this.combination.length; i++) {
+        this.wheels[i] = 0;
+      }
+      console.log(this.wheels)
     }
 
     private lockposition(){
       if (this.keyboard.isKeyDown(37)) {
-        if(this.wheel === 0){
-          this.wheel = this.wheels.length;
+        if(this.position === 0){
+          this.position = this.wheels.length;
         } else {
-          this.wheel--;
+          this.position--;
         }
+      } else if (this.keyboard.isKeyDown(39)) {
+        if(this.position === this.wheels.length){
+          this.position = 0;
+        } else {
+          this.position++;
+        }
+      }
+    }
+
+    private locknumber(){
+      if (this.keyboard.isKeyDown(40)) {
+        this.decrement(this.wheel);
+        this.check();
+      } else if (this.keyboard.isKeyDown(38)) {
+        this.increment(this.wheel);
+        this.check();
       }
     }
 

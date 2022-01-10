@@ -187,5 +187,10 @@ export default class Room {
     static randomNumber(min, max) {
         return Math.round(Math.random() * (max - min) + min);
     }
+    static loadNewImage(source) {
+        const img = new Image();
+        img.src = source;
+        return img;
+    }
 }
 //# sourceMappingURL=Room.js.map
