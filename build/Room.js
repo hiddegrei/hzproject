@@ -37,11 +37,13 @@ export default class Room {
     minigame14;
     miniGameFinished;
     answer;
-    constructor(roomId, ctx, scene) {
+    canvas;
+    constructor(roomId, ctx, scene, canvas) {
         this.roomId = roomId;
         this.ctx = ctx;
         this.keyboard = new KeyboardListener();
         this.scene = scene;
+        this.canvas = canvas;
         this.minigame0 = new MiniGame0(this.ctx, this);
         this.minigame1 = new MiniGame1(this.ctx, this);
         this.minigame2 = new MiniGame2(this.ctx, this);

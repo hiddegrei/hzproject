@@ -40,16 +40,18 @@ export default class Room{
 
     public miniGameFinished:boolean
     public answer:boolean
+    public canvas:HTMLCanvasElement
 
     
 
 
-    constructor(roomId:number,ctx:CanvasRenderingContext2D,scene:Scene){
+    constructor(roomId:number,ctx:CanvasRenderingContext2D,scene:Scene,canvas:HTMLCanvasElement){
         // super(roomId,ctx,scene)
         this.roomId=roomId
         this.ctx=ctx
         this.keyboard=new KeyboardListener()
         this.scene=scene
+        this.canvas=canvas
        
         this.minigame0=new MiniGame0(this.ctx,this)
         this.minigame1=new MiniGame1(this.ctx,this)

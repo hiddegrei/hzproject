@@ -9,6 +9,7 @@ export default class MiniGame0 extends MGMain {
         this.imageBob = Game.loadNewImage("./assets/img/players/bob.png");
     }
     update() {
+        this.ctx.clearRect(0, 0, this.room.canvas.width, this.room.canvas.height);
         if (this.keyboard.isKeyDown(67)) {
             this.room.miniGameFinished = true;
             this.room.answer = true;

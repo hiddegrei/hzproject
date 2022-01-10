@@ -10,6 +10,7 @@ import Agent from './Agent.js';
 import Progress from './Progress.js';
 import Room from './Room.js';
 import Keys from './Keys.js';
+import ScoreToDatabase from './ScoreToDatabase.js';
 export default class Scene {
     canvas;
     ctx;
@@ -27,6 +28,7 @@ export default class Scene {
     condition;
     currentTrans;
     room;
+    scoreToDatabase;
     timeArray;
     keyboard;
     camera;
@@ -54,10 +56,11 @@ export default class Scene {
         this.keys = new Keys();
         this.timeHacking = 0;
         this.showKeys = false;
+        this.scoreToDatabase = new ScoreToDatabase();
         this.game = game;
         this.ctx = this.canvas.getContext('2d');
         this.progress = new Progress();
-        this.room = new Room(0, this.ctx, this);
+        this.room = new Room(0, this.ctx, this, this.canvas);
         console.log("window widht:", window.innerWidth);
         console.log("window height:", window.innerHeight);
         this.score = [];
@@ -103,6 +106,7 @@ export default class Scene {
     update(elapsed) {
         if (false) {
             this.game.isEnd = true;
+            this.scoreToDatabase.update();
         }
         else if (this.insideRoom && this.room.visitedRooms[this.inRoomNum] != true) {
             this.room.update();
