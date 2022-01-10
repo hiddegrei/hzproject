@@ -11,7 +11,6 @@ import Camera from './Camera.js';
 import TimeLimit from './TimeLimit.js';
 import Agent from './Agent.js';
 import Progress from './Progress.js';
-import MiniGame from './Room.js';
 import Room from './Room.js';
 import Keys from './Keys.js';
 

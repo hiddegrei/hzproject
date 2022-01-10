@@ -10,7 +10,7 @@ export default class MiniGame1 extends MGMain {
             this.room.miniGameFinished = true;
             this.room.answer = true;
         }
-        else {
+        else if (this.keyboard.isKeyDown(66) || this.keyboard.isKeyDown(67)) {
             this.room.miniGameFinished = true;
             this.room.answer = false;
         }
