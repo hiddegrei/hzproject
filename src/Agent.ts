@@ -73,7 +73,7 @@ export default class Agent{
          this.target=new Vector(x,y)
          this.viewRays=[]
          this.sight=80;
-         this.checkAngle=6;
+         this.checkAngle=8;
          this.status=status
 
          if(status==="yellow"){
@@ -277,7 +277,7 @@ export default class Agent{
                 
             }
         }
-        if(record>this.widthHall-5&&this.inv(angle)!=this.lastAngle){
+        if(record>this.widthHall-8&&this.inv(angle)!=this.lastAngle){
             
         }else{
 return false
