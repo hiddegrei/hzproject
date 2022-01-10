@@ -1,16 +1,25 @@
-export default class MiniGame7{
-    public ctx:CanvasRenderingContext2D;
-    public roomId:number;
+import Room from "../Room";
+import Scene from "../Scene";
+export default class MiniGame7 extends Room {
+    private combination: number[];
+    private locked: boolean;
+    private wheels: number[];
+    private wheel: number;
 
-    constructor(ctx:CanvasRenderingContext2D){
+    constructor(roomId:number, ctx:CanvasRenderingContext2D, scene:Scene){
+      super(roomId, ctx, scene)
         this.ctx=ctx
         this.roomId=7
+        this.locked = true;
+        this.codeGenerator();
+        this.generateStartPosition();
+        
 
     }
 
 
     public update(){
-
+      this.lockposition()
     }
 
     public render(){
@@ -19,7 +28,55 @@ export default class MiniGame7{
         
     }
 
-     /**
+    private codeGenerator(){
+      for (let i = 0; i < Math.round(Room.randomNumber(0,9)); i++) {
+        this.combination.push(Math.round(Room.randomNumber(0,9))) 
+      }
+    }
+
+    private generateStartPosition(){
+      this.combination.forEach((index: number) => this.wheels.push(0));
+    }
+
+    private lockposition(){
+      if (this.keyboard.isKeyDown(37)) {
+        if(this.wheel === 0){
+          this.wheel = this.wheels.length;
+        } else {
+          this.wheel--;
+        }
+      }
+    }
+
+    // ***
+    // Combination Lock
+    // ***
+
+    private increment(wheel: number) {
+      if (this.wheels[wheel] === 9) {
+        this.wheels[wheel] = 0;
+      } else {
+        this.wheels[wheel]++;
+      }
+    }
+
+    private decrement(wheel: number) {
+      if (this.wheels[wheel] === 0) {
+        this.wheels[wheel] = 9;
+      } else {
+        this.wheels[wheel]--;
+      }
+    }
+
+    private check() {
+      if (this.combination === this.wheels) {
+        this.locked = false;
+      } else {
+        this.locked = true;
+      }
+    }
+
+  /**
    * @param text
    * @param xCoordinate
    * @param yCoordinate

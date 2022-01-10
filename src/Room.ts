@@ -20,7 +20,7 @@ export default class Room{
     public visitedRooms:Array<boolean>=[];
     public roomId:number
     public ctx:CanvasRenderingContext2D;
-    private keyboard:KeyboardListener;
+    protected keyboard:KeyboardListener;
     private scene:Scene;
     private minigame0:MiniGame0
     private minigame1:MiniGame1
@@ -180,6 +180,14 @@ export default class Room{
     this.ctx.fillStyle = color;
     this.ctx.textAlign = alignment;
     this.ctx.fillText(text, xCoordinate, yCoordinate);
+  }
+
+  /**
+   * @param min
+   * @param max
+   */
+  static randomNumber(min: number, max: number) {
+    return Math.round(Math.random() * (max - min) + min);
   }
    
 }

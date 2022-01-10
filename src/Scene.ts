@@ -11,9 +11,7 @@ import Camera from './Camera.js';
 import TimeLimit from './TimeLimit.js';
 import Agent from './Agent.js';
 import Progress from './Progress.js';
-import MiniGame from './Room.js';
-import Room from './Room.js';
-import Keys from './Keys.js';
+import MiniGame from './MiniGame.js';
 
 
 export default class Scene {
@@ -35,7 +33,7 @@ export default class Scene {
 
   private score: Score[];
 
-  public totalScore: number;
+  private totalScore: number;
 
   public widthHall: number;
 
@@ -47,7 +45,7 @@ export default class Scene {
 
   public currentTrans: Vector;
 
-  private room:Room;
+  private minigame:MiniGame;
 
   
  
@@ -68,12 +66,6 @@ export default class Scene {
   public insideRoom:boolean;
   private inRoomNum:number;
 
-  public keys:Keys;
-
-  public timeHacking:number;
-
-  private showKeys:boolean
-
   
 
 
@@ -93,9 +85,7 @@ export default class Scene {
     this.keyboard=new KeyboardListener()
     this.insideRoom=false;
     this.inRoomNum=-1;
-    this.keys=new Keys()
-   this.timeHacking=0;
-   this.showKeys=false
+   
    
    
    
@@ -106,7 +96,7 @@ export default class Scene {
     this.game = game;
     this.ctx = this.canvas.getContext('2d');
     this.progress = new Progress();
-    this.room=new Room(0,this.ctx,this)
+    this.minigame=new MiniGame(0,this.ctx,this)
     console.log("window widht:", window.innerWidth)
     console.log("window height:", window.innerHeight)
 
@@ -136,14 +126,10 @@ export default class Scene {
     // this.border= new Border(300,50,300,200,this.ctx)
     // this.ray=new Ray(50,150, this.ctx)
     this.particle = new Particle(100, 100+0.5*this.level.widthHall, this.ctx);
-    this.agents.push(new Agent(1.5*this.level.widthHall, 100+0.5*this.level.widthHall, this.ctx,this.level.widthHall,"random",0,"yellow"))
-    this.agents.push(new Agent((this.canvas.width/2)+3.5*this.level.widthHall, 300+2*this.level.widthHall, this.ctx,this.level.widthHall,"random",1,"orange"))
-    this.agents.push(new Agent((this.canvas.width/2)+12.5*this.level.widthHall, 300+8*this.level.widthHall, this.ctx,this.level.widthHall,"random",2,"yellow"))
-    this.agents.push(new Agent((this.canvas.width/2)-(0.5*this.level.widthHall), 100+3*this.level.widthHall, this.ctx,this.level.widthHall,"search",3,"red"))
-    this.keys.inPossesion[0]=true
-    this.keys.inPossesion[1]=true
-    this.keys.inPossesion[2]=true
-    this.keys.inPossesion[3]=true
+    this.agents.push(new Agent(1.5*this.level.widthHall, 100+0.5*this.level.widthHall, this.ctx,this.level.widthHall,"random"))
+    this.agents.push(new Agent((this.canvas.width/2)+3.5*this.level.widthHall, 300+2*this.level.widthHall, this.ctx,this.level.widthHall,"random"))
+    this.agents.push(new Agent((this.canvas.width/2)+12.5*this.level.widthHall, 300+8*this.level.widthHall, this.ctx,this.level.widthHall,"random"))
+    this.agents.push(new Agent((this.canvas.width/2)-(0.5*this.level.widthHall), 100+3*this.level.widthHall, this.ctx,this.level.widthHall,"search"))
     this.mouse = { x: 0, y: 0 };
     
     
@@ -187,8 +173,8 @@ export default class Scene {
     if(false){
     //if (this.timeLeft - elapsed < 0) {
       this.game.isEnd = true;
-    }else if(this.insideRoom&&this.room.visitedRooms[this.inRoomNum]!=true){
-      this.room.update()
+    }else if(this.insideRoom&&this.minigame.visitedRooms[this.inRoomNum]!=true){
+      this.minigame.update()
 
 
     } else {
@@ -198,15 +184,6 @@ export default class Scene {
       // this.progress.updateProgressBar();
 
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
-      if(this.keyboard.kPressed(84)){
-        
-          this.showKeys=true
-        
-      }
-      if(this.keyboard.kPressed(89)){
-        this.showKeys=false
-      }
       
 
       // this.currentTrans = { x: trans.x, y: trans.y }
@@ -237,12 +214,11 @@ export default class Scene {
       document.onmousemove = this.mouseDown.bind(this);
       
       let roomNum=this.particle.isInRoom(this.roomsIds)
-      if(roomNum!=-1&&this.keys.keys[roomNum]){
+      if(roomNum!=0){
         //player is inside a room or central hub
         this.insideRoom=true;
         this.inRoomNum=roomNum;
-        this.room.setRoomId(this.inRoomNum)
-
+        this.minigame.setRoomId(this.inRoomNum)
         
         
       };
@@ -258,43 +234,7 @@ export default class Scene {
       }
 
       this.particle.update(this.mouse.x, this.mouse.y, this.borders);
-      this.particle.hack(this.agents);
       this.particle.move()
-
-      let timeHack
-      if(this.agents[this.particle.hackAgent].status==="yellow"){
-       timeHack=5000
-      }else if(this.agents[this.particle.hackAgent].status==="orange"){
-        timeHack=7000
-       }else if(this.agents[this.particle.hackAgent].status==="red"){
-        timeHack=9000
-       }
-      if(this.timeHacking<timeHack&&this.particle.hacking){
-        this.timeHacking+=elapsed
-      
-      }else if(!this.particle.hacking){
-        this.timeHacking=0
-      }else if(this.timeHacking>=timeHack){
-        let key=this.agents[this.particle.hackAgent].keyNum
-        this.keys.keys[key]=true
-        this.timeHacking=0
-        if(this.agents[this.particle.hackAgent].status==="yellow"){
-          this.agents[this.particle.hackAgent].status="orange"
-         }else if(this.agents[this.particle.hackAgent].status==="orange"){
-          this.agents[this.particle.hackAgent].status="red"
-          }else{
-            this.agents[this.particle.hackAgent].mode="search"
-          }
-        console.log("hacked room num:" ,key)
-        for(let i=0;i<this.keys.keys.length;i++){
-          if(!this.keys.inPossesion[i]){
-            this.agents[this.particle.hackAgent].keyNum=i
-            this.keys.inPossesion[i]=true
-            break;
-          }
-        }
-
-      }
     }
     
    
@@ -311,13 +251,12 @@ export default class Scene {
    */
   render() {
     // this.border.show()
-    this.writeTextToCanvas("press t to show keys, press y to hide keys",20,window.innerWidth/2,30)
     
     if(false){
       //if (this.timeLeft - elapsed < 0) {
         this.game.isEnd = true;
-      }else if(this.insideRoom&&this.room.visitedRooms[this.inRoomNum]!=true){
-        this.room.render()
+      }else if(this.insideRoom&&this.minigame.visitedRooms[this.inRoomNum]!=true){
+        this.minigame.render()
   
   
       } else {
@@ -346,23 +285,6 @@ export default class Scene {
         this.ctx.closePath()
         this.ctx.fill()
         this.writeTextToCanvas(this.roomsIds[i][2],20,this.roomsIds[i][0],this.roomsIds[i][1]-20)
-    }
-  }
-
-  if(this.showKeys){
-    let index=2
-    this.ctx.fillStyle = "rgb(255,255,255)";
-        this.ctx.beginPath();
-        this.ctx.rect(window.innerWidth/2-20,40,100,index*30);
-        this.ctx.stroke();
-        this.ctx.closePath()
-        this.ctx.fill()
-    
-    for(let i=0;i<this.keys.keys.length;i++){
-      if(this.keys.keys[i]){
-        this.writeTextToCanvas(`key: ${i}`,15,window.innerWidth/2,index*30)
-        index++
-      }
     }
   }
     

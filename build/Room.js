@@ -171,5 +171,8 @@ export default class Room {
         this.ctx.textAlign = alignment;
         this.ctx.fillText(text, xCoordinate, yCoordinate);
     }
+    static randomNumber(min, max) {
+        return Math.round(Math.random() * (max - min) + min);
+    }
 }
 //# sourceMappingURL=Room.js.map
