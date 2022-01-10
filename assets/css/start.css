@@ -9,7 +9,15 @@ body {
 input {
     border-color: white;
     margin: 10px;
-    min-width: 200px;
+    min-width: 240px;
+}
+
+#username {
+    min-width: 0.7em;
+}
+
+#password {
+    min-width: 0em;
 }
 
 button {
@@ -30,8 +38,4 @@ h1 {
     right: 20%;
     border-radius: 20px;
     border: 10px ridge turquoise;
-}
-
-#repeatPassword {
-    min-width: 30%;
 }
