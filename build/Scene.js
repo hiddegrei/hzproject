@@ -194,7 +194,6 @@ export default class Scene {
         }
     }
     render() {
-        this.writeTextToCanvas("press t to show keys, press y to hide keys", 20, window.innerWidth / 2, 30);
         if (false) {
             this.game.isEnd = true;
         }
@@ -202,6 +201,7 @@ export default class Scene {
             this.room.render();
         }
         else {
+            this.writeTextToCanvas("press t to show keys, press y to hide keys", 20, window.innerWidth / 2, 30);
             this.particle.show();
             this.particle.animate();
             for (let i = 0; i < this.borders.length; i++) {
