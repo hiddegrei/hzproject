@@ -106,6 +106,10 @@ export default class Scene {
         }
         else if (this.insideRoom && this.room.visitedRooms[this.inRoomNum] != true) {
             this.room.update();
+            let isMiniGameComplete = this.room.checkDone();
+            if (isMiniGameComplete) {
+                this.totalScore++;
+            }
         }
         else {
             this.timeLeft -= elapsed;

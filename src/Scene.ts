@@ -172,8 +172,17 @@ export default class Scene {
     if(false){
     //if (this.timeLeft - elapsed < 0) {
       this.game.isEnd = true;
+<<<<<<< HEAD
     }else if(this.insideRoom&&this.minigame.visitedRooms[this.inRoomNum]!=true){
       this.minigame.update()
+=======
+    }else if(this.insideRoom&&this.room.visitedRooms[this.inRoomNum]!=true){
+      this.room.update()
+      let isMiniGameComplete=this.room.checkDone()
+      if(isMiniGameComplete){
+        this.totalScore++
+      }
+>>>>>>> 40dab64e9d45156d73bf7f85bbb5f1c46a28c491
 
 
     } else {

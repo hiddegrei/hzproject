@@ -63,12 +63,21 @@ export default class Room {
             this.visitedRooms[i] = false;
         }
     }
-    update() {
+    checkDone() {
         if (this.keyboard.isKeyDown(32) || this.miniGameFinished) {
             this.scene.insideRoom = false;
             this.visitsNew(this.roomId);
+            if (this.answer) {
+                return true;
+            }
+            else {
+                return false;
+            }
         }
-        else if (this.roomId === 0) {
+        return false;
+    }
+    update() {
+        if (this.roomId === 0) {
             this.minigame0.update();
         }
         else if (this.roomId === 1) {
