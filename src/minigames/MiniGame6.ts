@@ -1,10 +1,13 @@
-export default class MiniGame6{
-    public ctx:CanvasRenderingContext2D;
-    public roomId:number;
+import Room from "../Room.js";
+import MGMain from "./MGMain.js";
 
-    constructor(ctx:CanvasRenderingContext2D){
-        this.ctx=ctx
-        this.roomId=6
+export default class MiniGame6 extends MGMain{
+    public ctx:CanvasRenderingContext2D;
+    
+
+    constructor(ctx:CanvasRenderingContext2D,room:Room){
+      super(6,room)
+      this.ctx=ctx
 
     }
 

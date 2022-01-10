@@ -1,0 +1,1 @@
+{"version":3,"file":"MGMain.js","sourceRoot":"","sources":["../../src/minigames/MGMain.ts"],"names":[],"mappings":"AAEA,MAAM,CAAC,OAAO,OAAO,MAAM;IAChB,MAAM,CAAQ;IACd,IAAI,CAAK;IAEhB,YAAY,MAAa,EAAC,IAAS;QAC/B,IAAI,CAAC,MAAM,GAAC,MAAM,CAAA;QAClB,IAAI,CAAC,IAAI,GAAC,IAAI,CAAA;IAElB,CAAC;CACJ"}

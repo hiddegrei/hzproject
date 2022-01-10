@@ -1,9 +1,9 @@
-export default class MiniGame3 {
+import MGMain from "./MGMain.js";
+export default class MiniGame3 extends MGMain {
     ctx;
-    roomId;
-    constructor(ctx) {
+    constructor(ctx, room) {
+        super(3, room);
         this.ctx = ctx;
-        this.roomId = 3;
     }
     update() {
     }

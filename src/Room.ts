@@ -38,6 +38,9 @@ export default class Room{
     private minigame13:MiniGame13
     private minigame14:MiniGame14
 
+    public miniGameFinished:boolean
+    public answer:boolean
+
     
 
 
@@ -47,21 +50,25 @@ export default class Room{
         this.ctx=ctx
         this.keyboard=new KeyboardListener()
         this.scene=scene
-        this.minigame0=new MiniGame0(this.ctx)
-        this.minigame1=new MiniGame1(this.ctx)
-        this.minigame2=new MiniGame2(this.ctx)
-        this.minigame3=new MiniGame3(this.ctx)
-        this.minigame4=new MiniGame4(this.ctx)
-        this.minigame5=new MiniGame5(this.ctx)
-        this.minigame6=new MiniGame6(this.ctx)
-        this.minigame7=new MiniGame7(this.ctx)
-        this.minigame8=new MiniGame8(this.ctx)
-        this.minigame9=new MiniGame9(this.ctx)
-        this.minigame10=new MiniGame10(this.ctx)
-        this.minigame11=new MiniGame11(this.ctx)
-        this.minigame12=new MiniGame12(this.ctx)
-        this.minigame13=new MiniGame13(this.ctx)
-        this.minigame14=new MiniGame14(this.ctx)
+       
+        this.minigame0=new MiniGame0(this.ctx,this)
+        this.minigame1=new MiniGame1(this.ctx,this)
+        this.minigame2=new MiniGame2(this.ctx,this)
+        this.minigame3=new MiniGame3(this.ctx,this)
+        this.minigame4=new MiniGame4(this.ctx,this)
+        this.minigame5=new MiniGame5(this.ctx,this)
+        this.minigame6=new MiniGame6(this.ctx,this)
+        this.minigame7=new MiniGame7(this.ctx,this)
+        this.minigame8=new MiniGame8(this.ctx,this)
+        this.minigame9=new MiniGame9(this.ctx,this)
+        this.minigame10=new MiniGame10(this.ctx,this)
+        this.minigame11=new MiniGame11(this.ctx,this)
+        this.minigame12=new MiniGame12(this.ctx,this)
+        this.minigame13=new MiniGame13(this.ctx,this)
+        this.minigame14=new MiniGame14(this.ctx,this)
+
+        this.miniGameFinished=false
+        this.answer=false
         
 
         for(let i=0;i<16;i++){
@@ -71,7 +78,7 @@ export default class Room{
     }
 
     public update(){
-        if(this.keyboard.isKeyDown(32)){
+        if(this.keyboard.isKeyDown(32)||this.miniGameFinished){
           this.scene.insideRoom=false
           this.visitsNew(this.roomId)
         }
