@@ -428,6 +428,14 @@ export default class Level1map {
             this.makeBlock((this.canvas.width / 2)+15*this.widthHall ,300+3*this.widthHall,3*this.widthHall,2*this.widthHall)[3],
 
 
+            [(this.canvas.width / 2)+16*this.widthHall ,300+11*this.widthHall, (this.canvas.width/2)+18*this.widthHall ,300+11*this.widthHall],
+
+            [(this.canvas.width / 2)+5*this.widthHall ,300+9*this.widthHall, (this.canvas.width/2)+8*this.widthHall ,300+9*this.widthHall],
+
+            [(this.canvas.width / 2)+5*this.widthHall ,300+9*this.widthHall, (this.canvas.width/2)+5*this.widthHall ,300+10*this.widthHall],
+            [(this.canvas.width / 2)+8*this.widthHall ,300+9*this.widthHall, (this.canvas.width/2)+8*this.widthHall ,300+10*this.widthHall],
+
+
 
 
 
@@ -635,6 +643,8 @@ export default class Level1map {
               [(this.canvas.width/2)+11*this.widthHall,100,(this.canvas.width/2)+11*this.widthHall,100+this.widthHall],
               [(this.canvas.width/2)-8*this.widthHall,100+15*this.widthHall,(this.canvas.width/2)-7*this.widthHall,100+15*this.widthHall],
               [(this.canvas.width/2)+12*this.widthHall,100+3*this.widthHall,(this.canvas.width/2)+12*this.widthHall,100+4*this.widthHall],
+
+             
           ]
       }
 
