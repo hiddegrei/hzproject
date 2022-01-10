@@ -129,7 +129,7 @@ export default class Room{
 
     public render(){
         // this.writeTextToCanvas(`room: ${this.roomId}`,20,100,100)
-        this.writeTextToCanvas("press spacebar to leave room",20,300,300)
+        this.writeTextToCanvas("press spacebar to leave room",20,700,600)
 
         if(this.roomId===0){
           this.minigame0.render()

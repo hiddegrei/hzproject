@@ -30,14 +30,14 @@ export default class MiniGame1 extends MGMain{
 
         this.writeTextToCanvas("Wat is juist?",20,200,200)
 
-        this.writeTextToCanvas("Gebruik een wachtwoord manager en 2-staps verificatie",20,200,250)
-        this.writeTextToCanvas("press a",20,500,250)
+        this.writeTextToCanvas("Gebruik een wachtwoord manager en 2-staps verificatie",20,400,250)
+        this.writeTextToCanvas("press a",20,window.innerWidth/2,250)
 
-        this.writeTextToCanvas("Gebruik het zelfde wachtwoord voor elke website ",20,200,300)
-        this.writeTextToCanvas("press b",20,500,300)
+        this.writeTextToCanvas("Gebruik het zelfde wachtwoord voor elke website ",20,400,300)
+        this.writeTextToCanvas("press b",20,window.innerWidth/2,300)
 
-        this.writeTextToCanvas("Gebruik een ander wachtwoord voor elke website en sla je wachtwoorden op in kladblok op je telefoon",20,200,350)
-        this.writeTextToCanvas("press c",20,500,350)
+        this.writeTextToCanvas("Gebruik een ander wachtwoord voor elke website en sla je wachtwoorden op in kladblok op je telefoon",20,400,350)
+        this.writeTextToCanvas("press c",20,window.innerWidth/2,350)
         
         
     }
