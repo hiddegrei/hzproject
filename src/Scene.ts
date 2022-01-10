@@ -240,7 +240,9 @@ export default class Scene {
       document.onmousemove = this.mouseDown.bind(this);
       
       let roomNum=this.particle.isInRoom(this.roomsIds)
-      if(roomNum!=-1&&this.keys.keys[roomNum]){
+      if(roomNum!=-1
+        //&&this.keys.keys[roomNum]
+        ){
         //player is inside a room or central hub
         this.insideRoom=true;
         this.inRoomNum=roomNum;
