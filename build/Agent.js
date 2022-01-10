@@ -1,6 +1,7 @@
 import Border from "./Border.js";
 import Ray from "./Ray.js";
 import Vector from "./Vector.js";
+import Game from "./Game.js";
 export default class Agent {
     ctx;
     pos;
@@ -24,11 +25,13 @@ export default class Agent {
     keyNum;
     status;
     hackRange;
+    goldkeyImg;
     constructor(x, y, ctx, widthHall, mode, keyNum, status) {
         this.ctx = ctx;
         this.keyNum = keyNum;
         this.mode = mode;
         this.pos = new Vector(x, y);
+        this.goldkeyImg = Game.loadNewImage("./assets/img/objects/goldkey.png");
         this.rays = [];
         this.radius = 10;
         this.speed = 1;
@@ -193,7 +196,8 @@ export default class Agent {
         this.acc.setMag(0);
     }
     show(ctx) {
-        this.writeTextToCanvas(`${this.keyNum}`, 20, this.pos.x, this.pos.y - 35);
+        this.ctx.drawImage(this.goldkeyImg, 0, 0, this.goldkeyImg.width, this.goldkeyImg.height, this.pos.x - 20, this.pos.y - 35, 30, 30);
+        this.writeTextToCanvas(`${this.keyNum}`, 20, this.pos.x + 15, this.pos.y - 10);
         let color;
         if (this.status === "yellow") {
             color = "rgb(255,255,0)";
