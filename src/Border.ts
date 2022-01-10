@@ -21,7 +21,7 @@ export default class Border {
   show() {
     if(this.type==="normal"){
     this.ctx.strokeStyle = "rgb(255,255,255)";
-    this.ctx.lineWidth = 1;
+    this.ctx.lineWidth = 2;
     this.ctx.beginPath();
     this.ctx.moveTo(this.a.x, this.a.y);
     this.ctx.lineTo(this.b.x, this.b.y);
@@ -30,7 +30,7 @@ export default class Border {
     this.ctx.fill()
     }else{
       this.ctx.strokeStyle = "rgb(0,0,255)";
-    this.ctx.lineWidth = 1;
+    this.ctx.lineWidth = 2;
     this.ctx.beginPath();
     this.ctx.moveTo(this.a.x, this.a.y);
     this.ctx.lineTo(this.b.x, this.b.y);

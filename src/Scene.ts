@@ -34,7 +34,7 @@ export default class Scene {
 
   private score: Score[];
 
-  private totalScore: number;
+  public totalScore: number;
 
   public widthHall: number;
 
