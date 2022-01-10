@@ -11,7 +11,8 @@ import Camera from './Camera.js';
 import TimeLimit from './TimeLimit.js';
 import Agent from './Agent.js';
 import Progress from './Progress.js';
-import MiniGame from './MiniGame.js';
+import MiniGame from './Room.js';
+import Room from './Room.js';
 
 
 export default class Scene {
@@ -45,7 +46,7 @@ export default class Scene {
 
   public currentTrans: Vector;
 
-  private minigame:MiniGame;
+  private room:Room;
 
   
  
@@ -96,7 +97,7 @@ export default class Scene {
     this.game = game;
     this.ctx = this.canvas.getContext('2d');
     this.progress = new Progress();
-    this.minigame=new MiniGame(0,this.ctx,this)
+    this.room=new Room(0,this.ctx,this)
     console.log("window widht:", window.innerWidth)
     console.log("window height:", window.innerHeight)
 
@@ -173,8 +174,8 @@ export default class Scene {
     if(false){
     //if (this.timeLeft - elapsed < 0) {
       this.game.isEnd = true;
-    }else if(this.insideRoom&&this.minigame.visitedRooms[this.inRoomNum]!=true){
-      this.minigame.update()
+    }else if(this.insideRoom&&this.room.visitedRooms[this.inRoomNum]!=true){
+      this.room.update()
 
 
     } else {
@@ -218,7 +219,7 @@ export default class Scene {
         //player is inside a room or central hub
         this.insideRoom=true;
         this.inRoomNum=roomNum;
-        this.minigame.setRoomId(this.inRoomNum)
+        this.room.setRoomId(this.inRoomNum)
         
         
       };
@@ -255,8 +256,8 @@ export default class Scene {
     if(false){
       //if (this.timeLeft - elapsed < 0) {
         this.game.isEnd = true;
-      }else if(this.insideRoom&&this.minigame.visitedRooms[this.inRoomNum]!=true){
-        this.minigame.render()
+      }else if(this.insideRoom&&this.room.visitedRooms[this.inRoomNum]!=true){
+        this.room.render()
   
   
       } else {

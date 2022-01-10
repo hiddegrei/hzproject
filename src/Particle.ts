@@ -218,19 +218,7 @@ export default class Particle {
 
       
 
-        //this.ctx.setTransform(1, 0, 0, 1, 0, 0);
-    //     this.ctx.save();
-    //     //this.ctx.translate(-this.pos.x,-this.pos.y);
-    //    this.ctx.rotate(-(this.dirAngle/360)*2*Math.PI+(0.5*Math.PI));
-    //     this.ctx.drawImage(this.imageSprite,this.images[Math.ceil(this.imgIndex)%this.images.length][0],
-    //             this.images[Math.ceil(this.imgIndex)%this.images.length][1],
-    //             this.images[Math.ceil(this.imgIndex)%this.images.length][2],
-    //             this.images[Math.ceil(this.imgIndex)%this.images.length][3],
-    //             this.pos.x,
-    //             this.pos.y,
-    //             this.images[Math.ceil(this.imgIndex)%this.images.length][6],
-    //             this.images[Math.ceil(this.imgIndex)%this.images.length][7])
-    //     this.ctx.restore();
+        
 
         this.ctx.save();
         this.ctx.translate(this.pos.x,this.pos.y);

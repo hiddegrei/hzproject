@@ -8,7 +8,7 @@ import Camera from './Camera.js';
 import TimeLimit from './TimeLimit.js';
 import Agent from './Agent.js';
 import Progress from './Progress.js';
-import MiniGame from './MiniGame.js';
+import Room from './Room.js';
 export default class Scene {
     canvas;
     ctx;
@@ -25,7 +25,7 @@ export default class Scene {
     endGame;
     condition;
     currentTrans;
-    minigame;
+    room;
     timeArray;
     keyboard;
     camera;
@@ -50,7 +50,7 @@ export default class Scene {
         this.game = game;
         this.ctx = this.canvas.getContext('2d');
         this.progress = new Progress();
-        this.minigame = new MiniGame(0, this.ctx, this);
+        this.room = new Room(0, this.ctx, this);
         console.log("window widht:", window.innerWidth);
         console.log("window height:", window.innerHeight);
         this.score = [];
@@ -93,8 +93,8 @@ export default class Scene {
         if (false) {
             this.game.isEnd = true;
         }
-        else if (this.insideRoom && this.minigame.visitedRooms[this.inRoomNum] != true) {
-            this.minigame.update();
+        else if (this.insideRoom && this.room.visitedRooms[this.inRoomNum] != true) {
+            this.room.update();
         }
         else {
             this.timeLeft -= elapsed;
@@ -120,7 +120,7 @@ export default class Scene {
             if (roomNum != 0) {
                 this.insideRoom = true;
                 this.inRoomNum = roomNum;
-                this.minigame.setRoomId(this.inRoomNum);
+                this.room.setRoomId(this.inRoomNum);
             }
             ;
             this.count += 1;
@@ -137,8 +137,8 @@ export default class Scene {
         if (false) {
             this.game.isEnd = true;
         }
-        else if (this.insideRoom && this.minigame.visitedRooms[this.inRoomNum] != true) {
-            this.minigame.render();
+        else if (this.insideRoom && this.room.visitedRooms[this.inRoomNum] != true) {
+            this.room.render();
         }
         else {
             this.particle.show();
