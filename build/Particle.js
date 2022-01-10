@@ -83,7 +83,7 @@ export default class Particle {
                             let a = pt.x - this.pos.x;
                             let b = pt.y - this.pos.y;
                             let d = Math.sqrt(a * a + b * b);
-                            if (d < this.radius + 5) {
+                            if (d < this.radius + 10) {
                                 this.walk = false;
                             }
                         }
