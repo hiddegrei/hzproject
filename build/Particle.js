@@ -1,5 +1,9 @@
+import Game from "./Game.js";
 import Ray from "./Ray.js";
+import Vector from "./Vector.js";
 export default class Particle {
+    static WP = 95 / 2;
+    static HP = 130 / 2;
     ctx;
     pos = {};
     rays = [];
@@ -8,23 +12,61 @@ export default class Particle {
     dir = {};
     mouse = {};
     angleView;
+    imageSprite;
+    images = [];
+    imgIndex;
+    dirAngle;
+    walk;
+    vel;
+    acc;
+    maxspeed;
     constructor(x, y, ctx) {
         this.ctx = ctx;
-        this.pos = { x: x, y: y };
+        this.pos = new Vector(x, y);
         this.rays = [];
         this.radius = 10;
-        this.speed = 1;
+        this.speed = 2;
+        this.maxspeed = 2;
         this.dir = { x: 0, y: 0 };
         this.mouse = { x: 0, y: 0 };
         this.angleView = 18;
+        this.imageSprite = Game.loadNewImage("./assets/img/players/bkspr01.png");
+        console.log(this.imageSprite.width, this.imageSprite.height);
+        this.images.push([20, 150, 95, 130, 300, 300, Particle.WP, Particle.HP]);
+        this.images.push([132, 50, 95, 130, 300, 300, Particle.WP, Particle.HP]);
+        this.images.push([132, 270, 95, 130, 300, 300, Particle.WP, Particle.HP]);
+        this.images.push([20, 290, 95, 130, 300, 300, Particle.WP, Particle.HP]);
+        this.imgIndex = 0;
+        this.walk = false;
+        this.vel = new Vector(0, 0);
+        this.acc = new Vector(0, 0);
+    }
+    applyforce(force) {
+        this.acc.add(force);
     }
     getAngleDeg(ax, ay, bx, by) {
         var angleRad = Math.atan((ay - by) / (ax - bx));
         var angleDeg = angleRad * 180 / Math.PI;
         return (angleDeg);
     }
-    move(mx, my, borders) {
-        let walk = true;
+    isInRoom(rooms) {
+        for (let i = 0; i < rooms.length; i++) {
+            let roomV = { x: rooms[i][0], y: rooms[i][1] };
+            if (Vector.dist(this.pos, roomV) < this.radius * 2) {
+                console.log("im inside room: ", rooms[i][2]);
+                return +rooms[i][2];
+            }
+        }
+        return 0;
+    }
+    move() {
+        this.pos.add(this.vel);
+        this.vel.add(this.acc);
+        this.vel.limit(this.maxspeed);
+        this.acc.setMag(0);
+    }
+    update(mx, my, borders) {
+        this.walk = true;
         if (this.rays.length > 0) {
             for (let j = 0; j < this.rays.length; j++) {
                 for (let i = 0; i < borders.length; i++) {
@@ -35,7 +77,7 @@ export default class Particle {
                             let b = pt.y - this.pos.y;
                             let d = Math.sqrt(a * a + b * b);
                             if (d < this.radius + 5) {
-                                walk = false;
+                                this.walk = false;
                             }
                         }
                     }
@@ -52,6 +94,7 @@ export default class Particle {
             degrees -= 360;
         while (degrees < 0)
             degrees += 360;
+        this.dirAngle = degrees;
         this.rays = [];
         for (let i = degrees - this.angleView; i < degrees; i++) {
             this.rays.push(new Ray(this.pos, i, this.ctx));
@@ -61,19 +104,28 @@ export default class Particle {
         }
         this.dir.x = (this.dir.x / d) * this.speed;
         this.dir.y = (this.dir.y / d) * this.speed;
-        if (d > 20 && walk) {
-            this.pos.x += this.dir.x;
-            this.pos.y += this.dir.y;
+        if (d > 20 && this.walk) {
+            this.applyforce(this.dir);
+        }
+        else {
+            this.vel.setMag(0);
+            this.acc.setMag(0);
         }
     }
+    animate() {
+        this.imgIndex += 0.05;
+    }
     show() {
-        this.ctx.lineWidth = 1;
-        this.ctx.fillStyle = "rgb(255,255,255)";
-        this.ctx.beginPath();
-        this.ctx.arc(this.pos.x, this.pos.y, this.radius, 0, 2 * Math.PI);
-        this.ctx.stroke();
-        this.ctx.closePath();
-        this.ctx.fill();
+        this.ctx.save();
+        this.ctx.translate(this.pos.x, this.pos.y);
+        this.ctx.rotate(-(this.dirAngle * Math.PI) / 180 + (0.5 * Math.PI));
+        if (this.vel.dist() != 0) {
+            this.ctx.drawImage(this.imageSprite, this.images[Math.ceil(this.imgIndex) % this.images.length][0], this.images[Math.ceil(this.imgIndex) % this.images.length][1], this.images[Math.ceil(this.imgIndex) % this.images.length][2], this.images[Math.ceil(this.imgIndex) % this.images.length][3], -Particle.WP / 2, -Particle.HP / 2, this.images[Math.ceil(this.imgIndex) % this.images.length][6], this.images[Math.ceil(this.imgIndex) % this.images.length][7]);
+        }
+        else {
+            this.ctx.drawImage(this.imageSprite, 20, 50, 95, 50, -Particle.WP / 2, -(50 / 2) / 2, Particle.WP, 50 / 2);
+        }
+        this.ctx.restore();
     }
     look(borders) {
         for (let ray of this.rays) {
@@ -93,13 +145,6 @@ export default class Particle {
                 }
             }
             if (closest.x != -1) {
-                this.ctx.fillStyle = "#FF0000";
-                this.ctx.beginPath();
-                this.ctx.moveTo(this.pos.x, this.pos.y);
-                this.ctx.lineTo(closest.x, closest.y);
-                this.ctx.stroke();
-                this.ctx.closePath();
-                this.ctx.fill();
             }
         }
     }

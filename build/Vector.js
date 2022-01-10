@@ -56,6 +56,9 @@ export default class Vector {
     static sub(a, b) {
         return { x: a.x - b.x, y: a.y - b.y };
     }
+    dist() {
+        return Math.sqrt(this.x * this.x + this.y * this.y);
+    }
     static dist(a, b) {
         const l1 = a.x - b.x;
         const l2 = a.y - b.y;

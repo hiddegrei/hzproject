@@ -3,8 +3,6 @@ import GameLoop from './GameLoop.js';
 
 import Scene from './Scene.js';
 
-import TimeLimit from './TimeLimit.js';
-
 export default class Game {
   public canvas: HTMLCanvasElement;
 
@@ -16,31 +14,37 @@ export default class Game {
 
   public isEnd:boolean;
 
-  private username: string;
+  private usernameProperty: string;
 
-  private password: string;
-
-  public timeLimit: number;
+  private passwordProperty: string;
 
   /**
    * @param canvas
    */
   constructor(canvas: HTMLElement) {
     this.canvas = canvas as HTMLCanvasElement;
+    this.usernameProperty = localStorage.getItem('username');
+    this.passwordProperty = localStorage.getItem('password');
+    // Username and password properties must be initialized before an instance of the scene class is created!
     this.scene = new Scene(this.canvas, this);
     this.gameLoop = new GameLoop(this);
     this.endGame=new EndGame(this.canvas,this)
-    this.username = new URLSearchParams(document.location.search).get('username');
-    this.password = new URLSearchParams(document.location.search).get('password');
-    this.timeLimit = new TimeLimit(this.password).timeLimit;
+  }
+
+  public get username() {
+    return this.usernameProperty;
+  }
+
+  public get password() {
+    return this.passwordProperty;
   }
 
   /**
    *
    */
   public start() {
-    // console.log('starting');
-    // console.log(`Time limit: ${this.timeLimit.timeLimit}`);
+    console.log(`Username: ${this.username}`);
+    console.log(`Password: ${this.password}`);
     this.gameLoop.start();
   }
 
