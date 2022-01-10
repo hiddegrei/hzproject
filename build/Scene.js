@@ -25,6 +25,7 @@ export default class Scene {
     endGame;
     condition;
     currentTrans;
+    timeArray;
     keyboard;
     camera;
     agent;
@@ -34,6 +35,7 @@ export default class Scene {
     time;
     timeLeft;
     constructor(canvas, game) {
+        this.timeArray = [Date.now()];
         this.canvas = canvas;
         this.canvas.width = 1920;
         this.canvas.height = 969;
@@ -88,7 +90,6 @@ export default class Scene {
         this.camera.createMatrix(trans.x, trans.y, 0, 0);
         this.ctx.translate(trans.x, trans.y);
         this.progression.writeTextToCanvas('progress: ', this.canvas.width / 10 * 6.5, 20);
-        this.progression.pBar(this.ctx);
         document.onmousemove = this.mouseDown.bind(this);
         this.count += 1;
         this.progression.writeTextToCanvas('progress: ', 850, 20);
@@ -102,14 +103,10 @@ export default class Scene {
         else {
             this.writeTextToCanvas(`${this.progression.getProgression()}%`, 20, this.canvas.width / 10 * 9, 20);
         }
-<<<<<<< HEAD
-        if (this.count >= 500) {
-=======
         this.progression.pBar(this.ctx);
         this.score[0].writeTextToCanvas(`Score: ${this.totalScore}`, this.canvas.width / 2, 20);
         if (this.keyboard.isKeyDown(82)) {
             this.game.isEnd = true;
->>>>>>> 0c774b7e043776aa071879568f4be353697217c2
         }
         document.onmousemove = this.mouseDown.bind(this);
         this.particle.move(this.mouse.x, this.mouse.y, this.borders);
@@ -135,13 +132,9 @@ export default class Scene {
         }
         this.particle.look(this.borders);
         this.writeTextToCanvas('Central hub', 20, this.canvas.width / 2, 400);
-<<<<<<< HEAD
-        this.writeTextToCanvas("Timelimit: " + this.timeLeft, 20, 100, 20);
-=======
         this.writeTextToCanvas("Timelimit: " + this.timeLeft, 20, this.canvas.width / 3, 20);
         this.agent.show(this.ctx);
         this.agent.look(this.borders, this.ctx);
->>>>>>> 0c774b7e043776aa071879568f4be353697217c2
     }
     writeTextToCanvas(text, fontSize = 20, xCoordinate, yCoordinate, alignment = 'center', color = 'red') {
         this.ctx.font = `${fontSize}px sans-serif`;
