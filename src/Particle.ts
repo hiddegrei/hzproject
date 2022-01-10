@@ -204,12 +204,14 @@ export default class Particle {
 
         this.hacking=true
         this.hackAgent=i
+        return;
 
 
 
 
             }
         }
+        this.hacking=false
         
         
     }

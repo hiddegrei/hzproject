@@ -124,8 +124,10 @@ export default class Particle {
             if (Vector.dist(this.pos, agents[i].pos) < this.hackRange) {
                 this.hacking = true;
                 this.hackAgent = i;
+                return;
             }
         }
+        this.hacking = false;
     }
     animate() {
         this.imgIndex += 0.05;
