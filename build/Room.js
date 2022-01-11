@@ -38,6 +38,7 @@ export default class Room {
     miniGameFinished;
     answer;
     canvas;
+    img;
     constructor(roomId, ctx, scene, canvas) {
         this.roomId = roomId;
         this.ctx = ctx;
@@ -51,7 +52,7 @@ export default class Room {
         this.minigame4 = new MiniGame4(this.ctx, this);
         this.minigame5 = new MiniGame5(this.ctx, this);
         this.minigame6 = new MiniGame6(this.ctx, this);
-        this.minigame7 = new MiniGame7(this.ctx, this);
+        this.minigame7 = new MiniGame7(this.ctx, this, this.canvas);
         this.minigame8 = new MiniGame8(this.ctx, this);
         this.minigame9 = new MiniGame9(this.ctx, this);
         this.minigame10 = new MiniGame10(this.ctx, this);
@@ -193,6 +194,10 @@ export default class Room {
         const img = new Image();
         img.src = source;
         return img;
+    }
+    static drawImageScaled(ctx, img, imgWidth, imgHeight, xPos, yPos) {
+        let image = Room.loadNewImage(img);
+        ctx.drawImage(image, 0, 0, image.width / imgWidth, image.height / imgHeight, xPos, yPos, window.innerWidth, window.innerHeight);
     }
 }
 //# sourceMappingURL=Room.js.map
