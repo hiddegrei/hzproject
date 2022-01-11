@@ -96,6 +96,7 @@ export default class Room{
     }
 
     public update(){
+      this.ctx.setTransform(1, 0, 0, 1, 0, 0);
        
         if(this.roomId===0){
           this.minigame0.update()

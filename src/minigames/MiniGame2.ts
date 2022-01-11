@@ -10,6 +10,7 @@ export default class MiniGame2 extends MGMain{
     private complete:any
     private attemptsArr:Array<string>=[]
     private foundStr:string
+    private started:boolean
     
 
     constructor(ctx:CanvasRenderingContext2D,room:Room){
@@ -18,11 +19,12 @@ export default class MiniGame2 extends MGMain{
       this.secretW=["1","7","1","s","m","i","t","h"]
       this.found=[null,null,null,null,null,null,null,null]
       //window.addEventListener('keydown',this.checkKey,false);
-     // document.onkeydown = this.checkKey.bind(this);
+      // document.onkeydown = this.checkKey.bind(this);
       this.index=0
       this.attempts=5
       this.foundStr=""
      // this.complete=false
+     this.started=true
 
     }
 
@@ -106,6 +108,10 @@ export default class MiniGame2 extends MGMain{
 
     public update(){
       this.ctx.clearRect(0, 0, this.room.canvas.width, this.room.canvas.height);
+      if(this.started){
+        document.onkeydown = this.checkKey.bind(this);
+        this.started=false
+      }
 
     }
 

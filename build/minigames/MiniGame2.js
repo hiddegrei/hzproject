@@ -8,6 +8,7 @@ export default class MiniGame2 extends MGMain {
     complete;
     attemptsArr = [];
     foundStr;
+    started;
     constructor(ctx, room) {
         super(2, room);
         this.ctx = ctx;
@@ -16,6 +17,7 @@ export default class MiniGame2 extends MGMain {
         this.index = 0;
         this.attempts = 5;
         this.foundStr = "";
+        this.started = true;
     }
     checkKey(e) {
         if (e.keyCode === 8) {
@@ -81,6 +83,10 @@ export default class MiniGame2 extends MGMain {
     }
     update() {
         this.ctx.clearRect(0, 0, this.room.canvas.width, this.room.canvas.height);
+        if (this.started) {
+            document.onkeydown = this.checkKey.bind(this);
+            this.started = false;
+        }
     }
     render() {
         this.ctx.strokeStyle = "rgb(0,255,0)";
