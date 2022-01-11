@@ -48,17 +48,17 @@ export default class Scene {
         this.canvas = canvas;
         this.canvas.width = 1920;
         this.canvas.height = 969;
+        this.ctx = this.canvas.getContext('2d');
         this.camera = new Camera();
         this.currentTrans = new Vector(0, 0);
         this.keyboard = new KeyboardListener();
         this.insideRoom = false;
         this.inRoomNum = -1;
-        this.keys = new Keys();
+        this.keys = new Keys(this.ctx);
         this.timeHacking = 0;
         this.showKeys = false;
         this.scoreToDatabase = new ScoreToDatabase();
         this.game = game;
-        this.ctx = this.canvas.getContext('2d');
         this.progress = new Progress();
         this.room = new Room(0, this.ctx, this, this.canvas);
         console.log("window widht:", window.innerWidth);
@@ -183,8 +183,11 @@ export default class Scene {
                 else if (this.agents[this.particle.hackAgent].status === "orange") {
                     this.agents[this.particle.hackAgent].status = "red";
                 }
-                else {
+                else if (this.agents[this.particle.hackAgent].status === "red") {
                     this.agents[this.particle.hackAgent].mode = "search";
+                }
+                else if (this.agents[this.particle.hackAgent].mode = "search") {
+                    this.agents[this.particle.hackAgent].maxspeed += 0.2;
                 }
                 console.log("hacked room num:", key);
                 for (let i = 0; i < this.keys.keys.length; i++) {
@@ -229,19 +232,7 @@ export default class Scene {
             }
         }
         if (this.showKeys) {
-            let index = 2;
-            this.ctx.fillStyle = "rgb(255,255,255)";
-            this.ctx.beginPath();
-            this.ctx.rect(window.innerWidth / 2 - 20, 40, 100, index * 30);
-            this.ctx.stroke();
-            this.ctx.closePath();
-            this.ctx.fill();
-            for (let i = 0; i < this.keys.keys.length; i++) {
-                if (this.keys.keys[i]) {
-                    this.writeTextToCanvas(`key: ${i}`, 15, window.innerWidth / 2, index * 30);
-                    index++;
-                }
-            }
+            this.keys.show(this.ctx);
         }
     }
     writeTextToCanvas(text, fontSize = 20, xCoordinate, yCoordinate, alignment = 'center', color = 'red') {

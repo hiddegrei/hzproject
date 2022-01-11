@@ -126,6 +126,7 @@ export default class Room{
         }else if(this.roomId===14){
           this.minigame14.update()
         }
+       
 
     }
 

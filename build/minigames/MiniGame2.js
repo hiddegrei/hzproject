@@ -6,25 +6,28 @@ export default class MiniGame2 extends MGMain {
     found;
     index;
     complete;
+    attemptsArr = [];
+    foundStr;
     constructor(ctx, room) {
         super(2, room);
         this.ctx = ctx;
         this.secretW = ["1", "7", "1", "s", "m", "i", "t", "h"];
-        this.found = [0, 0, 0, 0, 0, 0, 0, 0];
+        this.found = [null, null, null, null, null, null, null, null];
         document.onkeydown = this.checkKey.bind(this);
         this.index = 0;
         this.attempts = 5;
+        this.foundStr = "";
     }
     checkKey(e) {
         if (e.keyCode === 8) {
-            this.found[this.index--] = 0;
+            this.found[this.index--] = null;
         }
         else if (e.keyCode === 13) {
             this.checkAttempt();
         }
         else if (this.index <= 7) {
             for (let i = 0; i < this.found.length; i++) {
-                if (this.found[i] === 0) {
+                if (this.found[i] === null) {
                     this.index = i;
                     break;
                 }
@@ -40,19 +43,24 @@ export default class MiniGame2 extends MGMain {
         }
     }
     checkAttempt() {
+        for (let i = 0; i < this.found.length; i++) {
+            this.foundStr += this.found[i];
+        }
+        this.attemptsArr.push(this.foundStr);
+        this.foundStr = "";
         let complete = true;
-        if (this.attempts <= 5) {
+        if (this.attempts > 0) {
             for (let i = 0; i < this.secretW.length; i++) {
                 if (this.found[i] === this.secretW[i]) {
                     this.found[i] = this.secretW[i];
                 }
                 else {
-                    this.found[i] = 0;
+                    this.found[i] = null;
                     complete = false;
                 }
             }
             for (let i = 0; i < this.found.length; i++) {
-                if (this.found[i] === 0) {
+                if (this.found[i] === null) {
                     this.index = i;
                     break;
                 }
@@ -60,12 +68,12 @@ export default class MiniGame2 extends MGMain {
             this.attempts--;
             if (complete) {
                 this.complete = true;
-                this.answer();
+                setTimeout(this.answer.bind(this), 2000);
             }
         }
         else {
             this.complete = 0;
-            this.answer();
+            setTimeout(this.answer.bind(this), 2000);
         }
     }
     answer() {
@@ -82,12 +90,17 @@ export default class MiniGame2 extends MGMain {
         this.ctx.closePath();
         this.ctx.stroke();
         this.writeTextToCanvas("Je hebt 5 pogingen om het wachtwoord te raden, na elke poging kun je zien welke", 16, 110, 130);
-        this.writeTextToCanvas("character je goed hebt geraden", 16, 110, 150);
-        this.writeTextToCanvas("PRESS ENTER  om je poging te testen.", 16, 110, 25);
+        this.writeTextToCanvas("characters je goed hebt geraden", 16, 110, 150);
+        this.writeTextToCanvas("PRESS ENTER  om je poging te testen.", 16, 110, 50);
+        if (this.attemptsArr) {
+            for (let i = 0; i < this.attemptsArr.length; i++) {
+                this.writeTextToCanvas(`Poging ${i}: ${this.attemptsArr[i]}`, 19, 110, 170 + i * 20);
+            }
+        }
         this.ctx.beginPath();
         this.ctx.rect(700, 100, 300, 500);
         this.ctx.closePath();
-        this.writeTextToCanvas("Informatie je hebt verkregen:", 20, 750, 100);
+        this.writeTextToCanvas("Informatie die je hebt verkregen:", 20, 750, 100);
         this.writeTextToCanvas("voornaam: Rik", 20, 750, 130);
         this.writeTextToCanvas("voornaam: Smith", 20, 750, 160);
         this.writeTextToCanvas("leeftijd: 17", 20, 750, 190);
@@ -105,7 +118,7 @@ export default class MiniGame2 extends MGMain {
         this.ctx.closePath();
         this.ctx.stroke();
         for (let i = 1; i < 9; i++) {
-            if (this.found[i - 1] != 0) {
+            if (this.found[i - 1] != null) {
                 this.writeTextToCanvas(this.found[i - 1], 40, i * 100 + 10, 540);
             }
             else {
