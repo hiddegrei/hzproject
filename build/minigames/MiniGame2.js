@@ -13,7 +13,6 @@ export default class MiniGame2 extends MGMain {
         this.ctx = ctx;
         this.secretW = ["1", "7", "1", "s", "m", "i", "t", "h"];
         this.found = [null, null, null, null, null, null, null, null];
-        document.onkeydown = this.checkKey.bind(this);
         this.index = 0;
         this.attempts = 5;
         this.foundStr = "";

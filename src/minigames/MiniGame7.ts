@@ -12,7 +12,8 @@ export default class MiniGame7 extends MGMain {
     private time: number;
     private positionKeyPressed: boolean;
     private numberKeyPressed: boolean;
-    private started:boolean
+    private timeIncrement: number;
+    
 
     constructor(ctx:CanvasRenderingContext2D,room:Room, canvas: HTMLCanvasElement){
       super(7,room)
@@ -26,23 +27,19 @@ export default class MiniGame7 extends MGMain {
       this.time = 0;
       this.positionKeyPressed = false;
       this.numberKeyPressed = false;
-      this.started=true
+      this.timeIncrement = 0;
       do {
         this.codeGenerator();
         this.generateStartPosition();
       } while (this.combination === this.wheels);
-      //document.onkeydown=this.checkLocks.bind(this);
+      
+      document.onkeydown=this.checkLocks.bind(this)
     }
 
 
     public update(){
-      // this.lockposition();
-      // this.locknumber();
-      //this.render();
-      if(this.started){
-        document.onkeydown=this.checkLocks.bind(this);
-        this.started=false
-      }
+      this.check();
+     
       if (this.time >= 100) {
         this.time = 0;
         this.positionKeyPressed = false;
@@ -55,6 +52,7 @@ export default class MiniGame7 extends MGMain {
       console.log(e.keyCode)
       this.lockposition(e.keyCode);
       this.locknumber(e.keyCode);
+
     }
 
     public render(){
@@ -131,11 +129,9 @@ export default class MiniGame7 extends MGMain {
     private locknumber(keycode:number){
       if (keycode===40 ) {
         this.decrement(this.position);
-        this.check();
         this.numberKeyPressed = true;
       } else if (keycode===38 ) {
         this.increment(this.position);
-        this.check();
         this.numberKeyPressed = true;
       }
     }
@@ -172,10 +168,30 @@ export default class MiniGame7 extends MGMain {
     }
 
     private check() {
-      if (this.combination === this.wheels) {
+      if (this.combinationCheck() === true) {
         this.locked = false;
+        setTimeout(this.answer.bind(this),4000)
       } else {
         this.locked = true;
+      }
+    }
+
+    private answer(){
+      this.room.miniGameFinished = true;
+      this.room.answer = true;
+    }
+
+    private combinationCheck(): boolean {
+      let boolean = true;
+      for (let i = 0; i < this.wheels.length; i++) {
+        if (this.wheels[i].valueOf() !== this.combination[i].valueOf()) {
+          boolean = false;
+        }
+      }
+      if(boolean === true) {
+        return true;
+      } else {
+        return false;
       }
     }
 

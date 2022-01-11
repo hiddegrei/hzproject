@@ -17,7 +17,7 @@ export default class MiniGame14 extends MGMain {
         this.attempts = 5;
         this.foundStr = "";
     }
-    checkKey(e) {
+    checkKey14(e) {
         if (e.keyCode === 8) {
             this.found[this.index--] = null;
         }
@@ -31,6 +31,7 @@ export default class MiniGame14 extends MGMain {
                     break;
                 }
             }
+            console.log(this.found[this.index]);
             if (e.keyCode <= 57) {
                 this.found[this.index] = String.fromCharCode(e.keyCode);
             }
