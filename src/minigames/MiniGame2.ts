@@ -18,7 +18,7 @@ export default class MiniGame2 extends MGMain{
       this.secretW=["1","7","1","s","m","i","t","h"]
       this.found=[null,null,null,null,null,null,null,null]
       //window.addEventListener('keydown',this.checkKey,false);
-      document.onkeydown = this.checkKey.bind(this);
+     // document.onkeydown = this.checkKey.bind(this);
       this.index=0
       this.attempts=5
       this.foundStr=""

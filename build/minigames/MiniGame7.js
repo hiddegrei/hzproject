@@ -11,7 +11,7 @@ export default class MiniGame7 extends MGMain {
     time;
     positionKeyPressed;
     numberKeyPressed;
-    timeIncrement;
+    started;
     constructor(ctx, room, canvas) {
         super(7, room);
         this.canvas = canvas;
@@ -24,22 +24,28 @@ export default class MiniGame7 extends MGMain {
         this.time = 0;
         this.positionKeyPressed = false;
         this.numberKeyPressed = false;
-        this.timeIncrement = 0;
+        this.started = true;
         do {
             this.codeGenerator();
             this.generateStartPosition();
         } while (this.combination === this.wheels);
     }
     update() {
-        this.check();
-        this.lockposition();
-        this.locknumber();
+        if (this.started) {
+            document.onkeydown = this.checkLocks.bind(this);
+            this.started = false;
+        }
         if (this.time >= 100) {
             this.time = 0;
             this.positionKeyPressed = false;
             this.numberKeyPressed = false;
         }
         this.time++;
+    }
+    checkLocks(e) {
+        console.log(e.keyCode);
+        this.lockposition(e.keyCode);
+        this.locknumber(e.keyCode);
     }
     render() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -70,9 +76,9 @@ export default class MiniGame7 extends MGMain {
         }
         console.log(this.wheels);
     }
-    lockposition() {
+    lockposition(keycode) {
         if (this.wheels.length !== 1) {
-            if (this.keyboard.isKeyDown(37) && this.positionKeyPressed === false) {
+            if (keycode === 37) {
                 if (this.position === this.wheels.length - 1) {
                     this.position = 0;
                 }
@@ -82,7 +88,7 @@ export default class MiniGame7 extends MGMain {
                 this.positionKeyPressed = true;
                 console.log(this.position);
             }
-            else if (this.keyboard.isKeyDown(39) && this.positionKeyPressed === false) {
+            else if (keycode === 39) {
                 if (this.position === 0) {
                     this.position = this.wheels.length - 1;
                 }
@@ -94,13 +100,15 @@ export default class MiniGame7 extends MGMain {
             }
         }
     }
-    locknumber() {
-        if (this.keyboard.isKeyDown(40) && this.numberKeyPressed === false) {
+    locknumber(keycode) {
+        if (keycode === 40) {
             this.decrement(this.position);
+            this.check();
             this.numberKeyPressed = true;
         }
-        else if (this.keyboard.isKeyDown(38) && this.numberKeyPressed === false) {
+        else if (keycode === 38) {
             this.increment(this.position);
+            this.check();
             this.numberKeyPressed = true;
         }
     }
@@ -131,30 +139,11 @@ export default class MiniGame7 extends MGMain {
         }
     }
     check() {
-        if (this.combinationCheck() === true) {
+        if (this.combination === this.wheels) {
             this.locked = false;
-            setTimeout(this.answer.bind(this), 4000);
         }
         else {
             this.locked = true;
-        }
-    }
-    answer() {
-        this.room.miniGameFinished = true;
-        this.room.answer = true;
-    }
-    combinationCheck() {
-        let boolean = true;
-        for (let i = 0; i < this.wheels.length; i++) {
-            if (this.wheels[i].valueOf() !== this.combination[i].valueOf()) {
-                boolean = false;
-            }
-        }
-        if (boolean === true) {
-            return true;
-        }
-        else {
-            return false;
         }
     }
     writeTextToCanvas(text, fontSize = 20, xCoordinate, yCoordinate, alignment = 'center', color = 'red') {

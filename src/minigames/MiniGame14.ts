@@ -18,7 +18,7 @@ export default class MiniGame14 extends MGMain{
       this.secretW=["1","2","0","2","2","j","a","n"]
       this.found=[null,null,null,null,null,null,null,null]
       //window.addEventListener('keydown',this.checkKey,false);
-      document.onkeydown = this.checkKey.bind(this);
+     // document.onkeydown = this.checkKey.bind(this);
       this.index=0
       this.attempts=5
       this.foundStr=""
@@ -40,7 +40,7 @@ export default class MiniGame14 extends MGMain{
             break;
           }
         }
-        console.log(this.found[this.index])
+        //console.log(this.found[this.index])
         if(e.keyCode<=57){
           this.found[this.index]=String.fromCharCode(e.keyCode)
           
