@@ -115,7 +115,6 @@ export default class MiniGame7 extends MGMain {
             this.position++;
           }
           this.positionKeyPressed = true;
-          console.log(this.position);
         } else if (keycode===39 ) {
           if(this.position === 0){
             this.position = this.wheels.length -1;
@@ -123,7 +122,6 @@ export default class MiniGame7 extends MGMain {
             this.position--;
           }
           this.positionKeyPressed = true;
-          console.log(this.position)
         }
       }
     }
@@ -160,7 +158,6 @@ export default class MiniGame7 extends MGMain {
       } else {
         this.wheels[wheel]++;
       }
-      console.log(`increment: ${wheel}`);
     }
 
     private decrement(wheel: number) {
