@@ -80,6 +80,7 @@ export default class Room {
         return false;
     }
     update() {
+        this.ctx.setTransform(1, 0, 0, 1, 0, 0);
         if (this.roomId === 0) {
             this.minigame0.update();
         }

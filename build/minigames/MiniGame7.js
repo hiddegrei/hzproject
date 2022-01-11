@@ -12,6 +12,7 @@ export default class MiniGame7 extends MGMain {
     positionKeyPressed;
     numberKeyPressed;
     timeIncrement;
+    started;
     constructor(ctx, room, canvas) {
         super(7, room);
         this.canvas = canvas;
@@ -25,14 +26,18 @@ export default class MiniGame7 extends MGMain {
         this.positionKeyPressed = false;
         this.numberKeyPressed = false;
         this.timeIncrement = 0;
+        this.started = true;
         do {
             this.codeGenerator();
             this.generateStartPosition();
         } while (this.combination === this.wheels);
-        document.onkeydown = this.checkLocks.bind(this);
     }
     update() {
         this.check();
+        if (this.started) {
+            document.onkeydown = this.checkLocks.bind(this);
+            this.started = false;
+        }
         if (this.time >= 100) {
             this.time = 0;
             this.positionKeyPressed = false;
