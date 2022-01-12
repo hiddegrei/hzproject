@@ -28,12 +28,12 @@ export default class Keys{
             index++
           }
         }
-        ctx.fillStyle = "rgb(255,255,255)";
-        ctx.beginPath();
-        ctx.rect(window.innerWidth/2-20,40,100,index*30);
-        ctx.stroke();
-        ctx.closePath()
-        ctx.fill()
+        // ctx.fillStyle = "rgb(255,255,255)";
+        // ctx.beginPath();
+        // ctx.rect(window.innerWidth/2-20,40,100,index*30);
+        // ctx.stroke();
+        // ctx.closePath()
+        // ctx.fill()
         let index2=2
        
         
@@ -45,7 +45,7 @@ export default class Keys{
         //   }
         // }
         this.ctx.drawImage(this.goldkeyImg,0,0,this.goldkeyImg.width,this.goldkeyImg.height,window.innerWidth/2-15,40,40,40)
-        this.writeTextToCanvas(` ${this.total}`,15,window.innerWidth/2+40,65)
+        this.writeTextToCanvas(` ${this.total}`,25,window.innerWidth/2+40,65,"center","white")
     }
 
     /**

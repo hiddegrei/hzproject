@@ -6,15 +6,6 @@ export default class MiniGame8 extends MGMain {
         this.ctx = ctx;
     }
     update() {
-        this.ctx.clearRect(0, 0, this.room.canvas.width, this.room.canvas.height);
-        if (this.keyboard.isKeyDown(65)) {
-            this.room.miniGameFinished = true;
-            this.room.answer = true;
-        }
-        else if (this.keyboard.isKeyDown(66) || this.keyboard.isKeyDown(67)) {
-            this.room.miniGameFinished = true;
-            this.room.answer = false;
-        }
     }
     render() {
         this.writeTextToCanvas(`this is room` + this.roomId, 20, 200, 200);

@@ -229,7 +229,6 @@ export default class Scene {
             this.room.render();
         }
         else {
-            this.writeTextToCanvas("press t to show keys, press y to hide keys", 20, window.innerWidth / 2, 30);
             this.particle.show();
             this.particle.animate();
             for (let i = 0; i < this.borders.length; i++) {
@@ -252,9 +251,7 @@ export default class Scene {
                 this.writeTextToCanvas(this.roomsIds[i][2], 20, this.roomsIds[i][0], this.roomsIds[i][1] - 20);
             }
         }
-        if (this.showKeys) {
-            this.keys.show(this.ctx);
-        }
+        this.keys.show(this.ctx);
     }
     writeTextToCanvas(text, fontSize = 20, xCoordinate, yCoordinate, alignment = 'center', color = 'red') {
         this.ctx.font = `${fontSize}px sans-serif`;
