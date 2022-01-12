@@ -15,6 +15,7 @@ import MiniGame7 from "./minigames/MiniGame7.js";
 import MiniGame8 from "./minigames/MiniGame8.js";
 import MiniGame9 from "./minigames/MiniGame9.js";
 import MiniGameP from "./minigames/MiniGameP.js";
+import Hints from "./Hints.js";
 export default class Room {
     visitedRooms = [];
     roomId;
@@ -37,6 +38,7 @@ export default class Room {
     minigame13;
     minigame14;
     minigameP;
+    hints;
     miniGameFinished;
     answer;
     canvas;
@@ -65,6 +67,7 @@ export default class Room {
         this.minigameP = new MiniGameP(this.ctx, this);
         this.miniGameFinished = false;
         this.answer = false;
+        this.hints = new Hints(this.canvas);
         for (let i = 0; i < 16; i++) {
             this.visitedRooms[i] = false;
         }
@@ -193,6 +196,9 @@ export default class Room {
     }
     setRoomId(roomId) {
         this.roomId = roomId;
+    }
+    getHintsGame() {
+        return this.hints;
     }
     visitsNew(roomId) {
         this.visitedRooms[roomId] = true;

@@ -14,22 +14,20 @@ export default class MiniGame0 extends MGMain {
     this.ctx = ctx
     this.imageBob = Game.loadNewImage("./assets/img/players/bob.png")
     this.image = Game.loadNewImage("./assets/img/background/download.jpeg")
-
   }
-
 
   public update() {
     this.ctx.clearRect(0, 0, this.room.canvas.width, this.room.canvas.height);
     if (this.keyboard.isKeyDown(67)) {
       this.room.miniGameFinished = true
-      this.room.answer = true
+      this.room.answer = true;
+      this.room.getHintsGame().foundHint('b');
     } else if (this.keyboard.isKeyDown(66) || this.keyboard.isKeyDown(65)) {
       this.room.miniGameFinished = true
       this.room.answer = false
-
     }
-
   }
+
 
   public render() {
     this.ctx.drawImage(this.image, 0, 0, this.image.width, this.image.height, 0, 0, window.innerWidth, window.innerHeight)

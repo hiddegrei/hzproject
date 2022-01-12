@@ -44,6 +44,7 @@ export default class Scene {
     timeHacking;
     showKeys;
     lockedUp;
+    hints;
     constructor(canvas, game) {
         this.timeArray = [Date.now()];
         this.canvas = canvas;
@@ -99,6 +100,7 @@ export default class Scene {
         this.timeLimit = new TimeLimit(this.game.password);
         this.timeLeft = this.timeLimit.timeLimit;
         this.time = 0;
+        this.hints = this.room.getHintsGame();
     }
     processInput() {
     }
@@ -159,6 +161,10 @@ export default class Scene {
             }
             ;
             this.count += 1;
+            this.writeTextToCanvas(`Verzamelde hints: `, 30, window.innerWidth / 6, window.innerHeight / 15);
+            this.hints.getHint().forEach((value, index) => {
+                this.writeTextToCanvas(`${value}`, 25, window.innerWidth / 4 + (index * 40), window.innerHeight / 15);
+            });
             for (let i = 0; i < this.agents.length; i++) {
                 let inSight = this.agents[i].inSight(this.particle, this.ctx);
                 if (inSight) {
@@ -220,6 +226,9 @@ export default class Scene {
                 }
             }
         }
+    }
+    gethintGame() {
+        return this.hints;
     }
     render() {
         if (false) {

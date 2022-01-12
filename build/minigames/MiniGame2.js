@@ -80,6 +80,7 @@ export default class MiniGame2 extends MGMain {
     answer() {
         this.room.miniGameFinished = true;
         this.room.answer = true;
+        this.room.getHintsGame().foundHint('o');
     }
     update() {
         this.ctx.clearRect(0, 0, this.room.canvas.width, this.room.canvas.height);

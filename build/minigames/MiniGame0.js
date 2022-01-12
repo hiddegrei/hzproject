@@ -15,6 +15,7 @@ export default class MiniGame0 extends MGMain {
         if (this.keyboard.isKeyDown(67)) {
             this.room.miniGameFinished = true;
             this.room.answer = true;
+            this.room.getHintsGame().foundHint('b');
         }
         else if (this.keyboard.isKeyDown(66) || this.keyboard.isKeyDown(65)) {
             this.room.miniGameFinished = true;
@@ -42,7 +43,7 @@ export default class MiniGame0 extends MGMain {
         this.writeTextToCanvas("Laat je wachtwoord-manager een wachtwoord genereren", 20, 600, 310);
         this.writeTextToCanvas("press c", 20, 1200, 310);
     }
-    writeTextToCanvas(text, fontSize = 20, xCoordinate, yCoordinate, alignment = 'start', color = 'red') {
+    writeTextToCanvas(text, fontSize = 20, xCoordinate, yCoordinate, alignment = 'start', color = 'black') {
         this.ctx.font = `${fontSize}px sans-serif`;
         this.ctx.fillStyle = color;
         this.ctx.textAlign = alignment;
