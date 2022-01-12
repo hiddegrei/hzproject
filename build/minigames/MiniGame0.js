@@ -3,10 +3,12 @@ import Game from "../Game.js";
 export default class MiniGame0 extends MGMain {
     ctx;
     imageBob;
+    image;
     constructor(ctx, room) {
         super(0, room);
         this.ctx = ctx;
         this.imageBob = Game.loadNewImage("./assets/img/players/bob.png");
+        this.image = Game.loadNewImage("./assets/img/background/download.jpeg");
     }
     update() {
         this.ctx.clearRect(0, 0, this.room.canvas.width, this.room.canvas.height);
@@ -20,6 +22,7 @@ export default class MiniGame0 extends MGMain {
         }
     }
     render() {
+        this.ctx.drawImage(this.image, 0, 0, this.image.width, this.image.height, 0, 0, window.innerWidth, window.innerHeight);
         this.writeTextToCanvas("Dit is Bob, Bob heeft een account op twitter.com. De profielnaam van Bob op Twitter is Bob12 en zijn wachtwoord is 'ABC54@#2as'. ", 20, 100, 100);
         this.writeTextToCanvas("Bob maakt een account aan op Instagram, wat is het beste wachtwoord dat hij kan kiezen? Hieronder staan de verdere gegevens van Bob", 20, 100, 120);
         this.ctx.strokeStyle = "rgb(255,255,255)";
