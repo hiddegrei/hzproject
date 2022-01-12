@@ -379,7 +379,9 @@ export default class Scene {
   }
   
 
-  
+  public getGame(){
+    return this.game;
+  }
 
   
 

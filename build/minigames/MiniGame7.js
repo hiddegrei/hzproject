@@ -44,17 +44,19 @@ export default class MiniGame7 extends MGMain {
         });
     }
     update() {
-        this.check();
-        if (this.started) {
-            document.onkeydown = this.checkLocks.bind(this);
-            this.started = false;
+        if (this.locked === true) {
+            this.check();
+            if (this.started) {
+                document.onkeydown = this.checkLocks.bind(this);
+                this.started = false;
+            }
+            if (this.time >= 100) {
+                this.time = 0;
+                this.positionKeyPressed = false;
+                this.numberKeyPressed = false;
+            }
+            this.time++;
         }
-        if (this.time >= 100) {
-            this.time = 0;
-            this.positionKeyPressed = false;
-            this.numberKeyPressed = false;
-        }
-        this.time++;
     }
     checkLocks(e) {
         console.log(e.keyCode);
