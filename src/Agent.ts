@@ -529,6 +529,7 @@ return false
 
                  rv.setMag(this.sight+20)
                  this.mode="search"
+                 console.log("gotya")
                  return true;
                 // ctx.beginPath();
                 // ctx.moveTo(this.pos.x, this.pos.y);

@@ -10,13 +10,20 @@ export default class MiniGameP extends MGMain{
     private complete:any
     private attemptsArr:Array<string>=[]
     private foundStr:string
-    private started:boolean
+    public started:boolean
+    private lockedUp:number
     
 
     constructor(ctx:CanvasRenderingContext2D,room:Room){
       super(80,room)
       this.ctx=ctx
-      this.secretW=["k","a","r","e","l","9","3","2"]
+     
+    //   if(this.lockedUp===1){
+    //   this.secretW=["k","a","r","e","l","9","3","2"]
+    //   }else{
+    //     this.secretW=["9","4","p","e","r","e","n","8"]
+
+    //   }
       this.found=[null,null,null,null,null,null,null,null]
       //window.addEventListener('keydown',this.checkKey,false);
       // document.onkeydown = this.checkKey.bind(this);
@@ -42,7 +49,7 @@ export default class MiniGameP extends MGMain{
             break;
           }
         }
-        console.log(this.found[this.index])
+       
         if(e.keyCode<=57){
           this.found[this.index]=String.fromCharCode(e.keyCode)
           
@@ -99,17 +106,34 @@ export default class MiniGameP extends MGMain{
   }
 
   public answer(){
+    this.found=[null,null,null,null,null,null,null,null]
+    this.attempts=5
+    this.foundStr=""
+    this.attemptsArr=[]
+    this.complete=null
+    this.index=0
     this.room.miniGameFinished=true
+    document.removeEventListener("onkeydown",this.checkKey.bind(this))
     this.room.answer=true
+    
     
 
   }
 
 
-    public update(){
+    public update(lockedUp:number){
       this.ctx.clearRect(0, 0, this.room.canvas.width, this.room.canvas.height);
       if(this.started){
         document.onkeydown = this.checkKey.bind(this);
+        this.lockedUp=lockedUp
+        if(lockedUp===1){
+            this.secretW=["k","a","r","e","l","9","3","2"]
+
+        }else{
+            this.secretW=["9","4","p","e","r","e","n","8"]
+
+        }
+        
         this.started=false
       }
 
@@ -138,11 +162,19 @@ export default class MiniGameP extends MGMain{
         this.ctx.rect(700,100,300,500)
         this.ctx.closePath()
         this.writeTextToCanvas("Informatie van de bewaker die het wachtwoord heeft verzonnen:",20,750,100)
+        if(this.lockedUp===1){
         this.writeTextToCanvas("voornaam: Karel",20,750,130)
         this.writeTextToCanvas("achternaam: De 2e",20,750,160)
         this.writeTextToCanvas("leeftijd: 32",20,750,190)
         this.writeTextToCanvas("geboorte datum: 02/01/1990",20,750,220)
         this.writeTextToCanvas("woonplaats: De Bank",20,750,250)
+        }else{
+            this.writeTextToCanvas("voornaam: Peter",20,750,130)
+        this.writeTextToCanvas("achternaam: Peren",20,750,160)
+        this.writeTextToCanvas("leeftijd: 28",20,750,190)
+        this.writeTextToCanvas("geboorte datum: 28/02/1994",20,750,220)
+        this.writeTextToCanvas("woonplaats: De Bank",20,750,250)
+        }
 
         this.ctx.beginPath()
         this.ctx.rect(100,500,50,50)

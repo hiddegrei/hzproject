@@ -90,9 +90,15 @@ export default class Room{
         this.visitsNew(this.roomId)
         if(this.answer){
           if(this.roomId===80){
+            //this.minigameP.started=true
+            this.miniGameFinished=false
+            this.answer=false
+            this.minigameP.started=true
             return 80
 
           }
+          this.miniGameFinished=false
+          this.answer=false
           return true;
         }else{
           return false
@@ -136,7 +142,7 @@ export default class Room{
         }else if(this.roomId===14){
           this.minigame14.update()
         }else if(this.roomId===80){
-          this.minigameP.update()
+          this.minigameP.update(this.scene.lockedUp)
         }
        
 

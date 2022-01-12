@@ -301,6 +301,7 @@ export default class Agent {
             rv.sub(this.pos);
             rv.setMag(this.sight + 20);
             this.mode = "search";
+            console.log("gotya");
             return true;
             this.writeTextToCanvas("!", 20, this.pos.x + rv.x, this.pos.y + rv.y, 'center', "red");
         }
