@@ -97,7 +97,7 @@ export default class MiniGame2 extends MGMain {
         this.ctx.stroke();
         this.writeTextToCanvas("Je hebt 5 pogingen om het wachtwoord te raden, na elke poging kun je zien welke", 16, 110, 130);
         this.writeTextToCanvas("characters je goed hebt geraden", 16, 110, 150);
-        this.writeTextToCanvas("PRESS ENTER  om je poging te testen.", 16, 110, 50);
+        this.writeTextToCanvas("Druk op ENTER  om je poging te testen.", 16, 110, 50);
         if (this.attemptsArr) {
             for (let i = 0; i < this.attemptsArr.length; i++) {
                 this.writeTextToCanvas(`Poging ${i}: ${this.attemptsArr[i]}`, 19, 110, 170 + i * 20);
@@ -135,7 +135,7 @@ export default class MiniGame2 extends MGMain {
             this.writeTextToCanvas("Je hebt het wachtwoord geraden!", 30, 100, 900);
         }
         else if (this.complete === 0) {
-            this.writeTextToCanvas("not good", 30, 100, 900);
+            this.writeTextToCanvas("Helaas, dit is fout", 30, 100, 900);
         }
     }
     writeTextToCanvas(text, fontSize = 20, xCoordinate, yCoordinate, alignment = 'start', color = 'red') {

@@ -244,7 +244,7 @@ export default class Scene {
                 this.borders[i].show();
             }
             this.particle.look(this.borders);
-            this.writeTextToCanvas('Central hub', 20, this.canvas.width / 2, 400);
+            this.writeTextToCanvas('Grote Kluis', 20, this.canvas.width / 2, 400);
             for (let i = 0; i < this.agents.length; i++) {
                 this.agents[i].show(this.ctx);
                 this.agents[i].look(this.borders, this.ctx);

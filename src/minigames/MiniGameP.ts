@@ -148,7 +148,7 @@ export default class MiniGameP extends MGMain{
         this.writeTextToCanvas("Je hebt 5 pogingen om het wachtwoord te raden, na elke poging kun je zien welke",16,110,130)
         this.writeTextToCanvas("characters je goed hebt geraden",16,110,150)
 
-        this.writeTextToCanvas("PRESS ENTER  om je poging te testen.",16,110,50)
+        this.writeTextToCanvas("Druk op ENTER  om je poging te testen.",16,110,50)
         this.writeTextToCanvas("Je bent opgesloten door de bewakers! En de bewakers hebben een wachtwoord op de deur gezet! ",16,110,70)
         this.writeTextToCanvas("Hack het wachtwoord om vrij te komen",16,110,90)
         if(this.attemptsArr){

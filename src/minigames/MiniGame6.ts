@@ -21,7 +21,7 @@ export default class MiniGame6 extends MGMain{
       this.partFingerprint = [Room.loadNewImage('assets/img/fingerPrints/detective-fingerprints-arch.png'),Room.loadNewImage('assets/img/fingerPrints/detective-fingerprints-loop.png'),Room.loadNewImage('assets/img/fingerPrints/detective-fingerprints-whorl.png')];
       this.randomNumber = Room.randomNumber(0,2);
       this.started = true;
-      this.titelText = 'match the fingerprint with the smaller ones';
+      this.titelText = 'Vergelijk de vingerafdruk met de kleinere en kies welke het meest overeenkomt';
       this.color = 'red';
       this.size = 20;
     }
@@ -36,12 +36,12 @@ export default class MiniGame6 extends MGMain{
 
     public render(){
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-      this.writeTextToCanvas(`this is room`+this.roomId,20,200,200)
+      this.writeTextToCanvas(`Dit is kamer `+this.roomId,20,200,200)
       this.writeTextToCanvas(this.titelText, this.size, window.innerWidth / 2, window.innerHeight / 8,'center', this.color)
       this.loadFingerPrints();
-      this.writeTextToCanvas(`Arrow left <`, 20, window.innerWidth / 1.3, window.innerHeight / 4 * (0 + 1.2))
-      this.writeTextToCanvas(`Arrow up ^`, 20, window.innerWidth / 1.3, window.innerHeight / 4 * (1 + 1.2))
-      this.writeTextToCanvas(`Arrow Right >`, 20, window.innerWidth / 1.3, window.innerHeight / 4 * (2 + 1.2))
+      this.writeTextToCanvas(`Pijltjestoets naar links <`, 20, window.innerWidth / 1.3, window.innerHeight / 4 * (0 + 1.2))
+      this.writeTextToCanvas(`Pijltjestoets omhoog ^`, 20, window.innerWidth / 1.3, window.innerHeight / 4 * (1 + 1.2))
+      this.writeTextToCanvas(`Pijltjestoets naar rechts >`, 20, window.innerWidth / 1.3, window.innerHeight / 4 * (2 + 1.2))
     }
 
     public checkLocks(e:any){
@@ -55,22 +55,22 @@ export default class MiniGame6 extends MGMain{
 
     private checkKeyboard(keycode: number){
       if (keycode===37 && this.randomNumber===2) {
-        this.titelText = 'Answer Correct';
+        this.titelText = 'Goed geantwoord';
         this.color = 'green';
         this.size = 30;
         setTimeout(this.answer.bind(this),3000);
       } else if (keycode===38 && this.randomNumber === 1) {
-        this.titelText = 'Answer Correct';
+        this.titelText = 'Goed geantwoord';
         this.color = 'green';
         this.size = 30;
         setTimeout(this.answer.bind(this),3000);
       } else if (keycode===39 && this.randomNumber === 0) {
-        this.titelText = 'Answer Correct';
+        this.titelText = 'Goed geantwoord';
         this.color = 'green';
         this.size = 30;
         setTimeout(this.answer.bind(this),3000);
       } else {
-        this.titelText = 'Answer Wrong';
+        this.titelText = 'Fout geantwoord';
         this.color = 'red';
         this.size = 30;
         setTimeout(this.answerWrong.bind(this),3000);
