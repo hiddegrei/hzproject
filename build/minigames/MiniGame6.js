@@ -77,6 +77,7 @@ export default class MiniGame6 extends MGMain {
     answer() {
         this.room.miniGameFinished = true;
         this.room.answer = true;
+        this.room.getHintsGame().foundHint('R');
     }
     writeTextToCanvas(text, fontSize = 20, xCoordinate, yCoordinate, alignment = 'center', color = 'red') {
         this.ctx.font = `${fontSize}px sans-serif`;
