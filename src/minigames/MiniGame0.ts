@@ -25,6 +25,7 @@ export default class MiniGame0 extends MGMain {
       , 20, 100, 100)
     this.writeTextToCanvas("Bob maakt een account aan op Instagram, wat is het beste wachtwoord dat hij kan kiezen? Hieronder staan de verdere gegevens van Bob", 20, 100, 120,)
   }
+
   public update() {
     this.ctx.clearRect(0, 0, this.room.canvas.width, this.room.canvas.height);
     if (this.keyboard.isKeyDown(67)) {
