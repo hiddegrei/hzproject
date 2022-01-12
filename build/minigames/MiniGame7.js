@@ -165,6 +165,7 @@ export default class MiniGame7 extends MGMain {
     answer() {
         this.room.miniGameFinished = true;
         this.room.answer = true;
+        this.room.getHintsGame().foundHint('e');
     }
     combinationCheck() {
         let boolean = true;

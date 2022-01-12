@@ -14,6 +14,7 @@ import Progress from './Progress.js';
 import Room from './Room.js';
 import Keys from './Keys.js';
 import ScoreToDatabase from './ScoreToDatabase.js';
+import Hints from './Hints.js';
 
 
 export default class Scene {
@@ -77,6 +78,8 @@ export default class Scene {
   private showKeys:boolean
 
   public lockedUp:number
+
+  private hints: Hints;
 
   
 
@@ -152,8 +155,6 @@ export default class Scene {
     this.keys.inPossesion[2]=true
     this.keys.inPossesion[3]=true
     this.mouse = { x: 0, y: 0 };
-    
-    
 
     // window.addEventListener("mousemove",this.mouseDown.bind(this), false)
     this.count = 0;
@@ -162,6 +163,8 @@ export default class Scene {
     this.timeLeft = this.timeLimit.timeLimit
 
     this.time=0;
+
+    this.hints = this.room.getHintsGame()
   }
 
   
@@ -271,6 +274,12 @@ export default class Scene {
       };
       this.count += 1;
 
+      this.writeTextToCanvas(`Verzamelde hints: `, 30, window.innerWidth / 6, window.innerHeight / 15)
+      this.hints.getHint().forEach((value: string, index: number) => {
+        this.writeTextToCanvas(`${value}`, 25, window.innerWidth / 4 + (index * 40), window.innerHeight / 15)
+      })
+      
+
      
 
       //check if player is insight of agents
@@ -344,6 +353,10 @@ export default class Scene {
    
   }
 
+
+  public gethintGame() {
+    return this.hints;
+  }
   
 
   
