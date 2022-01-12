@@ -51,7 +51,8 @@ export default class MiniGame7 extends MGMain {
 
 
     public update(){
-      this.check();
+      if (this.locked === true) {
+        this.check();
       if(this.started){
         document.onkeydown = this.checkLocks.bind(this);
         this.started=false
@@ -63,6 +64,7 @@ export default class MiniGame7 extends MGMain {
         this.numberKeyPressed = false;
       }
       this.time++;
+      }
     }
 
     public checkLocks(e:any){

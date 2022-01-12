@@ -241,6 +241,9 @@ export default class Scene {
     gethintGame() {
         return this.hints;
     }
+    getGame() {
+        return this.game;
+    }
     render() {
         if (false) {
             this.game.isEnd = true;
