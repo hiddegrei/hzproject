@@ -285,7 +285,8 @@ export default class Scene {
 
       //check if player is insight of agents
       for(let i=0;i<this.agents.length;i++){
-        let inSight=this.agents[i].inSight(this.particle,this.ctx)
+        if(Vector.dist(this.particle.pos,this.agents[i].pos)<80){
+        let inSight=this.agents[i].inSight(this.particle,this.ctx,this.borders)
         if(inSight){
           if(this.lockedUp===2){
             this.game.isEnd=true
@@ -299,10 +300,12 @@ export default class Scene {
           this.particle.pos.y=100+5*this.level.widthHall
          
         }
+      }
         
         //updateing and moving agents
         this.agents[i].update(this.particle, this.borders);
         this.agents[i].move()
+         //this.agents[i].look(this.borders,this.ctx)
         if( this.agents[i].sleepingTime>=20000){
           this.agents[i].sleepingTime=0
           this.agents[i].sleeping=false
@@ -403,7 +406,7 @@ export default class Scene {
 
     for(let i=0;i<this.agents.length;i++){
     this.agents[i].show(this.ctx)
-    this.agents[i].look(this.borders,this.ctx)
+     this.agents[i].look(this.borders,this.ctx)
     }
 
     for(let i=0;i<this.roomsIds.length;i++){
@@ -418,10 +421,10 @@ export default class Scene {
     }
   }
 
-  //if(this.showKeys){
+ 
    this.keys.show(this.ctx)
    
- // }
+  
     
   }
 

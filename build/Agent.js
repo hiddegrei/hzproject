@@ -28,8 +28,10 @@ export default class Agent {
     goldkeyImg;
     sleeping;
     sleepingTime;
+    raysEnd;
     constructor(x, y, ctx, widthHall, mode, keyNum, status) {
         this.ctx = ctx;
+        this.raysEnd = [];
         this.keyNum = keyNum;
         this.mode = mode;
         this.pos = new Vector(x, y);
@@ -127,10 +129,10 @@ export default class Agent {
             }
         }
         this.viewRays = [];
-        for (let i = degrees - this.angleView; i < degrees; i++) {
+        for (let i = degrees - this.angleView; i < degrees; i += 1) {
             this.viewRays.push(new Ray(this.pos, i, this.ctx));
         }
-        for (let i = degrees; i < degrees + this.angleView; i++) {
+        for (let i = degrees; i < degrees + this.angleView; i += 1) {
             this.viewRays.push(new Ray(this.pos, i, this.ctx));
         }
         this.dir.x = (this.dir.x / d) * this.speed;
@@ -254,6 +256,7 @@ export default class Agent {
                     let rv = new Vector(closest.x, closest.y);
                     rv.sub(this.pos);
                     rv.limit(this.sight);
+                    this.raysEnd.push({ x: rv.x, y: rv.y });
                     ctx.beginPath();
                     ctx.moveTo(this.pos.x, this.pos.y);
                     ctx.lineTo(this.pos.x + rv.x, this.pos.y + rv.y);
@@ -266,6 +269,7 @@ export default class Agent {
                     let rv = new Vector(closest.x, closest.y);
                     rv.sub(this.pos);
                     rv.limit(this.sight);
+                    this.raysEnd.push({ x: rv.x, y: rv.y });
                     ctx.beginPath();
                     ctx.moveTo(this.pos.x, this.pos.y);
                     ctx.lineTo(this.pos.x + rv.x, this.pos.y + rv.y);
@@ -276,16 +280,16 @@ export default class Agent {
             }
         }
     }
-    inSight(particle, ctx) {
-        let lines = [
-            new Border(particle.pos.x, particle.pos.y - particle.radius, particle.pos.x, particle.pos.y + particle.radius, ctx, "particle"),
-            new Border(particle.pos.x - particle.radius, particle.pos.y, particle.pos.x + particle.radius, particle.pos.y, ctx, "particle")
-        ];
+    inSight(particle, ctx, borders2) {
+        let borders = [...borders2];
+        borders.push(new Border(particle.pos.x, particle.pos.y - particle.radius, particle.pos.x, particle.pos.y + particle.radius, ctx, "particle"));
+        borders.push(new Border(particle.pos.x - particle.radius, particle.pos.y, particle.pos.x + particle.radius, particle.pos.y, ctx, "particle"));
         let gotya = false;
         for (let ray of this.viewRays) {
             let closest = { x: -1, y: -1 };
             let record = this.sight;
-            for (let border of lines) {
+            let type = "";
+            for (let border of borders) {
                 const p = ray.cast(border);
                 if (p) {
                     const a = p.x - this.pos.x;
@@ -295,10 +299,11 @@ export default class Agent {
                         record = d;
                         closest.x = p.x;
                         closest.y = p.y;
+                        type = border.type;
                     }
                 }
             }
-            if (closest.x != -1) {
+            if (closest.x != -1 && type === "particle") {
                 gotya = true;
             }
         }

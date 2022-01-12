@@ -166,17 +166,19 @@ export default class Scene {
                 this.writeTextToCanvas(`${value}`, 25, window.innerWidth / 4 + (index * 40), window.innerHeight / 15);
             });
             for (let i = 0; i < this.agents.length; i++) {
-                let inSight = this.agents[i].inSight(this.particle, this.ctx);
-                if (inSight) {
-                    if (this.lockedUp === 2) {
-                        this.game.isEnd = true;
+                if (Vector.dist(this.particle.pos, this.agents[i].pos) < 80) {
+                    let inSight = this.agents[i].inSight(this.particle, this.ctx, this.borders);
+                    if (inSight) {
+                        if (this.lockedUp === 2) {
+                            this.game.isEnd = true;
+                        }
+                        if (this.agents.length <= 5) {
+                            this.agents.push(new Agent(100 + 5 * this.level.widthHall, 100 + 0.5 * this.level.widthHall, this.ctx, this.level.widthHall, "random", this.agents.length, "yellow"));
+                        }
+                        this.lockedUp++;
+                        this.particle.pos.x = (this.canvas.width / 2) + 18 * this.level.widthHall;
+                        this.particle.pos.y = 100 + 5 * this.level.widthHall;
                     }
-                    if (this.agents.length <= 5) {
-                        this.agents.push(new Agent(100 + 5 * this.level.widthHall, 100 + 0.5 * this.level.widthHall, this.ctx, this.level.widthHall, "random", this.agents.length, "yellow"));
-                    }
-                    this.lockedUp++;
-                    this.particle.pos.x = (this.canvas.width / 2) + 18 * this.level.widthHall;
-                    this.particle.pos.y = 100 + 5 * this.level.widthHall;
                 }
                 this.agents[i].update(this.particle, this.borders);
                 this.agents[i].move();
