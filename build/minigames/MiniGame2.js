@@ -1,3 +1,4 @@
+import Game from "../Game.js";
 import MGMain from "./MGMain.js";
 export default class MiniGame2 extends MGMain {
     ctx;
@@ -9,6 +10,7 @@ export default class MiniGame2 extends MGMain {
     attemptsArr = [];
     foundStr;
     started;
+    image;
     constructor(ctx, room) {
         super(2, room);
         this.ctx = ctx;
@@ -18,6 +20,7 @@ export default class MiniGame2 extends MGMain {
         this.attempts = 5;
         this.foundStr = "";
         this.started = true;
+        this.image = Game.loadNewImage("./assets/img/background/password2.jpg");
     }
     checkKey(e) {
         if (e.keyCode === 8) {
@@ -90,9 +93,10 @@ export default class MiniGame2 extends MGMain {
         }
     }
     render() {
+        this.ctx.drawImage(this.image, 0, 0, this.image.width, this.image.height, 0, 0, window.innerWidth, window.innerHeight);
         this.ctx.strokeStyle = "rgb(0,255,0)";
         this.ctx.beginPath();
-        this.ctx.rect(100, 100, 600, 300);
+        this.ctx.rect(100, 100, 700, 300);
         this.ctx.closePath();
         this.ctx.stroke();
         this.writeTextToCanvas("Je hebt 5 pogingen om het wachtwoord te raden, na elke poging kun je zien welke", 16, 110, 130);
@@ -103,15 +107,16 @@ export default class MiniGame2 extends MGMain {
                 this.writeTextToCanvas(`Poging ${i}: ${this.attemptsArr[i]}`, 19, 110, 170 + i * 20);
             }
         }
+        this.ctx.strokeStyle = 'black';
         this.ctx.beginPath();
         this.ctx.rect(700, 100, 300, 500);
         this.ctx.closePath();
-        this.writeTextToCanvas("Informatie die je hebt verkregen:", 20, 750, 100);
-        this.writeTextToCanvas("voornaam: Rik", 20, 750, 130);
-        this.writeTextToCanvas("voornaam: Smith", 20, 750, 160);
-        this.writeTextToCanvas("leeftijd: 17", 20, 750, 190);
-        this.writeTextToCanvas("geboorte datum: 17/10/2001", 20, 750, 220);
-        this.writeTextToCanvas("woonplaats: Utrecht", 20, 750, 250);
+        this.writeTextToCanvas("Informatie die je hebt verkregen:", 20, 850, 100);
+        this.writeTextToCanvas("voornaam: Rik", 20, 850, 130);
+        this.writeTextToCanvas("voornaam: Smith", 20, 850, 160);
+        this.writeTextToCanvas("leeftijd: 17", 20, 850, 190);
+        this.writeTextToCanvas("geboorte datum: 17/10/2001", 20, 850, 220);
+        this.writeTextToCanvas("woonplaats: Utrecht", 20, 850, 250);
         this.ctx.beginPath();
         this.ctx.rect(100, 500, 50, 50);
         this.ctx.rect(200, 500, 50, 50);
@@ -138,11 +143,13 @@ export default class MiniGame2 extends MGMain {
             this.writeTextToCanvas("Helaas, dit is fout", 30, 100, 900);
         }
     }
-    writeTextToCanvas(text, fontSize = 20, xCoordinate, yCoordinate, alignment = 'start', color = 'red') {
-        this.ctx.font = `${fontSize}px sans-serif`;
+    writeTextToCanvas(text, fontSize = 40, xCoordinate, yCoordinate, alignment = 'start', color = 'black') {
+        this.ctx.font = `700 ${fontSize}px sans-serif`;
         this.ctx.fillStyle = color;
         this.ctx.textAlign = alignment;
         this.ctx.fillText(text, xCoordinate, yCoordinate);
+        this.ctx.strokeText(text, xCoordinate, yCoordinate);
+        this.ctx.strokeStyle = 'black';
     }
 }
 //# sourceMappingURL=MiniGame2.js.map

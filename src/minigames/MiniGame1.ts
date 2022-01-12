@@ -13,7 +13,7 @@ export default class MiniGame1 extends MGMain {
     super(1, room)
     this.ctx = ctx
 
-    //this.image = Game.loadNewImage("./assets/img/background/password.jpeg")
+    this.image = Game.loadNewImage("./assets/img/background/password2.jpg")
   }
 
 
@@ -52,13 +52,13 @@ export default class MiniGame1 extends MGMain {
     this.writeTextToCanvas("Wat is juist?", 20, 100, 200)
 
     this.writeTextToCanvas("Gebruik een wachtwoord-manager en 2-staps verificatie", 20, 100, 300)
-    this.writeTextToCanvas("press a", 20, (window.innerWidth / 2) + 100, 300)
+    this.writeTextToCanvas("press a", 20, (window.innerWidth / 2) + 400, 300)
 
     this.writeTextToCanvas("Gebruik het zelfde wachtwoord voor elke website", 20, 100, 400)
-    this.writeTextToCanvas("press b", 20, (window.innerWidth / 2) + 100, 400)
+    this.writeTextToCanvas("press b", 20, (window.innerWidth / 2) + 400, 400)
 
     this.writeTextToCanvas("Gebruik een ander wachtwoord voor elke website en sla je wachtwoorden op in kladblok op je telefoon", 20, 100, 500)
-    this.writeTextToCanvas("press c", 20, (window.innerWidth / 2) + 100, 500)
+    this.writeTextToCanvas("press c", 20, (window.innerWidth / 2) + 400, 500)
 
 
   }
@@ -73,17 +73,18 @@ export default class MiniGame1 extends MGMain {
 */
   public writeTextToCanvas(
     text: string,
-    fontSize: number = 20,
+    fontSize: number = 40,
     xCoordinate: number,
     yCoordinate: number,
-    color: string = 'red',
+    color: string = 'black',
     alignment: CanvasTextAlign = 'center',
-
   ): void {
-    this.ctx.font = `${fontSize}px sans-serif`;
+    this.ctx.font = `400 ${fontSize}px sans-serif`;
     this.ctx.fillStyle = color;
     this.ctx.textAlign = alignment
     this.ctx.textAlign = "start";
     this.ctx.fillText(text, xCoordinate, yCoordinate);
+    this.ctx.strokeText(text, xCoordinate, yCoordinate);
+    this.ctx.strokeStyle = 'black';
   }
 }
