@@ -4,7 +4,7 @@ import MGMain from "./MGMain.js";
 export default class MiniGameC extends MGMain{
     public ctx:CanvasRenderingContext2D;
     private canvas: HTMLCanvasElement;
-    private started:boolean;
+    public started:boolean;
     private r:string;
     private e:string;
     private g:string;
@@ -15,6 +15,8 @@ export default class MiniGameC extends MGMain{
     private attempts:number;
     private wrong:string;
     private wrongLetter:string;
+    private gotit:number
+    private pass:string[]
 
     constructor(ctx:CanvasRenderingContext2D,room:Room, canvas:HTMLCanvasElement){
       super(100,room);
@@ -28,27 +30,38 @@ export default class MiniGameC extends MGMain{
       this.b = '_';
       this.o = '_';
       this.q = '_';
-      this.attempts = 3;
+      
+      this.attempts = 5;
+      this.gotit=0
       this.wrong = ``
     }
+    //TODO: meerdere keren bosslevel kunnen starten
 
 
     public update(){
         this.ctx.clearRect(0, 0, this.room.canvas.width, this.room.canvas.height);
         if (this.attempts<=0){
             this.started = false;
-            this.room.getScene().getGame().isEnd = true;
+            // this.room.getScene().getGame().isEnd = true;
+            this.room.miniGameFinished=true
+            this.room.answer=false
         }
         if(this.started){
             document.onkeydown = this.checkKey.bind(this);
         
             this.started=false
         }
+        if(this.r!='_'&&this.e!='_'&&this.g!='_'&&this.n!='_'&&this.b!='_'&&this.o!='_'&&this.q!='_'){
+            this.room.miniGameFinished=true
+            this.room.answer=true
+
+        }
     }
 
     private checkKey(e:any){
         if(e.keyCode===82) {
             this.r = 'R'
+            
         } else if (e.keyCode===69) {
             this.e = 'e'
         } else if (e.keyCode===71) {
@@ -70,9 +83,11 @@ export default class MiniGameC extends MGMain{
 
     public render(){
 
-        this.writeTextToCanvas(`Dit is de Grote Kluis`,30,200,200);
-        this.writeTextToCanvas(`Kraak de kluis met de verzamelde hints`,20,200,250);
-        this.writeTextToCanvas(`Verzamelde hints:`,20,200,300);
+        this.writeTextToCanvas(`Dit is de Grote Kluis`,30,50,200);
+        this.writeTextToCanvas(`Kraak de kluis met de verzamelde hints`,20,50,250);
+        this.writeTextToCanvas(`Verzamelde hints:`,20,50,300);
+        this.writeTextToCanvas(`Pogingen: ${this.attempts}`,30,50,400);
+        this.writeTextToCanvas("Let op je pogingen! Druk op de spatiebalk om de kamer te verlaten",20,50,500);
         this.room.getHintsGame().getHint().forEach((value: string, index: number) => {
             this.writeTextToCanvas(`${value}`, 20,200 + index * 30,350)
           })
@@ -96,7 +111,7 @@ export default class MiniGameC extends MGMain{
     fontSize: number = 20,
     xCoordinate: number,
     yCoordinate: number,
-    alignment: CanvasTextAlign = 'center',
+    alignment: CanvasTextAlign = 'start',
     color: string = 'red',
   ): void {
     this.ctx.font = `${fontSize}px sans-serif`;

@@ -77,9 +77,23 @@ export default class EndGame extends InfoDisplay {
       this.writeTextToCanvas(`#${index + 1} - ${this.highscores.highscores[index][0]} - ${this.highscores.highscores[index][1]} Punten`, this.canvas.width / 5.85, ((this.canvas.height / 2.6) + (((this.canvas.height / 1.4) - (this.canvas.height / 2.6)) / 10) * index));
     }
 
+    this.ctx.strokeStyle = "rgb(255,0,0)"
+    this.ctx.fillStyle="rgb(255,255,255)"
+    this.ctx.beginPath()
+    this.ctx.rect(window.innerWidth-400, 280, 300, 100)
+    this.ctx.closePath()
+    this.ctx.stroke()
+    this.ctx.fill()
     if(this.scene.howGameEnded==="caught"){
       this.writeTextToCanvas("Je bent gepakt door de politie!",window.innerWidth-200,300)
     }
+    if(this.scene.howGameEnded==="gekraakt"){
+      this.writeTextToCanvas("Je hebt de bank gekraakt, gefeliciteerd!",window.innerWidth-200,300)
+    }
+    if(this.scene.howGameEnded==="outofattempts"){
+      this.writeTextToCanvas("Je poging om de bank te kraken duurde te lang, je bent gepakt door de politie",window.innerWidth-200,300)
+    }
+   
   }
 
   private draw(ctx:CanvasRenderingContext2D, image: string, xPos: number, yPos: number): void {

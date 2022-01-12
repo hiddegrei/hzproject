@@ -86,9 +86,18 @@ export default class Room {
                     this.minigameP.started = true;
                     return 80;
                 }
+                if (this.roomId === 100) {
+                    this.miniGameFinished = false;
+                    this.answer = false;
+                    this.minigameC.started = true;
+                    return 100;
+                }
                 this.miniGameFinished = false;
                 this.answer = false;
                 return true;
+            }
+            else if (this.roomId === 100) {
+                return 101;
             }
             else {
                 return false;

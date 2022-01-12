@@ -121,7 +121,7 @@ export default class Particle {
     }
     hack(agents) {
         for (let i = 0; i < agents.length; i++) {
-            if (Vector.dist(this.pos, agents[i].pos) < agents[i].hackRange) {
+            if (Vector.dist(this.pos, agents[i].pos) < agents[i].hackRange && agents[i].sleeping != true) {
                 this.hacking = true;
                 this.hackAgent = i;
                 return;

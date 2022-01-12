@@ -1,4 +1,3 @@
-import Game from "../Game.js";
 import MGMain from "./MGMain.js";
 export default class MiniGame1 extends MGMain {
     ctx;
@@ -6,7 +5,6 @@ export default class MiniGame1 extends MGMain {
     constructor(ctx, room) {
         super(1, room);
         this.ctx = ctx;
-        this.image = Game.loadNewImage("./assets/img/background/download.jpeg");
     }
     update() {
         this.ctx.clearRect(0, 0, this.room.canvas.width, this.room.canvas.height);
@@ -21,7 +19,6 @@ export default class MiniGame1 extends MGMain {
         }
     }
     render() {
-        this.ctx.drawImage(this.image, 0, 0, this.image.width, this.image.height, 0, 0, window.innerWidth, window.innerHeight);
         this.writeTextToCanvas(`Dit is kamer ` + this.roomId, 20, 100, 50);
         this.writeTextToCanvas("Wat is juist?", 20, 100, 200);
         this.writeTextToCanvas("Gebruik een wachtwoord-manager en 2-staps verificatie", 20, 100, 300);

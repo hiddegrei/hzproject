@@ -116,7 +116,7 @@ export default class Scene {
             this.game.isEnd = true;
             this.scoreToDatabase.update();
         }
-        else if (this.insideRoom && (this.room.visitedRooms[this.inRoomNum] != true || this.inRoomNum === 80)) {
+        else if (this.insideRoom && (this.room.visitedRooms[this.inRoomNum] != true || this.inRoomNum === 80 || this.inRoomNum === 100)) {
             this.room.update();
             let isMiniGameComplete = this.room.checkDone();
             if (isMiniGameComplete === true) {
@@ -124,6 +124,14 @@ export default class Scene {
             }
             if (isMiniGameComplete != 80 && isMiniGameComplete != false) {
                 this.keys.total--;
+            }
+            if (isMiniGameComplete === 100) {
+                this.howGameEnded = "gekraakt";
+                this.game.isEnd = true;
+            }
+            if (isMiniGameComplete === 101) {
+                this.howGameEnded = "outofattempts";
+                this.game.isEnd = true;
             }
             if (isMiniGameComplete === 80) {
                 this.particle.pos.x = (this.canvas.width / 2) + 18.5 * this.level.widthHall;
@@ -151,9 +159,6 @@ export default class Scene {
                 if (this.count === 100) {
                     this.score.forEach((element) => { this.totalScore += element.score; });
                 }
-            }
-            if (this.keyboard.isKeyDown(82)) {
-                this.game.isEnd = true;
             }
             document.onmousemove = this.mouseDown.bind(this);
             let roomNum = this.particle.isInRoom(this.roomsIds);
@@ -252,7 +257,7 @@ export default class Scene {
         if (false) {
             this.game.isEnd = true;
         }
-        else if (this.insideRoom && (this.room.visitedRooms[this.inRoomNum] != true || this.inRoomNum === 80)) {
+        else if (this.insideRoom && (this.room.visitedRooms[this.inRoomNum] != true || this.inRoomNum === 80 || this.inRoomNum === 100)) {
             this.room.render();
         }
         else {

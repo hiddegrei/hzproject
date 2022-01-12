@@ -204,7 +204,7 @@ export default class Scene {
     //if (this.timeLeft < 0) {
       this.game.isEnd = true;
       this.scoreToDatabase.update()
-    }else if(this.insideRoom&&(this.room.visitedRooms[this.inRoomNum]!=true||this.inRoomNum===80)){
+    }else if(this.insideRoom&&(this.room.visitedRooms[this.inRoomNum]!=true||this.inRoomNum===80||this.inRoomNum===100)){
       this.room.update()
       let isMiniGameComplete=this.room.checkDone()
       if(isMiniGameComplete===true){
@@ -213,6 +213,16 @@ export default class Scene {
       if(isMiniGameComplete!=80&&isMiniGameComplete!=false){
         this.keys.total--
 
+      }
+      if(isMiniGameComplete===100){
+        this.howGameEnded="gekraakt"
+        this.game.isEnd=true
+        
+      }
+      if(isMiniGameComplete===101){
+        this.howGameEnded="outofattempts"
+        this.game.isEnd=true
+        
       }
       if(isMiniGameComplete===80){
         this.particle.pos.x=(this.canvas.width/2)+18.5*this.level.widthHall
@@ -224,6 +234,17 @@ export default class Scene {
       this.timeLeft -= elapsed;
       document.querySelector('div#timeLimit.hud span').innerHTML = (JSON.stringify(Math.floor(this.timeLeft / 1000)));
       document.querySelector('div#score.hud span').innerHTML = JSON.stringify(this.totalScore); //TODO goede score
+      // if(this.time>=1000){
+      //   this.timeLeft-=1
+      //   this.time=0
+      // }else{
+      //   this.time+=elapsed
+      // }
+      // if(this.timeLeft<=0){
+        
+      //   this.scoreToDatabase.update(this.totalScore)
+      //   this.game.isEnd=true
+      // }
       // this.progress.updateProgressBar();
 
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -257,10 +278,10 @@ export default class Scene {
       // this.progression.pBar(this.ctx);
       // this.score[0].writeTextToCanvas(`Score: ${this.totalScore}`, this.canvas.width / 2, 20);
 
-      if (this.keyboard.isKeyDown(82)) {
+     // if (this.keyboard.isKeyDown(82)) {
         // this.endGame = new EndGame(this.canvas);
-        this.game.isEnd = true;
-      }
+      //  this.game.isEnd = true;
+     // }
 
     
       document.onmousemove = this.mouseDown.bind(this);
@@ -396,12 +417,14 @@ export default class Scene {
     if(false){
       //if (this.timeLeft - elapsed < 0) {
         this.game.isEnd = true;
-      }else if(this.insideRoom&&(this.room.visitedRooms[this.inRoomNum]!=true||this.inRoomNum===80)){
+      }else if(this.insideRoom&&(this.room.visitedRooms[this.inRoomNum]!=true||this.inRoomNum===80||this.inRoomNum===100)){
         this.room.render()
   
   
       } else {
        // this.writeTextToCanvas("press t to show keys, press y to hide keys",20,window.innerWidth/2,30)
+      //  this.writeTextToCanvas(`time left: ${this.timeLeft}`,20,100,40)
+      //  this.writeTextToCanvas(`score: ${this.totalScore}`,20,window.innerWidth-100,40)
 
     this.particle.show();
     this.particle.animate();

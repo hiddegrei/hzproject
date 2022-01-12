@@ -13,7 +13,7 @@ export default class MiniGame1 extends MGMain {
     super(1, room)
     this.ctx = ctx
 
-    this.image = Game.loadNewImage("./assets/img/background/download.jpeg")
+    //this.image = Game.loadNewImage("./assets/img/background/password.jpeg")
   }
 
 
@@ -44,7 +44,7 @@ export default class MiniGame1 extends MGMain {
 
   // }
   public render() {
-    this.ctx.drawImage(this.image, 0, 0, this.image.width, this.image.height, 0, 0, window.innerWidth, window.innerHeight)
+    //this.ctx.drawImage(this.image, 0, 0, this.image.width, this.image.height, 0, 0, window.innerWidth, window.innerHeight)
 
 
     this.writeTextToCanvas(`Dit is kamer ` + this.roomId, 20, 100, 50)
