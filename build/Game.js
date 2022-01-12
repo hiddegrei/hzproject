@@ -15,7 +15,7 @@ export default class Game {
         this.passwordProperty = localStorage.getItem('password');
         this.scene = new Scene(this.canvas, this);
         this.gameLoop = new GameLoop(this);
-        this.endGame = new EndGame(this.canvas, this);
+        this.endGame = new EndGame(this.canvas, this, this.scene);
     }
     get username() {
         return this.usernameProperty;
