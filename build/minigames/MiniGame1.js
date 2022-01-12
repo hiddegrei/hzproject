@@ -26,9 +26,10 @@ export default class MiniGame1 extends MGMain {
         this.writeTextToCanvas("Gebruik een ander wachtwoord voor elke website en sla je wachtwoorden op in kladblok op je telefoon", 20, 100, 500);
         this.writeTextToCanvas("press c", 20, (window.innerWidth / 2) + 100, 500);
     }
-    writeTextToCanvas(text, fontSize = 20, xCoordinate, yCoordinate, restrict = text.length * fontSize, alignment = 'center', color = 'red') {
+    writeTextToCanvas(text, fontSize = 20, xCoordinate, yCoordinate, color = 'red', alignment = 'center') {
         this.ctx.font = `${fontSize}px sans-serif`;
         this.ctx.fillStyle = color;
+        this.ctx.textAlign = alignment;
         this.ctx.textAlign = "start";
         this.ctx.fillText(text, xCoordinate, yCoordinate);
     }

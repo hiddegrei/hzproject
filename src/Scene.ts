@@ -201,6 +201,10 @@ export default class Scene {
       if(isMiniGameComplete===true){
         this.totalScore++
       }
+      if(isMiniGameComplete!=80){
+        this.keys.total--
+
+      }
       if(isMiniGameComplete===80){
         this.particle.pos.x=(this.canvas.width/2)+18.5*this.level.widthHall
         this.particle.pos.y=100+2*this.level.widthHall
@@ -260,10 +264,7 @@ export default class Scene {
         this.insideRoom=true;
         this.inRoomNum=roomNum;
         this.room.setRoomId(this.inRoomNum)
-        if(roomNum!=80){
-          this.keys.total--
-
-        }
+        
         
 
         
@@ -293,6 +294,14 @@ export default class Scene {
         //updateing and moving agents
         this.agents[i].update(this.particle, this.borders);
         this.agents[i].move()
+        if( this.agents[i].sleepingTime>=20000){
+          this.agents[i].sleepingTime=0
+          this.agents[i].sleeping=false
+
+        
+        }else{
+          this.agents[i].sleepingTime+=elapsed
+        }
 
       }
       //updateing and moving player
@@ -315,8 +324,9 @@ export default class Scene {
       
       }else if(!this.particle.hacking){
         this.timeHacking=0
-      }else if(this.timeHacking>=timeHack){
+      }else if(this.timeHacking>=timeHack&&this.agents[this.particle.hackAgent].sleeping===false){
         let key=this.agents[this.particle.hackAgent].keyNum
+        this.agents[this.particle.hackAgent].sleeping=true
         this.keys.keys[key]=true
         this.keys.total++
         this.timeHacking=0
