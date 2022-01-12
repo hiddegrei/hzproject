@@ -170,7 +170,7 @@ export default class MiniGame14 extends MGMain{
         if(this.complete){
           this.writeTextToCanvas("Je hebt het wachtwoord geraden!",30,100,900)
         }else if(this.complete===0){
-          this.writeTextToCanvas("not good",30,100,900)
+          this.writeTextToCanvas("Helaas, dit antwoord is fout",30,100,900)
 
         }
         

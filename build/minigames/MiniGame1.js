@@ -18,7 +18,7 @@ export default class MiniGame1 extends MGMain {
         }
     }
     render() {
-        this.writeTextToCanvas(`this is room` + this.roomId, 20, 100, 50);
+        this.writeTextToCanvas(`Dit is kamer ` + this.roomId, 20, 100, 50);
         this.writeTextToCanvas("Wat is juist?", 20, 100, 200);
         this.writeTextToCanvas("Gebruik een wachtwoord-manager en 2-staps verificatie", 20, 100, 300);
         this.writeTextToCanvas("press a", 20, (window.innerWidth / 2) + 100, 300);

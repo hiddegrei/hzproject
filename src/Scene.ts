@@ -65,7 +65,7 @@ export default class Scene {
   private timeLimit: TimeLimit;
   private time:number;
   private timeLeft:number
-  private progress: Progress;
+  private static progress: Progress;
 
   private roomsIds:Array<any>=[]
   public insideRoom:boolean;
@@ -115,7 +115,7 @@ export default class Scene {
     
     this.game = game;
    
-    this.progress = new Progress();
+    Scene.progress = new Progress();
     this.room=new Room(0,this.ctx,this,this.canvas)
     console.log("window widht:", window.innerWidth)
     console.log("window height:", window.innerHeight)
@@ -185,6 +185,10 @@ export default class Scene {
     //console.log(this.mouse)
 
 
+  }
+
+  public static getProgress() {
+    return this.progress;
   }
 
 
@@ -402,7 +406,7 @@ export default class Scene {
     }
     this.particle.look(this.borders);
 
-    this.writeTextToCanvas('Central hub', 20, this.canvas.width / 2, 400);
+    this.writeTextToCanvas('Grote Kluis', 20, this.canvas.width / 2, 400);
 
     for(let i=0;i<this.agents.length;i++){
     this.agents[i].show(this.ctx)

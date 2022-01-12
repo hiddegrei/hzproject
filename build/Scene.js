@@ -36,7 +36,7 @@ export default class Scene {
     timeLimit;
     time;
     timeLeft;
-    progress;
+    static progress;
     roomsIds = [];
     insideRoom;
     inRoomNum;
@@ -62,7 +62,7 @@ export default class Scene {
         this.showKeys = false;
         this.scoreToDatabase = new ScoreToDatabase();
         this.game = game;
-        this.progress = new Progress();
+        Scene.progress = new Progress();
         this.room = new Room(0, this.ctx, this, this.canvas);
         console.log("window widht:", window.innerWidth);
         console.log("window height:", window.innerHeight);
@@ -106,6 +106,9 @@ export default class Scene {
     }
     mouseDown(e) {
         this.mouse = this.camera.toWorld(e.clientX, e.clientY);
+    }
+    static getProgress() {
+        return this.progress;
     }
     update(elapsed) {
         if (false) {
@@ -254,7 +257,7 @@ export default class Scene {
                 this.borders[i].show();
             }
             this.particle.look(this.borders);
-            this.writeTextToCanvas('Central hub', 20, this.canvas.width / 2, 400);
+            this.writeTextToCanvas('Grote Kluis', 20, this.canvas.width / 2, 400);
             for (let i = 0; i < this.agents.length; i++) {
                 this.agents[i].show(this.ctx);
                 this.agents[i].look(this.borders, this.ctx);

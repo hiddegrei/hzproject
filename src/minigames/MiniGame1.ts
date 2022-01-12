@@ -39,7 +39,7 @@ export default class MiniGame1 extends MGMain{
       //  this.ctx.drawImage(this.image,0,0,window.innerWidth,window.innerHeight)
       
 
-        this.writeTextToCanvas(`this is room`+this.roomId,20,100,50)
+        this.writeTextToCanvas(`Dit is kamer `+this.roomId,20,100,50)
 
         this.writeTextToCanvas("Wat is juist?",20,100,200)
 
