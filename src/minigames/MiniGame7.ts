@@ -76,7 +76,7 @@ export default class MiniGame7 extends MGMain {
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
       Room.drawImageScaled(
         this.ctx,
-        'assets/img/background/bank-room-interior-backdrop-metal-safe-door-vault-background-racks-deposit-boxes-secure-currency-storage-inside-174243488.jpg',
+        './assets/img/background/bank-room-interior-backdrop-metal-safe-door-vault-background-racks-deposit-boxes-secure-currency-storage-inside-174243488.jpg',
         1,
         1,
         0,
