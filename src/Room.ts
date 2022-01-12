@@ -17,13 +17,14 @@ import MiniGame9 from "./minigames/MiniGame9.js";
 import Scene from "./Scene.js";
 import MiniGameP from "./minigames/MiniGameP.js";
 import Hints from "./Hints.js";
+import MiniGameC from "./minigames/MiniGameC.js";
 
 export default class Room{
     public visitedRooms:Array<boolean>=[];
     public roomId:number
     public ctx:CanvasRenderingContext2D;
     protected keyboard:KeyboardListener;
-    private scene:Scene;
+    protected scene:Scene;
     private minigame0:MiniGame0
     private minigame1:MiniGame1
     private minigame2:MiniGame2
@@ -39,6 +40,7 @@ export default class Room{
     private minigame12:MiniGame12
     private minigame13:MiniGame13
     private minigame14:MiniGame14
+    private minigameC:MiniGameC;
     private minigameP:MiniGameP
     private hints: Hints;
 
@@ -74,6 +76,7 @@ export default class Room{
         this.minigame12=new MiniGame12(this.ctx,this)
         this.minigame13=new MiniGame13(this.ctx,this)
         this.minigame14=new MiniGame14(this.ctx,this)
+        this.minigameC=new MiniGameC(this.ctx,this,this.canvas)
         this.minigameP=new MiniGameP(this.ctx,this)
 
         this.miniGameFinished=false
@@ -145,11 +148,17 @@ export default class Room{
           this.minigame13.update()
         }else if(this.roomId===14){
           this.minigame14.update()
+        }else if (this.roomId===100) {
+          this.minigameC.update()
         }else if(this.roomId===80){
           this.minigameP.update(this.scene.lockedUp)
         }
        
 
+    }
+
+    public getScene(){
+      return this.scene;
     }
 
     public render(){
@@ -189,6 +198,8 @@ export default class Room{
           this.minigame14.render()
         }else if(this.roomId===80){
           this.minigameP.render()
+        }else if (this.roomId===100) {
+          this.minigameC.render()
         }
 
     }

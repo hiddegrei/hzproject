@@ -53,8 +53,11 @@ export default class Agent{
     public sleeping:boolean
     public sleepingTime:number
 
+    public raysEnd:any[]
+
     constructor(x: number, y: number, ctx: CanvasRenderingContext2D, widthHall:number,mode:string,keyNum:number,status:string) {
         this.ctx = ctx;
+        this.raysEnd=[]
         this.keyNum=keyNum
         this.mode=mode
         this.pos = new Vector(x,y)
@@ -219,11 +222,11 @@ export default class Agent{
 
         this.viewRays = []
 
-        for (let i =  degrees- this.angleView; i < degrees; i++) {
+        for (let i =  degrees- this.angleView; i < degrees; i+=1) {
             this.viewRays.push(new Ray(this.pos, i, this.ctx))
 
         }
-        for (let i = degrees; i <degrees+this.angleView; i++) {
+        for (let i = degrees; i <degrees+this.angleView; i+=1) {
             this.viewRays.push(new Ray(this.pos, i, this.ctx))
 
         }
@@ -356,6 +359,14 @@ return false
         ctx.fill()
 
     }
+    // for(let i=0;i<this.raysEnd.length;i++){
+    //     ctx.beginPath();
+    //     ctx.moveTo(this.pos.x, this.pos.y);
+    //     ctx.lineTo(this.pos.x+this.raysEnd[i].x, this.pos.y+this.raysEnd[i].y);
+    //     ctx.stroke();
+    //     ctx.closePath()
+    //     ctx.fill()
+    // }
 
         //this.writeTextToCanvas(`${this.angle}`,this.pos.x,this.pos.y+20)
 
@@ -423,6 +434,7 @@ return false
                  rv.sub(this.pos)
 
                  rv.limit(this.sight)
+                this.raysEnd.push({x:rv.x,y:rv.y})
                 ctx.beginPath();
                 ctx.moveTo(this.pos.x, this.pos.y);
                 ctx.lineTo(this.pos.x+rv.x, this.pos.y+rv.y);
@@ -438,6 +450,7 @@ return false
                      rv.sub(this.pos)
     
                      rv.limit(this.sight)
+                     this.raysEnd.push({x:rv.x,y:rv.y})
                     ctx.beginPath();
                     ctx.moveTo(this.pos.x, this.pos.y);
                     ctx.lineTo(this.pos.x+rv.x, this.pos.y+rv.y);
@@ -459,21 +472,25 @@ return false
 
     }
 
-    inSight(particle:Particle,ctx:CanvasRenderingContext2D){
+    inSight(particle:Particle,ctx:CanvasRenderingContext2D,borders2: Array<Border>){
+        let borders=[...borders2]
+          borders.push(new Border(particle.pos.x,particle.pos.y-particle.radius,particle.pos.x,particle.pos.y+particle.radius,ctx,"particle"))
+          borders.push(new Border(particle.pos.x-particle.radius,particle.pos.y,particle.pos.x+particle.radius,particle.pos.y,ctx,"particle"))
 
-        let lines=[
-            new Border(particle.pos.x,particle.pos.y-particle.radius,particle.pos.x,particle.pos.y+particle.radius,ctx,"particle"),
-            new Border(particle.pos.x-particle.radius,particle.pos.y,particle.pos.x+particle.radius,particle.pos.y,ctx,"particle")
-        ]
+    //     let lines=[
+    //        new Border(particle.pos.x,particle.pos.y-particle.radius,particle.pos.x,particle.pos.y+particle.radius,ctx,"particle"),
+    //         new Border(particle.pos.x-particle.radius,particle.pos.y,particle.pos.x+particle.radius,particle.pos.y,ctx,"particle")
+    //    ]
         let gotya=false
 
         for (let ray of this.viewRays) {
             let closest = { x: -1, y: -1 }
             let record = this.sight
+            let type=""
 
 
 
-            for (let border of lines) {
+            for (let border of borders) {
 
                 const p = ray.cast(border)
 
@@ -495,17 +512,18 @@ return false
                         record = d
                         closest.x = p.x
                         closest.y = p.y
+                        type=border.type
                     }
                 }
 
             }
-            if (closest.x != -1) {
+            if (closest.x != -1&&type==="particle" ) {
                 //ctx.fillStyle = "#FF0000";
                 // this.ctx.fillRect(closest.x, closest.y, 10, 10);
               gotya=true
                  
-                // let rv=new Vector(closest.x,closest.y)
-                 //rv.sub(this.pos)
+               // let rv=new Vector(closest.x,closest.y)
+                // rv.sub(this.pos)
 
                 // rv.setMag(this.sight+20)
                 // ctx.beginPath();
@@ -514,7 +532,7 @@ return false
                 // ctx.stroke();
                 // ctx.closePath()
                 // ctx.fill()
-               // this.writeTextToCanvas("!",20,this.pos.x+rv.x,this.pos.y+rv.y,'center',"red")
+                //this.writeTextToCanvas("!",20,this.pos.x+rv.x,this.pos.y+rv.y,'center',"red")
 
                
         //this.writeTextToCanvas(ray.angle,20,closest.x,closest.y)

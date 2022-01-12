@@ -36,7 +36,7 @@ export default class Scene {
     timeLimit;
     time;
     timeLeft;
-    progress;
+    static progress;
     roomsIds = [];
     insideRoom;
     inRoomNum;
@@ -62,7 +62,7 @@ export default class Scene {
         this.showKeys = false;
         this.scoreToDatabase = new ScoreToDatabase();
         this.game = game;
-        this.progress = new Progress();
+        Scene.progress = new Progress();
         this.room = new Room(0, this.ctx, this, this.canvas);
         console.log("window widht:", window.innerWidth);
         console.log("window height:", window.innerHeight);
@@ -106,6 +106,9 @@ export default class Scene {
     }
     mouseDown(e) {
         this.mouse = this.camera.toWorld(e.clientX, e.clientY);
+    }
+    static getProgress() {
+        return this.progress;
     }
     update(elapsed) {
         if (false) {
@@ -166,17 +169,19 @@ export default class Scene {
                 this.writeTextToCanvas(`${value}`, 25, window.innerWidth / 4 + (index * 40), window.innerHeight / 15);
             });
             for (let i = 0; i < this.agents.length; i++) {
-                let inSight = this.agents[i].inSight(this.particle, this.ctx);
-                if (inSight) {
-                    if (this.lockedUp === 2) {
-                        this.game.isEnd = true;
+                if (Vector.dist(this.particle.pos, this.agents[i].pos) < 80) {
+                    let inSight = this.agents[i].inSight(this.particle, this.ctx, this.borders);
+                    if (inSight) {
+                        if (this.lockedUp === 2) {
+                            this.game.isEnd = true;
+                        }
+                        if (this.agents.length <= 5) {
+                            this.agents.push(new Agent(100 + 5 * this.level.widthHall, 100 + 0.5 * this.level.widthHall, this.ctx, this.level.widthHall, "random", this.agents.length, "yellow"));
+                        }
+                        this.lockedUp++;
+                        this.particle.pos.x = (this.canvas.width / 2) + 18 * this.level.widthHall;
+                        this.particle.pos.y = 100 + 5 * this.level.widthHall;
                     }
-                    if (this.agents.length <= 5) {
-                        this.agents.push(new Agent(100 + 5 * this.level.widthHall, 100 + 0.5 * this.level.widthHall, this.ctx, this.level.widthHall, "random", this.agents.length, "yellow"));
-                    }
-                    this.lockedUp++;
-                    this.particle.pos.x = (this.canvas.width / 2) + 18 * this.level.widthHall;
-                    this.particle.pos.y = 100 + 5 * this.level.widthHall;
                 }
                 this.agents[i].update(this.particle, this.borders);
                 this.agents[i].move();
@@ -237,6 +242,9 @@ export default class Scene {
     }
     gethintGame() {
         return this.hints;
+    }
+    getGame() {
+        return this.game;
     }
     render() {
         if (false) {

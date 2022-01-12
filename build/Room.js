@@ -16,6 +16,7 @@ import MiniGame8 from "./minigames/MiniGame8.js";
 import MiniGame9 from "./minigames/MiniGame9.js";
 import MiniGameP from "./minigames/MiniGameP.js";
 import Hints from "./Hints.js";
+import MiniGameC from "./minigames/MiniGameC.js";
 export default class Room {
     visitedRooms = [];
     roomId;
@@ -37,6 +38,7 @@ export default class Room {
     minigame12;
     minigame13;
     minigame14;
+    minigameC;
     minigameP;
     hints;
     miniGameFinished;
@@ -64,6 +66,7 @@ export default class Room {
         this.minigame12 = new MiniGame12(this.ctx, this);
         this.minigame13 = new MiniGame13(this.ctx, this);
         this.minigame14 = new MiniGame14(this.ctx, this);
+        this.minigameC = new MiniGameC(this.ctx, this, this.canvas);
         this.minigameP = new MiniGameP(this.ctx, this);
         this.miniGameFinished = false;
         this.answer = false;
@@ -140,9 +143,15 @@ export default class Room {
         else if (this.roomId === 14) {
             this.minigame14.update();
         }
+        else if (this.roomId === 100) {
+            this.minigameC.update();
+        }
         else if (this.roomId === 80) {
             this.minigameP.update(this.scene.lockedUp);
         }
+    }
+    getScene() {
+        return this.scene;
     }
     render() {
         if (this.roomId === 0) {
@@ -192,6 +201,9 @@ export default class Room {
         }
         else if (this.roomId === 80) {
             this.minigameP.render();
+        }
+        else if (this.roomId === 100) {
+            this.minigameC.render();
         }
     }
     setRoomId(roomId) {

@@ -52,7 +52,7 @@ export default class Particle {
         this.ctx = ctx
         this.pos = new Vector(x,y)
         this.rays = []
-        this.radius = 10
+        this.radius = 5
         this.speed = 2;
         this.maxspeed=3
         this.dir = { x: 0, y: 0 }
