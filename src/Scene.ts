@@ -366,7 +366,7 @@ export default class Scene {
   
   
       } else {
-        this.writeTextToCanvas("press t to show keys, press y to hide keys",20,window.innerWidth/2,30)
+       // this.writeTextToCanvas("press t to show keys, press y to hide keys",20,window.innerWidth/2,30)
 
     this.particle.show();
     this.particle.animate();
@@ -395,10 +395,10 @@ export default class Scene {
     }
   }
 
-  if(this.showKeys){
+  //if(this.showKeys){
    this.keys.show(this.ctx)
    
-  }
+ // }
     
   }
 
