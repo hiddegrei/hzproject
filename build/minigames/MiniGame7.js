@@ -127,12 +127,13 @@ export default class MiniGame7 extends MGMain {
     }
     explanation() {
         this.writeTextToCanvas(`Dit is kamer ` + this.roomId, 20, window.innerWidth / 3, window.innerHeight / 1.1);
-        this.writeTextToCanvas(`Probeer de code te kraken`, 20, 225, 300);
-        this.writeTextToCanvas(`Gebruik de pijltestoetsen (en misschien ook wat hints)`, 20, 225, 325);
+        this.writeTextToCanvas(`Probeer de code te kraken`, 20, 225, 290);
+        this.writeTextToCanvas(`Gebruik de pijltestoetsen`, 20, 225, 325);
+        this.writeTextToCanvas(`(en misschien ook wat hints)`, 20, 225, 345);
         this.writeTextToCanvas(`Pijl omhoog = cijfer omhoog`, 20, 225, 400);
         this.writeTextToCanvas(`Pijl omlaag = cijfer omlaag`, 20, 225, 450);
         this.writeTextToCanvas(`Pijl naar links = positie naar links`, 20, 225, 500);
-        this.writeTextToCanvas(`Pijl naar rechts = positie naar rechts`, 20, 225, 550);
+        this.writeTextToCanvas(`Pijl naar rechts = positie naar rechts`, 20, 235, 550);
     }
     hints() {
         this.combination.forEach((value, index) => {
@@ -183,7 +184,7 @@ export default class MiniGame7 extends MGMain {
             return false;
         }
     }
-    writeTextToCanvas(text, fontSize = 20, xCoordinate, yCoordinate, alignment = 'center', color = 'red') {
+    writeTextToCanvas(text, fontSize = 40, xCoordinate, yCoordinate, alignment = 'center', color = 'black') {
         this.ctx.font = `${fontSize}px sans-serif`;
         this.ctx.fillStyle = color;
         this.ctx.textAlign = alignment;

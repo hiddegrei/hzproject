@@ -1,3 +1,4 @@
+import Game from "../Game.js";
 import Room from "../Room.js";
 import MGMain from "./MGMain.js";
 export default class MiniGame6 extends MGMain {
@@ -10,6 +11,7 @@ export default class MiniGame6 extends MGMain {
     titelText;
     color;
     size;
+    image;
     constructor(ctx, room, canvas) {
         super(6, room);
         this.canvas = canvas;
@@ -21,6 +23,7 @@ export default class MiniGame6 extends MGMain {
         this.titelText = 'Vergelijk de vingerafdruk met de kleinere en kies welke het meest overeenkomt';
         this.color = 'red';
         this.size = 20;
+        this.image = Game.loadNewImage("./assets/img/background/password2.jpg");
     }
     update() {
         if (this.started) {
@@ -29,13 +32,14 @@ export default class MiniGame6 extends MGMain {
         }
     }
     render() {
+        this.ctx.drawImage(this.image, 0, 0, this.image.width, this.image.height, 0, 0, window.innerWidth, window.innerHeight);
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.writeTextToCanvas(`Dit is kamer ` + this.roomId, 20, 200, 200);
         this.writeTextToCanvas(this.titelText, this.size, window.innerWidth / 2, window.innerHeight / 8, 'center', this.color);
         this.loadFingerPrints();
-        this.writeTextToCanvas(`Pijltjestoets naar links <`, 20, window.innerWidth / 1.3, window.innerHeight / 4 * (0 + 1.2));
-        this.writeTextToCanvas(`Pijltjestoets omhoog ^`, 20, window.innerWidth / 1.3, window.innerHeight / 4 * (1 + 1.2));
-        this.writeTextToCanvas(`Pijltjestoets naar rechts >`, 20, window.innerWidth / 1.3, window.innerHeight / 4 * (2 + 1.2));
+        this.writeTextToCanvas(`Pijltjestoets naar links <`, 20, window.innerWidth / 1.7, window.innerHeight / 4 * (0 + 1.2));
+        this.writeTextToCanvas(`Pijltjestoets omhoog ^`, 20, window.innerWidth / 1.7, window.innerHeight / 4 * (1 + 1.2));
+        this.writeTextToCanvas(`Pijltjestoets naar rechts >`, 20, window.innerWidth / 1.7, window.innerHeight / 4 * (2 + 1.2));
     }
     checkLocks(e) {
         this.checkKeyboard(e.keyCode);
@@ -79,11 +83,13 @@ export default class MiniGame6 extends MGMain {
         this.room.answer = true;
         this.room.getHintsGame().foundHint('R');
     }
-    writeTextToCanvas(text, fontSize = 20, xCoordinate, yCoordinate, alignment = 'center', color = 'red') {
-        this.ctx.font = `${fontSize}px sans-serif`;
+    writeTextToCanvas(text, fontSize = 40, xCoordinate, yCoordinate, alignment = 'center', color = 'white') {
+        this.ctx.font = `700 ${fontSize}px sans-serif`;
         this.ctx.fillStyle = color;
         this.ctx.textAlign = alignment;
         this.ctx.fillText(text, xCoordinate, yCoordinate);
+        this.ctx.strokeText(text, xCoordinate, yCoordinate);
+        this.ctx.strokeStyle = 'black';
     }
 }
 //# sourceMappingURL=MiniGame6.js.map

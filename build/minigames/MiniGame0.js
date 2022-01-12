@@ -10,6 +10,11 @@ export default class MiniGame0 extends MGMain {
         this.imageBob = Game.loadNewImage("./assets/img/players/bob.png");
         this.image = Game.loadNewImage("./assets/img/background/password2.jpg");
     }
+    render() {
+        this.ctx.drawImage(this.image, 0, 0, this.image.width, this.image.height, 0, 0, window.innerWidth, window.innerHeight);
+        this.writeTextToCanvas("Dit is Bob, Bob heeft een account op twitter.com. De profielnaam van Bob op Twitter is Bob12 en zijn wachtwoord is 'ABC54@#2as'. ", 20, 100, 100);
+        this.writeTextToCanvas("Bob maakt een account aan op Instagram, wat is het beste wachtwoord dat hij kan kiezen? Hieronder staan de verdere gegevens van Bob", 20, 100, 120);
+    }
     update() {
         this.ctx.clearRect(0, 0, this.room.canvas.width, this.room.canvas.height);
         if (this.keyboard.isKeyDown(67)) {
@@ -22,11 +27,6 @@ export default class MiniGame0 extends MGMain {
             this.room.miniGameFinished = true;
             this.room.answer = false;
         }
-    }
-    render() {
-        this.ctx.drawImage(this.image, 0, 0, this.image.width, this.image.height, 0, 0, window.innerWidth, window.innerHeight);
-        this.writeTextToCanvas("Dit is Bob, Bob heeft een account op twitter.com. De profielnaam van Bob op Twitter is Bob12 en zijn wachtwoord is 'ABC54@#2as'. ", 20, 100, 100);
-        this.writeTextToCanvas("Bob maakt een account aan op Instagram, wat is het beste wachtwoord dat hij kan kiezen? Hieronder staan de verdere gegevens van Bob", 20, 100, 120);
         this.ctx.strokeStyle = "rgb(255,255,255)";
         this.ctx.beginPath();
         this.ctx.rect(100, 200, 400, 400);
