@@ -251,12 +251,13 @@ export default class Scene {
       
       let roomNum=this.particle.isInRoom(this.roomsIds)
       if(roomNum!=-1
-        //&&this.keys.keys[roomNum]
+        &&this.keys.total>0
         ){
         //player is inside a room or central hub
         this.insideRoom=true;
         this.inRoomNum=roomNum;
         this.room.setRoomId(this.inRoomNum)
+        this.keys.total--
 
         
         
@@ -300,6 +301,7 @@ export default class Scene {
       }else if(this.timeHacking>=timeHack){
         let key=this.agents[this.particle.hackAgent].keyNum
         this.keys.keys[key]=true
+        this.keys.total++
         this.timeHacking=0
         if(this.agents[this.particle.hackAgent].status==="yellow"){
           this.agents[this.particle.hackAgent].status="orange"

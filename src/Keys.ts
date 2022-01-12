@@ -1,9 +1,13 @@
+import Game from "./Game.js"
+
 export default class Keys{
 
     public keys:Array<boolean>=[]
     public ctx:CanvasRenderingContext2D
 
     public inPossesion:Array<boolean>=[]
+    public total:number
+    private goldkeyImg:HTMLImageElement
 
     constructor(ctx:CanvasRenderingContext2D){
         this.ctx=ctx
@@ -11,6 +15,8 @@ export default class Keys{
             this.keys[i]=false
             this.inPossesion[i]=false;
         }
+        this.total=0
+        this.goldkeyImg=Game.loadNewImage("./assets/img/objects/goldkey.png")
 
     }
 
@@ -31,13 +37,15 @@ export default class Keys{
         let index2=2
        
         
-        for(let i=0;i<this.keys.length;i++){
-          if(this.keys[i]){
-            this.writeTextToCanvas(`key: ${i}`,15,window.innerWidth/2,index2*30)
-            index2++
+        // for(let i=0;i<this.keys.length;i++){
+        //   if(this.keys[i]){
+        //     this.writeTextToCanvas(`key: ${i}`,15,window.innerWidth/2,index2*30)
+        //     index2++
            
-          }
-        }
+        //   }
+        // }
+        this.ctx.drawImage(this.goldkeyImg,0,0,this.goldkeyImg.width,this.goldkeyImg.height,window.innerWidth/2-15,40,40,40)
+        this.writeTextToCanvas(` ${this.total}`,15,window.innerWidth/2+40,65)
     }
 
     /**

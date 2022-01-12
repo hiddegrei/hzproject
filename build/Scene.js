@@ -146,10 +146,12 @@ export default class Scene {
             }
             document.onmousemove = this.mouseDown.bind(this);
             let roomNum = this.particle.isInRoom(this.roomsIds);
-            if (roomNum != -1) {
+            if (roomNum != -1
+                && this.keys.total > 0) {
                 this.insideRoom = true;
                 this.inRoomNum = roomNum;
                 this.room.setRoomId(this.inRoomNum);
+                this.keys.total--;
             }
             ;
             this.count += 1;
@@ -187,6 +189,7 @@ export default class Scene {
             else if (this.timeHacking >= timeHack) {
                 let key = this.agents[this.particle.hackAgent].keyNum;
                 this.keys.keys[key] = true;
+                this.keys.total++;
                 this.timeHacking = 0;
                 if (this.agents[this.particle.hackAgent].status === "yellow") {
                     this.agents[this.particle.hackAgent].status = "orange";

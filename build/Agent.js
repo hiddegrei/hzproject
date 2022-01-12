@@ -196,7 +196,6 @@ export default class Agent {
     }
     show(ctx) {
         this.ctx.drawImage(this.goldkeyImg, 0, 0, this.goldkeyImg.width, this.goldkeyImg.height, this.pos.x - 20, this.pos.y - 35, 30, 30);
-        this.writeTextToCanvas(`${this.keyNum}`, 20, this.pos.x + 15, this.pos.y - 10);
         let color;
         if (this.status === "yellow") {
             color = "rgb(255,255,0)";
