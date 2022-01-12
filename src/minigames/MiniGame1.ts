@@ -42,10 +42,17 @@ export default class MiniGame1 extends MGMain {
 
   //   }
 
-  // }
+  //  }
   public render() {
-    //this.ctx.drawImage(this.image, 0, 0, this.image.width, this.image.height, 0, 0, window.innerWidth, window.innerHeight)
+    this.ctx.drawImage(this.image, 0, 0, this.image.width, this.image.height, 0, 0, window.innerWidth, window.innerHeight)
 
+    this.ctx.strokeStyle = "rgb(255,255,255)"
+    this.ctx.fillStyle="rgb(255,255,255)"
+    this.ctx.beginPath()
+    this.ctx.rect(90, 170, (window.innerWidth / 2) + 400, 400)
+    this.ctx.closePath()
+    this.ctx.stroke()
+    this.ctx.fill()
 
     this.writeTextToCanvas(`Dit is kamer ` + this.roomId, 20, 100, 50)
 

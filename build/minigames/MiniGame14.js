@@ -94,11 +94,13 @@ export default class MiniGame14 extends MGMain {
     }
     render() {
         this.ctx.drawImage(this.image, 0, 0, this.image.width, this.image.height, 0, 0, window.innerWidth, window.innerHeight);
-        this.ctx.strokeStyle = "rgb(0,0,0)";
+        this.ctx.strokeStyle = "rgb(0,255,0)";
+        this.ctx.fillStyle = "rgb(255,255,255)";
         this.ctx.beginPath();
-        this.ctx.rect(100, 100, 650, 300);
+        this.ctx.rect(100, 100, 680, 300);
         this.ctx.closePath();
         this.ctx.stroke();
+        this.ctx.fill();
         this.writeTextToCanvas("Je hebt 5 pogingen om het wachtwoord te raden, na elke poging kun je zien welke", 16, 110, 130);
         this.writeTextToCanvas("characters je goed hebt geraden", 16, 110, 150);
         this.writeTextToCanvas("PRESS ENTER  om je poging te testen.", 16, 110, 50);
@@ -107,15 +109,13 @@ export default class MiniGame14 extends MGMain {
                 this.writeTextToCanvas(`Poging ${i}: ${this.attemptsArr[i]}`, 19, 110, 170 + i * 20);
             }
         }
-        this.ctx.beginPath();
-        this.ctx.rect(700, 100, 300, 500);
-        this.ctx.closePath();
         this.writeTextToCanvas("Informatie die je hebt verkregen:", 20, 800, 100);
         this.writeTextToCanvas("voornaam: Jan", 20, 800, 130);
         this.writeTextToCanvas("voornaam: Alleman", 20, 800, 160);
         this.writeTextToCanvas("leeftijd: 12", 20, 800, 190);
         this.writeTextToCanvas("geboorte datum: 12/12/2002", 20, 800, 220);
         this.writeTextToCanvas("woonplaats: Amsterdam", 20, 800, 250);
+        this.ctx.strokeStyle = "rgb(0,0,0)";
         this.ctx.beginPath();
         this.ctx.rect(100, 500, 50, 50);
         this.ctx.rect(200, 500, 50, 50);

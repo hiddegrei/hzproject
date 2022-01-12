@@ -121,10 +121,12 @@ export default class MiniGame2 extends MGMain {
   public render() {
     this.ctx.drawImage(this.image, 0, 0, this.image.width, this.image.height, 0, 0, window.innerWidth, window.innerHeight)
     this.ctx.strokeStyle = "rgb(0,255,0)"
+    this.ctx.fillStyle="rgb(255,255,255)"
     this.ctx.beginPath()
     this.ctx.rect(100, 100, 700, 300)
     this.ctx.closePath()
     this.ctx.stroke()
+    this.ctx.fill()
     this.writeTextToCanvas("Je hebt 5 pogingen om het wachtwoord te raden, na elke poging kun je zien welke", 16, 110, 130)
     this.writeTextToCanvas("characters je goed hebt geraden", 16, 110, 150)
 

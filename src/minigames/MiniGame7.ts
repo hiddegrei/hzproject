@@ -88,7 +88,7 @@ export default class MiniGame7 extends MGMain {
     this.ctx.drawImage(this.lockImage, -20, window.innerHeight / 6);
     this.explanation();
     this.lockImage = Room.loadNewImage('assets/img/objects/pngwing.com (500).png');
-    this.ctx.drawImage(this.lockImage, window.innerWidth / 3, -12);
+    this.ctx.drawImage(this.lockImage, this.canvas.width / 3, -12);
     this.wheels.forEach((value: number, index: number) => {
       if (this.position === index) {
         this.writeTextToCanvas(
