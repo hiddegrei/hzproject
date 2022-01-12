@@ -76,6 +76,8 @@ export default class Scene {
 
   private showKeys:boolean
 
+  public lockedUp:number
+
   
 
 
@@ -90,6 +92,7 @@ export default class Scene {
     this.canvas.height = 969;
     this.ctx = this.canvas.getContext('2d');
     this.camera=new Camera()
+    this.lockedUp=0
     this.currentTrans = new Vector(0, 0)
     // this.canvas.width = window.innerWidth;
     // this.canvas.height = window.innerHeight;
@@ -143,7 +146,7 @@ export default class Scene {
     this.agents.push(new Agent(1.5*this.level.widthHall, 100+1.5*this.level.widthHall, this.ctx,this.level.widthHall,"random",0,"yellow"))
     this.agents.push(new Agent((this.canvas.width/2)+3.5*this.level.widthHall, 300+2*this.level.widthHall, this.ctx,this.level.widthHall,"random",1,"orange"))
     this.agents.push(new Agent((this.canvas.width/2)+12.5*this.level.widthHall, 300+8*this.level.widthHall, this.ctx,this.level.widthHall,"random",2,"yellow"))
-    this.agents.push(new Agent((this.canvas.width/2)-(0.5*this.level.widthHall), 100+3*this.level.widthHall, this.ctx,this.level.widthHall,"search",3,"red"))
+    this.agents.push(new Agent((this.canvas.width/2)-(0.5*this.level.widthHall), 100+3*this.level.widthHall, this.ctx,this.level.widthHall,"random",3,"red"))
     this.keys.inPossesion[0]=true
     this.keys.inPossesion[1]=true
     this.keys.inPossesion[2]=true
@@ -192,10 +195,10 @@ export default class Scene {
     //if (this.timeLeft < 0) {
       this.game.isEnd = true;
       this.scoreToDatabase.update()
-    }else if(this.insideRoom&&this.room.visitedRooms[this.inRoomNum]!=true){
+    }else if(this.insideRoom&&(this.room.visitedRooms[this.inRoomNum]!=true||this.inRoomNum===80)){
       this.room.update()
       let isMiniGameComplete=this.room.checkDone()
-      if(isMiniGameComplete){
+      if(isMiniGameComplete===true){
         this.totalScore++
       }
       if(isMiniGameComplete===80){
@@ -251,13 +254,17 @@ export default class Scene {
       
       let roomNum=this.particle.isInRoom(this.roomsIds)
       if(roomNum!=-1
-        &&this.keys.total>0
+        &&(this.keys.total>0||roomNum===80)
         ){
         //player is inside a room or central hub
         this.insideRoom=true;
         this.inRoomNum=roomNum;
         this.room.setRoomId(this.inRoomNum)
-        this.keys.total--
+        if(roomNum!=80){
+          this.keys.total--
+
+        }
+        
 
         
         
@@ -266,25 +273,35 @@ export default class Scene {
 
      
 
+      //check if player is insight of agents
       for(let i=0;i<this.agents.length;i++){
         let inSight=this.agents[i].inSight(this.particle,this.ctx)
         if(inSight){
+          if(this.lockedUp===2){
+            this.game.isEnd=true
+          }
           if(this.agents.length<=5){
-         this.agents.push(new Agent((this.canvas.width/2)-(0.5*this.level.widthHall), 100+3*this.level.widthHall, this.ctx,this.level.widthHall,"search",4,"red"))
+         this.agents.push(new Agent(100+5*this.level.widthHall, 100+0.5*this.level.widthHall, this.ctx,this.level.widthHall,"random",this.agents.length,"yellow"))
           }
           //player in room
+          this.lockedUp++
           this.particle.pos.x=(this.canvas.width/2)+18*this.level.widthHall
           this.particle.pos.y=100+5*this.level.widthHall
+         
         }
+        
+        //updateing and moving agents
         this.agents[i].update(this.particle, this.borders);
         this.agents[i].move()
 
       }
-
+      //updateing and moving player
       this.particle.update(this.mouse.x, this.mouse.y, this.borders);
       this.particle.hack(this.agents);
       this.particle.move()
 
+
+      //hack agents and retrieve keys
       let timeHack
       if(this.agents[this.particle.hackAgent].status==="yellow"){
        timeHack=5000
@@ -338,12 +355,13 @@ export default class Scene {
    */
   render() {
     // this.border.show()
+    //this.writeTextToCanvas(`${this.lockedUp}`,30,300,40)
    
     
     if(false){
       //if (this.timeLeft - elapsed < 0) {
         this.game.isEnd = true;
-      }else if(this.insideRoom&&this.room.visitedRooms[this.inRoomNum]!=true){
+      }else if(this.insideRoom&&(this.room.visitedRooms[this.inRoomNum]!=true||this.inRoomNum===80)){
         this.room.render()
   
   
