@@ -1,15 +1,19 @@
+import Game from "../Game.js";
 import Room from "../Room.js";
 import MGMain from "./MGMain.js";
 
 
 export default class MiniGame1 extends MGMain{
     public ctx:CanvasRenderingContext2D;
+    //private image:HTMLImageElement
     
     
 
     constructor(ctx:CanvasRenderingContext2D,room:Room){
       super(1,room)
       this.ctx=ctx
+
+      //this.image=Game.loadNewImage("./......")
       
 
       
@@ -31,7 +35,7 @@ export default class MiniGame1 extends MGMain{
     }
 
     public render(){
-
+      //  this.ctx.drawImage(this.image,0,0,window.innerWidth,window.innerHeight)
       
 
         this.writeTextToCanvas(`this is room`+this.roomId,20,100,50)
@@ -63,13 +67,13 @@ export default class MiniGame1 extends MGMain{
     fontSize: number = 20,
     xCoordinate: number,
     yCoordinate: number,
-   
-    restrict:number=text.length*fontSize,
-    alignment: CanvasTextAlign = 'center',
     color: string = 'red',
+    alignment: CanvasTextAlign = 'center',
+    
   ): void {
     this.ctx.font = `${fontSize}px sans-serif`;
     this.ctx.fillStyle = color;
+    this.ctx.textAlign=alignment
     this.ctx.textAlign = "start";
     this.ctx.fillText(text, xCoordinate, yCoordinate);
   }
