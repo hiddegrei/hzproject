@@ -83,8 +83,8 @@ export default class Scene {
             const y2 = this.level.agentBorders[i][3];
             this.borders.push(new Border(x, y, x2, y2, this.ctx, "agent"));
         }
-        this.particle = new Particle(100, 100 + 0.5 * this.level.widthHall, this.ctx);
-        this.agents.push(new Agent(1.5 * this.level.widthHall, 100 + 0.5 * this.level.widthHall, this.ctx, this.level.widthHall, "random", 0, "yellow"));
+        this.particle = new Particle(100 + this.level.widthHall, 100 + 0.5 * this.level.widthHall, this.ctx);
+        this.agents.push(new Agent(1.5 * this.level.widthHall, 100 + 1.5 * this.level.widthHall, this.ctx, this.level.widthHall, "random", 0, "yellow"));
         this.agents.push(new Agent((this.canvas.width / 2) + 3.5 * this.level.widthHall, 300 + 2 * this.level.widthHall, this.ctx, this.level.widthHall, "random", 1, "orange"));
         this.agents.push(new Agent((this.canvas.width / 2) + 12.5 * this.level.widthHall, 300 + 8 * this.level.widthHall, this.ctx, this.level.widthHall, "random", 2, "yellow"));
         this.agents.push(new Agent((this.canvas.width / 2) - (0.5 * this.level.widthHall), 100 + 3 * this.level.widthHall, this.ctx, this.level.widthHall, "search", 3, "red"));
@@ -113,6 +113,10 @@ export default class Scene {
             let isMiniGameComplete = this.room.checkDone();
             if (isMiniGameComplete) {
                 this.totalScore++;
+            }
+            if (isMiniGameComplete === 80) {
+                this.particle.pos.x = (this.canvas.width / 2) + 18.5 * this.level.widthHall;
+                this.particle.pos.y = 100 + 2 * this.level.widthHall;
             }
         }
         else {
@@ -150,7 +154,14 @@ export default class Scene {
             ;
             this.count += 1;
             for (let i = 0; i < this.agents.length; i++) {
-                this.agents[i].inSight(this.particle, this.ctx);
+                let inSight = this.agents[i].inSight(this.particle, this.ctx);
+                if (inSight) {
+                    if (this.agents.length <= 5) {
+                        this.agents.push(new Agent((this.canvas.width / 2) - (0.5 * this.level.widthHall), 100 + 3 * this.level.widthHall, this.ctx, this.level.widthHall, "search", 4, "red"));
+                    }
+                    this.particle.pos.x = (this.canvas.width / 2) + 18 * this.level.widthHall;
+                    this.particle.pos.y = 100 + 5 * this.level.widthHall;
+                }
                 this.agents[i].update(this.particle, this.borders);
                 this.agents[i].move();
             }
@@ -189,7 +200,6 @@ export default class Scene {
                 else if (this.agents[this.particle.hackAgent].mode = "search") {
                     this.agents[this.particle.hackAgent].maxspeed += 0.2;
                 }
-                console.log("hacked room num:", key);
                 for (let i = 0; i < this.keys.keys.length; i++) {
                     if (!this.keys.inPossesion[i]) {
                         this.agents[this.particle.hackAgent].keyNum = i;

@@ -301,8 +301,11 @@ export default class Agent {
             let rv = new Vector(this.target.x, this.target.y);
             rv.sub(this.pos);
             rv.setMag(this.sight + 20);
+            this.mode = "search";
+            return true;
             this.writeTextToCanvas("!", 20, this.pos.x + rv.x, this.pos.y + rv.y, 'center', "red");
         }
+        return false;
     }
     writeTextToCanvas(text, fontSize = 20, xCoordinate, yCoordinate, alignment = 'center', color = 'white') {
         this.ctx.font = `${fontSize}px sans-serif`;

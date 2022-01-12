@@ -528,6 +528,8 @@ return false
                  rv.sub(this.pos)
 
                  rv.setMag(this.sight+20)
+                 this.mode="search"
+                 return true;
                 // ctx.beginPath();
                 // ctx.moveTo(this.pos.x, this.pos.y);
                 // ctx.lineTo(this.pos.x+rv.x, this.pos.y+rv.y);
@@ -537,6 +539,7 @@ return false
                 this.writeTextToCanvas("!",20,this.pos.x+rv.x,this.pos.y+rv.y,'center',"red")
 
         }
+        return false
 
     }
 

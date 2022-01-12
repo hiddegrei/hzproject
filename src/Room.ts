@@ -15,6 +15,7 @@ import MiniGame7 from "./minigames/MiniGame7.js";
 import MiniGame8 from "./minigames/MiniGame8.js";
 import MiniGame9 from "./minigames/MiniGame9.js";
 import Scene from "./Scene.js";
+import MiniGameP from "./minigames/MiniGameP.js";
 
 export default class Room{
     public visitedRooms:Array<boolean>=[];
@@ -37,6 +38,7 @@ export default class Room{
     private minigame12:MiniGame12
     private minigame13:MiniGame13
     private minigame14:MiniGame14
+    private minigameP:MiniGameP
 
     public miniGameFinished:boolean
     public answer:boolean
@@ -70,6 +72,7 @@ export default class Room{
         this.minigame12=new MiniGame12(this.ctx,this)
         this.minigame13=new MiniGame13(this.ctx,this)
         this.minigame14=new MiniGame14(this.ctx,this)
+        this.minigameP=new MiniGameP(this.ctx,this)
 
         this.miniGameFinished=false
         this.answer=false
@@ -86,6 +89,10 @@ export default class Room{
         this.scene.insideRoom=false
         this.visitsNew(this.roomId)
         if(this.answer){
+          if(this.roomId===80){
+            return 80
+
+          }
           return true;
         }else{
           return false
@@ -128,6 +135,8 @@ export default class Room{
           this.minigame13.update()
         }else if(this.roomId===14){
           this.minigame14.update()
+        }else if(this.roomId===80){
+          this.minigameP.update()
         }
        
 
@@ -135,7 +144,7 @@ export default class Room{
 
     public render(){
         // this.writeTextToCanvas(`room: ${this.roomId}`,20,100,100)
-        this.writeTextToCanvas("press spacebar to leave room",20,700,600)
+        //this.writeTextToCanvas("press spacebar to leave room",20,700,600)
 
         if(this.roomId===0){
           this.minigame0.render()
@@ -168,6 +177,8 @@ export default class Room{
           this.minigame13.render()
         }else if(this.roomId===14){
           this.minigame14.render()
+        }else if(this.roomId===80){
+          this.minigameP.render()
         }
 
     }

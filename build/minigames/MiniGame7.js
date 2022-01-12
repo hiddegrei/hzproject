@@ -12,13 +12,10 @@ export default class MiniGame7 extends MGMain {
     positionKeyPressed;
     numberKeyPressed;
     timeIncrement;
-<<<<<<< HEAD
     randomNumberPositionDX;
     randomNumberPositionDY;
     randomSize;
-=======
     started;
->>>>>>> 7d65ab8ef10e413008bbf4e8551a47262eda473d
     constructor(ctx, room, canvas) {
         super(7, room);
         this.canvas = canvas;
@@ -32,26 +29,19 @@ export default class MiniGame7 extends MGMain {
         this.positionKeyPressed = false;
         this.numberKeyPressed = false;
         this.timeIncrement = 0;
-<<<<<<< HEAD
         this.randomNumberPositionDX = [];
         this.randomNumberPositionDY = [];
         this.randomSize = [];
-=======
         this.started = true;
->>>>>>> 7d65ab8ef10e413008bbf4e8551a47262eda473d
         do {
             this.codeGenerator();
             this.generateStartPosition();
         } while (this.combination === this.wheels);
-<<<<<<< HEAD
         this.combination.forEach((value) => {
             this.randomNumberPositionDX.push(Room.randomNumber(10 * value, (window.innerWidth / 1.1)));
             this.randomNumberPositionDY.push(Room.randomNumber(10 * value, (window.innerHeight / 1.1)));
             this.randomSize.push(Room.randomNumber(15, 25));
         });
-        document.onkeydown = this.checkLocks.bind(this);
-=======
->>>>>>> 7d65ab8ef10e413008bbf4e8551a47262eda473d
     }
     update() {
         this.check();
