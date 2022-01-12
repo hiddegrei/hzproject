@@ -6,7 +6,7 @@ import KeyboardListener from './KeyboardListener.js';
 import Scene from './Scene.js';
 
 export default class EndGame extends InfoDisplay {
-  private scene: Scene;
+  
 
   private game: Game;
 
@@ -22,12 +22,14 @@ export default class EndGame extends InfoDisplay {
 
   private highscores: HighScores;
 
+  private scene:Scene;
+
   /**
    * constructor
    *
    * @param canvas canvas
    */
-  public constructor(canvas: HTMLCanvasElement,game:Game) {
+  public constructor(canvas: HTMLCanvasElement,game:Game,scene:Scene) {
     super(canvas);
     this.ctx = this.canvas.getContext('2d');
     this.keyboard=new KeyboardListener()
@@ -36,6 +38,7 @@ export default class EndGame extends InfoDisplay {
     this.highscores.highscores;
     console.log(this.game.username);
     this.highscores.addHighscore(this.game.username, 999, this.game.password);
+    this.scene=scene
   }
 
   /**
@@ -72,6 +75,10 @@ export default class EndGame extends InfoDisplay {
     }
     for (let index = 0; index < limit ; index++) {
       this.writeTextToCanvas(`#${index + 1} - ${this.highscores.highscores[index][0]} - ${this.highscores.highscores[index][1]} Punten`, this.canvas.width / 5.85, ((this.canvas.height / 2.6) + (((this.canvas.height / 1.4) - (this.canvas.height / 2.6)) / 10) * index));
+    }
+
+    if(this.scene.howGameEnded==="caught"){
+      this.writeTextToCanvas("Je bent gepakt door de politie!",window.innerWidth-200,300)
     }
   }
 

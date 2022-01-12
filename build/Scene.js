@@ -45,6 +45,7 @@ export default class Scene {
     showKeys;
     lockedUp;
     hints;
+    howGameEnded;
     constructor(canvas, game) {
         this.timeArray = [Date.now()];
         this.canvas = canvas;
@@ -174,6 +175,7 @@ export default class Scene {
                     if (inSight) {
                         if (this.lockedUp === 2) {
                             this.game.isEnd = true;
+                            this.howGameEnded = "caught";
                         }
                         if (this.agents.length <= 5) {
                             this.agents.push(new Agent(100 + 5 * this.level.widthHall, 100 + 0.5 * this.level.widthHall, this.ctx, this.level.widthHall, "random", this.agents.length, "yellow"));
