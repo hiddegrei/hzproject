@@ -26,6 +26,8 @@ export default class Agent {
     status;
     hackRange;
     goldkeyImg;
+    sleeping;
+    sleepingTime;
     constructor(x, y, ctx, widthHall, mode, keyNum, status) {
         this.ctx = ctx;
         this.keyNum = keyNum;
@@ -43,6 +45,8 @@ export default class Agent {
         this.acc = new Vector(0, 0);
         this.widthHall = widthHall;
         this.lastAngle = 0;
+        this.sleeping = false;
+        this.sleepingTime = 0;
         for (let i = 0; i < 360; i += 90) {
             this.rays.push(new Ray(this.pos, i, this.ctx));
         }
@@ -195,7 +199,9 @@ export default class Agent {
         this.acc.setMag(0);
     }
     show(ctx) {
-        this.ctx.drawImage(this.goldkeyImg, 0, 0, this.goldkeyImg.width, this.goldkeyImg.height, this.pos.x - 20, this.pos.y - 35, 30, 30);
+        if (!this.sleeping) {
+            this.ctx.drawImage(this.goldkeyImg, 0, 0, this.goldkeyImg.width, this.goldkeyImg.height, this.pos.x - 20, this.pos.y - 35, 30, 30);
+        }
         let color;
         if (this.status === "yellow") {
             color = "rgb(255,255,0)";

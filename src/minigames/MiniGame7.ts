@@ -153,13 +153,13 @@ export default class MiniGame7 extends MGMain {
     }
 
     private explanation() {
-      this.writeTextToCanvas(`this is room`+this.roomId,20,window.innerWidth/3,window.innerHeight/1.1);
-      this.writeTextToCanvas(`Try to unlock this lock`,20,225,300);
-      this.writeTextToCanvas(`using the arrow keys`,20,225,325);
-      this.writeTextToCanvas(`Arrow up = number up`,20,225,400);
-      this.writeTextToCanvas(`Arrow down = number down`,20,225,450);
-      this.writeTextToCanvas(`Arrow left = position left`,20,225,500);
-      this.writeTextToCanvas(`Arrow right = position right`,20,225,550);
+      this.writeTextToCanvas(`Dit is kamer `+this.roomId,20,window.innerWidth/3,window.innerHeight/1.1);
+      this.writeTextToCanvas(`Probeer de code te kraken`,20,225,300);
+      this.writeTextToCanvas(`Gebruik de pijltestoetsen (en misschien ook wat hints)`,20,225,325);
+      this.writeTextToCanvas(`Pijl omhoog = cijfer omhoog`,20,225,400);
+      this.writeTextToCanvas(`Pijl omlaag = cijfer omlaag`,20,225,450);
+      this.writeTextToCanvas(`Pijl naar links = positie naar links`,20,225,500);
+      this.writeTextToCanvas(`Pijl naar rechts = positie naar rechts`,20,225,550);
     }
 
     private hints(){

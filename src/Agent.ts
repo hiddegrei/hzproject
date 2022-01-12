@@ -50,6 +50,9 @@ export default class Agent{
 
     private goldkeyImg:HTMLImageElement
 
+    public sleeping:boolean
+    public sleepingTime:number
+
     constructor(x: number, y: number, ctx: CanvasRenderingContext2D, widthHall:number,mode:string,keyNum:number,status:string) {
         this.ctx = ctx;
         this.keyNum=keyNum
@@ -67,6 +70,8 @@ export default class Agent{
         this.acc=new Vector(0,0)
         this.widthHall=widthHall
          this.lastAngle=0;
+         this.sleeping=false
+         this.sleepingTime=0
          for(let i=0;i<360;i+=90){
              this.rays.push( new Ray(this.pos,i,this.ctx))
          }
@@ -321,8 +326,9 @@ return false
 
     }
     show(ctx:CanvasRenderingContext2D) {
-        
+        if(!this.sleeping){
         this.ctx.drawImage(this.goldkeyImg,0,0,this.goldkeyImg.width,this.goldkeyImg.height,this.pos.x-20,this.pos.y-35,30,30)
+        }
         //this.writeTextToCanvas(`${this.keyNum}`,20,this.pos.x+15,this.pos.y-10)
         let color
         if(this.status==="yellow"){

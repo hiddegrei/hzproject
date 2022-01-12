@@ -8,7 +8,7 @@ export default class MiniGame0 extends MGMain {
         super(0, room);
         this.ctx = ctx;
         this.imageBob = Game.loadNewImage("./assets/img/players/bob.png");
-        this.image = Game.loadNewImage("./assets/img/background/download.jpeg");
+        this.image = Game.loadNewImage("./assets/img/background/password2.jpg");
     }
     update() {
         this.ctx.clearRect(0, 0, this.room.canvas.width, this.room.canvas.height);
@@ -32,22 +32,24 @@ export default class MiniGame0 extends MGMain {
         this.ctx.closePath();
         this.ctx.stroke();
         this.ctx.drawImage(this.imageBob, 100, 200);
-        this.writeTextToCanvas("naam: Bob", 20, 110, 350);
+        this.writeTextToCanvas("naam: Bob", 20, 110, 355);
         this.writeTextToCanvas("leeftijd: 17", 20, 110, 400);
         this.writeTextToCanvas("geboorte datum: 01/10/2001", 20, 110, 450);
         this.writeTextToCanvas("woonplaats: Utrecht", 20, 110, 500);
         this.writeTextToCanvas("Bob17Utrecht01", 20, 600, 210);
-        this.writeTextToCanvas("press a", 20, 1200, 210);
+        this.writeTextToCanvas("press a", 20, 1250, 210);
         this.writeTextToCanvas("ABC54@#2as", 20, 600, 260);
-        this.writeTextToCanvas("press b", 20, 1200, 260);
+        this.writeTextToCanvas("press b", 20, 1250, 260);
         this.writeTextToCanvas("Laat je wachtwoord-manager een wachtwoord genereren", 20, 600, 310);
-        this.writeTextToCanvas("press c", 20, 1200, 310);
+        this.writeTextToCanvas("press c", 20, 1250, 310);
     }
-    writeTextToCanvas(text, fontSize = 20, xCoordinate, yCoordinate, alignment = 'start', color = 'black') {
-        this.ctx.font = `${fontSize}px sans-serif`;
+    writeTextToCanvas(text, fontSize = 40, xCoordinate, yCoordinate, alignment = 'start', color = 'black') {
+        this.ctx.font = `1000 ${fontSize}px sans-serif`;
         this.ctx.fillStyle = color;
         this.ctx.textAlign = alignment;
         this.ctx.fillText(text, xCoordinate, yCoordinate);
+        this.ctx.strokeText(text, xCoordinate, yCoordinate);
+        this.ctx.strokeStyle = 'white';
     }
 }
 //# sourceMappingURL=MiniGame0.js.map
