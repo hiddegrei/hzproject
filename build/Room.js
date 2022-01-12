@@ -53,7 +53,7 @@ export default class Room {
         this.minigame3 = new MiniGame3(this.ctx, this);
         this.minigame4 = new MiniGame4(this.ctx, this);
         this.minigame5 = new MiniGame5(this.ctx, this);
-        this.minigame6 = new MiniGame6(this.ctx, this);
+        this.minigame6 = new MiniGame6(this.ctx, this, this.canvas);
         this.minigame7 = new MiniGame7(this.ctx, this, this.canvas);
         this.minigame8 = new MiniGame8(this.ctx, this);
         this.minigame9 = new MiniGame9(this.ctx, this);
