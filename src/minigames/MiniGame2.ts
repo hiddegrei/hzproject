@@ -120,8 +120,8 @@ export default class MiniGame2 extends MGMain {
 
   public render() {
     this.ctx.drawImage(this.image, 0, 0, this.image.width, this.image.height, 0, 0, window.innerWidth, window.innerHeight)
-    this.ctx.strokeStyle = "rgb(0,255,0)"
-    this.ctx.fillStyle="rgb(255,255,255)"
+    this.ctx.strokeStyle = "rgb(0,0,0)"
+    this.ctx.fillStyle = "rgb(255,255,255)"
     this.ctx.beginPath()
     this.ctx.rect(100, 100, 700, 300)
     this.ctx.closePath()
@@ -137,16 +137,18 @@ export default class MiniGame2 extends MGMain {
       }
     }
 
-    this.ctx.strokeStyle = 'black';
+    this.ctx.strokeStyle = "rgb(0,0,0)"
+    this.ctx.fillStyle = "rgb(255,255,255)"
     this.ctx.beginPath()
-    this.ctx.rect(700, 100, 300, 500)
+    this.ctx.rect(840, 100, 330, 300)
     this.ctx.closePath()
-    this.writeTextToCanvas("Informatie die je hebt verkregen:", 20, 850, 100)
-    this.writeTextToCanvas("voornaam: Rik", 20, 850, 130)
-    this.writeTextToCanvas("voornaam: Smith", 20, 850, 160)
-    this.writeTextToCanvas("leeftijd: 17", 20, 850, 190)
-    this.writeTextToCanvas("geboorte datum: 17/10/2001", 20, 850, 220)
-    this.writeTextToCanvas("woonplaats: Utrecht", 20, 850, 250)
+    this.ctx.fill()
+    this.writeTextToCanvas("Informatie die je hebt verkregen:", 20, 850, 130)
+    this.writeTextToCanvas("voornaam: Rik", 20, 850, 160)
+    this.writeTextToCanvas("voornaam: Smith", 20, 850, 190)
+    this.writeTextToCanvas("leeftijd: 17", 20, 850, 220)
+    this.writeTextToCanvas("geboorte datum: 17/10/2001", 20, 850, 250)
+    this.writeTextToCanvas("woonplaats: Utrecht", 20, 850, 280)
 
     this.ctx.beginPath()
     this.ctx.rect(100, 500, 50, 50)
