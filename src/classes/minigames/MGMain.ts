@@ -76,7 +76,7 @@ export default class MGMain {
     // var myGif = GIF();
     // myGif.load("GIFurl.gif");
     
-   // this.image = Game.loadNewImage("./img/background/hackgif.gif");
+    // this.image = Game.loadNewImage("./img/background/hackgif.gif");
   }
 
  
