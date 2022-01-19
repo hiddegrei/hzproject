@@ -12,7 +12,7 @@ export default class MiniGame4 extends MGMain{
    * @param canvas canvas
    */
     constructor(ctx:CanvasRenderingContext2D,room:Room, canvas: HTMLCanvasElement){
-      super(4,room,ctx, canvas,["s","l","o","g","a","n","8","8","9"],[null,null,null,null,null,null,null,null,null])
+      super(4,room,ctx, canvas)
      
 
       this.fname="Peter"

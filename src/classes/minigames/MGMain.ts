@@ -1,6 +1,7 @@
 import Game from "../Game";
 import KeyboardListener from "../KeyboardListener";
 import Room from "../Room";
+import MiniGameSecrets from "./MiniGameSecrets"
 
 export default class MGMain{
     public roomId:number;
@@ -11,7 +12,7 @@ export default class MGMain{
     private bezig:boolean;
     public timeLeft:number;
 
-    public secretW:Array<string>=[];
+    public secretW:string[]=[];
     public attempts:number;
     public found:any[];
     public index:number;
@@ -27,6 +28,8 @@ export default class MGMain{
     public habitat!: string;
     public age!: number;
     public hobbys!: string;
+
+    public miniGameSecrets:MiniGameSecrets
 
     /**
      * Create an instance of this object
@@ -44,8 +47,15 @@ export default class MGMain{
         this.bezig=true
         this.timeLeft=120000
 
-        this.secretW=secret;
-      	this.found=found;
+        this.miniGameSecrets=new MiniGameSecrets()
+       let secrett=this.miniGameSecrets.getSecret();
+       this.secretW=secrett[0];
+      	this.found=secrett[1];
+    //     this.fname="Rik"
+    // this.lname="Smith"
+    // this.age=17
+    // this.birth="17/10/2001"
+    // this.habitat="Utrecht"
         this.index=0;
       	this.attempts=5;
       	this.foundStr="";

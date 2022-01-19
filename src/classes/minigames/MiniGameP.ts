@@ -17,13 +17,7 @@ export default class MiniGameP extends MGMain {
     	super(80,room, ctx, canvas);
 		this.lockedUp=1
   
-	      if(this.lockedUp===1){
-    	  this.secretW=["k","a","r","e","l","9","3","2"];
-    	  }else{
-    	    this.secretW=["9","4","p","e","r","e","n","8"];
-
-    	  }
-      	this.found=[null,null,null,null,null,null,null,null];
+	     
 		 
 
 		this.loadInfo()
@@ -33,21 +27,10 @@ export default class MiniGameP extends MGMain {
   	}
 
 	  public loadInfo(){
-		if(this.lockedUp===1){
-			this.fname="Karel"
-			this.lname="De 2e"
-			this.age=32
-			this.birth="02/01/1990"
-			this.habitat="De Bank"
-			
-	  }else{
-		this.fname="Peter"
-		this.lname="Peren"
-		this.age=28
-		this.birth="28/02/1994"
-		this.habitat="De Bank"
-			
-	  }
+		let secrett=this.miniGameSecrets.getSecret();
+		this.secretW=secrett[0];
+		   this.found=secrett[1];
+		
 
 	  }
 
@@ -60,11 +43,7 @@ export default class MiniGameP extends MGMain {
     	if(this.started){
       		document.onkeydown = this.checkKey.bind(this);
       		this.lockedUp=lockedUp;
-      		if(lockedUp===1){
-          		this.secretW=["k","a","r","e","l","9","3","2"];
-      		}else{
-          		this.secretW=["9","4","p","e","r","e","n","8"];
-      		}
+      		
 			  this.loadInfo()
         
       		this.started=false;

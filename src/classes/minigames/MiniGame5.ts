@@ -12,14 +12,9 @@ export default class MiniGame5 extends MGMain{
    * @param canvas canvas
    */
     constructor(ctx:CanvasRenderingContext2D,room:Room, canvas: HTMLCanvasElement){
-      super(5,room,ctx, canvas,["b","a","s","b","a","l","8","3"],[null,null,null,null,null,null,null,null])
+      super(5,room,ctx, canvas)
      
-      this.fname="Bastiaan"
-      this.lname="Berg"
-      this.age=18
-      this.birth="08/08/2003"
-      this.habitat="Utrecht"
-      this.hobbys="Basketballen"
+     
 
     }
 
