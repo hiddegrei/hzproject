@@ -17,6 +17,7 @@ import ScoreToDatabase from "./ScoreToDatabase";
 import Hints from "./Hints";
 import SceneInfo from "./SceneInfo";
 import CameraAgent from "./CameraAgent";
+import { transcode } from "buffer";
 
 export default class Scene {
   public canvas: HTMLCanvasElement;
@@ -94,7 +95,7 @@ export default class Scene {
 
   private flash: number;
 
-  private trans:any=[]
+  private trans: any = [];
 
   // private agentMid:Agent
 
@@ -201,11 +202,11 @@ export default class Scene {
       ctxAlert.fill();
     }
 
-    ctxAlert.drawImage(this.testImg, 100, 100);
+    ctxAlert.drawImage(this.testImg, 100 + (this.trans.x*-1), 100 + (this.trans.y*-1));
     ctxAlert.strokeStyle = "rgb(0,0,0)";
     ctxAlert.fillStyle = "rgb(255,255,255)";
     ctxAlert.beginPath();
-    ctxAlert.rect(0, window.innerHeight / 2.5, 500, 50);
+    ctxAlert.rect(0 + (this.trans.x*-1), window.innerHeight / 2.5 + (this.trans.y*-1), 500, 50);
     ctxAlert.closePath();
     ctxAlert.stroke();
     ctxAlert.fill();
@@ -213,7 +214,7 @@ export default class Scene {
     ctxAlert.font = `30px sans-serif`;
     ctxAlert.fillStyle = 'red';
     ctxAlert.textAlign = 'left';
-    ctxAlert.fillText("Directeur: M. Oney", 200, window.innerHeight / 2.2);
+    ctxAlert.fillText("Directeur: M. Oney", 200 + (this.trans.x*-1), window.innerHeight / 2.2 + (this.trans.y*-1));
   }
 
   public checkKeyScene(e: any) {
@@ -399,8 +400,11 @@ export default class Scene {
         );
         if (inSight) {
           //this.totalScore-=Scene.CAUGHT_AGENTS
-          this.score.seenCameras();
-          
+          this.score.caughtAgents();
+          if (this.lockedUp === 2) {
+            this.game.isEnd = true;
+            this.howGameEnded = "caught";
+          }
           if (this.cameraAgents.length <= 5) {
             this.agents.push(
               new Agent(
@@ -414,7 +418,11 @@ export default class Scene {
               )
             );
           }
-          this.sendAgents(this.cameraAgents[i].pos)
+          //player in room
+          // this.lockedUp++;
+          this.particle.pos.x =
+            this.canvas.width / 2 + 18 * this.level.widthHall;
+          this.particle.pos.y = 100 + 5 * this.level.widthHall;
         }
       }
 
@@ -422,17 +430,6 @@ export default class Scene {
     }
 
   }
-
-  public sendAgents(pos:Vector){
-    for(let i=0;i<this.agents.length;i++){
-      let dist=Vector.dist(this.agents[i].pos,pos)
-      // if(dist<200){
-      //   this.agents.
-      // }
-    }
-  }
-
-
   public gethintGame() {
     return this.hints;
   }
