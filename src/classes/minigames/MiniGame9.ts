@@ -57,6 +57,11 @@ export default class MiniGame9 extends MGMain{
      */
     public render(){
       this.ctx.clearRect(0, 0, this.room.canvas.width, this.room.canvas.height);
+      this.ctx.fillStyle="white"
+      this.ctx.beginPath()
+      this.ctx.rect(0,0,window.innerWidth,window.innerHeight)
+      this.ctx.closePath()
+      this.ctx.fill()
       // this.ctx.drawImage(this.image, 0, 0, this.image.width, this.image.height, 0, 0, window.innerWidth, window.innerHeight);
       for (let i = 0; i < 3; i++) {
         this.drawLines(i);
