@@ -98,8 +98,7 @@ export default class MiniGame7 extends MGMain {
 			  		`[${value}]`,
 			  		50, 997 - (index * 54.5),
 			  		513,
-			  		'center',
-			  		'green',
+			  		
 				);
 		  	} else {
 			  	this.writeTextToCanvas(
@@ -203,7 +202,7 @@ export default class MiniGame7 extends MGMain {
 	 */
     private hints(){
       	this.combination.forEach((value: number, index: number) => {
-        	this.writeTextToCanvas(`${value}`,this.randomSize[index],this.randomNumberPositionDX[index],this.randomNumberPositionDY[index], 'center', 'orange');
+        	this.writeTextToCanvas(`${value}`,this.randomSize[index],this.randomNumberPositionDX[index],this.randomNumberPositionDY[index], 'orange','center');
       	});
     }
 

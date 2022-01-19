@@ -111,8 +111,7 @@ export default class MGMain {
       20,
       100,
       60,
-      "start",
-      "green"
+      
     );
   }
 
@@ -210,7 +209,8 @@ export default class MGMain {
       "Druk op ENTER  om je poging te testen.",
       16,
       110,
-      140
+      140,
+      "rgb(0,255,0)"
     );
     if (this.attemptsArr) {
       for (let i = 0; i < this.attemptsArr.length; i++) {
@@ -258,11 +258,11 @@ export default class MGMain {
     this.ctx.closePath();
     this.ctx.stroke();
 
-    for (let i = 1; i < 9; i++) {
+    for (let i = 1; i < this.found.length+1; i++) {
       if (this.found[i - 1] != null) {
-        this.writeTextToCanvas(this.found[i - 1], 40, i * 100 + 10, 540,"center","rgb(0,255,0)");
+        this.writeTextToCanvas(this.found[i - 1], 40, i * 100 + 10, 540,"rgb(0,255,0)");
       } else {
-        this.writeTextToCanvas("*", 40, i * 100 + 10, 550,"center","rgb(0,255,0)");
+        this.writeTextToCanvas("*", 40, i * 100 + 10, 550,"rgb(0,255,0)");
       }
     }
   }
@@ -288,12 +288,13 @@ export default class MGMain {
         "Je hebt het wachtwoord geraden! Gebruik dus nooit je eigen gegevens in je wachtwoord, je ziet hoe makkelijk het is om dan je wachtwoord te raden!",
         20,
         100,
-        window.innerHeight - 150
+        window.innerHeight - 150,
+        "rgb(0,255,0)"
       );
     } else if (this.complete === 0) {
-      this.writeTextToCanvas("Helaas, dit is fout", 30, 100, 900);
+      this.writeTextToCanvas("Helaas, dit is fout", 30, 100, 900,"rgb(0,255,0)");
     } else if (this.complete === 5) {
-      this.writeTextToCanvas("Helaas, de tijd is op", 30, 100, 900);
+      this.writeTextToCanvas("Helaas, de tijd is op", 30, 100, 900,"rgb(0,255,0)");
     }
   }
 
@@ -310,8 +311,9 @@ export default class MGMain {
     fontSize: number = 20,
     xCoordinate: number,
     yCoordinate: number,
+    color: string = "black",
     alignment: CanvasTextAlign = "start",
-    color: string = "black"
+    
   ): void {
     this.ctx.font = `700 ${fontSize}px sans-serif`;
     this.ctx.fillStyle = color;

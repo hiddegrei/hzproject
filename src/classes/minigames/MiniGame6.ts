@@ -48,7 +48,7 @@ export default class MiniGame6 extends MGMain{
      	// this.ctx.drawImage(this.image, 0, 0, this.image.width, this.image.height, 0, 0, window.innerWidth, window.innerHeight);
     
     	this.writeTextToCanvas(`Dit is kamer ` + this.roomId, 20, 200, 200);
-    	this.writeTextToCanvas(this.titelText, this.size, window.innerWidth / 2, window.innerHeight / 8, 'center', this.color);
+    	this.writeTextToCanvas(this.titelText, this.size, window.innerWidth / 2, window.innerHeight / 8, this.color,'center');
     	this.loadFingerPrints();
     	this.writeTextToCanvas(`Pijltjestoets naar links <`, 20, window.innerWidth / 1.7, window.innerHeight / 4 * (0 + 1.2));
     	this.writeTextToCanvas(`Pijltjestoets omhoog ^`, 20, window.innerWidth / 1.7, window.innerHeight / 4 * (1 + 1.2));
