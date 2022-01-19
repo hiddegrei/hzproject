@@ -15,7 +15,7 @@ export default class DarkSpot extends Room {
     public createAll() {
         this.createLShape();
         this.createBlock();
-        this.loadAllImages();
+       // this.loadAllImages();
     }
 
     private createRec(dx:number, dy: number, width: number, height: number) {
