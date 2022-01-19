@@ -4,6 +4,7 @@ import MGMain from "./MGMain";
 
 export default class MiniGame9 extends MGMain{
    private static readonly RANDOMCODEWIDTH = 2.5;
+   private static readonly LINECODE = 670;
    private counter: number[];
    private increase: boolean;
    private line: number;
@@ -62,31 +63,31 @@ export default class MiniGame9 extends MGMain{
       }
       this.moveLine(this.line);
       this.writeTextToCanvas(`pogingen over: ${this.attempts}`, 30, window.innerWidth/7, window.innerHeight/4);
-      this.writeTextToCanvas(`Gebruik "pijltje omlaag" om door te gaan naar het volgende blokje`, 20, window.innerWidth/3, window.innerHeight/7);
-      this.writeTextToCanvas(`Druk op "pijltje omlaag" als het blokje groen is`, 20, window.innerWidth/3, window.innerHeight/6);
+      this.writeTextToCanvas(`Gebruik "pijltje omlaag" om door te gaan naar het volgende blokje`, 20, window.innerWidth/3, 70);
+      this.writeTextToCanvas(`Druk op "pijltje omlaag" als het blokje groen is`, 20, window.innerWidth/3, 100);
 
       if (this.locked === false) {
         this.writeTextToCanvas(`Goed gedaan`, 30, window.innerWidth/7, window.innerHeight/2);
       }
       if (this.line === 1) {
         for (let i = 0; i < 3; i++) {
-          this.writeTextToCanvas(`[${Room.randomNumber(0,9)}] [${Room.randomNumber(0,9)}] [${Room.randomNumber(0,9)}] [${Room.randomNumber(0,9)}] [${Room.randomNumber(0,9)}]`, 15, window.innerWidth / MiniGame9.RANDOMCODEWIDTH, 175 + (150 * i));
+          this.writeTextToCanvas(`[${Room.randomNumber(0,9)}] [${Room.randomNumber(0,9)}] [${Room.randomNumber(0,9)}] [${Room.randomNumber(0,9)}] [${Room.randomNumber(0,9)}]`, 15, MiniGame9.LINECODE, 175 + (150 * i));
         }
       } else if (this.line === 2) {
         for (let i = 1; i < 3; i++) {
-          this.writeTextToCanvas(`[5] [6] [2] [9] [1]`, 15, window.innerWidth / MiniGame9.RANDOMCODEWIDTH, 175 + (150 * 0));
-          this.writeTextToCanvas(`[${Room.randomNumber(0,9)}] [${Room.randomNumber(0,9)}] [${Room.randomNumber(0,9)}] [${Room.randomNumber(0,9)}] [${Room.randomNumber(0,9)}]`, 15, window.innerWidth / MiniGame9.RANDOMCODEWIDTH, 175 + (150 * i));
+          this.writeTextToCanvas(`[5] [6] [2] [9] [1]`, 15, MiniGame9.LINECODE, 175 + (150 * 0));
+          this.writeTextToCanvas(`[${Room.randomNumber(0,9)}] [${Room.randomNumber(0,9)}] [${Room.randomNumber(0,9)}] [${Room.randomNumber(0,9)}] [${Room.randomNumber(0,9)}]`, 15, MiniGame9.LINECODE, 175 + (150 * i));
         }
       } else if (this.line === 3 && this.locked === true) {
         for (let i = 2; i < 3; i++) {
-          this.writeTextToCanvas(`[5] [6] [2] [9] [1]`, 15, window.innerWidth / MiniGame9.RANDOMCODEWIDTH, 175 + (150 * 0));
-          this.writeTextToCanvas(`[6] [8] [1] [0] [4]`, 15, window.innerWidth / MiniGame9.RANDOMCODEWIDTH, 175 + (150 * 1));
-          this.writeTextToCanvas(`[${Room.randomNumber(0,9)}] [${Room.randomNumber(0,9)}] [${Room.randomNumber(0,9)}] [${Room.randomNumber(0,9)}] [${Room.randomNumber(0,9)}]`, 15, window.innerWidth / MiniGame9.RANDOMCODEWIDTH, 175 + (150 * i));
+          this.writeTextToCanvas(`[5] [6] [2] [9] [1]`, 15, MiniGame9.LINECODE, 175 + (150 * 0));
+          this.writeTextToCanvas(`[6] [8] [1] [0] [4]`, 15, MiniGame9.LINECODE, 175 + (150 * 1));
+          this.writeTextToCanvas(`[${Room.randomNumber(0,9)}] [${Room.randomNumber(0,9)}] [${Room.randomNumber(0,9)}] [${Room.randomNumber(0,9)}] [${Room.randomNumber(0,9)}]`, 15, MiniGame9.LINECODE, 175 + (150 * i));
         }
       } else {
-        this.writeTextToCanvas(`[5] [6] [2] [9] [1]`, 15, window.innerWidth / MiniGame9.RANDOMCODEWIDTH, 175 + (150 * 0));
-        this.writeTextToCanvas(`[6] [8] [1] [0] [4]`, 15, window.innerWidth / MiniGame9.RANDOMCODEWIDTH, 175 + (150 * 1));
-        this.writeTextToCanvas(`[2] [0] [4] [7] [3]`, 15, window.innerWidth / MiniGame9.RANDOMCODEWIDTH, 175 + (150 * 2));
+        this.writeTextToCanvas(`[5] [6] [2] [9] [1]`, 15, MiniGame9.LINECODE, 175 + (150 * 0));
+        this.writeTextToCanvas(`[6] [8] [1] [0] [4]`, 15, MiniGame9.LINECODE, 175 + (150 * 1));
+        this.writeTextToCanvas(`[2] [0] [4] [7] [3]`, 15, MiniGame9.LINECODE, 175 + (150 * 2));
       }
       
       
