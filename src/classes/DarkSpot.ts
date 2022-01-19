@@ -15,7 +15,7 @@ export default class DarkSpot extends Room {
     public createAll() {
         this.createLShape();
         this.createBlock();
-       // this.loadAllImages();
+        this.loadAllImages();
     }
 
     private createRec(dx:number, dy: number, width: number, height: number) {
@@ -34,12 +34,20 @@ export default class DarkSpot extends Room {
     }
 
     private loadAllImages() {
-        this.insertRoomImages("./img/background/42e41e7460483a2f00bb7bd16fe3b9f3.jpg", 900, 500);
-        this.insertRoomImages("./img/background/42e41e7460483a2f00bb7bd16fe3b9f3.jpg", 900,800);
+        this.insertRoomImages("./img/background/42e41e7460483a2f00bb7bd16fe3b9f3.jpg", 160, 754, 100, 95);
+        this.insertRoomImages("./img/background/cartoon-illustration-bank-vault-inside-metallic-iron-safe-door_1441-2029.jpg", 610,751,200 ,103);
+        this.insertRoomImages("./img/background/depositphotos_66872185-stock-photo-top-view-office-room-wooden.jpg", 1265,300,240 ,100);
+        this.insertRoomImages("./img/background/nina-volkova-back13.jpg", 710,600,150 ,100);
+        this.insertRoomImages("./img/background/36064143-vector-illustration-of-a-closed-safe-with-money-.jpg", 1410,150,100 ,100);
+        this.insertRoomImages("./img/background/verlichtingsplan.jpg", 1410,700,149 ,100);
+        this.insertRoomImages("./img/background/vector-cartoon-illustration-bank-robbery-safety-vault-three-thieves-stealing-gold-cash-throwing-bag-sack-currency-119359066.jpg", 462,751,100 ,149);
+        this.insertRoomImages("./img/background/9da45f21d0d2f59c2c335e3651f43621--small-bedrooms-perspective.jpg", 1762,600,100 ,200);
+        this.insertRoomImages("./img/background/145739320-empty-meeting-room-semi-flat-rgb-color-vector-illustration-conference-coffee-break-documents-and-com.webp", 510,300,100 ,100);
+        this.insertRoomImages("./img/background/56b19636ec2dc3f52f4092e9d4527213.jpg", 360,203,100 ,150);
     }
 
-    private insertRoomImages(image: string, dx: number, dy: number){
-        this.ctx.drawImage(Room.loadNewImage(image), dx, dy);
+    private insertRoomImages(image: string, dx: number, dy: number, dw: number, dh: number){
+        this.ctx.drawImage(Room.loadNewImage(image), dx, dy, dw, dh);
     }
 
     private createBlock() {
