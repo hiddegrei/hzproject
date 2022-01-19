@@ -14,7 +14,8 @@ export default class DarkSpot extends Room {
 
     public createAll() {
         this.createLShape();
-        this.createBlock()
+        this.createBlock();
+        this.loadAllImages();
     }
 
     private createRec(dx:number, dy: number, width: number, height: number) {
@@ -30,6 +31,15 @@ export default class DarkSpot extends Room {
         this.ctx.closePath();
         this.ctx.stroke();
         this.ctx.fill();
+    }
+
+    private loadAllImages() {
+        this.insertRoomImages("./img/background/42e41e7460483a2f00bb7bd16fe3b9f3.jpg", 900, 500);
+        this.insertRoomImages("./img/background/42e41e7460483a2f00bb7bd16fe3b9f3.jpg", 900,800);
+    }
+
+    private insertRoomImages(image: string, dx: number, dy: number){
+        this.ctx.drawImage(Room.loadNewImage(image), dx, dy);
     }
 
     private createBlock() {
