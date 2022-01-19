@@ -15,7 +15,7 @@ export default class Keys{
             this.keys[i]=false
             this.inPossesion[i]=false;
         }
-        this.total=0
+        this.total=10
         this.goldkeyImg=Game.loadNewImage("./img/objects/goldkey.png")
 
     }
