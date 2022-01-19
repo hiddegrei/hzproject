@@ -16,11 +16,6 @@ export default class MiniGame2 extends MGMain{
     
       	super(2,room,ctx, canvas);
 
-       
-
-       
-      
-     
     }
 
 	/**

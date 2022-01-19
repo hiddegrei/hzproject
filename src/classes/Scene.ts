@@ -94,6 +94,8 @@ export default class Scene {
 
   private flash: number;
 
+  private trans:any=[]
+
   // private agentMid:Agent
 
   /**
@@ -282,9 +284,9 @@ export default class Scene {
       this.updateTime(elapsed)
       // transform canvas en camera
       this.ctx.setTransform(1, 0, 0, 1, 0, 0);
-      let trans = this.camera.checkScaling(this.canvas, this.particle);
-      this.camera.createMatrix(trans.x, trans.y, 0, 0);
-      this.ctx.translate(trans.x, trans.y);
+      this.trans = this.camera.checkScaling(this.canvas, this.particle);
+      this.camera.createMatrix(this.trans.x, this.trans.y, 0, 0);
+      this.ctx.translate(this.trans.x, this.trans.y);
       //register mouse position to move the player
       document.onmousemove = this.mouseDown.bind(this);
       //Developers
@@ -397,11 +399,8 @@ export default class Scene {
         );
         if (inSight) {
           //this.totalScore-=Scene.CAUGHT_AGENTS
-          this.score.caughtAgents();
-          if (this.lockedUp === 2) {
-            this.game.isEnd = true;
-            this.howGameEnded = "caught";
-          }
+          this.score.seenCameras();
+          
           if (this.cameraAgents.length <= 5) {
             this.agents.push(
               new Agent(
@@ -415,11 +414,7 @@ export default class Scene {
               )
             );
           }
-          //player in room
-          // this.lockedUp++;
-          this.particle.pos.x =
-            this.canvas.width / 2 + 18 * this.level.widthHall;
-          this.particle.pos.y = 100 + 5 * this.level.widthHall;
+          this.sendAgents(this.cameraAgents[i].pos)
         }
       }
 
@@ -427,6 +422,17 @@ export default class Scene {
     }
 
   }
+
+  public sendAgents(pos:Vector){
+    for(let i=0;i<this.agents.length;i++){
+      let dist=Vector.dist(this.agents[i].pos,pos)
+      // if(dist<200){
+      //   this.agents.
+      // }
+    }
+  }
+
+
   public gethintGame() {
     return this.hints;
   }
