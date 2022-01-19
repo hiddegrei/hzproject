@@ -353,7 +353,7 @@ export default class Scene {
       this.room.render();
     } else {
       
-          this.ctx.drawImage(this.imgFloor, 0, 0, this.imgFloor.width, this.imgFloor.height, 0, 0, this.canvas.width, this.canvas.height)
+     this.ctx.drawImage(this.imgFloor, 0, 0, this.imgFloor.width, this.imgFloor.height, 0, 0, this.canvas.width, this.canvas.height)
          
       //kamer1 background
       // this.ctx.drawImage(this.imgBank, 1000, 200, 2 * this.level.widthHall, 3 * this.level.widthHall, 100 + 5 * this.level.widthHall + 10, 100 + 2 * this.level.widthHall, 2 * this.level.widthHall, 3 * this.level.widthHall)

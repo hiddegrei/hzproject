@@ -22,7 +22,7 @@ export default class MiniGameP extends MGMain {
 
 		this.loadInfo()
       
-     	//this.image=Game.loadNewImage("./img/background/cell2.jpg");
+     	this.image=Game.loadNewImage("./img/background/cell2.jpg");
 
   	}
 
