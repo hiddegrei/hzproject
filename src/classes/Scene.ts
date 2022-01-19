@@ -193,7 +193,7 @@ export default class Scene {
       ctxAlert.strokeStyle = "rgb(0,0,0)";
       ctxAlert.fillStyle = "rgb(255,0,0,0.8)";
       ctxAlert.beginPath();
-      ctxAlert.rect(0, 0, window.innerWidth, window.innerHeight);
+      ctxAlert.rect(0, 0, window.innerWidth *2, window.innerHeight *2);
       ctxAlert.closePath();
       ctxAlert.stroke();
       ctxAlert.fill();
