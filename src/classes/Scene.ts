@@ -95,6 +95,7 @@ export default class Scene {
 
   private flash: number;
 
+  private imgFloor: HTMLImageElement;
   private trans: any = [];
 
   private elapsed: number;
@@ -131,6 +132,7 @@ export default class Scene {
     this.count = 0;
 
     this.imgBank = Game.loadNewImage("./img/background/bankheistmap.jpg");
+    this.imgFloor = Game.loadNewImage("./img/objects/walls1.png");
 
     document.onkeydown = this.checkKeyScene.bind(this);
 
@@ -168,8 +170,8 @@ export default class Scene {
     // this.ray=new Ray(50,150, this.ctx)
 
     this.particle = new Particle(
-      (this.canvas.width / 2) - 11 * this.level.widthHall,
-      100 + 16.5 * this.level.widthHall,
+      (this.canvas.width / 2) - 13 * this.level.widthHall,
+      100 + 5 * this.level.widthHall,
       this.ctx
     );
 
@@ -202,13 +204,13 @@ export default class Scene {
       ctxAlert.strokeStyle = "rgb(0,0,0)";
       ctxAlert.fillStyle = "rgb(255,0,0,0.5)";
       ctxAlert.beginPath();
-      ctxAlert.rect(0, 0, window.innerWidth *2, window.innerHeight *2);
+      ctxAlert.rect(0, 0, window.innerWidth * 2, window.innerHeight * 2);
       ctxAlert.closePath();
       ctxAlert.stroke();
       ctxAlert.fill();
     }
 
-    ctxAlert.drawImage(this.testImg, 100 + (this.trans.x*-1), 100 + (this.trans.y*-1));
+    ctxAlert.drawImage(this.testImg, 100 + (this.trans.x * -1), 100 + (this.trans.y * -1));
     ctxAlert.strokeStyle = "rgb(0,0,0)";
     ctxAlert.fillStyle = "rgb(255,255,255)";
     ctxAlert.beginPath();
@@ -347,14 +349,19 @@ export default class Scene {
     if (this.legalInsideRoom()) {
       this.room.render();
     } else {
-      // for(let i=0;i<this.canvas.width;i+=50){
-      //   for(let j=0;j<this.canvas.height;j+=50){
-      //     this.ctx.drawImage(this.imgBank,850,870,50,50,i,j,50,50)
-      //   }
+      for (let i = 0; i < this.canvas.width; i += 50) {
+        for (let j = 0; j < this.canvas.height; j += 50) {
+          //brick background 1
+          this.ctx.drawImage(this.imgFloor, 192, 0, 32, 32, i + 10, j, 50, 50)
+          //brick background 2
+          // this.ctx.drawImage(this.imgFloor, 416, 0, 32, 32, i + 10, j, 50, 50)
+          //cyan background
+          // this.ctx.drawImage(this.imgBank, 1128, 368, 8, 8, i + 10, j, 50, 50)
+        }
 
-      // }
+      }
       //kamer1 background
-      // this.ctx.drawImage(this.imgBank,1000,200,2*this.level.widthHall,3*this.level.widthHall,100+5*this.level.widthHall+10,100+2*this.level.widthHall,2*this.level.widthHall,3*this.level.widthHall)
+      // this.ctx.drawImage(this.imgBank, 1000, 200, 2 * this.level.widthHall, 3 * this.level.widthHall, 100 + 5 * this.level.widthHall + 10, 100 + 2 * this.level.widthHall, 2 * this.level.widthHall, 3 * this.level.widthHall)
 
       this.sceneInfo.renderBackgroundImages(this.level.widthHall, this.imgBank);
       //show the player
@@ -413,7 +420,7 @@ export default class Scene {
   public isPlayerInSightCameras() {
 
     for (let i = 0; i < this.cameraAgents.length; i++) {
-      if (Vector.dist(this.particle.pos, this.cameraAgents[i].pos) < 80) {
+      if (Vector.dist(this.particle.pos, this.cameraAgents[i].pos) < 200) {
         let inSight = this.cameraAgents[i].inSight(
           this.particle,
           this.ctx,
@@ -426,24 +433,9 @@ export default class Scene {
             this.game.isEnd = true;
             this.howGameEnded = "caught";
           }
-          if (this.cameraAgents.length <= 5) {
-            this.agents.push(
-              new Agent(
-                100 + 5 * this.level.widthHall,
-                100 + 0.5 * this.level.widthHall,
-                this.ctx,
-                this.level.widthHall,
-                "random",
-                this.cameraAgents.length,
-                "yellow"
-              )
-            );
-          }
-          //player in room
-          // this.lockedUp++;
-          this.particle.pos.x =
-            this.canvas.width / 2 + 18 * this.level.widthHall;
-          this.particle.pos.y = 100 + 5 * this.level.widthHall;
+          this.sendAgents(this.cameraAgents[i].pos)
+          break;
+          
         }
       }
 
@@ -451,6 +443,19 @@ export default class Scene {
     }
 
   }
+
+  public sendAgents(pos:Vector){
+    for(let i=0;i<this.agents.length;i++){
+      let dist=Vector.dist(this.agents[i].pos,pos)
+      if(dist<800){
+        
+        this.agents[i].newTarget(pos)
+        this.agents[i].updateMode("camera")
+      }
+    }
+  }
+
+
   public gethintGame() {
     return this.hints;
   }
