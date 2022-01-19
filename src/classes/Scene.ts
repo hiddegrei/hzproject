@@ -181,8 +181,9 @@ export default class Scene {
     this.agents = this.sceneInfo.loadAgents(this.level.widthHall)
 
     //agent linksboven
-    this.cameraAgents.push(new CameraAgent(100 - this.level.widthHall, 100, this.ctx, this.level.widthHall, 80, 100 + this.level.widthHall, 100 + this.level.widthHall))
-
+    
+    this.cameraAgents=this.sceneInfo.loadCameras(this.level.widthHall)
+   
 
 
     this.keys.inPossesion[0] = true;

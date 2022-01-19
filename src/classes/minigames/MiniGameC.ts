@@ -1,9 +1,4 @@
-// this.writeTextToCanvas(`Dit is de Grote Kluis`,30,50,200);
-// this.writeTextToCanvas(`Kraak de kluis met de verzamelde hints`,20,50,250);
-// this.writeTextToCanvas(`Verzamelde hints:`,20,50,300);
-// this.writeTextToCanvas(`Pogingen: ${this.attempts}`,30,50,400);
-// this.writeTextToCanvas("Let op je pogingen! Druk op de spatiebalk om de kamer te verlaten",20,50,500);
-// this.imgBank=Game.loadNewImage("./img/background/bankback.jpg");
+
 
 import Room from "../Room";
 import MGMain from "./MGMain";

@@ -1,4 +1,5 @@
 import Agent from "./Agent";
+import CameraAgent from "./CameraAgent";
 import Hints from "./Hints";
 
 export default class SceneInfo{
@@ -94,6 +95,15 @@ export default class SceneInfo{
         );
         return agents
     
+      }
+
+
+      public loadCameras(widthHall:number){
+        let array=[]
+        array.push(new CameraAgent(100 - widthHall, 100, this.ctx, widthHall, 80, 100 + widthHall, 100 + widthHall))
+
+        return array
+
       }
 
     public renderBackgroundImages(widthHall:number,imgBank:HTMLImageElement){
