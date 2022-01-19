@@ -126,7 +126,7 @@ export default class Scene {
     this.flash = 1;
 
     this.imgBank = Game.loadNewImage("./img/background/bankheistmap.jpg");
-    this.imgFloor = Game.loadNewImage("./img/objects/walls1.png");
+    this.imgFloor = Game.loadNewImage("./img/background/backgroundGamehz.png");
 
     document.onkeydown = this.checkKeyScene.bind(this);
 
@@ -332,17 +332,9 @@ export default class Scene {
     if (this.legalInsideRoom()) {
       this.room.render();
     } else {
-      for (let i = 0; i < this.canvas.width; i += 50) {
-        for (let j = 0; j < this.canvas.height; j += 50) {
-          //brick background 1
-          this.ctx.drawImage(this.imgFloor, 192, 0, 32, 32, i + 10, j, 50, 50)
-          //brick background 2
-          // this.ctx.drawImage(this.imgFloor, 416, 0, 32, 32, i + 10, j, 50, 50)
-          //cyan background
-          // this.ctx.drawImage(this.imgBank, 1128, 368, 8, 8, i + 10, j, 50, 50)
-        }
-
-      }
+      
+          this.ctx.drawImage(this.imgFloor, 0, 0, this.imgFloor.width, this.imgFloor.height, 0, 0, window.innerWidth, window.innerHeight)
+         
       //kamer1 background
       // this.ctx.drawImage(this.imgBank, 1000, 200, 2 * this.level.widthHall, 3 * this.level.widthHall, 100 + 5 * this.level.widthHall + 10, 100 + 2 * this.level.widthHall, 2 * this.level.widthHall, 3 * this.level.widthHall)
 
@@ -426,10 +418,11 @@ export default class Scene {
   public sendAgents(pos:Vector){
     for(let i=0;i<this.agents.length;i++){
       let dist=Vector.dist(this.agents[i].pos,pos)
-      if(dist<800){
+      if(dist<400){
         
         this.agents[i].newTarget(pos)
         this.agents[i].updateMode("camera")
+
       }
     }
   }
@@ -544,7 +537,7 @@ export default class Scene {
       }
 
       //updateing and moving agents
-      this.agents[i].updateTarget(this.canvas, this.level.widthHall, this.particle.pos)
+      this.agents[i].updateTarget(this.canvas, this.level.widthHall, this.particle.pos,this.particle.vel)
       this.agents[i].update(this.borders)
 
       this.agents[i].move();
