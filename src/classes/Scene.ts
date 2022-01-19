@@ -17,6 +17,7 @@ import ScoreToDatabase from "./ScoreToDatabase";
 import Hints from "./Hints";
 import SceneInfo from "./SceneInfo";
 import CameraAgent from "./CameraAgent";
+import { transcode } from "buffer";
 
 export default class Scene {
   public canvas: HTMLCanvasElement;
@@ -95,6 +96,7 @@ export default class Scene {
   private flash: number;
 
   private imgFloor: HTMLImageElement;
+  private trans: any = [];
 
   // private agentMid:Agent
 
@@ -196,17 +198,17 @@ export default class Scene {
       ctxAlert.strokeStyle = "rgb(0,0,0)";
       ctxAlert.fillStyle = "rgb(255,0,0,0.8)";
       ctxAlert.beginPath();
-      ctxAlert.rect(0, 0, window.innerWidth, window.innerHeight);
+      ctxAlert.rect(0, 0, window.innerWidth * 2, window.innerHeight * 2);
       ctxAlert.closePath();
       ctxAlert.stroke();
       ctxAlert.fill();
     }
 
-    ctxAlert.drawImage(this.testImg, 100, 100);
+    ctxAlert.drawImage(this.testImg, 100 + (this.trans.x * -1), 100 + (this.trans.y * -1));
     ctxAlert.strokeStyle = "rgb(0,0,0)";
     ctxAlert.fillStyle = "rgb(255,255,255)";
     ctxAlert.beginPath();
-    ctxAlert.rect(0, window.innerHeight / 2.5, 500, 50);
+    ctxAlert.rect(0 + (this.trans.x * -1), window.innerHeight / 2.5 + (this.trans.y * -1), 500, 50);
     ctxAlert.closePath();
     ctxAlert.stroke();
     ctxAlert.fill();
@@ -214,7 +216,7 @@ export default class Scene {
     ctxAlert.font = `30px sans-serif`;
     ctxAlert.fillStyle = 'red';
     ctxAlert.textAlign = 'left';
-    ctxAlert.fillText("Directeur: M. Oney", 200, window.innerHeight / 2.2);
+    ctxAlert.fillText("Directeur: M. Oney", 200 + (this.trans.x * -1), window.innerHeight / 2.2 + (this.trans.y * -1));
   }
 
   public checkKeyScene(e: any) {
@@ -285,9 +287,9 @@ export default class Scene {
       this.updateTime(elapsed)
       // transform canvas en camera
       this.ctx.setTransform(1, 0, 0, 1, 0, 0);
-      let trans = this.camera.checkScaling(this.canvas, this.particle);
-      this.camera.createMatrix(trans.x, trans.y, 0, 0);
-      this.ctx.translate(trans.x, trans.y);
+      this.trans = this.camera.checkScaling(this.canvas, this.particle);
+      this.camera.createMatrix(this.trans.x, this.trans.y, 0, 0);
+      this.ctx.translate(this.trans.x, this.trans.y);
       //register mouse position to move the player
       document.onmousemove = this.mouseDown.bind(this);
       //Developers
