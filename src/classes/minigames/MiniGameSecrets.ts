@@ -23,12 +23,7 @@ export default class MiniGameSecrets{
     ]
 
     }
-    public loadSecrets(){
-        this.secrets.push(
-            ["1","7","1","s","m","i","t","h"]
-        )
-
-    }
+   
 
     
 

@@ -44,7 +44,7 @@ export default class MiniGameC extends MGMain{
       	this.ctx.drawImage(this.image, 0, 0, this.image.width, this.image.height, 0, 0, window.innerWidth, window.innerHeight);
       
 		  this.renderAttemptsBlock()
-		  this.renderInfoBlock()
+		  //this.renderInfoBlock()
 		//   this.renderPassBlocks()
 		  //this.renderStreepIndex()
 		 // this.renderComplete()

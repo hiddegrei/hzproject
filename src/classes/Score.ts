@@ -4,6 +4,7 @@ export default class Score {
   public static readonly POINTS_LOSS_MG=25
   public static readonly CAUGHT_AGENTS=300
   public static readonly WIN_BOSSLEVEL=500
+  public static readonly SEEN_CAMERAS=10
 
   /**
    * score
@@ -31,6 +32,15 @@ export default class Score {
       this.scoreProperty=0
     }
     
+
+  }
+  public seenCameras(){
+    if(this.scoreProperty>=Score.SEEN_CAMERAS){
+      this.scoreProperty-=Score.SEEN_CAMERAS
+
+    }else{
+      this.scoreProperty=0
+    }
 
   }
 

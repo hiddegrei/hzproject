@@ -15,12 +15,7 @@ export default class MiniGame4 extends MGMain{
       super(4,room,ctx, canvas)
      
 
-      this.fname="Peter"
-		  this.lname="Sagan"
-		  this.age=34
-		  this.birth="08/09/1988"
-		  this.habitat="Slovakije"
-		  this.hobbys="Wielrennen"
+     
     }
 
  

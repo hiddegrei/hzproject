@@ -104,7 +104,7 @@ export default class MiniGame9 extends MGMain{
         this.line++;
       } else if (e.keyCode === 40 && this.line===2 && this.counter[this.line - 1] >= 300 && this.counter[this.line - 1] <=400) {
         this.line++;
-      } else if (e.keyCode === 40 && this.line===3 && this.counter[this.line - 1] >= 225 && this.counter[this.line - 1] <=275) {
+      } else if (e.keyCode === 40 && this.line===3 && this.counter[this.line - 1] >= 225 && this.counter[this.line - 1] <=375) {
         this.locked = false;
         setTimeout(this.answer.bind(this), 2000);
       } else if (e.keyCode === 40 && (this.line===2 || this.line === 3)) {
@@ -143,7 +143,7 @@ export default class MiniGame9 extends MGMain{
         this.ctx.fillStyle = "rgb(0, 225, 0)";
       } else if (this.line===2 && this.counter[this.line - 1] >= 300 && this.counter[this.line - 1] <=400) {
         this.ctx.fillStyle = "rgb(0, 225, 0)";
-      } else if (this.line===3 && this.counter[this.line - 1] >= 225 && this.counter[this.line - 1] <=275) {
+      } else if (this.line===3 && this.counter[this.line - 1] >= 225 && this.counter[this.line - 1] <=375) {
         this.ctx.fillStyle = "rgb(0, 225, 0)";
       } else{
         this.ctx.fillStyle = "rgb(255,255,255)";
