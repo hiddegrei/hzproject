@@ -258,7 +258,7 @@ export default class MGMain {
     this.ctx.closePath();
     this.ctx.stroke();
 
-    for (let i = 1; i < this.found.length; i++) {
+    for (let i = 1; i < this.found.length+1; i++) {
       if (this.found[i - 1] != null) {
         this.writeTextToCanvas(this.found[i - 1], 40, i * 100 + 10, 540,"rgb(0,255,0)");
       } else {
