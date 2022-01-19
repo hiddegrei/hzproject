@@ -55,23 +55,31 @@ export default class MGMain {
     this.timeLeft = 120000;
 
     this.miniGameSecrets = new MiniGameSecrets();
+
     let secrett = this.miniGameSecrets.getSecret();
     this.secretW = secrett[0];
     this.found = secrett[1];
+    console.log(this.secretW,this.found)
+
     this.fname = secrett[0][secrett[0].length - 6];
     this.lname = secrett[0][secrett[0].length - 5];
     this.age = secrett[0][secrett[0].length - 4];
     this.birth = secrett[0][secrett[0].length - 3];
     this.habitat = secrett[0][secrett[0].length - 2];
     this.hobbys = secrett[0][secrett[0].length - 1];
+
     this.index = 0;
     this.attempts = 5;
     this.foundStr = "";
     // this.complete=false;
     this.started = true;
-    this.image = Game.loadNewImage("./img/background/password2.jpg");
+    // var myGif = GIF();
+    // myGif.load("GIFurl.gif");
+    
+   // this.image = Game.loadNewImage("./img/background/hackgif.gif");
   }
 
+ 
   /**
    * Functie die bepaalt wat er gebeurt als het antwoord goed is
    */
@@ -148,7 +156,7 @@ export default class MGMain {
 
     let complete = true;
     if (this.attempts >= 1) {
-      for (let i = 0; i < this.secretW.length; i++) {
+      for (let i = 0; i < this.found.length; i++) {
         if (this.found[i] === this.secretW[i]) {
           this.found[i] = this.secretW[i];
         } else {
@@ -236,13 +244,15 @@ export default class MGMain {
       this.writeTextToCanvas(`geboorte datum: ${this.birth}`, 20, 850, 300);
      
         this.writeTextToCanvas(`woonplaats: ${this.habitat}`, 20, 850, 330);
+        this.writeTextToCanvas(`woonplaats: ${this.hobbys}`, 20, 850, 360);
       
     }
   }
 
   public renderPassBlocks() {
+    this.ctx.strokeStyle="rgb(0,255,0)"
     this.ctx.beginPath();
-    for (let i = 0; i < this.secretW.length; i++) {
+    for (let i = 0; i < this.found.length; i++) {
       this.ctx.rect(100 + i * 100, 500, 50, 50);
     }
     this.ctx.closePath();
@@ -250,9 +260,9 @@ export default class MGMain {
 
     for (let i = 1; i < 9; i++) {
       if (this.found[i - 1] != null) {
-        this.writeTextToCanvas(this.found[i - 1], 40, i * 100 + 10, 540);
+        this.writeTextToCanvas(this.found[i - 1], 40, i * 100 + 10, 540,"center","rgb(0,255,0)");
       } else {
-        this.writeTextToCanvas("*", 40, i * 100 + 10, 550);
+        this.writeTextToCanvas("*", 40, i * 100 + 10, 550,"center","rgb(0,255,0)");
       }
     }
   }
@@ -261,12 +271,12 @@ export default class MGMain {
     //streep waar de index is
     this.ctx.strokeStyle = "rgb(0,255,0)";
     this.ctx.beginPath();
-    if (this.index <= this.secretW.length - 1 && this.index > 0) {
+    if (this.index <= this.found.length - 1 && this.index > 0) {
       this.ctx.rect(100 + this.index * 100, 540, 50, 10);
     } else if (this.index <= 0) {
       this.ctx.rect(100, 540, 50, 10);
     } else {
-      this.ctx.rect(100 + (this.secretW.length - 1) * 100, 540, 50, 10);
+      this.ctx.rect(100 + (this.found.length - 1) * 100, 540, 50, 10);
     }
     this.ctx.closePath();
     this.ctx.stroke();

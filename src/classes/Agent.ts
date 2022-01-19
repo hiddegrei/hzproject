@@ -121,11 +121,14 @@ export default class Agent {
     if (this.status === "yellow") {
       this.status = "orange";
       this.hackRange = 80;
+      this.maxspeed += 0.2;
     } else if (this.status === "orange") {
       this.status = "red";
       this.hackRange = 60;
+      this.maxspeed += 0.2;
     } else if (this.status === "red") {
       this.mode = "search";
+      this.maxspeed += 0.2;
     } else if (this.mode === "search") {
       this.maxspeed += 0.2;
     }
@@ -139,6 +142,7 @@ export default class Agent {
     canvas: HTMLCanvasElement,
     widthHall: number,
     particlePos: Vector,
+    particleVel:Vector
    
   ) {
     let mid = new Vector(canvas.width / 2 - widthHall, 100 + 6 * widthHall);
@@ -149,8 +153,19 @@ export default class Agent {
     );
 
     if(this.mode==="camera") {
+      if(Vector.dist(this.pos,this.endTarget)<40){
+        this.mode="random"
+      }
         
-      }else if (this.mode === "mid") {
+      }else if (this.mode === "insluit") {
+        let playerPosCopy=new Vector(particlePos.x,particlePos.y)
+
+       let newVel=new Vector(particleVel.x,particleVel.y)
+       newVel.setMag(100)
+        playerPosCopy.add(newVel)
+        this.endTarget=playerPosCopy
+      }
+      else if (this.mode === "mid") {
         this.endTarget = mid;
       } else if (this.mode === "search11") {
         this.endTarget = search11;
@@ -220,7 +235,8 @@ export default class Agent {
       (this.mode === "search" ||
         this.mode === "mid" ||
         this.mode === "search11"||
-        this.mode==="camera")
+        this.mode==="camera"||
+        this.mode==="insluit")
     ) {
       let record = Infinity;
       let nextTarget = new Vector(0, 0);
