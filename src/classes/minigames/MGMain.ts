@@ -29,6 +29,8 @@ export default class MGMain {
   public age!: number;
   public hobbys!: string;
 
+  public foundedArray:boolean[]=[]
+
   public miniGameSecrets: MiniGameSecrets;
 
   /**
@@ -54,11 +56,23 @@ export default class MGMain {
     this.bezig = true;
     this.timeLeft = 120000;
 
-    this.miniGameSecrets = new MiniGameSecrets();
+    this.miniGameSecrets = new MiniGameSecrets(this.roomId);
 
     let secrett = this.miniGameSecrets.getSecret();
-    this.secretW = secrett[0];
+    if(secret){
+      this.secretW=secret
+      this.found=found
+    }else{
+      this.secretW = secrett[0];
     this.found = secrett[1];
+
+    }
+    for(let i=0;i<this.found.length;i++){
+      if(this.found[i]==='-'){
+        this.foundedArray[i]=true
+      }
+    }
+    
     
 
     this.fname = secrett[0][secrett[0].length - 6];
@@ -115,37 +129,86 @@ export default class MGMain {
     );
   }
 
+  public alreadyFound(i:number){
+    
+      if(this.foundedArray[i]){
+        return true;
+      }else{
+        return false
+      }
+
+    
+
+  }
+
   /**
    * Checks de keys pressed
    * @param e Key pressed
    */
   public checkKey(e: any) {
-    //console.log(e.keyCode);
-    if (e.keyCode === 8 && this.index >= 0) {
-     
-      if((this.index-1)<this.found.length){
-        this.index--
-        this.found[this.index] = null;
+   //console.log(e.keyCode);
+   if(e.keyCode===8){
+    this.index--
+			  
+    
+   
+    if(!this.alreadyFound(this.index)){
+      this.found[this.index]=null;
+      }else{
+        let indexTest=this.index
+        
+        while(indexTest>=0&&this.alreadyFound(indexTest)){
+          indexTest--
+          
+        }
+        if(indexTest===-1){
+       this.index++
+        }else{
+          this.index=indexTest
+          this.found[indexTest]=null;
+        }
+       
      
   
       }
-      //this.index--;
-    } else if (e.keyCode === 13) {
+    
+    
+    
+      
+    }else if(e.keyCode===13){
       this.checkAttempt();
-    } else if (this.index < this.found.length && e.keyCode != 8) {
-      for (let i = 0; i < this.found.length; i++) {
-        if (this.found[i] === null) {
-          this.index = i;
-          break;
-        }
+    }else if(this.index<=this.found.length-1){
+      for(let i=0;i<this.found.length;i++){
+          if(this.found[i]===null){
+            this.index=i;
+            break;
+          }
       }
-
-      if (e.keyCode <= 57) {
-        this.found[this.index] = String.fromCharCode(e.keyCode);
-      } else {
-        this.found[this.index] = String.fromCharCode(e.keyCode + 32);
-      }
+      //console.log(this.found[this.index])
+      if(e.keyCode>90||e.keyCode<65){
+    if(e.shiftKey&&e.keyCode===49){
+      this.found[this.index]="!"
       this.index++;
+    }else if(e.keyCode===189){
+      this.found[this.index]="-"
+    }else if(!e.shiftKey){
+      this.found[this.index]=String.fromCharCode(e.keyCode);
+
+    }
+    if(!e.shiftKey){
+    this.index++;
+    }
+      }else{
+    
+    if(!e.shiftKey){
+      this.found[this.index]=String.fromCharCode(e.keyCode+32);
+     
+      this.index++;
+    }
+          
+    
+      }
+      
     }
   }
 
@@ -164,6 +227,7 @@ export default class MGMain {
       for (let i = 0; i < this.found.length; i++) {
         if (this.found[i] === this.secretW[i]) {
           this.found[i] = this.secretW[i];
+          this.foundedArray[i]=true
         } else {
           this.found[i] = null;
           complete = false;
@@ -234,7 +298,7 @@ export default class MGMain {
     this.ctx.strokeStyle = "rgb(0,0,0)";
     this.ctx.fillStyle = "rgb(255,255,255)";
     this.ctx.beginPath();
-    this.ctx.rect(840, 150, 330, 300);
+    this.ctx.rect(840, 150, 400, 300);
     this.ctx.closePath();
     this.ctx.stroke();
     this.ctx.fill();
@@ -256,36 +320,52 @@ export default class MGMain {
   }
 
   public renderPassBlocks() {
+    let widthBlock:number
+    if(this.roomId!=100){
+      widthBlock=50
+
+    }else{
+      widthBlock=40
+
+    }
     this.ctx.strokeStyle="rgb(0,255,0)"
     this.ctx.beginPath();
     for (let i = 0; i < this.found.length; i++) {
-      this.ctx.rect(100 + i * 100, 500, 50, 50);
+      this.ctx.rect((2*widthBlock) + i * (2*widthBlock), 500, widthBlock, widthBlock);
     }
     this.ctx.closePath();
     this.ctx.stroke();
 
     for (let i = 1; i < this.found.length+1; i++) {
       if (this.found[i - 1] != null) {
-        this.writeTextToCanvas(this.found[i - 1], 40, i * 100 + 10, 540,"rgb(0,255,0)");
+        this.writeTextToCanvas(this.found[i - 1], 40, i * (2*widthBlock) + 10, 540,"rgb(0,255,0)");
       } else {
-        this.writeTextToCanvas("*", 40, i * 100 + 10, 550,"rgb(0,255,0)");
+        this.writeTextToCanvas("*", 40, i * (2*widthBlock) + 10, 550,"rgb(0,255,0)");
       }
     }
   }
 
   public renderStreepIndex() {
+    let widthBlock:number
+    if(this.roomId!=100){
+      widthBlock=50
+
+    }else{
+      widthBlock=40
+
+    }
     //streep waar de index is
-    this.ctx.strokeStyle = "rgb(0,255,0)";
+    this.ctx.fillStyle = "rgb(0,255,0)";
     this.ctx.beginPath();
     if (this.index <= this.found.length - 1 && this.index > 0) {
-      this.ctx.rect(100 + this.index * 100, 540, 50, 10);
+      this.ctx.rect((2*widthBlock) + this.index * (2*widthBlock), 540, widthBlock, 10);
     } else if (this.index <= 0) {
-      this.ctx.rect(100, 540, 50, 10);
+      this.ctx.rect((2*widthBlock), 540, widthBlock, 10);
     } else {
-      this.ctx.rect(100 + (this.found.length - 1) * 100, 540, 50, 10);
+      this.ctx.rect((2*widthBlock) + (this.found.length - 1) * (2*widthBlock), 540, widthBlock, 10);
     }
     this.ctx.closePath();
-    this.ctx.stroke();
+    this.ctx.fill();
   }
 
   public renderComplete() {

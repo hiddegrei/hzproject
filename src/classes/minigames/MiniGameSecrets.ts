@@ -4,8 +4,10 @@ export default class MiniGameSecrets{
 
     private secrets:string[][]
     private secretsSeen:boolean[]=[]
+    private roomId:number
 
-    constructor(){
+    constructor(roomNum:number){
+        this.roomId=roomNum
        
        
        
@@ -36,7 +38,7 @@ export default class MiniGameSecrets{
         
         
        while(!gotit){
-        ranNum=Room.randomNumber(0,this.secrets.length-7)
+        ranNum=Room.randomNumber(0,this.secrets.length-1)
             if(!this.secretsSeen[ranNum]){
                 
                 returnSecret=this.secrets[ranNum];
@@ -46,16 +48,23 @@ export default class MiniGameSecrets{
 
         }
         let found:any[]=[]
+        let minus:number
        
-           
-            for(let i=0;i<(this.secrets[ranNum].length-6);i++){
-                if (this.secrets[ranNum][i] === '-') {
-                    found.push('-');
-                } else {
-                    found.push(null);
-                }
-                
+           if(this.roomId!=100){
+               minus=6
+           }else{
+               minus=0
+
+           }
+           for(let i=0;i<(this.secrets[ranNum].length-minus);i++){
+            if (this.secrets[ranNum][i] === '-') {
+                found.push('-');
+            } else {
+                found.push(null);
             }
+            
+        }
+           
         return [returnSecret,found];
 
 
