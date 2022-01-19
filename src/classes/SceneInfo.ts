@@ -132,20 +132,25 @@ export default class SceneInfo{
 
     }
 
-    public renderInfo(timeLeft:number,score:number,progressNum:number,hints:Hints){
-        this.writeTextToCanvas(`time left: ${timeLeft}`, 20, 100, 40);
+    public renderInfo(timeLeft:number,score:number,progressNum:number,hints:Hints,trans:any){
+      this.ctx.fillStyle="rgb(105,105,105)"
+      this.ctx.beginPath()
+      this.ctx.rect(0,0,window.innerWidth,90-trans.y)
+      this.ctx.closePath()
+      this.ctx.fill()
+        this.writeTextToCanvas(`time left: ${timeLeft}`, 20, 100, 40-trans.y);
       this.writeTextToCanvas(
         `score: ${score}`,
         20,
         window.innerWidth - 100,
-        40
+        40-trans.y
       );
       //draw voortgang
       this.writeTextToCanvas(
         `voortgang: ${progressNum}%`,
         20,
         window.innerWidth - 300,
-        40
+        40-trans.y
       );
 
       //draw hints
@@ -153,14 +158,14 @@ export default class SceneInfo{
         `Verzamelde hints: `,
         30,
         window.innerWidth / 6,
-        window.innerHeight / 15
+        (window.innerHeight / 15)-trans.y
       );
       hints.getHint().forEach((value: string, index: number) => {
         this.writeTextToCanvas(
           `${value}`,
           25,
           (window.innerWidth / 4)+90 + index * 40,
-          window.innerHeight / 15
+          (window.innerHeight / 15)-trans.y
         );
       });
     }

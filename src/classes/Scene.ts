@@ -177,7 +177,7 @@ export default class Scene {
     // this.ray=new Ray(50,150, this.ctx)
 
     this.particle = new Particle(
-      (this.canvas.width / 2) - 13 * this.level.widthHall,
+      (this.canvas.width / 2) - 9.5 * this.level.widthHall,
       100 + 5 * this.level.widthHall,
       this.ctx
     );
@@ -363,6 +363,8 @@ export default class Scene {
     } else {
       
      this.ctx.drawImage(this.imgFloor, 0, 0, this.imgFloor.width, this.imgFloor.height, 0, 0, this.canvas.width, this.canvas.height)
+      // create dark spots
+      this.darkSpots.createAll();
          
       //kamer1 background
       // this.ctx.drawImage(this.imgBank, 1000, 200, 2 * this.level.widthHall, 3 * this.level.widthHall, 100 + 5 * this.level.widthHall + 10, 100 + 2 * this.level.widthHall, 2 * this.level.widthHall, 3 * this.level.widthHall)
@@ -381,19 +383,11 @@ export default class Scene {
       }
       //show the room ids(rondjes)
       this.level.showRoomIds(this.room);
-      //show the keys on top screen
-      this.keys.show(this.ctx);
+      
 
-      // create dark spots
-      this.darkSpots.createAll();
+     
 
-      //render info on top
-      this.sceneInfo.renderInfo(
-        this.timeLeft,
-        this.score.scoreProperty,
-        this.progress.progressNum,
-        this.hints
-      );
+      
 
       //render agentcamera
       for (let i = 0; i < this.cameraAgents.length; i++) {
@@ -418,6 +412,18 @@ export default class Scene {
       }
       
       this.count++;
+
+      //render info on top
+      this.sceneInfo.renderInfo(
+        this.timeLeft,
+        this.score.scoreProperty,
+        this.progress.progressNum,
+        this.hints,
+        this.trans
+      );
+
+      //show the keys on top screen
+      this.keys.show(this.ctx,this.trans);
     }
   }
 

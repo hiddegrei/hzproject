@@ -99,27 +99,34 @@ export default class MiniGameP extends MGMain {
    	* @param e Key pressed
    	*/
   	public checkKey(e:any) {
-      	//console.log(e.keyCode);
-      	if(e.keyCode===8&&this.index>=0){
-        	this.found[this.index--]=null;
-        	//this.index--;
-      	}else if(e.keyCode===13){
-        	this.checkAttemptP();
-      	}else if(this.index<=7&&e.keyCode!=8){
-        	for(let i=0;i<this.found.length;i++){
-          		if(this.found[i]===null){
-            		this.index=i;
-            		break;
-          		}
-        	}
-       
-        	if(e.keyCode<=57){
-          		this.found[this.index]=String.fromCharCode(e.keyCode);
-        	}else{
-         		this.found[this.index]=String.fromCharCode(e.keyCode+32);
-        	}
-        	this.index++;
-      	}
+        //console.log(e.keyCode);
+    if (e.keyCode === 8 && this.index >= 0) {
+		if((this.index-1)<this.found.length){
+			this.index--
+			this.found[this.index] = null;
+		 
+	  
+		  }
+		
+		//this.index--;
+	  } else if (e.keyCode === 13) {
+		 
+		this.checkAttemptP();
+	  } else if (this.index < this.found.length && e.keyCode != 8) {
+		for (let i = 0; i < this.found.length; i++) {
+		  if (this.found[i] === null) {
+			this.index = i;
+			break;
+		  }
+		}
+  
+		if (e.keyCode <= 57) {
+		  this.found[this.index] = String.fromCharCode(e.keyCode);
+		} else {
+		  this.found[this.index] = String.fromCharCode(e.keyCode + 32);
+		}
+		this.index++;
+	  }
   	}
 
   	/**
@@ -127,42 +134,56 @@ export default class MiniGameP extends MGMain {
    	* if the player has guessed correctly they will be released
    	*/
   	public checkAttemptP(){
-    	for(let i=0;i<this.found.length;i++){
-      		this.foundStr+=this.found[i];
-    	}
-    	this.attemptsArr.push(this.foundStr);
-    	this.foundStr="";
-
-    	let complete=true;
-    	if(this.attempts>1){
-      		for(let i=0;i<this.secretW.length;i++){
-        		if(this.found[i]===this.secretW[i]){
-          			this.found[i]=this.secretW[i];
-        		}else{
-          			this.found[i]=null;
-          			complete=false;
-        		}
-      		}
-      		for(let i=0;i<this.found.length;i++){
-        		if(this.found[i]===null){
-          			this.index=i;
-          			break;
-        		}
-      		}
-      		this.attempts--;
-      		if(complete){
-        		this.complete=true;
-     
-        		//setTimeout(this.answer,2000);
-        		setTimeout(this.answerP.bind(this), 2000);
-        		//this.answer();
-     
-      		}
-    	}else{
-      		this.complete=0;
-      		setTimeout(this.answerP.bind(this), 2000);
-      		//this.answer();
-    	}
+		for (let i = 0; i < this.found.length; i++) {
+			this.foundStr += this.found[i];
+		  }
+		  this.attemptsArr.push(this.foundStr);
+		  this.foundStr = "";
+	  
+		  let complete = true;
+		  if (this.attempts >= 1) {
+			for (let i = 0; i < this.found.length; i++) {
+			  if (this.found[i] === this.secretW[i]) {
+				this.found[i] = this.secretW[i];
+			  } else {
+				this.found[i] = null;
+				complete = false;
+			  }
+			}
+			for (let i = 0; i < this.found.length; i++) {
+			  if (this.found[i] === null) {
+				this.index = i;
+				break;
+			  }
+			}
+	  
+			if (complete) {
+			  this.complete = true;
+	  
+			  //setTimeout(this.answer,2000);
+			  this.loadInfo()
+			  this.attempts=5;
+			  this.foundStr="";
+			  this.attemptsArr=[];
+			  this.complete=null;
+			  this.index=0;
+			  setTimeout(this.answer.bind(this), 2000);
+			  //this.answer();
+			} else if (this.attempts === 1) {
+			  this.complete = 0;
+			  this.room.scene.howGameEnded = "outofattempts";
+			  this.room.scene.game.isEnd = true;
+			  setTimeout(this.answerWrong.bind(this), 2000);
+			}
+			this.attempts--;
+		  } else {
+			this.complete = 0;
+			setTimeout(this.answerWrong.bind(this), 2000);
+			this.room.scene.howGameEnded = "outofattempts";
+			this.room.scene.game.isEnd = true;
+	  
+			//this.answer();
+		  }
   	}
 
   	/**
@@ -170,7 +191,7 @@ export default class MiniGameP extends MGMain {
    	*/
   	private answerP(){
       if(this.complete){
-    	this.found=[null,null,null,null,null,null,null,null];
+    	this.loadInfo()
     	this.attempts=5;
     	this.foundStr="";
     	this.attemptsArr=[];

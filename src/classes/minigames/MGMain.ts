@@ -59,7 +59,7 @@ export default class MGMain {
     let secrett = this.miniGameSecrets.getSecret();
     this.secretW = secrett[0];
     this.found = secrett[1];
-    console.log(this.secretW,this.found)
+    
 
     this.fname = secrett[0][secrett[0].length - 6];
     this.lname = secrett[0][secrett[0].length - 5];
@@ -122,7 +122,13 @@ export default class MGMain {
   public checkKey(e: any) {
     //console.log(e.keyCode);
     if (e.keyCode === 8 && this.index >= 0) {
-      this.found[this.index--] = null;
+     
+      if((this.index-1)<this.found.length){
+        this.index--
+        this.found[this.index] = null;
+     
+  
+      }
       //this.index--;
     } else if (e.keyCode === 13) {
       this.checkAttempt();
