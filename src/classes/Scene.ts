@@ -97,6 +97,10 @@ export default class Scene {
 
   private trans: any = [];
 
+  private elapsed: number;
+
+  private count: number;
+
   // private agentMid:Agent
 
   /**
@@ -123,6 +127,8 @@ export default class Scene {
     this.keys = new Keys(this.ctx);
     this.timeHacking = 0;
     this.flash = 1;
+    this.elapsed = 0;
+    this.count = 0;
 
     this.imgBank = Game.loadNewImage("./img/background/bankheistmap.jpg");
 
@@ -194,7 +200,7 @@ export default class Scene {
     let ctxAlert = this.canvas.getContext("2d") as CanvasRenderingContext2D;
     if (number === 1) {
       ctxAlert.strokeStyle = "rgb(0,0,0)";
-      ctxAlert.fillStyle = "rgb(255,0,0,0.8)";
+      ctxAlert.fillStyle = "rgb(255,0,0,0.5)";
       ctxAlert.beginPath();
       ctxAlert.rect(0, 0, window.innerWidth *2, window.innerHeight *2);
       ctxAlert.closePath();
@@ -206,7 +212,7 @@ export default class Scene {
     ctxAlert.strokeStyle = "rgb(0,0,0)";
     ctxAlert.fillStyle = "rgb(255,255,255)";
     ctxAlert.beginPath();
-    ctxAlert.rect(0 + (this.trans.x*-1), window.innerHeight / 2.5 + (this.trans.y*-1), 500, 50);
+    ctxAlert.rect(0 + (this.trans.x*-1), 290 + (this.trans.y*-1), 470, 50);
     ctxAlert.closePath();
     ctxAlert.stroke();
     ctxAlert.fill();
@@ -214,7 +220,17 @@ export default class Scene {
     ctxAlert.font = `30px sans-serif`;
     ctxAlert.fillStyle = 'red';
     ctxAlert.textAlign = 'left';
-    ctxAlert.fillText("Directeur: M. Oney", 200 + (this.trans.x*-1), window.innerHeight / 2.2 + (this.trans.y*-1));
+    ctxAlert.fillText("Directeur: M. Oney", 200 + (this.trans.x*-1), 330 + (this.trans.y*-1));
+
+    ctxAlert.strokeStyle = "rgb(0,0,0)";
+    ctxAlert.fillStyle = "rgb(255,255,255)";
+    ctxAlert.beginPath();
+    ctxAlert.ellipse(450 + (this.trans.x*-1), 100 + (this.trans.y*-1), 150, 140, Math.PI / 4, 0, 2 * Math.PI);
+    ctxAlert.closePath();
+    ctxAlert.stroke();
+    ctxAlert.fill();
+    this.writeTextToCanvas(`Er is een inbreker!`, 25, 450 + (this.trans.x*-1), 100 + (this.trans.y*-1));
+    this.writeTextToCanvas(`Alle agenten opgelet!`, 25, 450 + (this.trans.x*-1), 120 + (this.trans.y*-1));
   }
 
   public checkKeyScene(e: any) {
@@ -274,6 +290,7 @@ export default class Scene {
    *@param elapsed time passed
    */
   public update(elapsed: number): void {
+    this.elapsed += elapsed;
     if (this.legalInsideRoom()) {
       this.room.update(this.mouse.x, this.mouse.y, elapsed);
       document.onmousemove = this.mouseDown.bind(this);
@@ -369,24 +386,28 @@ export default class Scene {
         this.cameraAgents[i].show(this.ctx)
       }
 
-      this.allAgentAlert(1897, 1898);
-      this.allAgentAlert(1890, 1891);
+      if(this.elapsed >=10000) {
+        this.allAgentAlert();
+        if(this.elapsed>=14000) {
+          this.elapsed = 0;
+        }
+      }
+      
     }
   }
 
-  private allAgentAlert(timeleftA: number, timeleftB: number) {
-    if (this.timeLeft >= timeleftA && this.timeLeft <= timeleftB) {
-      if (this.flash === 1) {
+  private allAgentAlert() {
+      if (this.flash <= 20) {
         this.directorAlert(1);
         this.flash++;
-      } else if (this.flash >= 5) {
+      } else if (this.flash >= 50) {
         this.directorAlert(0);
         this.flash = 1;
       } else {
         this.directorAlert(0);
         this.flash++;
       }
-    }
+    
   }
 
   public isPlayerInSightCameras() {
