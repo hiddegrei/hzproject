@@ -92,9 +92,9 @@ export default class MiniGameC extends MGMain{
   
       	for (let i = 1; i < this.secretW.length+1; i++) {
         	if (this.found[i - 1] != null) {
-          		this.writeTextToCanvas(this.found[i - 1], 35, i * 80 + 10, 540,"start","rgb(255,69,0)");
+          		this.writeTextToCanvas(this.found[i - 1], 35, i * 80 + 10, 540,"rgb(255,69,0)");
         	} else {
-				this.writeTextToCanvas("*", 35, i * 80 + 10, 550,"start","rgb(255,69,0)");
+				this.writeTextToCanvas("*", 35, i * 80 + 10, 550,"rgb(255,69,0)");
 			}
       	}
   
