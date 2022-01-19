@@ -59,7 +59,7 @@ export default class MGMain {
     this.miniGameSecrets = new MiniGameSecrets(this.roomId);
 
     let secrett = this.miniGameSecrets.getSecret();
-    if(secret){
+    if(secret.length>0){
       this.secretW=secret
       this.found=found
     }else{
@@ -323,6 +323,7 @@ export default class MGMain {
     let widthBlock:number
     if(this.roomId!=100){
       widthBlock=50
+     
 
     }else{
       widthBlock=40
