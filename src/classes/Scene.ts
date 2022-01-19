@@ -17,6 +17,7 @@ import ScoreToDatabase from "./ScoreToDatabase";
 import Hints from "./Hints";
 import SceneInfo from "./SceneInfo";
 import CameraAgent from "./CameraAgent";
+import { transcode } from "buffer";
 
 export default class Scene {
   public canvas: HTMLCanvasElement;
@@ -94,7 +95,7 @@ export default class Scene {
 
   private flash: number;
 
-  private trans:any=[]
+  private trans: any = [];
 
   // private agentMid:Agent
 
@@ -161,8 +162,8 @@ export default class Scene {
     // this.ray=new Ray(50,150, this.ctx)
 
     this.particle = new Particle(
-      (this.canvas.width / 2) - 11 * this.level.widthHall,
-      100 + 16.5 * this.level.widthHall,
+      (this.canvas.width / 2) - 13 * this.level.widthHall,
+      100 + 5 * this.level.widthHall,
       this.ctx
     );
 
@@ -195,17 +196,17 @@ export default class Scene {
       ctxAlert.strokeStyle = "rgb(0,0,0)";
       ctxAlert.fillStyle = "rgb(255,0,0,0.8)";
       ctxAlert.beginPath();
-      ctxAlert.rect(0, 0, window.innerWidth, window.innerHeight);
+      ctxAlert.rect(0, 0, window.innerWidth *2, window.innerHeight *2);
       ctxAlert.closePath();
       ctxAlert.stroke();
       ctxAlert.fill();
     }
 
-    ctxAlert.drawImage(this.testImg, 100, 100);
+    ctxAlert.drawImage(this.testImg, 100 + (this.trans.x*-1), 100 + (this.trans.y*-1));
     ctxAlert.strokeStyle = "rgb(0,0,0)";
     ctxAlert.fillStyle = "rgb(255,255,255)";
     ctxAlert.beginPath();
-    ctxAlert.rect(0, window.innerHeight / 2.5, 500, 50);
+    ctxAlert.rect(0 + (this.trans.x*-1), window.innerHeight / 2.5 + (this.trans.y*-1), 500, 50);
     ctxAlert.closePath();
     ctxAlert.stroke();
     ctxAlert.fill();
@@ -213,7 +214,7 @@ export default class Scene {
     ctxAlert.font = `30px sans-serif`;
     ctxAlert.fillStyle = 'red';
     ctxAlert.textAlign = 'left';
-    ctxAlert.fillText("Directeur: M. Oney", 200, window.innerHeight / 2.2);
+    ctxAlert.fillText("Directeur: M. Oney", 200 + (this.trans.x*-1), window.innerHeight / 2.2 + (this.trans.y*-1));
   }
 
   public checkKeyScene(e: any) {
@@ -391,7 +392,7 @@ export default class Scene {
   public isPlayerInSightCameras() {
 
     for (let i = 0; i < this.cameraAgents.length; i++) {
-      if (Vector.dist(this.particle.pos, this.cameraAgents[i].pos) < 80) {
+      if (Vector.dist(this.particle.pos, this.cameraAgents[i].pos) < 200) {
         let inSight = this.cameraAgents[i].inSight(
           this.particle,
           this.ctx,
@@ -399,22 +400,14 @@ export default class Scene {
         );
         if (inSight) {
           //this.totalScore-=Scene.CAUGHT_AGENTS
-          this.score.seenCameras();
-          
-          if (this.cameraAgents.length <= 5) {
-            this.agents.push(
-              new Agent(
-                100 + 5 * this.level.widthHall,
-                100 + 0.5 * this.level.widthHall,
-                this.ctx,
-                this.level.widthHall,
-                "random",
-                this.cameraAgents.length,
-                "yellow"
-              )
-            );
+          this.score.caughtAgents();
+          if (this.lockedUp === 2) {
+            this.game.isEnd = true;
+            this.howGameEnded = "caught";
           }
           this.sendAgents(this.cameraAgents[i].pos)
+          break;
+          
         }
       }
 
@@ -426,9 +419,10 @@ export default class Scene {
   public sendAgents(pos:Vector){
     for(let i=0;i<this.agents.length;i++){
       let dist=Vector.dist(this.agents[i].pos,pos)
-      if(dist<200){
+      if(dist<800){
         
         this.agents[i].newTarget(pos)
+        this.agents[i].updateMode("camera")
       }
     }
   }

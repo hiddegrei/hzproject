@@ -219,7 +219,8 @@ export default class Agent {
       opt > 0 &&
       (this.mode === "search" ||
         this.mode === "mid" ||
-        this.mode === "search11")
+        this.mode === "search11"||
+        this.mode==="camera")
     ) {
       let record = Infinity;
       let nextTarget = new Vector(0, 0);
@@ -350,7 +351,10 @@ export default class Agent {
         colorSight="green"
     }else if(this.mode==="search11"||this.mode==="mid"){
         colorSight="rgb(255,69,0)"
-    }else if(this.mode==="random"){
+    }else if(this.mode==="camera"){
+        colorSight="rgb(255,255,0)"
+    }
+    else if(this.mode==="random"){
         colorSight="blue"
     }
     if (this.status === "yellow") {

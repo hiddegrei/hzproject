@@ -129,7 +129,7 @@ export default class CameraAgent {
     
 
     for (let i = 0; i < this.raysEnd.length; i++) {
-        ctx.strokeStyle="green"
+        ctx.strokeStyle="rgb(255,255,255,0.3)"
       ctx.beginPath();
       ctx.moveTo(this.pos.x, this.pos.y);
       ctx.lineTo(
