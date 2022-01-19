@@ -19,8 +19,9 @@ import MiniGameP from "./minigames/MiniGameP";
 import Hints from "./Hints";
 import MiniGameC from "./minigames/MiniGameC";
 import MiniGameShop from "./minigames/MiniGameShop";
+import DarkSpot from "./DarkSpot";
 
-export default class Room{
+export default class Room {
   private static readonly TIMEOUT_ROOMS=40000
     public visitedRooms:Array<boolean>=[];
     public timeoutRooms:any[]=[] ;

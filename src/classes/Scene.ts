@@ -18,6 +18,7 @@ import Hints from "./Hints";
 import SceneInfo from "./SceneInfo";
 import CameraAgent from "./CameraAgent";
 import { transcode } from "buffer";
+import DarkSpot from "./DarkSpot";
 
 export default class Scene {
   public canvas: HTMLCanvasElement;
@@ -104,6 +105,8 @@ export default class Scene {
 
   private autoSearch: boolean;
 
+  private darkSpots: DarkSpot;
+
   // private agentMid:Agent
 
   /**
@@ -151,6 +154,7 @@ export default class Scene {
     this.totalScore = 0;
     this.borders = [];
     this.level = new Level1map(this.canvas, this.ctx);
+    this.darkSpots = new DarkSpot(0, this.ctx,this,this.canvas);
     this.roomsIds = this.level.rooms;
 
     for (let i = 0; i < this.level.level1.length; i++) {
@@ -197,6 +201,10 @@ export default class Scene {
     this.timeLeft = time;
 
     this.time = 0;
+  }
+
+  public getLevel() {
+    return this.level;
   }
 
 
@@ -374,6 +382,9 @@ export default class Scene {
       this.level.showRoomIds(this.room);
       //show the keys on top screen
       this.keys.show(this.ctx);
+
+      // create dark spots
+      this.darkSpots.createAll();
 
       //render info on top
       this.sceneInfo.renderInfo(
