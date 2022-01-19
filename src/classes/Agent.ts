@@ -138,7 +138,8 @@ export default class Agent {
   public updateTarget(
     canvas: HTMLCanvasElement,
     widthHall: number,
-    particlePos: Vector
+    particlePos: Vector,
+   
   ) {
     let mid = new Vector(canvas.width / 2 - widthHall, 100 + 6 * widthHall);
 
@@ -147,13 +148,25 @@ export default class Agent {
       100 + 7 * widthHall + 15
     );
 
-    if (this.mode === "mid") {
-      this.endTarget = mid;
-    } else if (this.mode === "search11") {
-      this.endTarget = search11;
-    } else {
+    if(this.mode==="camera") {
+        
+      }else if (this.mode === "mid") {
+        this.endTarget = mid;
+      } else if (this.mode === "search11") {
+        this.endTarget = search11;
+      }
+     else {
       this.endTarget = particlePos;
     }
+  }
+
+  public newTarget( newTarget:Vector){
+    this.endTarget=newTarget;
+
+  }
+
+  public updateMode(mode:string){
+      this.mode=mode
   }
 
   update(borders: Array<Border>) {

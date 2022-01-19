@@ -426,9 +426,10 @@ export default class Scene {
   public sendAgents(pos:Vector){
     for(let i=0;i<this.agents.length;i++){
       let dist=Vector.dist(this.agents[i].pos,pos)
-      // if(dist<200){
-      //   this.agents.
-      // }
+      if(dist<200){
+        
+        this.agents[i].newTarget(pos)
+      }
     }
   }
 
