@@ -102,6 +102,8 @@ export default class Scene {
 
   private count: number;
 
+  private autoSearch: boolean;
+
   // private agentMid:Agent
 
   /**
@@ -130,6 +132,7 @@ export default class Scene {
     this.flash = 1;
     this.elapsed = 0;
     this.count = 0;
+    this.autoSearch = false;
 
     this.imgBank = Game.loadNewImage("./img/background/bankheistmap.jpg");
     this.imgFloor = Game.loadNewImage("./img/background/backgroundGamehz.png");
@@ -384,14 +387,25 @@ export default class Scene {
       for (let i = 0; i < this.cameraAgents.length; i++) {
         this.cameraAgents[i].show(this.ctx)
       }
-
-      if(this.elapsed >=10000) {
+      if(this.elapsed >=100000) {
         this.allAgentAlert();
-        if(this.elapsed>=14000) {
+        if(this.elapsed>=104000) {
           this.elapsed = 0;
+          for(let i=0;i<this.agents.length;i++){
+            this.agents[i].updateMode("search");
+          }
+          this.count = 0;
+          this.autoSearch = true;
         }
       }
+      if (this.count >=1000 && this.autoSearch === true) {
+        for(let i=0;i<this.agents.length;i++){
+          this.agents[i].updateMode("random");
+        }
+        this.autoSearch = false;
+      }
       
+      this.count++;
     }
   }
 
