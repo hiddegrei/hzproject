@@ -95,6 +95,7 @@ export default class Scene {
 
   private flash: number;
 
+  private imgFloor: HTMLImageElement;
   private trans: any = [];
 
   // private agentMid:Agent
@@ -125,6 +126,7 @@ export default class Scene {
     this.flash = 1;
 
     this.imgBank = Game.loadNewImage("./img/background/bankheistmap.jpg");
+    this.imgFloor = Game.loadNewImage("./img/objects/walls1.png");
 
     document.onkeydown = this.checkKeyScene.bind(this);
 
@@ -196,17 +198,17 @@ export default class Scene {
       ctxAlert.strokeStyle = "rgb(0,0,0)";
       ctxAlert.fillStyle = "rgb(255,0,0,0.8)";
       ctxAlert.beginPath();
-      ctxAlert.rect(0, 0, window.innerWidth *2, window.innerHeight *2);
+      ctxAlert.rect(0, 0, window.innerWidth * 2, window.innerHeight * 2);
       ctxAlert.closePath();
       ctxAlert.stroke();
       ctxAlert.fill();
     }
 
-    ctxAlert.drawImage(this.testImg, 100 + (this.trans.x*-1), 100 + (this.trans.y*-1));
+    ctxAlert.drawImage(this.testImg, 100 + (this.trans.x * -1), 100 + (this.trans.y * -1));
     ctxAlert.strokeStyle = "rgb(0,0,0)";
     ctxAlert.fillStyle = "rgb(255,255,255)";
     ctxAlert.beginPath();
-    ctxAlert.rect(0 + (this.trans.x*-1), window.innerHeight / 2.5 + (this.trans.y*-1), 500, 50);
+    ctxAlert.rect(0 + (this.trans.x * -1), window.innerHeight / 2.5 + (this.trans.y * -1), 500, 50);
     ctxAlert.closePath();
     ctxAlert.stroke();
     ctxAlert.fill();
@@ -214,7 +216,7 @@ export default class Scene {
     ctxAlert.font = `30px sans-serif`;
     ctxAlert.fillStyle = 'red';
     ctxAlert.textAlign = 'left';
-    ctxAlert.fillText("Directeur: M. Oney", 200 + (this.trans.x*-1), window.innerHeight / 2.2 + (this.trans.y*-1));
+    ctxAlert.fillText("Directeur: M. Oney", 200 + (this.trans.x * -1), window.innerHeight / 2.2 + (this.trans.y * -1));
   }
 
   public checkKeyScene(e: any) {
@@ -330,14 +332,19 @@ export default class Scene {
     if (this.legalInsideRoom()) {
       this.room.render();
     } else {
-      // for(let i=0;i<this.canvas.width;i+=50){
-      //   for(let j=0;j<this.canvas.height;j+=50){
-      //     this.ctx.drawImage(this.imgBank,850,870,50,50,i,j,50,50)
-      //   }
+      for (let i = 0; i < this.canvas.width; i += 50) {
+        for (let j = 0; j < this.canvas.height; j += 50) {
+          //brick background 1
+          this.ctx.drawImage(this.imgFloor, 192, 0, 32, 32, i + 10, j, 50, 50)
+          //brick background 2
+          // this.ctx.drawImage(this.imgFloor, 416, 0, 32, 32, i + 10, j, 50, 50)
+          //cyan background
+          // this.ctx.drawImage(this.imgBank, 1128, 368, 8, 8, i + 10, j, 50, 50)
+        }
 
-      // }
+      }
       //kamer1 background
-      // this.ctx.drawImage(this.imgBank,1000,200,2*this.level.widthHall,3*this.level.widthHall,100+5*this.level.widthHall+10,100+2*this.level.widthHall,2*this.level.widthHall,3*this.level.widthHall)
+      // this.ctx.drawImage(this.imgBank, 1000, 200, 2 * this.level.widthHall, 3 * this.level.widthHall, 100 + 5 * this.level.widthHall + 10, 100 + 2 * this.level.widthHall, 2 * this.level.widthHall, 3 * this.level.widthHall)
 
       this.sceneInfo.renderBackgroundImages(this.level.widthHall, this.imgBank);
       //show the player
