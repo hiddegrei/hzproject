@@ -18,8 +18,13 @@ export default class DarkSpot extends Room {
     }
 
     private createRec(dx:number, dy: number, width: number, height: number) {
-        this.ctx.strokeStyle = "rgb(0,0,0)";
-        this.ctx.fillStyle = "rgb(0,0,0)";
+        //*******************************************************
+        //                       |
+        // Change color here     |
+        //                       v
+        //*******************************************************
+        this.ctx.strokeStyle = "rgb(105,105,105)";
+        this.ctx.fillStyle = this.ctx.strokeStyle;
         this.ctx.beginPath();
         this.ctx.rect(dx, dy, width, height);
         this.ctx.closePath();
