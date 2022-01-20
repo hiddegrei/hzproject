@@ -409,52 +409,16 @@ export default class Agent {
     } else if (this.status === "red") {
       color = "rgb(255, 0, 0)";
     }
-    //if (this.mode === "random") {
-      // ctx.lineWidth = 1;
-      // ctx.fillStyle = color;
-      // ctx.beginPath();
-      // ctx.arc(this.pos.x, this.pos.y, this.radius, 0, 2 * Math.PI);
-      // ctx.stroke();
-      // ctx.closePath();
-      // ctx.fill();
-      this.ctx.save();
-    this.ctx.translate(this.pos.x, this.pos.y);
-    this.ctx.rotate(-(this.lastAngle * Math.PI) / 180 + 0.5 * Math.PI);
-    let imageSprite:HTMLImageElement=this.imageSpriteYellow
-    if (this.vel.dist() != 0) {
+    if (this.mode === "random") {
+      ctx.lineWidth = 1;
+      ctx.fillStyle = color;
+      ctx.beginPath();
+      ctx.arc(this.pos.x, this.pos.y, this.radius, 0, 2 * Math.PI);
+      ctx.stroke();
+      ctx.closePath();
+      ctx.fill();
      
-      if(this.status==="yellow"){
-        imageSprite=this.imageSpriteYellow
-      }else if(this.status==="orange"){
-        imageSprite=this.imageSpriteOrange
-      }else if(this.status==="red"){
-        imageSprite=this.imageSpriteBlue
-      }
-      this.ctx.drawImage(
-        imageSprite,
-        this.images[Math.ceil(this.imgIndex) % this.images.length][0],
-        this.images[Math.ceil(this.imgIndex) % this.images.length][1],
-        this.images[Math.ceil(this.imgIndex) % this.images.length][2],
-        this.images[Math.ceil(this.imgIndex) % this.images.length][3],
-        -Particle.WP / 2,
-        -Particle.HP / 2,
-        this.images[Math.ceil(this.imgIndex) % this.images.length][6],
-        this.images[Math.ceil(this.imgIndex) % this.images.length][7]
-      );
-    // } else {
-    //   this.ctx.drawImage(
-    //     imageSprite,
-    //     20,
-    //     50,
-    //     95,
-    //     50,
-    //     -Particle.WP / 2,
-    //     -(50 / 2) / 2,
-    //     Particle.WP,
-    //     50 / 2
-    //   );
-    // }
-    this.ctx.restore();
+  
     } else {
       ctx.lineWidth = 1;
       ctx.fillStyle = color;
@@ -466,7 +430,7 @@ export default class Agent {
     }
 
     for (let i = 0; i < this.raysEnd.length; i++) {
-        ctx.strokeStyle="rgb(255,255,255,0.3)"
+        ctx.strokeStyle=colorSight
       ctx.beginPath();
       ctx.moveTo(this.pos.x, this.pos.y);
       ctx.lineTo(
