@@ -364,15 +364,15 @@ export default class Scene {
         this.allAgentAlert();
         if (this.elapsed >= 104000) {
           this.elapsed = 0;
-          for (let i = 0; i < this.agents.length; i++) {
+          for(let i=2;i<this.agents.length;i++){
             this.agents[i].updateMode("search");
           }
           this.count = 0;
           this.autoSearch = true;
         }
       }
-      if (this.count >= 1000 && this.autoSearch === true) {
-        for (let i = 0; i < this.agents.length; i++) {
+      if (this.count >=1000 && this.autoSearch === true) {
+        for(let i=2;i<this.agents.length;i++){
           this.agents[i].updateMode("random");
         }
         this.autoSearch = false;
@@ -388,17 +388,18 @@ export default class Scene {
     }
   }
 
-  private allAgentAlert() {
-    if (this.flash <= 20) {
-      this.directorAlert(1);
-      this.flash++;
-    } else if (this.flash >= 50) {
-      this.directorAlert(0);
-      this.flash = 1;
-    } else {
-      this.directorAlert(0);
-      this.flash++;
-    }
+  public allAgentAlert() {
+      if (this.flash <= 20) {
+        this.directorAlert(1);
+        this.flash++;
+      } else if (this.flash >= 50) {
+        this.directorAlert(0);
+        this.flash = 1;
+      } else {
+        this.directorAlert(0);
+        this.flash++;
+      }
+    
   }
 
   public isPlayerInSightCameras() {

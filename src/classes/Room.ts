@@ -150,53 +150,55 @@ export default class Room {
     return false;
   }
 
-  public update(mousex: number, mousey: number, elapsed: number) {
-    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    this.ctx.setTransform(1, 0, 0, 1, 0, 0);
-    this.scene.camera.createMatrix(0, 0, 0, 0);
-    this.ctx.translate(0, 0);
+  public update(mousex:number,mousey:number,elapsed:number){
+      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      this.ctx.setTransform(1, 0, 0, 1, 0, 0);
+      this.scene.camera.createMatrix(0, 0, 0, 0);
+      this.ctx.translate(0, 0);
+       
+      // eval(` this.minigame${this.roomId}(update`)
+        if(this.roomId===0){
+          this.minigame0.update(mousex,mousey,elapsed)
+        }else if(this.roomId===1){
+          this.minigame1.update(mousex,mousey,elapsed)
+        }else if(this.roomId===2){
+          this.minigame2.update(elapsed)
+        }else if(this.roomId===3){
+          this.minigame3.update(mousex,mousey,elapsed)
+        }else if(this.roomId===4){
+          this.minigame4.update(elapsed)
+        }else if(this.roomId===5){
+          this.minigame5.update(elapsed)
+        }else if(this.roomId===6){
+          this.minigame6.update(elapsed)
+        }else if(this.roomId===7){
+          this.minigame7.update(elapsed)
+        }else if(this.roomId===8){
+          this.minigame8.update(mousex,mousey,elapsed)
+        }else if(this.roomId===9){
+          this.minigame9.update(elapsed)
+        }else if(this.roomId===10){
+          this.minigame10.update(elapsed)
+        }else if(this.roomId===11){
+          this.minigame11.update(elapsed)
+        }else if(this.roomId===12){
+          this.minigame12.update(elapsed)
+        }else if(this.roomId===13){
+          this.minigame13.update(elapsed)
+        }else if(this.roomId===14){
+          this.minigame14.update(elapsed)
+        }else if (this.roomId===100) {
+          this.minigameC.update(elapsed)
+        }else if(this.roomId===80){
+          this.minigameP.update(this.scene.lockedUp,elapsed)
+        }else if(this.roomId===90){
+          this.minigameShop.update(mousex,mousey,elapsed)
+        } else if(this.roomId===15) {
+          this.securityRoom.update(elapsed)
+        }
+       
 
-    // eval(` this.minigame${this.roomId}(update`)
-    if (this.roomId === 0) {
-      this.minigame0.update(mousex, mousey, elapsed);
-    } else if (this.roomId === 1) {
-      this.minigame1.update(mousex, mousey, elapsed);
-    } else if (this.roomId === 2) {
-      this.minigame2.update(elapsed);
-    } else if (this.roomId === 3) {
-      this.minigame3.update(mousex, mousey, elapsed);
-    } else if (this.roomId === 4) {
-      this.minigame4.update(elapsed);
-    } else if (this.roomId === 5) {
-      this.minigame5.update(elapsed);
-    } else if (this.roomId === 6) {
-      this.minigame6.update(elapsed);
-    } else if (this.roomId === 7) {
-      this.minigame7.update(elapsed);
-    } else if (this.roomId === 8) {
-      this.minigame8.update(mousex, mousey, elapsed);
-    } else if (this.roomId === 9) {
-      this.minigame9.update(elapsed);
-    } else if (this.roomId === 10) {
-      this.minigame10.update(elapsed);
-    } else if (this.roomId === 11) {
-      this.minigame11.update(elapsed);
-    } else if (this.roomId === 12) {
-      this.minigame12.update(elapsed);
-    } else if (this.roomId === 13) {
-      this.minigame13.update(elapsed);
-    } else if (this.roomId === 14) {
-      this.minigame14.update(elapsed);
-    } else if (this.roomId === 100) {
-      this.minigameC.update(elapsed);
-    } else if (this.roomId === 80) {
-      this.minigameP.update(this.scene.lockedUp, elapsed);
-    } else if (this.roomId === 90) {
-      this.minigameShop.update(mousex, mousey, elapsed);
-    } else if (this.roomId === 15) {
-      this.securityRoom.update(mousex, mousey, elapsed);
     }
-  }
 
   public getScene() {
     return this.scene;
