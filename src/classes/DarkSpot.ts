@@ -14,11 +14,12 @@ export default class DarkSpot extends Room {
     private img8:HTMLImageElement;
     private img9:HTMLImageElement;
     private img10:HTMLImageElement;
-    //private img11:HTMLImageElement;
+    private img11:HTMLImageElement;
+    private widthHall
 
     
     
-    public constructor(roomId:number,ctx:CanvasRenderingContext2D, scene:Scene,canvas:HTMLCanvasElement) {
+    public constructor(roomId:number,ctx:CanvasRenderingContext2D, scene:Scene,canvas:HTMLCanvasElement,widthhall:number) {
         super(roomId,ctx,scene,canvas);
         this.level1Map = scene.getLevel();
         this.img1=Room.loadNewImage("./img/background/42e41e7460483a2f00bb7bd16fe3b9f3.jpg")
@@ -31,6 +32,8 @@ export default class DarkSpot extends Room {
         this.img8=Room.loadNewImage("./img/background/9da45f21d0d2f59c2c335e3651f43621--small-bedrooms-perspective.jpg")
         this.img9=Room.loadNewImage("./img/background/145739320-empty-meeting-room-semi-flat-rgb-color-vector-illustration-conference-coffee-break-documents-and-com.webp")
         this.img10=Room.loadNewImage("./img/background/56b19636ec2dc3f52f4092e9d4527213.jpg")
+        this.img11=Room.loadNewImage("./img/background/topviewPrison.jpg")
+        this.widthHall=widthhall
         this.createAll()
     }
 
@@ -66,6 +69,8 @@ export default class DarkSpot extends Room {
        this.insertRoomImages(this.img8, 1762,600,100 ,200);
         this.insertRoomImages(this.img9, 510,300,100 ,100);
        this.insertRoomImages(this.img10, 360,203,100 ,150);
+       this.insertRoomImages(this.img11, (this.canvas.width/2)+16*this.widthHall+5,100+3*this.widthHall+5,3*this.widthHall ,3*this.widthHall);
+      
     }
 
     private insertRoomImages(image: HTMLImageElement, dx: number, dy: number, dw: number, dh: number){

@@ -149,7 +149,7 @@ export default class Scene {
     this.totalScore = 0;
     this.borders = [];
     this.level = new Level1map(this.canvas, this.ctx);
-    this.darkSpots = new DarkSpot(0, this.ctx,this,this.canvas);
+    this.darkSpots = new DarkSpot(0, this.ctx,this,this.canvas,this.level.widthHall);
     this.roomsIds = this.level.rooms;
 
     for (let i = 0; i < this.level.level1.length; i++) {
