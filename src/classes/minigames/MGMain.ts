@@ -10,11 +10,12 @@ export default class MGMain {
   public ctx: CanvasRenderingContext2D;
   public canvas: HTMLCanvasElement;
   private bezig: boolean;
+  private bezig2: boolean;
   public timeLeft: number;
 
   public secretW: string[] = [];
   public attempts: number;
-  public found: any[];
+  public found!: any[] ;
   public index: number;
   public complete: any;
   public attemptsArr: Array<string> = [];
@@ -31,7 +32,7 @@ export default class MGMain {
 
   public foundedArray: boolean[] = [];
 
-  public miniGameSecrets: MiniGameSecrets;
+ 
 
   /**
    * Create an instance of this object
@@ -47,30 +48,35 @@ export default class MGMain {
     this.ctx = ctx;
     this.canvas = canvas;
     this.bezig = true;
+    this.bezig2 = true;
     this.timeLeft = 120000;
 
-    this.miniGameSecrets = new MiniGameSecrets(this.roomId);
+    
 
-    let secrett = this.miniGameSecrets.getSecret();
+    //let secrett = this.miniGameSecrets.getSecret();
     if (secret.length > 0) {
+      let secrett = this.room.miniGameSecrets.getSecret(this.roomId);
       this.secretW = secret;
       this.found = found;
-    } else {
-      this.secretW = secrett[0];
-      this.found = secrett[1];
-    }
-
-    for (let i = 0; i < this.found.length; i++) {
-      if (this.found[i] === "-") {
-        this.foundedArray[i] = true;
+      for (let i = 0; i < this.found.length; i++) {
+        if (this.found[i] === "-") {
+          this.foundedArray[i] = true;
+        }
       }
+      this.fname = secrett[0][secrett[0].length - 6];
+      this.lname = secrett[0][secrett[0].length - 5];
+      this.age = secrett[0][secrett[0].length - 4];
+      this.birth = secrett[0][secrett[0].length - 3];
+      this.habitat = secrett[0][secrett[0].length - 2];
+      this.hobbys = secrett[0][secrett[0].length - 1];
     }
-    this.fname = secrett[0][secrett[0].length - 6];
-    this.lname = secrett[0][secrett[0].length - 5];
-    this.age = secrett[0][secrett[0].length - 4];
-    this.birth = secrett[0][secrett[0].length - 3];
-    this.habitat = secrett[0][secrett[0].length - 2];
-    this.hobbys = secrett[0][secrett[0].length - 1];
+    //  else {
+    //   this.secretW = secrett[0];
+    //   this.found = secrett[1];
+    // }
+
+    
+   
 
     this.index = 0;
     this.attempts = 5;
@@ -79,11 +85,20 @@ export default class MGMain {
     this.started = true;
   }
 
+
+  public startGame(){
+    document.onkeydown = this.checkKey.bind(this);
+      this.started = false;
+      this.loadInfo()
+      this.bezig=true
+
+  }
   /**
    * Functie die bepaalt wat er gebeurt als het antwoord goed is
    */
   public answer() {
     if (this.bezig) {
+      console.log("ji")
       this.bezig = false;
       this.room.answer = true;
       this.room.miniGameFinished = true;
@@ -105,6 +120,8 @@ export default class MGMain {
    * functie die bepaalt wat er gebeurt als het antwoord fout is
    */
   public answerWrong() {
+    if (this.bezig2) {
+      this.bezig2 = false;
     this.room.answer = false;
     this.room.miniGameFinished = true;
     this.complete=null
@@ -113,11 +130,15 @@ export default class MGMain {
     this.attemptsArr = [];
     this.complete = null;
     this.index = 0;
+    this.foundedArray=[]
+    this.started=false
+    this.loadInfo()
 
     if (this.roomId === 80) {
       this.room.scene.howGameEnded = "outofattempts";
       this.room.scene.game.isEnd = true;
     }
+  }
   }
 
   public timer(elapsed: number) {
@@ -141,6 +162,7 @@ export default class MGMain {
    */
   public checkKey(e: any) {
     //console.log(e.keyCode);
+    if(this.attempts>=1){
     if (e.keyCode === 8) {
       if (this.index > 0) {
         this.index--;
@@ -191,6 +213,7 @@ export default class MGMain {
         }
       }
     }
+  }
   }
 
   /**
@@ -243,7 +266,7 @@ export default class MGMain {
   }
 
   public loadInfo() {
-    let secrett = this.miniGameSecrets.getSecret();
+    let secrett = this.room.miniGameSecrets.getSecret(this.roomId);
     this.secretW = secrett[0];
     this.found = secrett[1];
 

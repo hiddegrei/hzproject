@@ -21,9 +21,10 @@ import MiniGameC from "./minigames/MiniGameC";
 import MiniGameShop from "./minigames/MiniGameShop";
 import DarkSpot from "./DarkSpot";
 import Security from "./minigames/SecurityRoom";
+import MiniGameSecrets from "./minigames/MiniGameSecrets";
 
 export default class Room {
-  private static readonly TIMEOUT_ROOMS = 40000;
+  private static readonly TIMEOUT_ROOMS = 10000;
   public visitedRooms: Array<boolean> = [];
   public timeoutRooms: any[] = [];
   public roomId: number;
@@ -58,6 +59,8 @@ export default class Room {
   private img!: HTMLImageElement;
   public mgTimeLeft: number;
 
+  public miniGameSecrets: MiniGameSecrets;
+
   constructor(roomId: number, ctx: CanvasRenderingContext2D, scene: Scene, canvas: HTMLCanvasElement) {
     // super(roomId,ctx,scene)
     this.roomId = roomId;
@@ -67,6 +70,7 @@ export default class Room {
     this.scene = scene;
     this.canvas = canvas;
     this.hints = new Hints(this.canvas, this.scene);
+    this.miniGameSecrets = new MiniGameSecrets();
     this.minigame0 = new MiniGame0(this.ctx, this, this.canvas);
     this.minigame1 = new MiniGame1(this.ctx, this, this.canvas);
     this.minigame2 = new MiniGame2(this.ctx, this, this.canvas);
@@ -97,6 +101,8 @@ export default class Room {
     this.timeoutRooms[80] = [0, false];
     this.timeoutRooms[90] = [0, false];
     this.timeoutRooms[100] = [0, false];
+
+   
   }
 
   public checkDone() {

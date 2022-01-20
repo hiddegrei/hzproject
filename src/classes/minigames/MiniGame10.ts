@@ -20,8 +20,9 @@ export default class MiniGame10 extends MGMain {
     this.ctx.clearRect(0, 0, this.room.canvas.width, this.room.canvas.height);
     this.timer(elapsed);
     if (this.started) {
-      document.onkeydown = this.checkKey.bind(this);
-      this.started = false;
+    //   document.onkeydown = this.checkKey.bind(this);
+    //   this.started = false;
+	this.startGame()
     }
     if (this.timeLeft <= 0) {
       this.complete = 5;
@@ -34,7 +35,7 @@ export default class MiniGame10 extends MGMain {
    */
   public render() {
     // this.ctx.drawImage(this.image, 0, 0, this.image.width, this.image.height, 0, 0, window.innerWidth, window.innerHeight);
-
+	if(this.found){
     this.renderAttemptsBlock();
     this.renderInfoBlock();
     this.renderPassBlocks();
@@ -43,5 +44,6 @@ export default class MiniGame10 extends MGMain {
 
     //timer
     this.renderTime();
+	}
   }
 }

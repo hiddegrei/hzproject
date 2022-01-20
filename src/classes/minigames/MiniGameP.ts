@@ -28,7 +28,8 @@ export default class MiniGameP extends MGMain {
       document.onkeydown = this.checkKey.bind(this);
       this.lockedUp = lockedUp;
 
-      this.started = false;
+     
+	  this.startGame()
     }
 
     if (this.timeLeft <= 0) {
@@ -46,6 +47,7 @@ export default class MiniGameP extends MGMain {
     this.writeTextToCanvas("Je bent opgesloten door de bewakers! En de bewakers hebben een wachtwoord op de deur gezet! ", 16, 110, 90);
     this.writeTextToCanvas("Hack het wachtwoord om vrij te komen", 16, 110, 110);
 
+	if(this.found){
     this.renderAttemptsBlock();
     this.renderInfoBlock();
     this.renderPassBlocks();
@@ -56,5 +58,6 @@ export default class MiniGameP extends MGMain {
 
     //timer
     this.renderTime();
+	}
   }
 }

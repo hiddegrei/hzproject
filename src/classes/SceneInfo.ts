@@ -61,7 +61,7 @@ export default class SceneInfo {
     //draw hints
     this.writeTextToCanvas(`Verzamelde hints: `, 30, window.innerWidth / 6, window.innerHeight / 15 - trans.y);
     hints.getHint().forEach((value: string, index: number) => {
-      this.writeTextToCanvas(`${value}`, 25, window.innerWidth / 4 + 90 + index * 40, window.innerHeight / 15 - trans.y);
+      this.writeTextToCanvas(`${value}`, 25, window.innerWidth / 6 + 290 + index * 40, window.innerHeight / 15 - trans.y);
     });
   }
 
