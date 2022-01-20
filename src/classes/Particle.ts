@@ -54,7 +54,7 @@ export default class Particle {
     this.rays = [];
     this.radius = 5;
     this.speed = 2;
-    this.maxspeed = 2.5;
+    this.maxspeed = 2.8;
     this.dir = { x: 0, y: 0 };
     this.mouse = { x: 0, y: 0 };
     this.angleView = 18;

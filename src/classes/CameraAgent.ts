@@ -41,6 +41,10 @@ export default class CameraAgent {
 
   public raysEnd: any[];
 
+  private camImg:HTMLImageElement
+  private camImgFlip:HTMLImageElement
+private degrees:number
+private dirImg:string
   
 
   constructor(
@@ -50,11 +54,14 @@ export default class CameraAgent {
     widthHall: number,
     sight: number,
     targetx:number,
-    targety:number
+    targety:number,
+    dir:string
   ) {
     this.ctx = ctx;
     this.raysEnd = [];
-    
+    this.dirImg=dir
+    this.camImg=Game.loadNewImage("./img/objects/seccam.png")
+    this.camImgFlip=Game.loadNewImage("./img/objects/seccamFlip.png")
     this.pos = new Vector(x, y);
     this.goldkeyImg = Game.loadNewImage("./img/objects/gold_trophytest.png");
     this.rays = [];
@@ -63,6 +70,7 @@ export default class CameraAgent {
     this.angleView = 25;
     this.dir=new Vector(0,0)
     this.widthHall = widthHall;
+    this.degrees=0
    
    
     for (let i = 0; i < 360; i += 90) {
@@ -98,7 +106,7 @@ export default class CameraAgent {
 
    
 
-   
+   this.degrees=degrees
     this.viewRays = [];
 
     for (let i = degrees - this.angleView; i < degrees; i += 1) {
@@ -117,16 +125,33 @@ export default class CameraAgent {
   public show(ctx: CanvasRenderingContext2D) {
    
     //this.writeTextToCanvas(`${this.keyNum}`,20,this.pos.x+15,this.pos.y-10)
-    let color = "yellow";
+    // let color = "yellow";
    
     
-      ctx.lineWidth = 1;
-      ctx.fillStyle = color;
-      ctx.beginPath();
-      ctx.arc(this.pos.x, this.pos.y, this.radius, 0, 2 * Math.PI);
-      ctx.stroke();
-      ctx.closePath();
-      ctx.fill();
+    //   ctx.lineWidth = 1;
+    //   ctx.fillStyle = color;
+    //   ctx.beginPath();
+    //   ctx.arc(this.pos.x, this.pos.y, this.radius, 0, 2 * Math.PI);
+    //   ctx.stroke();
+    //   ctx.closePath();
+    //   ctx.fill();
+
+    if(this.dirImg==="r"){
+      // this.ctx.save();
+      // this.ctx.translate(this.pos.x, this.pos.y);
+      // this.ctx.rotate(-(this.degrees * Math.PI) / 180 );
+      this.ctx.drawImage(this.camImgFlip,0, 0,this.camImgFlip.width,this.camImgFlip.height,this.pos.x-20,this.pos.y-20,40,40)
+     // this.ctx.restore()
+      
+
+    }else{
+    this.ctx.save();
+    this.ctx.translate(this.pos.x, this.pos.y);
+    this.ctx.rotate(-(this.degrees * Math.PI) / 180 +1.2*Math.PI);
+    this.ctx.drawImage(this.camImg,0, 0,this.camImg.width,this.camImg.height,-20,-20,40,40)
+    this.ctx.restore()
+    }
+    
     
 
     for (let i = 0; i < this.raysEnd.length; i++) {
