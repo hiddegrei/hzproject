@@ -1,7 +1,7 @@
-import EndGame from './EndGame';
-import GameLoop from './GameLoop';
+import EndGame from "./EndGame";
+import GameLoop from "./GameLoop";
 
-import Scene from './Scene';
+import Scene from "./Scene";
 
 export default class Game {
   public canvas: HTMLCanvasElement;
@@ -10,9 +10,9 @@ export default class Game {
 
   public scene: Scene;
 
-  private endGame:EndGame;
+  private endGame: EndGame;
 
-  public isEnd:boolean | undefined;
+  public isEnd: boolean | undefined;
 
   // private usernameProperty: string;
 
@@ -21,15 +21,15 @@ export default class Game {
   /**
    * @param canvas
    */
-  constructor(canvas: any,time:number) {
+  constructor(canvas: any, time: number) {
     this.canvas = canvas as HTMLCanvasElement;
     // this.usernameProperty = localStorage.getItem('username');
     // this.passwordProperty = localStorage.getItem('password');
     // Username and password properties must be initialized before an instance of the scene class is created!
-    this.scene = new Scene(this.canvas, this,time);
+    this.scene = new Scene(this.canvas, this, time);
     this.gameLoop = new GameLoop(this);
-    this.endGame=new EndGame(this.canvas,this,this.scene)
-    this.isEnd=false
+    this.endGame = new EndGame(this.canvas, this, this.scene);
+    this.isEnd = false;
   }
 
   // public get username() {

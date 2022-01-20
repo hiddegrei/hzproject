@@ -7,7 +7,8 @@ export default class Han {
   public static constrain(val: number, a: number, b: number) {
     if (val < a) {
       return a;
-    } if (val > b) {
+    }
+    if (val > b) {
       return b;
     }
     return val;
@@ -21,7 +22,8 @@ export default class Han {
   public constrain(val: number, a: number, b: number) {
     if (val < a) {
       return a;
-    } if (val > b) {
+    }
+    if (val > b) {
       return b;
     }
     return val;
@@ -36,7 +38,7 @@ export default class Han {
    * @param withinBounds
    */
   public static map(n: number, start1: number, stop1: number, start2: number, stop2: number, withinBounds: any) {
-    const newval = (n - start1) / (stop1 - start1) * (stop2 - start2) + start2;
+    const newval = ((n - start1) / (stop1 - start1)) * (stop2 - start2) + start2;
     if (!withinBounds) {
       return newval;
     }

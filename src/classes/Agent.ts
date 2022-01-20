@@ -70,16 +70,7 @@ export default class Agent {
   private images: Array<any> = [];
   private imgIndex: number;
 
-
-  constructor(
-    x: number,
-    y: number,
-    ctx: CanvasRenderingContext2D,
-    widthHall: number,
-    mode: string,
-    keyNum: number,
-    status: string
-  ) {
+  constructor(x: number, y: number, ctx: CanvasRenderingContext2D, widthHall: number, mode: string, keyNum: number, status: string) {
     this.ctx = ctx;
     this.raysEnd = [];
     this.canTurnAround = false;
@@ -95,8 +86,7 @@ export default class Agent {
     this.images.push([132, 50, 95, 130, 300, 300, Particle.WP, Particle.HP]);
     this.images.push([132, 270, 95, 130, 300, 300, Particle.WP, Particle.HP]);
     this.images.push([20, 290, 95, 130, 300, 300, Particle.WP, Particle.HP]);
-    this.imgIndex=0
-
+    this.imgIndex = 0;
 
     this.rays = [];
     this.radius = 10;
@@ -156,50 +146,37 @@ export default class Agent {
     this.acc.add(force);
   }
 
-  public updateTarget(
-    canvas: HTMLCanvasElement,
-    widthHall: number,
-    particlePos: Vector,
-    particleVel:Vector
-   
-  ) {
+  public updateTarget(canvas: HTMLCanvasElement, widthHall: number, particlePos: Vector, particleVel: Vector) {
     let mid = new Vector(canvas.width / 2 - widthHall, 100 + 6 * widthHall);
 
-    let search11 = new Vector(
-      canvas.width / 2 + 12 * widthHall + 20,
-      100 + 7 * widthHall + 15
-    );
+    let search11 = new Vector(canvas.width / 2 + 12 * widthHall + 20, 100 + 7 * widthHall + 15);
 
-    if(this.mode==="camera") {
-      if(Vector.dist(this.pos,this.endTarget)<40){
-        this.mode="random"
+    if (this.mode === "camera") {
+      if (Vector.dist(this.pos, this.endTarget) < 40) {
+        this.mode = "random";
       }
-        
-      }else if (this.mode === "insluit") {
-        let playerPosCopy=new Vector(particlePos.x,particlePos.y)
+    } else if (this.mode === "insluit") {
+      let playerPosCopy = new Vector(particlePos.x, particlePos.y);
 
-       let newVel=new Vector(particleVel.x,particleVel.y)
-       newVel.setMag(100)
-        playerPosCopy.add(newVel)
-        this.endTarget=playerPosCopy
-      }
-      else if (this.mode === "mid") {
-        this.endTarget = mid;
-      } else if (this.mode === "search11") {
-        this.endTarget = search11;
-      }
-     else {
+      let newVel = new Vector(particleVel.x, particleVel.y);
+      newVel.setMag(100);
+      playerPosCopy.add(newVel);
+      this.endTarget = playerPosCopy;
+    } else if (this.mode === "mid") {
+      this.endTarget = mid;
+    } else if (this.mode === "search11") {
+      this.endTarget = search11;
+    } else {
       this.endTarget = particlePos;
     }
   }
 
-  public newTarget( newTarget:Vector){
-    this.endTarget=newTarget;
-
+  public newTarget(newTarget: Vector) {
+    this.endTarget = newTarget;
   }
 
-  public updateMode(mode:string){
-      this.mode=mode
+  public updateMode(mode: string) {
+    this.mode = mode;
   }
 
   update(borders: Array<Border>) {
@@ -248,14 +225,7 @@ export default class Agent {
         this.target.x = this.pos.x + todo.x;
         this.target.y = this.pos.y + todo.y;
       }
-    } else if (
-      opt > 0 &&
-      (this.mode === "search" ||
-        this.mode === "mid" ||
-        this.mode === "search11"||
-        this.mode==="camera"||
-        this.mode==="insluit")
-    ) {
+    } else if (opt > 0 && (this.mode === "search" || this.mode === "mid" || this.mode === "search11" || this.mode === "camera" || this.mode === "insluit")) {
       let record = Infinity;
       let nextTarget = new Vector(0, 0);
       for (let i = 0; i < open.length; i++) {
@@ -368,39 +338,25 @@ export default class Agent {
   /**
    * increment image and animation index
    */
-   public animate() {
+  public animate() {
     this.imgIndex += 0.05;
-
-    
   }
-
 
   public show(ctx: CanvasRenderingContext2D) {
     if (!this.sleeping) {
-      this.ctx.drawImage(
-        this.goldkeyImg,
-        0,
-        0,
-        this.goldkeyImg.width,
-        this.goldkeyImg.height,
-        this.pos.x - 20,
-        this.pos.y - 35,
-        30,
-        30
-      );
+      this.ctx.drawImage(this.goldkeyImg, 0, 0, this.goldkeyImg.width, this.goldkeyImg.height, this.pos.x - 20, this.pos.y - 35, 30, 30);
     }
     //this.writeTextToCanvas(`${this.keyNum}`,20,this.pos.x+15,this.pos.y-10)
     let color = "yellow";
-    let colorSight="blue"
-    if(this.mode==="search"){
-        colorSight="green"
-    }else if(this.mode==="search11"||this.mode==="mid"){
-        colorSight="rgb(255,69,0)"
-    }else if(this.mode==="camera"){
-        colorSight="rgb(255,255,0)"
-    }
-    else if(this.mode==="random"){
-        colorSight="blue"
+    let colorSight = "blue";
+    if (this.mode === "search") {
+      colorSight = "green";
+    } else if (this.mode === "search11" || this.mode === "mid") {
+      colorSight = "rgb(255,69,0)";
+    } else if (this.mode === "camera") {
+      colorSight = "rgb(255,255,0)";
+    } else if (this.mode === "random") {
+      colorSight = "blue";
     }
     if (this.status === "yellow") {
       color = "rgb(255,255,0)";
@@ -417,8 +373,6 @@ export default class Agent {
       ctx.stroke();
       ctx.closePath();
       ctx.fill();
-     
-  
     } else {
       ctx.lineWidth = 1;
       ctx.fillStyle = color;
@@ -430,14 +384,11 @@ export default class Agent {
     }
 
     for (let i = 0; i < this.raysEnd.length; i++) {
-        ctx.strokeStyle=colorSight
+      ctx.strokeStyle = colorSight;
       ctx.beginPath();
       ctx.moveTo(this.pos.x, this.pos.y);
-      ctx.lineTo(
-        this.pos.x + this.raysEnd[i].x,
-        this.pos.y + this.raysEnd[i].y
-      );
-     
+      ctx.lineTo(this.pos.x + this.raysEnd[i].x, this.pos.y + this.raysEnd[i].y);
+
       ctx.closePath();
       ctx.stroke();
     }
@@ -458,7 +409,7 @@ export default class Agent {
           const b = p.y - this.pos.y;
           const d = Math.sqrt(a * a + b * b);
 
-          if (d <= record&&border.type!="nodoor") {
+          if (d <= record && border.type != "nodoor") {
             //this.writeTextToCanvas(Math.round(d),p.x,p.y+30)
 
             //console.log("record: "+ record, "newD: " + Math.round(d))
@@ -499,32 +450,10 @@ export default class Agent {
     }
   }
 
-  public inSight(
-    particle: Particle,
-    ctx: CanvasRenderingContext2D,
-    borders2: Array<Border>
-  ) {
+  public inSight(particle: Particle, ctx: CanvasRenderingContext2D, borders2: Array<Border>) {
     let borders = [...borders2];
-    borders.push(
-      new Border(
-        particle.pos.x,
-        particle.pos.y - particle.radius,
-        particle.pos.x,
-        particle.pos.y + particle.radius,
-        ctx,
-        "particle"
-      )
-    );
-    borders.push(
-      new Border(
-        particle.pos.x - particle.radius,
-        particle.pos.y,
-        particle.pos.x + particle.radius,
-        particle.pos.y,
-        ctx,
-        "particle"
-      )
-    );
+    borders.push(new Border(particle.pos.x, particle.pos.y - particle.radius, particle.pos.x, particle.pos.y + particle.radius, ctx, "particle"));
+    borders.push(new Border(particle.pos.x - particle.radius, particle.pos.y, particle.pos.x + particle.radius, particle.pos.y, ctx, "particle"));
 
     let gotya = false;
 
@@ -570,14 +499,7 @@ export default class Agent {
     return false;
   }
 
-  public writeTextToCanvas(
-    text: string,
-    fontSize: number = 20,
-    xCoordinate: number,
-    yCoordinate: number,
-    alignment: CanvasTextAlign = "center",
-    color: string = "white"
-  ): void {
+  public writeTextToCanvas(text: string, fontSize: number = 20, xCoordinate: number, yCoordinate: number, alignment: CanvasTextAlign = "center", color: string = "white"): void {
     this.ctx.font = `${fontSize}px sans-serif`;
     this.ctx.fillStyle = color;
     this.ctx.textAlign = alignment;

@@ -16,20 +16,16 @@ export default class CameraAgent {
 
   public radius: number;
 
- 
-
   public angleView: number;
 
-  
   public widthHall: number;
 
   public target: Vector;
 
- private dir:Vector
+  private dir: Vector;
 
   public viewRays: Array<Ray>;
   public sight: number;
-
 
   public checkAngle: number;
 
@@ -37,58 +33,40 @@ export default class CameraAgent {
 
   private goldkeyImg: HTMLImageElement;
 
- 
-
   public raysEnd: any[];
 
-  private camImg:HTMLImageElement
-  private camImgFlip:HTMLImageElement
-private degrees:number
-private dirImg:string
-  
+  private camImg: HTMLImageElement;
+  private camImgFlip: HTMLImageElement;
+  private degrees: number;
+  private dirImg: string;
 
-  constructor(
-    x: number,
-    y: number,
-    ctx: CanvasRenderingContext2D,
-    widthHall: number,
-    sight: number,
-    targetx:number,
-    targety:number,
-    dir:string
-  ) {
+  constructor(x: number, y: number, ctx: CanvasRenderingContext2D, widthHall: number, sight: number, targetx: number, targety: number, dir: string) {
     this.ctx = ctx;
     this.raysEnd = [];
-    this.dirImg=dir
-    this.camImg=Game.loadNewImage("./img/objects/seccam.png")
-    this.camImgFlip=Game.loadNewImage("./img/objects/seccamFlip.png")
+    this.dirImg = dir;
+    this.camImg = Game.loadNewImage("./img/objects/seccam.png");
+    this.camImgFlip = Game.loadNewImage("./img/objects/seccamFlip.png");
     this.pos = new Vector(x, y);
     this.goldkeyImg = Game.loadNewImage("./img/objects/gold_trophytest.png");
     this.rays = [];
     this.radius = 10;
-   
+
     this.angleView = 25;
-    this.dir=new Vector(0,0)
+    this.dir = new Vector(0, 0);
     this.widthHall = widthHall;
-    this.degrees=0
-   
-   
+    this.degrees = 0;
+
     for (let i = 0; i < 360; i += 90) {
       this.rays.push(new Ray(this.pos, i, this.ctx));
     }
     // { x: Math.cos((angle / 360) * 2 * Math.PI), y: Math.sin((angle / 360) * 2 * Math.PI) }
-    this.target = new Vector(targetx,targety)
-   
+    this.target = new Vector(targetx, targety);
+
     this.viewRays = [];
     this.sight = 80;
     this.checkAngle = 9;
-   this.sight=sight
+    this.sight = sight;
   }
-
-  
-
- 
-  
 
   update() {
     this.dir.x = this.target.x - this.pos.x;
@@ -104,9 +82,7 @@ private dirImg:string
     while (degrees >= 360) degrees -= 360;
     while (degrees < 0) degrees += 360;
 
-   
-
-   this.degrees=degrees
+    this.degrees = degrees;
     this.viewRays = [];
 
     for (let i = degrees - this.angleView; i < degrees; i += 1) {
@@ -115,19 +91,12 @@ private dirImg:string
     for (let i = degrees; i < degrees + this.angleView; i += 1) {
       this.viewRays.push(new Ray(this.pos, i, this.ctx));
     }
-
-   
   }
 
-  
-
- 
   public show(ctx: CanvasRenderingContext2D) {
-   
     //this.writeTextToCanvas(`${this.keyNum}`,20,this.pos.x+15,this.pos.y-10)
     // let color = "yellow";
-   
-    
+
     //   ctx.lineWidth = 1;
     //   ctx.fillStyle = color;
     //   ctx.beginPath();
@@ -136,36 +105,28 @@ private dirImg:string
     //   ctx.closePath();
     //   ctx.fill();
 
-    if(this.dirImg==="r"){
+    if (this.dirImg === "r") {
       // this.ctx.save();
       // this.ctx.translate(this.pos.x, this.pos.y);
       // this.ctx.rotate(-(this.degrees * Math.PI) / 180 );
-      this.ctx.drawImage(this.camImgFlip,0, 0,this.camImgFlip.width,this.camImgFlip.height,this.pos.x-20,this.pos.y-20,40,40)
-     // this.ctx.restore()
-      
-
-    }else{
-    this.ctx.save();
-    this.ctx.translate(this.pos.x, this.pos.y);
-    this.ctx.rotate(-(this.degrees * Math.PI) / 180 +1.2*Math.PI);
-    this.ctx.drawImage(this.camImg,0, 0,this.camImg.width,this.camImg.height,-20,-20,40,40)
-    this.ctx.restore()
+      this.ctx.drawImage(this.camImgFlip, 0, 0, this.camImgFlip.width, this.camImgFlip.height, this.pos.x - 20, this.pos.y - 20, 40, 40);
+      // this.ctx.restore()
+    } else {
+      this.ctx.save();
+      this.ctx.translate(this.pos.x, this.pos.y);
+      this.ctx.rotate(-(this.degrees * Math.PI) / 180 + 1.2 * Math.PI);
+      this.ctx.drawImage(this.camImg, 0, 0, this.camImg.width, this.camImg.height, -20, -20, 40, 40);
+      this.ctx.restore();
     }
-    
-    
 
     for (let i = 0; i < this.raysEnd.length; i++) {
-        ctx.strokeStyle="rgb(255,255,255,0.2)"
+      ctx.strokeStyle = "rgb(255,255,255,0.2)";
       ctx.beginPath();
       ctx.moveTo(this.pos.x, this.pos.y);
-      ctx.lineTo(
-        this.pos.x + this.raysEnd[i].x,
-        this.pos.y + this.raysEnd[i].y
-      );
-      
+      ctx.lineTo(this.pos.x + this.raysEnd[i].x, this.pos.y + this.raysEnd[i].y);
+
       ctx.closePath();
       ctx.stroke();
-     
     }
   }
   public look(borders: Array<Border>, ctx: CanvasRenderingContext2D) {
@@ -195,46 +156,22 @@ private dirImg:string
         }
       }
       if (closest.x != -1) {
-        
-          ctx.strokeStyle = "rgb(0,0,255)";
-          // this.ctx.fillRect(closest.x, closest.y, 10, 10);
+        ctx.strokeStyle = "rgb(0,0,255)";
+        // this.ctx.fillRect(closest.x, closest.y, 10, 10);
 
-          let rv = new Vector(closest.x, closest.y);
-          rv.sub(this.pos);
+        let rv = new Vector(closest.x, closest.y);
+        rv.sub(this.pos);
 
-          rv.limit(this.sight);
-          this.raysEnd.push({ x: rv.x, y: rv.y });
-        
+        rv.limit(this.sight);
+        this.raysEnd.push({ x: rv.x, y: rv.y });
       }
     }
   }
 
-  public inSight(
-    particle: Particle,
-    ctx: CanvasRenderingContext2D,
-    borders2: Array<Border>
-  ) {
+  public inSight(particle: Particle, ctx: CanvasRenderingContext2D, borders2: Array<Border>) {
     let borders = [...borders2];
-    borders.push(
-      new Border(
-        particle.pos.x,
-        particle.pos.y - particle.radius,
-        particle.pos.x,
-        particle.pos.y + particle.radius,
-        ctx,
-        "particle"
-      )
-    );
-    borders.push(
-      new Border(
-        particle.pos.x - particle.radius,
-        particle.pos.y,
-        particle.pos.x + particle.radius,
-        particle.pos.y,
-        ctx,
-        "particle"
-      )
-    );
+    borders.push(new Border(particle.pos.x, particle.pos.y - particle.radius, particle.pos.x, particle.pos.y + particle.radius, ctx, "particle"));
+    borders.push(new Border(particle.pos.x - particle.radius, particle.pos.y, particle.pos.x + particle.radius, particle.pos.y, ctx, "particle"));
 
     let gotya = false;
 
@@ -273,21 +210,14 @@ private dirImg:string
       rv.sub(this.pos);
 
       rv.setMag(this.sight + 20);
-     
+
       console.log("gotya");
       return true;
     }
     return false;
   }
 
-  public writeTextToCanvas(
-    text: string,
-    fontSize: number = 20,
-    xCoordinate: number,
-    yCoordinate: number,
-    alignment: CanvasTextAlign = "center",
-    color: string = "white"
-  ): void {
+  public writeTextToCanvas(text: string, fontSize: number = 20, xCoordinate: number, yCoordinate: number, alignment: CanvasTextAlign = "center", color: string = "white"): void {
     this.ctx.font = `${fontSize}px sans-serif`;
     this.ctx.fillStyle = color;
     this.ctx.textAlign = alignment;

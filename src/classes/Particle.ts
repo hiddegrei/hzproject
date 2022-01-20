@@ -120,7 +120,7 @@ export default class Particle {
   /**
    * move the player
    */
- public move() {
+  public move() {
     this.pos.add(this.vel);
     this.vel.add(this.acc);
     this.vel.limit(this.maxspeed);
@@ -130,9 +130,9 @@ export default class Particle {
 
   /**
    * update the position of the player, check if the player hits any walls
-   * @param mx 
-   * @param my 
-   * @param borders 
+   * @param mx
+   * @param my
+   * @param borders
    */
   public update(mx: number, my: number, borders: Array<Border>) {
     this.walk = true;
@@ -199,15 +199,12 @@ export default class Particle {
 
   /**
    * Register which agent the player is hacking
-   * @param agents 
-   * @returns 
+   * @param agents
+   * @returns
    */
   public hack(agents: Array<Agent>) {
     for (let i = 0; i < agents.length; i++) {
-      if (
-        Vector.dist(this.pos, agents[i].pos) < agents[i].hackRange &&
-        agents[i].sleeping != true
-      ) {
+      if (Vector.dist(this.pos, agents[i].pos) < agents[i].hackRange && agents[i].sleeping != true) {
         this.colorSight = agents[i].status;
         this.hackRange = agents[i].hackRange;
         this.hacking = true;
@@ -235,8 +232,8 @@ export default class Particle {
 
   /**
    * show the player
-   * @param show 
-   * @param color 
+   * @param show
+   * @param color
    */
   public show(show: boolean, color: string) {
     if (this.hacking) {
@@ -247,13 +244,7 @@ export default class Particle {
       this.ctx.lineWidth = 3;
       this.ctx.strokeStyle = color;
       this.ctx.beginPath();
-      this.ctx.arc(
-        this.pos.x,
-        this.pos.y,
-        Math.ceil(this.hackIndex) % this.hackRange,
-        0,
-        2 * Math.PI
-      );
+      this.ctx.arc(this.pos.x, this.pos.y, Math.ceil(this.hackIndex) % this.hackRange, 0, 2 * Math.PI);
       this.ctx.stroke();
       this.ctx.closePath();
 
@@ -283,29 +274,12 @@ export default class Particle {
         this.images[Math.ceil(this.imgIndex) % this.images.length][7]
       );
     } else {
-      this.ctx.drawImage(
-        this.imageSprite,
-        20,
-        50,
-        95,
-        50,
-        -Particle.WP / 2,
-        -(50 / 2) / 2,
-        Particle.WP,
-        50 / 2
-      );
+      this.ctx.drawImage(this.imageSprite, 20, 50, 95, 50, -Particle.WP / 2, -(50 / 2) / 2, Particle.WP, 50 / 2);
     }
     this.ctx.restore();
   }
 
-  public writeTextToCanvas(
-    text: string,
-    fontSize: number = 20,
-    xCoordinate: number,
-    yCoordinate: number,
-    alignment: CanvasTextAlign = "center",
-    color: string = "white"
-  ): void {
+  public writeTextToCanvas(text: string, fontSize: number = 20, xCoordinate: number, yCoordinate: number, alignment: CanvasTextAlign = "center", color: string = "white"): void {
     this.ctx.font = `${fontSize}px sans-serif`;
     this.ctx.fillStyle = color;
     this.ctx.textAlign = alignment;
