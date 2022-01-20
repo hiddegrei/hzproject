@@ -38,12 +38,7 @@ auth.createUserWithEmailAndPassword(newemail,password).then((userCredential) => 
     
 })
 
-db.collection('users').doc(username).collection('followingNUM').doc(username).set({
-    following:0
-}).catch(error=>alert(error.message))
- db.collection('users').doc(username).collection('followersNUM').doc(username).set({
-    followers:0
-}).catch(error=>alert(error.message))
+
 
 newuser.sendEmailVerification().then(function() {
   

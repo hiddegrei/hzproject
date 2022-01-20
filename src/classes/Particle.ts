@@ -230,7 +230,7 @@ export default class Particle {
    * increment image and animation index
    */
   public animate() {
-    this.imgIndex += 0.1;
+    this.imgIndex += 0.15;
 
     if (this.hackRange === Agent.HACK_RANGE_E) {
       this.hackIndex += 0.5;

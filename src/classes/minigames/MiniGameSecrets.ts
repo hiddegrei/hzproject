@@ -3,10 +3,10 @@ import Room from "../Room";
 export default class MiniGameSecrets {
   private secrets: string[][];
   private secretsSeen: boolean[] = [];
-  private roomId: number;
+ 
 
-  constructor(roomNum: number) {
-    this.roomId = roomNum;
+  constructor() {
+    
 
     //this.loadSecrets()
     this.secrets = [
@@ -21,10 +21,12 @@ export default class MiniGameSecrets {
       ["k", "a", "r", "e", "l", "9", "3", "2", "Karel", "De 2e", "32", "02/01/1990", "De Bank", "Bewaken"],
       ["9", "4", "p", "e", "r", "e", "n", "8", "Peter", "Peren", "28", "28/02/1994", "De Bank", "Bewaken"],
       ["h", "a", "m", "4", "5", "k", "a", "a", "s", "Klaas", "Kaas", "54", "04/05/1974", "Hamburg", "Vissen"],
+      ["s","m","i","t","h","0","9","Patricia","Smith","53","04/09/1971","Milaan","Volleybal"],
+      ["1","8","1","9","8","4","l","i","s","a","Lisa","Brown","42","10/18/1984","Rotterdam","Wandelen"]
     ];
   }
 
-  public getSecret() {
+  public getSecret(roomId:number) {
     let ranNum: number = 0;
     let gotit = false;
     let returnSecret: string[] = [];
@@ -40,7 +42,7 @@ export default class MiniGameSecrets {
     let found: any[] = [];
     let minus: number;
 
-    if (this.roomId != 100) {
+    if (roomId != 100) {
       minus = 6;
     } else {
       minus = 0;

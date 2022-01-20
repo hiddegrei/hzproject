@@ -34,6 +34,7 @@ export default class EndGame extends InfoDisplay {
   private userData: any[] = [];
   private scoreToDatabase: ScoreToDatabase;
   private started: boolean;
+  private score!:number
   /**
    * constructor
    *
@@ -86,7 +87,8 @@ export default class EndGame extends InfoDisplay {
     }
     if (this.started) {
       this.started = false;
-      this.scoreToDatabase.update(this.scene.score.scoreProperty);
+      this.score=this.scene.score.scoreProperty
+      this.scoreToDatabase.update(this.score);
       setTimeout(() => this.getData(), 500);
     }
 
@@ -149,7 +151,7 @@ export default class EndGame extends InfoDisplay {
     this.ctx.closePath();
     this.ctx.stroke();
     this.ctx.fill();
-    this.writeTextToCanvas(`Jouw score: ${this.scene.score.scoreProperty}`, window.innerWidth - 490, 120, 14);
+    this.writeTextToCanvas(`Jouw score: ${this.score}`, window.innerWidth - 490, 120, 14);
 
     this.ctx.strokeStyle = "rgb(255,0,0)";
     this.ctx.fillStyle = "rgb(255,255,255)";
