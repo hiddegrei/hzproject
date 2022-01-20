@@ -214,7 +214,7 @@ export default class Room {
         }else if(this.roomId===90){
           this.minigameShop.update(mousex,mousey,elapsed)
         } else if(this.roomId===15) {
-          this.securityRoom.update(mousex,mousey,elapsed)
+          this.securityRoom.update(elapsed)
         }
        
 
