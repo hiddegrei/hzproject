@@ -32,7 +32,7 @@ export default class Security extends MGMain {
     	super(15, room, ctx, canvas);
         this.width = 0;
         this.widthCop = 10;
-        this.status = `Hacking: ${Math.round(this.width/5)}%`;
+        this.status = `Hacking: ${Math.floor(this.width/5)}%`;
         this.testImg = Room.loadNewImage("./img/objects/gold_trophytest.png");
         this.flash = 1;
         this.count = 0;
