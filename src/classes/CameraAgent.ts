@@ -49,7 +49,8 @@ export default class CameraAgent {
     ctx: CanvasRenderingContext2D,
     widthHall: number,
     sight: number,
-    angle:number
+    targetx:number,
+    targety:number
   ) {
     this.ctx = ctx;
     this.raysEnd = [];
@@ -68,7 +69,7 @@ export default class CameraAgent {
       this.rays.push(new Ray(this.pos, i, this.ctx));
     }
     // { x: Math.cos((angle / 360) * 2 * Math.PI), y: Math.sin((angle / 360) * 2 * Math.PI) }
-    this.target = new Vector( Math.cos((angle / 360) * 2 * Math.PI), Math.sin((angle / 360) * 2 * Math.PI));
+    this.target = new Vector(targetx,targety)
    
     this.viewRays = [];
     this.sight = 80;

@@ -4,11 +4,33 @@ import Level1map from "./Level1map";
 
 export default class DarkSpot extends Room {
     private level1Map: Level1map;
+    private img1:HTMLImageElement;
+    private img2:HTMLImageElement;
+    private img3:HTMLImageElement;
+    private img4:HTMLImageElement;
+    private img5:HTMLImageElement;
+    private img6:HTMLImageElement;
+    private img7:HTMLImageElement;
+    private img8:HTMLImageElement;
+    private img9:HTMLImageElement;
+    private img10:HTMLImageElement;
+    //private img11:HTMLImageElement;
+
     
     
     public constructor(roomId:number,ctx:CanvasRenderingContext2D, scene:Scene,canvas:HTMLCanvasElement) {
         super(roomId,ctx,scene,canvas);
         this.level1Map = scene.getLevel();
+        this.img1=Room.loadNewImage("./img/background/42e41e7460483a2f00bb7bd16fe3b9f3.jpg")
+        this.img2=Room.loadNewImage("./img/background/cartoon-illustration-bank-vault-inside-metallic-iron-safe-door_1441-2029.jpg")
+        this.img3=Room.loadNewImage("./img/background/depositphotos_66872185-stock-photo-top-view-office-room-wooden.jpg")
+        this.img4=Room.loadNewImage("./img/background/nina-volkova-back13.jpg")
+        this.img5=Room.loadNewImage("./img/background/36064143-vector-illustration-of-a-closed-safe-with-money-.jpg")
+        this.img6=Room.loadNewImage("./img/background/verlichtingsplan.jpg")
+        this.img7=Room.loadNewImage("./img/background/vector-cartoon-illustration-bank-robbery-safety-vault-three-thieves-stealing-gold-cash-throwing-bag-sack-currency-119359066.jpg")
+        this.img8=Room.loadNewImage("./img/background/9da45f21d0d2f59c2c335e3651f43621--small-bedrooms-perspective.jpg")
+        this.img9=Room.loadNewImage("./img/background/145739320-empty-meeting-room-semi-flat-rgb-color-vector-illustration-conference-coffee-break-documents-and-com.webp")
+        this.img10=Room.loadNewImage("./img/background/56b19636ec2dc3f52f4092e9d4527213.jpg")
         this.createAll()
     }
 
@@ -34,20 +56,20 @@ export default class DarkSpot extends Room {
     }
 
     private loadAllImages() {
-        this.insertRoomImages("./img/background/42e41e7460483a2f00bb7bd16fe3b9f3.jpg", 160, 754, 100, 95);
-        this.insertRoomImages("./img/background/cartoon-illustration-bank-vault-inside-metallic-iron-safe-door_1441-2029.jpg", 610,751,200 ,103);
-        this.insertRoomImages("./img/background/depositphotos_66872185-stock-photo-top-view-office-room-wooden.jpg", 1265,300,240 ,100);
-        this.insertRoomImages("./img/background/nina-volkova-back13.jpg", 710,600,150 ,100);
-        this.insertRoomImages("./img/background/36064143-vector-illustration-of-a-closed-safe-with-money-.jpg", 1410,150,100 ,100);
-        this.insertRoomImages("./img/background/verlichtingsplan.jpg", 1410,700,149 ,100);
-        this.insertRoomImages("./img/background/vector-cartoon-illustration-bank-robbery-safety-vault-three-thieves-stealing-gold-cash-throwing-bag-sack-currency-119359066.jpg", 462,751,100 ,149);
-        this.insertRoomImages("./img/background/9da45f21d0d2f59c2c335e3651f43621--small-bedrooms-perspective.jpg", 1762,600,100 ,200);
-        this.insertRoomImages("./img/background/145739320-empty-meeting-room-semi-flat-rgb-color-vector-illustration-conference-coffee-break-documents-and-com.webp", 510,300,100 ,100);
-        this.insertRoomImages("./img/background/56b19636ec2dc3f52f4092e9d4527213.jpg", 360,203,100 ,150);
+     this.insertRoomImages(this.img1, 160, 754, 100, 95);
+        this.insertRoomImages(this.img2, 610,751,200 ,103);
+        this.insertRoomImages(this.img3, 1265,300,240 ,100);
+        this.insertRoomImages(this.img4, 710,600,150 ,100);
+        this.insertRoomImages(this.img5, 1410,150,100 ,100);
+       this.insertRoomImages(this.img6, 1410,700,149 ,100);
+       this.insertRoomImages(this.img7, 462,751,100 ,149);
+       this.insertRoomImages(this.img8, 1762,600,100 ,200);
+        this.insertRoomImages(this.img9, 510,300,100 ,100);
+       this.insertRoomImages(this.img10, 360,203,100 ,150);
     }
 
-    private insertRoomImages(image: string, dx: number, dy: number, dw: number, dh: number){
-        this.ctx.drawImage(Room.loadNewImage(image), dx, dy, dw, dh);
+    private insertRoomImages(image: HTMLImageElement, dx: number, dy: number, dw: number, dh: number){
+        this.ctx.drawImage(image, dx, dy, dw, dh);
     }
 
     private createBlock() {
