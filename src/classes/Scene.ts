@@ -587,6 +587,7 @@ export default class Scene {
       //updateing and moving agents
       this.agents[i].updateTarget(this.canvas, this.level.widthHall, this.particle.pos,this.particle.vel)
       this.agents[i].update(this.borders)
+      this.agents[i].animate();
 
       this.agents[i].move();
       //this.agents[i].look(this.borders,this.ctx)

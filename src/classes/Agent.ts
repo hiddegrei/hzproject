@@ -64,6 +64,13 @@ export default class Agent {
 
   public canTurnAround: boolean;
 
+  private imageSpriteYellow: HTMLImageElement;
+  private imageSpriteOrange: HTMLImageElement;
+  private imageSpriteBlue: HTMLImageElement;
+  private images: Array<any> = [];
+  private imgIndex: number;
+
+
   constructor(
     x: number,
     y: number,
@@ -80,6 +87,17 @@ export default class Agent {
     this.mode = mode;
     this.pos = new Vector(x, y);
     this.goldkeyImg = Game.loadNewImage("./img/objects/goldkey.png");
+
+    this.imageSpriteOrange = Game.loadNewImage("./img/players/bkspr01orange.png");
+    this.imageSpriteYellow = Game.loadNewImage("./img/players/bkspr01yellow.png");
+    this.imageSpriteBlue = Game.loadNewImage("./img/players/bkspr01blue.png");
+    this.images.push([20, 150, 95, 130, 300, 300, Particle.WP, Particle.HP]);
+    this.images.push([132, 50, 95, 130, 300, 300, Particle.WP, Particle.HP]);
+    this.images.push([132, 270, 95, 130, 300, 300, Particle.WP, Particle.HP]);
+    this.images.push([20, 290, 95, 130, 300, 300, Particle.WP, Particle.HP]);
+    this.imgIndex=0
+
+
     this.rays = [];
     this.radius = 10;
     this.speed = 1;
@@ -346,6 +364,17 @@ export default class Agent {
 
     this.acc.setMag(0);
   }
+
+  /**
+   * increment image and animation index
+   */
+   public animate() {
+    this.imgIndex += 0.05;
+
+    
+  }
+
+
   public show(ctx: CanvasRenderingContext2D) {
     if (!this.sleeping) {
       this.ctx.drawImage(
@@ -380,14 +409,52 @@ export default class Agent {
     } else if (this.status === "red") {
       color = "rgb(255, 0, 0)";
     }
-    if (this.mode === "random") {
-      ctx.lineWidth = 1;
-      ctx.fillStyle = color;
-      ctx.beginPath();
-      ctx.arc(this.pos.x, this.pos.y, this.radius, 0, 2 * Math.PI);
-      ctx.stroke();
-      ctx.closePath();
-      ctx.fill();
+    //if (this.mode === "random") {
+      // ctx.lineWidth = 1;
+      // ctx.fillStyle = color;
+      // ctx.beginPath();
+      // ctx.arc(this.pos.x, this.pos.y, this.radius, 0, 2 * Math.PI);
+      // ctx.stroke();
+      // ctx.closePath();
+      // ctx.fill();
+      this.ctx.save();
+    this.ctx.translate(this.pos.x, this.pos.y);
+    this.ctx.rotate(-(this.lastAngle * Math.PI) / 180 + 0.5 * Math.PI);
+    let imageSprite:HTMLImageElement=this.imageSpriteYellow
+    if (this.vel.dist() != 0) {
+     
+      if(this.status==="yellow"){
+        imageSprite=this.imageSpriteYellow
+      }else if(this.status==="orange"){
+        imageSprite=this.imageSpriteOrange
+      }else if(this.status==="red"){
+        imageSprite=this.imageSpriteBlue
+      }
+      this.ctx.drawImage(
+        imageSprite,
+        this.images[Math.ceil(this.imgIndex) % this.images.length][0],
+        this.images[Math.ceil(this.imgIndex) % this.images.length][1],
+        this.images[Math.ceil(this.imgIndex) % this.images.length][2],
+        this.images[Math.ceil(this.imgIndex) % this.images.length][3],
+        -Particle.WP / 2,
+        -Particle.HP / 2,
+        this.images[Math.ceil(this.imgIndex) % this.images.length][6],
+        this.images[Math.ceil(this.imgIndex) % this.images.length][7]
+      );
+    // } else {
+    //   this.ctx.drawImage(
+    //     imageSprite,
+    //     20,
+    //     50,
+    //     95,
+    //     50,
+    //     -Particle.WP / 2,
+    //     -(50 / 2) / 2,
+    //     Particle.WP,
+    //     50 / 2
+    //   );
+    // }
+    this.ctx.restore();
     } else {
       ctx.lineWidth = 1;
       ctx.fillStyle = color;
@@ -399,7 +466,7 @@ export default class Agent {
     }
 
     for (let i = 0; i < this.raysEnd.length; i++) {
-        ctx.strokeStyle=colorSight
+        ctx.strokeStyle="rgb(255,255,255,0.3)"
       ctx.beginPath();
       ctx.moveTo(this.pos.x, this.pos.y);
       ctx.lineTo(
