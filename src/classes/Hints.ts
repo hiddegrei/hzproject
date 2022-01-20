@@ -64,7 +64,7 @@ export default class Hints extends InfoDisplay {
         gotit = true;
       }
     }
-    this.scene.progress.increaseProgress(10);
+    // this.scene.progress.increaseProgress(10);
   }
 
   public getHint() {

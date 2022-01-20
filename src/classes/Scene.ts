@@ -1,4 +1,5 @@
 import Game from "./Game";
+import UserData from "./UserData";
 import Border from "./Border";
 import Particle from "./Particle";
 import Level1map from "./Level1map";
@@ -7,7 +8,6 @@ import Vector from "./Vector";
 import KeyboardListener from "./KeyboardListener";
 import Camera from "./Camera";
 import Agent from "./Agent";
-import Progress from "./Progress";
 import Room from "./Room";
 import Keys from "./Keys";
 import Hints from "./Hints";
@@ -16,6 +16,8 @@ import CameraAgent from "./CameraAgent";
 import DarkSpot from "./DarkSpot";
 
 export default class Scene {
+  public userData: UserData;
+
   public canvas: HTMLCanvasElement;
 
   public static readonly POINTS_WIN_MG = 100;
@@ -60,8 +62,6 @@ export default class Scene {
   private agents: Array<Agent> = [];
 
   private time: number;
-
-  public progress: Progress;
 
   private roomsIds: Array<any> = [];
 
@@ -111,6 +111,7 @@ export default class Scene {
    * @param game
    */
   constructor(canvas: HTMLCanvasElement, game: Game, time: number) {
+    this.userData = new UserData();
     this.canvas = canvas;
     this.canvas.width = 1920;
     this.testImg = Game.loadNewImage("./img/objects/gold_trophytest.png");
@@ -142,8 +143,6 @@ export default class Scene {
     document.onkeydown = this.checkKeyScene.bind(this);
 
     this.game = game;
-
-    this.progress = new Progress();
 
     this.room = new Room(0, this.ctx, this, this.canvas);
     this.hints = this.room.getHintsGame();
@@ -265,10 +264,6 @@ export default class Scene {
     // this.particle.update(window.event.clientX,window.event.clientY)
     this.mouse = this.camera.toWorld(e.clientX, e.clientY);
     //console.log(this.mouse)
-  }
-
-  public getProgress() {
-    return this.progress;
   }
 
   public legalInsideRoom(): boolean {
@@ -396,7 +391,7 @@ export default class Scene {
       this.count++;
 
       //render info on top
-      this.sceneInfo.renderInfo(this.game.userData.timeLimit, this.score.scoreProperty, this.progress.progressNum, this.hints, this.trans);
+      this.sceneInfo.renderInfo(this.userData.timeLimit, this.score.scoreProperty, this.userData.progress, this.hints, this.trans);
 
       //show the keys on top screen
       this.keys.show(this.ctx, this.trans);
@@ -553,13 +548,13 @@ export default class Scene {
    */
   public updateTime(elapsed: number) {
     if (this.time >= 1000) {
-      this.game.userData.decreaseTimeLimit(elapsed);
+      this.userData.decreaseTimeLimit(elapsed);
       this.time = 0;
     } else {
       this.time += elapsed;
     }
     //tijd om ? game over, score naar database
-    if (this.game.userData.timeLimit <= 0) {
+    if (this.userData.timeLimit <= 0) {
       // this.scoreToDatabase.update(this.score.scoreProperty);
       this.game.isEnd = true;
     }

@@ -1,6 +1,5 @@
 import EndGame from "./EndGame";
 import GameLoop from "./GameLoop";
-import UserData from "./UserData";
 import Scene from "./Scene";
 
 export default class Game {
@@ -14,14 +13,11 @@ export default class Game {
 
   public isEnd: boolean | undefined;
 
-  public userData: UserData;
-
   /**
    * @param canvas
    */
   constructor(canvas: any, time: number) {
     this.canvas = canvas as HTMLCanvasElement;
-    this.userData = new UserData();
     this.scene = new Scene(this.canvas, this, time);
     this.gameLoop = new GameLoop(this);
     this.endGame = new EndGame(this.canvas, this, this.scene);
