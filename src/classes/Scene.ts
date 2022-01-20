@@ -1,23 +1,18 @@
 import Game from "./Game";
 import Border from "./Border";
-import Ray from "./Ray";
 import Particle from "./Particle";
 import Level1map from "./Level1map";
 import Score from "./Score";
-import EndGame from "./EndGame";
 import Vector from "./Vector";
 import KeyboardListener from "./KeyboardListener";
 import Camera from "./Camera";
-import TimeLimit from "./TimeLimit";
 import Agent from "./Agent";
 import Progress from "./Progress";
 import Room from "./Room";
 import Keys from "./Keys";
-import ScoreToDatabase from "./ScoreToDatabase";
 import Hints from "./Hints";
 import SceneInfo from "./SceneInfo";
 import CameraAgent from "./CameraAgent";
-import { transcode } from "buffer";
 import DarkSpot from "./DarkSpot";
 
 export default class Scene {
@@ -36,9 +31,9 @@ export default class Scene {
 
   public borders: Array<Border> = [];
 
-  public particle = <any>{};
+  public particle :any;
 
-  public mouse = <any>{};
+  public mouse : any;
 
   public level: Level1map;
 

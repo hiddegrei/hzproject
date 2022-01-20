@@ -20,6 +20,7 @@ import Hints from "./Hints";
 import MiniGameC from "./minigames/MiniGameC";
 import MiniGameShop from "./minigames/MiniGameShop";
 import DarkSpot from "./DarkSpot";
+import Security from "./minigames/SecurityRoom";
 
 export default class Room {
   private static readonly TIMEOUT_ROOMS=40000
@@ -47,6 +48,7 @@ export default class Room {
     private minigameC:MiniGameC;
     private minigameP:MiniGameP
     private minigameShop:MiniGameShop;
+    private securityRoom:Security;
     public hints: Hints;
 
     public miniGameFinished:boolean
@@ -89,6 +91,7 @@ export default class Room {
         this.minigameC=new MiniGameC(this.ctx,this,this.canvas)
         this.minigameP=new MiniGameP(this.ctx,this, this.canvas)
         this.minigameShop=new MiniGameShop(this.ctx,this, this.canvas)
+        this.securityRoom = new Security(this.ctx,this,this.canvas)
 
         this.miniGameFinished=false
         this.answer=false
@@ -96,7 +99,7 @@ export default class Room {
         
         
 
-        for(let i=0;i<18;i++){
+        for(let i=0;i<19;i++){
             this.visitedRooms[i]=false
             this.timeoutRooms[i]=[0,false]
            
@@ -210,6 +213,8 @@ export default class Room {
           this.minigameP.update(this.scene.lockedUp,elapsed)
         }else if(this.roomId===90){
           this.minigameShop.update(mousex,mousey,elapsed)
+        } else if(this.roomId===15) {
+          this.securityRoom.update(mousex,mousey,elapsed)
         }
        
 
@@ -260,6 +265,8 @@ export default class Room {
           this.minigameC.render()
         }else if(this.roomId===90){
           this.minigameShop.render()
+        } else if(this.roomId===15){
+          this.securityRoom.render()
         }
 
     }
