@@ -23,6 +23,8 @@ export default class Scene {
   public static readonly CAUGHT_AGENTS = 300;
   public static readonly WIN_BOSSLEVEL = 500;
 
+  private countCameraTime: number;
+
   public ctx: CanvasRenderingContext2D;
 
   private sceneInfo: SceneInfo;
@@ -102,6 +104,8 @@ export default class Scene {
 
   private darkSpots: DarkSpot;
 
+  private cameraLive: boolean
+
   // private agentMid:Agent
 
   /**
@@ -131,6 +135,8 @@ export default class Scene {
     this.elapsed = 0;
     this.count = 0;
     this.autoSearch = false;
+    this.countCameraTime = 0;
+    this.cameraLive = true;
 
     this.imgBank = Game.loadNewImage("./img/background/bankheistmap.jpg");
     this.imgFloor = Game.loadNewImage("./img/background/backgroundGamehz.png");
@@ -324,6 +330,20 @@ export default class Scene {
         this.cameraAgents[i].look(this.borders, this.ctx);
       }
       this.isPlayerInSightCameras();
+      if (this.cameraLive !=  true) {
+        this.countCameraTime++;
+        if (this.countCameraTime >= 1000) {
+          for (let i = 0; i < this.cameraAgents.length; i++) {
+
+            this.cameraAgents[i].setActive()
+        
+        
+        
+          }
+          this.cameraLive = true;
+          this.countCameraTime = 0;
+        }
+      }
     }
   }
 
