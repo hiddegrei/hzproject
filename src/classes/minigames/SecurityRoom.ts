@@ -51,10 +51,11 @@ export default class Security extends MGMain {
       	}
         if (this.count>=10) {
             if (this.widthCop>=0) {
-                if (this.widthCop >= 1000) {
-                    this.widthCop = 1004;
+                if (this.widthCop >= 500) {
+                    this.widthCop = 504;
+                    this.room.scene.particle.sendToJail(this.canvas,this.room.scene.level.widthHall)
                     setTimeout(this.answerWrong.bind(this),2000)
-                    // sent player to jail
+                    
                 }
                 this.widthCop -= 2;
             }
@@ -73,12 +74,14 @@ export default class Security extends MGMain {
         this.writeTextToCanvas("Dit is de bewakingskamer!",25,(this.canvas.width/2)-20,this.canvas.height/12,"center","white");
         this.writeTextToCanvas("Houd E ingedrukt om het systeem te hacken",25,(this.canvas.width/2)-20,this.canvas.height/10,"center","white");
         this.writeTextToCanvas(`${this.status}`,25,(this.canvas.width/2)-20,this.canvas.height/2.65,"center","green");
+        this.writeTextToCanvas(`gevaar niveau:`,25,(this.canvas.width/2)-20,this.canvas.height/1.75,"center","white");
         // hacking bar
         this.createRec(500,"rgb(0,0,0)",680,580);
         this.createRec(this.width,"rgb(0,255,0)",680,580);
         // agent bar
-        this.createRec(1000,"rgb(0,0,0)",430,880);
-        this.createRec(this.widthCop,"rgb(255,0,0)",430,880);
+        this.createRec(500,"rgb(0,0,0)",680,880);
+        this.createRec(this.widthCop,`rgb(255,${255-(this.widthCop/2)},0)` ,680,880);
+        
         if (this.width <=150) {
             for (let i = 0; i < 3; i++) {
               this.writeTextToCanvas(`[${Room.randomNumber(0,9)}] [${Room.randomNumber(0,9)}] [${Room.randomNumber(0,9)}] [${Room.randomNumber(0,9)}] [${Room.randomNumber(0,9)}]`, Security.SIZE, Security.DX, Security.DY + (Security.EXTRA * i));
@@ -99,9 +102,9 @@ export default class Security extends MGMain {
             this.writeTextToCanvas(`[6] [8] [1] [0] [4]`, Security.SIZE, Security.DX, Security.DY + (Security.EXTRA * 1));
             this.writeTextToCanvas(`[2] [0] [4] [7] [3]`, Security.SIZE, Security.DX, Security.DY + (Security.EXTRA * 2));
           }
-          if (this.widthCop >= 1000) {
+          if (this.widthCop >= 500) {
               this.allAgentAlert()
-          } else if (this.widthCop >=700) {
+          } else if (this.widthCop >=400) {
             if (this.flash <= 20) {
                 this.redFlash()
                 this.flash++;
@@ -148,10 +151,12 @@ export default class Security extends MGMain {
         if (keycode === 69) {
             if (this.width > 500) {
                 setTimeout(this.answerWrong.bind(this),2000);
-                //Hier de camera's uitschakelen
+                for (let i = 0; i < this.room.scene.cameraAgents.length; i++) {
+                    this.room.scene.cameraAgents[i].setInActive()
+                }
             } else {
                 this.width++;
-                if (this.widthCop>1000) {
+                if (this.widthCop>500) {
                     setTimeout(this.answerWrong.bind(this),2000)
                 } else {
                     this.widthCop += 3;
