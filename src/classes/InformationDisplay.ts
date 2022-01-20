@@ -20,15 +20,8 @@ export default abstract class InfoDisplay {
    * @param color - The color of the text
    * @param alignment - Where to align the text
    */
-  public writeTextToCanvas(
-    text: string,
-    xCoordinate: number,
-    yCoordinate: number,
-    fontSize: number = 20,
-    color: string = 'red',
-    alignment: CanvasTextAlign = 'start',
-  ): void {
-    const ctx = this.canvas.getContext('2d') as CanvasRenderingContext2D;
+  public writeTextToCanvas(text: string, xCoordinate: number, yCoordinate: number, fontSize: number = 20, color: string = "red", alignment: CanvasTextAlign = "start"): void {
+    const ctx = this.canvas.getContext("2d") as CanvasRenderingContext2D;
     ctx.font = `${fontSize}px sans-serif`;
     ctx.fillStyle = color;
     ctx.textAlign = alignment;

@@ -195,8 +195,8 @@ export default class Security extends MGMain {
         ctxAlert.closePath();
         ctxAlert.stroke();
         ctxAlert.fill();
-        this.writeTextToCanvas(`We hebben de inbreker gevonden!`, 25, 300, 100);
-        this.writeTextToCanvas(`Gooi hem in de gevangenis`, 25, 450, 120);
+        this.writeTextToCanvas(`We hebben de inbreker!`, 24, 310, 100,"left","red");
+        this.writeTextToCanvas(`gevonden!`, 24, 320, 120, "left","red");
       }
 
     public allAgentAlert() {
