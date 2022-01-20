@@ -40,6 +40,8 @@ export default class CameraAgent {
   private degrees: number;
   private dirImg: string;
 
+  private active:boolean
+
   constructor(x: number, y: number, ctx: CanvasRenderingContext2D, widthHall: number, sight: number, targetx: number, targety: number, dir: string) {
     this.ctx = ctx;
     this.raysEnd = [];
@@ -50,6 +52,7 @@ export default class CameraAgent {
     this.goldkeyImg = Game.loadNewImage("./img/objects/gold_trophytest.png");
     this.rays = [];
     this.radius = 10;
+    this.active=true
 
     this.angleView = 25;
     this.dir = new Vector(0, 0);
@@ -168,6 +171,16 @@ export default class CameraAgent {
     }
   }
 
+  public setInActive(){
+    this.active=false
+
+  }
+
+  public setActive(){
+    this.active=true
+
+  }
+
   public inSight(particle: Particle, ctx: CanvasRenderingContext2D, borders2: Array<Border>) {
     let borders = [...borders2];
     borders.push(new Border(particle.pos.x, particle.pos.y - particle.radius, particle.pos.x, particle.pos.y + particle.radius, ctx, "particle"));
@@ -212,7 +225,13 @@ export default class CameraAgent {
       rv.setMag(this.sight + 20);
 
       console.log("gotya");
-      return true;
+
+      if(this.active){
+        return true;
+      }else{
+        return false;
+      }
+     
     }
     return false;
   }

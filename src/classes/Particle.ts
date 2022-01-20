@@ -48,8 +48,13 @@ export default class Particle {
 
   private colorSight: string;
 
+  // private canvas:HTMLCanvasElement;
+  // private widthHall:number
+
   constructor(x: number, y: number, ctx: CanvasRenderingContext2D) {
     this.ctx = ctx;
+    // this.canvas=canvas;
+    // this.widthHall=widthHall
     this.pos = new Vector(x, y);
     this.rays = [];
     this.radius = 5;
@@ -126,6 +131,12 @@ export default class Particle {
     this.vel.limit(this.maxspeed);
 
     this.acc.setMag(0);
+  }
+
+  public sendToJail(canvas:HTMLCanvasElement,widthHall:number){
+    this.pos.x = canvas.width / 2 + 18 * widthHall;
+    this.pos.y = 100 + 5 * widthHall;
+
   }
 
   /**

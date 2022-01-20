@@ -419,10 +419,12 @@ export default class Scene {
     }
   }
 
+  
+
   public sendAgents(pos: Vector) {
     for (let i = 0; i < this.agents.length; i++) {
       let dist = Vector.dist(this.agents[i].pos, pos);
-      if (dist < 400) {
+      if (dist < 600) {
         this.agents[i].newTarget(pos);
         this.agents[i].updateMode("camera");
       }
@@ -508,8 +510,7 @@ export default class Scene {
           }
           //player in room
           // this.lockedUp++;
-          this.particle.pos.x = this.canvas.width / 2 + 18 * this.level.widthHall;
-          this.particle.pos.y = 100 + 5 * this.level.widthHall;
+         this.particle.sendToJail(this.canvas,this.level.widthHall)
         }
       }
 
