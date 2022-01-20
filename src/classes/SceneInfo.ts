@@ -5,10 +5,14 @@ import Hints from "./Hints";
 export default class SceneInfo {
   private canvas: HTMLCanvasElement;
   private ctx: CanvasRenderingContext2D;
+  private grd:any;
 
   constructor(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
     this.canvas = canvas;
     this.ctx = ctx;
+    this.grd = ctx.createLinearGradient(0, 90, 0, 100);
+    this.grd.addColorStop(0, "grey");
+    this.grd.addColorStop(1, "rgb(0,0,0,0.5");
   }
 
   public loadAgents(widthHall: number) {
@@ -44,7 +48,7 @@ export default class SceneInfo {
   }
 
   public renderInfo(timeLeft: number, score: number, progressNum: number, hints: Hints, trans: any) {
-    this.ctx.fillStyle = "rgb(105,105,105)";
+    this.ctx.fillStyle = this.grd;
     this.ctx.beginPath();
     this.ctx.rect(0, 0, window.innerWidth, 90 - trans.y);
     this.ctx.closePath();
