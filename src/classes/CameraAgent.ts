@@ -122,6 +122,7 @@ export default class CameraAgent {
       this.ctx.restore();
     }
 
+    if(this.active){
     for (let i = 0; i < this.raysEnd.length; i++) {
       ctx.strokeStyle = "rgb(255,255,255,0.2)";
       ctx.beginPath();
@@ -131,6 +132,7 @@ export default class CameraAgent {
       ctx.closePath();
       ctx.stroke();
     }
+  }
   }
   public look(borders: Array<Border>, ctx: CanvasRenderingContext2D) {
     this.raysEnd = [];
