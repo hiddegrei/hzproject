@@ -6,7 +6,6 @@ export default class Hints extends InfoDisplay {
   public hintsArray: string[];
   private returnHint: string[];
   // private hintFound: string[] = [];
-  //private progress: Progress;
   private scene: Scene;
   public found: any[];
   public test: any;
@@ -24,7 +23,6 @@ export default class Hints extends InfoDisplay {
     for (let i = 0; i < this.hintsArray.length; i++) {
       this.hintsGiven[i] = false;
     }
-    // this.progress = Scene.getProgress()
   }
 
   // public foundHint(hint: string) {
@@ -64,7 +62,7 @@ export default class Hints extends InfoDisplay {
         gotit = true;
       }
     }
-    // this.scene.progress.increaseProgress(10);
+    this.scene.userData.increaseProgress(10);
   }
 
   public getHint() {
