@@ -49,8 +49,7 @@ export default class CameraAgent {
     ctx: CanvasRenderingContext2D,
     widthHall: number,
     sight: number,
-    targetx:number,
-    targety:number
+    angle:number
   ) {
     this.ctx = ctx;
     this.raysEnd = [];
@@ -68,7 +67,8 @@ export default class CameraAgent {
     for (let i = 0; i < 360; i += 90) {
       this.rays.push(new Ray(this.pos, i, this.ctx));
     }
-    this.target = new Vector(targetx, targety);
+    // { x: Math.cos((angle / 360) * 2 * Math.PI), y: Math.sin((angle / 360) * 2 * Math.PI) }
+    this.target = new Vector( Math.cos((angle / 360) * 2 * Math.PI), Math.sin((angle / 360) * 2 * Math.PI));
    
     this.viewRays = [];
     this.sight = 80;

@@ -100,7 +100,10 @@ export default class SceneInfo{
 
       public loadCameras(widthHall:number){
         let array=[]
-        array.push(new CameraAgent(100 - widthHall, 100, this.ctx, widthHall, 80, 100 + widthHall, 100 + widthHall))
+        array.push(new CameraAgent(100 - widthHall, 100, this.ctx, widthHall, 80, 180))
+        array.push(new CameraAgent(100 +17* widthHall, 100+5*widthHall, this.ctx, widthHall, 80, 100))
+        array.push(new CameraAgent(100 +22* widthHall+5, 100, this.ctx, widthHall, 80, 220))
+        array.push(new CameraAgent(100 +33* widthHall+5, 100, this.ctx, widthHall, 80, 220))
 
         return array
 
