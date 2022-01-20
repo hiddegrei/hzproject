@@ -149,7 +149,7 @@ export default class Security extends MGMain {
 	 */
      private checkKeyboard(keycode: number){
         if (keycode === 69) {
-            if (this.width > 500) {
+            if (this.width >= 500) {
                 setTimeout(this.answerWrong.bind(this),2000);
                 for (let i = 0; i < this.room.scene.cameraAgents.length; i++) {
                     this.room.scene.cameraAgents[i].setInActive()
