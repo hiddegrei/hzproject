@@ -19,7 +19,7 @@ export default class MiniGame9 extends MGMain {
    * @param canvas canvas
    */
   constructor(ctx: CanvasRenderingContext2D, room: Room, canvas: HTMLCanvasElement) {
-    super(4, room, ctx, canvas);
+    super(9, room, ctx, canvas);
     this.counter = [0, 0, 0];
     this.increase = true;
     this.line = 1;

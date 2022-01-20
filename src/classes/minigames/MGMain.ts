@@ -107,6 +107,12 @@ export default class MGMain {
   public answerWrong() {
     this.room.answer = false;
     this.room.miniGameFinished = true;
+    this.complete=null
+    this.attempts = 5;
+    this.foundStr = "";
+    this.attemptsArr = [];
+    this.complete = null;
+    this.index = 0;
 
     if (this.roomId === 80) {
       this.room.scene.howGameEnded = "outofattempts";

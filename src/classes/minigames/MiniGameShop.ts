@@ -5,7 +5,7 @@ import Particle from "../Particle";
 import Border from "../Border";
 import Vector from "../Vector";
 
-export default class MiniGame0 extends MGMain {
+export default class MiniGameShop extends MGMain {
   /**
    * Create an instance of this object
    * @param ctx canvas rendering context 2D
@@ -13,7 +13,7 @@ export default class MiniGame0 extends MGMain {
    * @param canvas canvas
    */
   constructor(ctx: CanvasRenderingContext2D, room: Room, canvas: HTMLCanvasElement) {
-    super(0, room, ctx, canvas);
+    super(90, room, ctx, canvas);
   }
 
   /**
