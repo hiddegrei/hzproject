@@ -3,7 +3,6 @@ import {db} from "../firebase";
 import {useStateValue} from "../Stateprovider";
 import "../assets/css/Main.css"
 import Game from "../classes/Game";
-import TimeLimit from "../classes/TimeLimit";
 import {useHistory} from "react-router-dom";
 function Main() {
     const[{user,profile,username,password}]=useStateValue();
@@ -19,12 +18,10 @@ function Main() {
             history.push("/login")
         }
         if(username&&password){
-           
-            let timelimit=new TimeLimit(password)
-            time=timelimit.timeLimit
             
 
-            localStorage.setItem("username",profile.username)
+            localStorage.setItem("username", profile.username)
+            localStorage.setItem("password", password)
             
 
         }else{

@@ -1,6 +1,6 @@
 import EndGame from "./EndGame";
 import GameLoop from "./GameLoop";
-
+import UserData from "./UserData";
 import Scene from "./Scene";
 
 export default class Game {
@@ -14,38 +14,24 @@ export default class Game {
 
   public isEnd: boolean | undefined;
 
-  // private usernameProperty: string;
-
-  // private passwordProperty: string;
+  public userData: UserData;
 
   /**
    * @param canvas
    */
   constructor(canvas: any, time: number) {
     this.canvas = canvas as HTMLCanvasElement;
-    // this.usernameProperty = localStorage.getItem('username');
-    // this.passwordProperty = localStorage.getItem('password');
-    // Username and password properties must be initialized before an instance of the scene class is created!
+    this.userData = new UserData();
     this.scene = new Scene(this.canvas, this, time);
     this.gameLoop = new GameLoop(this);
     this.endGame = new EndGame(this.canvas, this, this.scene);
     this.isEnd = false;
   }
 
-  // public get username() {
-  //   return this.usernameProperty;
-  // }
-
-  // public get password() {
-  //   return this.passwordProperty;
-  // }
-
   /**
    *
    */
   public start() {
-    // console.log(`Username: ${this.username}`);
-    // console.log(`Password: ${this.password}`);
     this.gameLoop.start();
   }
 

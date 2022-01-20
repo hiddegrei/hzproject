@@ -61,8 +61,6 @@ export default class Scene {
 
   private time: number;
 
-  private timeLeft: number;
-
   public progress: Progress;
 
   private roomsIds: Array<any> = [];
@@ -192,9 +190,6 @@ export default class Scene {
     this.mouse = { x: 0, y: 0 };
 
     // window.addEventListener("mousemove",this.mouseDown.bind(this), false)
-
-    //this.timeLimit = new TimeLimit(this.game.password);
-    this.timeLeft = time;
 
     this.time = 0;
   }
@@ -401,7 +396,7 @@ export default class Scene {
       this.count++;
 
       //render info on top
-      this.sceneInfo.renderInfo(this.timeLeft, this.score.scoreProperty, this.progress.progressNum, this.hints, this.trans);
+      this.sceneInfo.renderInfo(this.game.userData.timeLimit, this.score.scoreProperty, this.progress.progressNum, this.hints, this.trans);
 
       //show the keys on top screen
       this.keys.show(this.ctx, this.trans);
@@ -558,13 +553,13 @@ export default class Scene {
    */
   public updateTime(elapsed: number) {
     if (this.time >= 1000) {
-      this.timeLeft -= 1;
+      this.game.userData.decreaseTimeLimit(elapsed);
       this.time = 0;
     } else {
       this.time += elapsed;
     }
     //tijd om ? game over, score naar database
-    if (this.timeLeft <= 0) {
+    if (this.game.userData.timeLimit <= 0) {
       // this.scoreToDatabase.update(this.score.scoreProperty);
       this.game.isEnd = true;
     }

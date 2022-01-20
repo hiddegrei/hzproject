@@ -1,8 +1,8 @@
-import TimeLimit from "./TimeLimit";
-import Progress from "./Progress.js";
+import Progress from "./Progress";
+import PasswordMeter from './PasswordStrengthChecker';
 
 export default class UserData{
-    private timeLimitProperty: TimeLimit;
+    private timeLimitProperty: number;
 
     private progressProperty: Progress;
 
@@ -12,10 +12,10 @@ export default class UserData{
 
     public constructor() {
     // public constructor(username: string, password: string) {
-    this.timeLimitProperty = new TimeLimit(this.password);
     this.progressProperty = new Progress();
     this.usernameProperty = localStorage.getItem('username') as string;
     this.passwordProperty = localStorage.getItem('password') as string;
+    this.timeLimitProperty = new PasswordMeter().getResult(this.passwordProperty).score * 500;
     }
 
     public get username(): string {
@@ -27,7 +27,11 @@ export default class UserData{
     }
 
     public get timeLimit(): number {
-        return this.timeLimitProperty.timeLimit;
+        return this.timeLimitProperty;
+    }
+
+    public decreaseTimeLimit(miliseconds: number) {
+        this.timeLimitProperty -= miliseconds;
     }
 
     public get progress(): number {
