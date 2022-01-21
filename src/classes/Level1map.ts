@@ -286,8 +286,7 @@ export default class Level1map {
       this.makeBlock(this.canvas.width / 2 + 13 * this.widthHall, 300 + 8 * this.widthHall, 2 * this.widthHall, 2 * this.widthHall)[3],
 
       [this.canvas.width / 2 + 14 * this.widthHall, 300 + 11 * this.widthHall, this.canvas.width / 2 + 15 * this.widthHall, 300 + 11 * this.widthHall],
-      // this.makeHallV((this.canvas.width / 2) +   15*this.widthHall,300+11 * this.widthHall,this.widthHall)[0],
-      // this.makeHallV((this.canvas.width / 2) +   15*this.widthHall,300+11 * this.widthHall,this.widthHall)[1],
+      
       this.turnDR(this.canvas.width / 2 + 15 * this.widthHall, 300 + 11 * this.widthHall)[0],
       this.turnDR(this.canvas.width / 2 + 15 * this.widthHall, 300 + 11 * this.widthHall)[1],
       this.turnDR(this.canvas.width / 2 + 15 * this.widthHall, 300 + 11 * this.widthHall)[2],
@@ -405,15 +404,18 @@ export default class Level1map {
       //wall rechts voor prison room
       [this.canvas.width / 2 + 18 * this.widthHall, 100 + 3 * this.widthHall, this.canvas.width, 100 + 3 * this.widthHall],
 
+      // this.makeHallV((this.canvas.width / 2) +   15*this.widthHall,300+11 * this.widthHall,this.widthHall)[0],
+      // this.makeHallV((this.canvas.width / 2) +   15*this.widthHall,300+11 * this.widthHall,this.widthHall)[1],
+
       //gangdown left
-      [this.canvas.width / 2 - 11 * this.widthHall, 100 + 16 * this.widthHall, this.canvas.width / 2 - 10 * this.widthHall, 100 + 16 * this.widthHall],
+       [this.canvas.width / 2 - 11 * this.widthHall, 100 + 16 * this.widthHall, this.canvas.width / 2 - 10 * this.widthHall, 100 + 16 * this.widthHall],
       this.makeHallV(this.canvas.width / 2 - 11 * this.widthHall, 100 + 17 * this.widthHall, 3 * this.widthHall)[0],
       this.makeHallV(this.canvas.width / 2 - 11 * this.widthHall, 100 + 17 * this.widthHall, 3 * this.widthHall)[1],
 
       //gangdown right
       this.makeHallH(this.canvas.width / 2 + 5 * this.widthHall, 300 + 12 * this.widthHall, 2 * this.widthHall)[0],
       this.makeHallH(this.canvas.width / 2 + 5 * this.widthHall, 300 + 12 * this.widthHall, 2 * this.widthHall)[1],
-      [this.canvas.width / 2 + 7 * this.widthHall, 300 + 12 * this.widthHall, this.canvas.width / 2 + 8 * this.widthHall, 300 + 12 * this.widthHall],
+       [this.canvas.width / 2 + 7 * this.widthHall, 300 + 12 * this.widthHall, this.canvas.width / 2 + 8 * this.widthHall, 300 + 12 * this.widthHall],
       this.makeHallV(this.canvas.width / 2 + 7 * this.widthHall, 300 + 13 * this.widthHall, 2 * this.widthHall)[0],
       this.makeHallV(this.canvas.width / 2 + 7 * this.widthHall, 300 + 13 * this.widthHall, 2 * this.widthHall)[1],
     ];
@@ -626,7 +628,14 @@ export default class Level1map {
 
   public showRoomIds(room: Room) {
     for (let i = 0; i < this.rooms.length; i++) {
-      if (this.rooms[i][2] != "100" && room.visitedRooms[+this.rooms[i][2]] != true && room.timeoutRooms[i][1] != true) {
+      if(this.rooms[i][2] ==="15"){
+        this.writeTextToCanvas("Bewakings kamer", 15, this.rooms[i][0]-10, this.rooms[i][1] );
+
+      }else if(this.rooms[i][2] === "100"){
+        this.writeTextToCanvas("Grote kluis", 20, this.rooms[i][0], this.rooms[i][1] - 20,"start","white");
+
+      }
+      else if (this.rooms[i][2] != "100" && room.visitedRooms[+this.rooms[i][2]] != true && room.timeoutRooms[i][1] != true) {
         this.ctx.lineWidth = 1;
         this.ctx.fillStyle = "rgb(255,0,0)";
         this.ctx.beginPath();

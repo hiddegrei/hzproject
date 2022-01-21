@@ -125,7 +125,7 @@ export default class Scene {
     this.canvas = canvas;
     this.canvas.width = 1920;
     this.testImg = Game.loadNewImage("./img/objects/gold_trophytest.png");
-    this.canvas.height = 1500;
+    this.canvas.height =920 ;
     this.playerRadius = 200;
     this.timeTurnAroundAgents = 0;
     this.ctx = this.canvas.getContext("2d") as CanvasRenderingContext2D;
@@ -134,7 +134,7 @@ export default class Scene {
     this.currentTrans = new Vector(0, 0);
     this.sceneInfo = new SceneInfo(this.canvas, this.ctx);
     // this.canvas.width = window.innerWidth;
-    // this.canvas.height = window.innerHeight;
+    this.canvas.height = window.innerHeight;
     this.keyboard = new KeyboardListener();
     this.insideRoom = false;
     this.inRoomNum = -1;
@@ -182,7 +182,7 @@ export default class Scene {
     // this.border= new Border(300,50,300,200,this.ctx)
     // this.ray=new Ray(50,150, this.ctx)
 
-    this.particle = new Particle(this.canvas.width / 2 - 9.5 * this.level.widthHall, 100 + 4 * this.level.widthHall, this.ctx);
+    this.particle = new Particle(this.canvas.width / 2 - 12.5 * this.level.widthHall, 100 + 7.5 * this.level.widthHall, this.ctx);
 
     this.agents = this.sceneInfo.loadAgents(this.level.widthHall);
 
@@ -293,7 +293,7 @@ export default class Scene {
       document.onmousemove = this.mouseDown.bind(this);
       this.specialCasesMinigame();
     } else {
-      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    
       //tijd aftellen
       this.updateTime(elapsed);
       // transform canvas en camera
@@ -352,6 +352,7 @@ export default class Scene {
     if (this.legalInsideRoom()) {
       this.room.render();
     } else {
+      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
       this.ctx.drawImage(this.imgFloor, 0, 0, this.imgFloor.width, this.imgFloor.height, 0, 0, this.canvas.width, this.canvas.height);
       // create dark spots
       this.darkSpots.createAll();
@@ -378,17 +379,7 @@ export default class Scene {
       for (let i = 0; i < this.cameraAgents.length; i++) {
         this.cameraAgents[i].show(this.ctx);
       }
-      if (this.elapsed >= 100000) {
-        this.allAgentAlert();
-        if (this.elapsed >= 104000) {
-          this.elapsed = 0;
-          for(let i=2;i<this.agents.length;i++){
-            this.agents[i].updateMode("search");
-          }
-          this.count = 0;
-          this.autoSearch = true;
-        }
-      }
+      
       if (this.count >=1000 && this.autoSearch === true) {
         for(let i=2;i<this.agents.length;i++){
           this.agents[i].updateMode("random");
@@ -403,6 +394,17 @@ export default class Scene {
 
       //show the keys on top screen
       this.keys.show(this.ctx, this.trans);
+      if (this.elapsed >= 100000) {
+        this.allAgentAlert();
+        if (this.elapsed >= 104000) {
+          this.elapsed = 0;
+          for(let i=2;i<this.agents.length;i++){
+            this.agents[i].updateMode("search");
+          }
+          this.count = 0;
+          this.autoSearch = true;
+        }
+      }
     }
   }
 
@@ -590,9 +592,10 @@ export default class Scene {
     if (isMiniGameComplete === -1) {
       //this.totalScore-=Scene.POINTS_LOSS_MG
       this.score.miniGameLossed();
+      this.keys.total--;
     }
 
-    if (isMiniGameComplete != 80 && isMiniGameComplete != 100 && isMiniGameComplete != 101 && isMiniGameComplete != 81 && isMiniGameComplete != 90 && isMiniGameComplete != false) {
+    if (isMiniGameComplete != 80 && isMiniGameComplete != 100 && isMiniGameComplete != 101 && isMiniGameComplete != 81 && isMiniGameComplete != 90 && isMiniGameComplete != false&&isMiniGameComplete!=-1) {
       this.room.answer = false;
       this.room.miniGameFinished = false;
       // this.totalScore++;

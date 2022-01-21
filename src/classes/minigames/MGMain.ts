@@ -91,6 +91,7 @@ export default class MGMain {
       this.started = false;
       this.loadInfo()
       this.bezig=true
+      this.bezig2=true
 
   }
   /**
@@ -103,14 +104,12 @@ export default class MGMain {
       this.room.answer = true;
       this.room.miniGameFinished = true;
       this.room.mgTimeLeft = this.timeLeft;
-      if (this.roomId === 80) {
-        this.loadInfo();
-        this.attempts = 5;
-        this.foundStr = "";
-        this.attemptsArr = [];
-        this.complete = null;
-        this.index = 0;
-      }
+      this.attempts = 5;
+      this.foundStr = "";
+      this.attemptsArr = [];
+      this.complete = null;
+      this.index = 0;
+      this.started=true
     }
 
     //   this.room.getHintsGame().foundHint('R');
@@ -131,13 +130,13 @@ export default class MGMain {
     this.complete = null;
     this.index = 0;
     this.foundedArray=[]
-    this.started=false
-    this.loadInfo()
+    // this.loadInfo()
 
     if (this.roomId === 80) {
       this.room.scene.howGameEnded = "outofattempts";
       this.room.scene.game.isEnd = true;
     }
+    this.started=true
   }
   }
 
@@ -145,7 +144,7 @@ export default class MGMain {
     this.timeLeft -= elapsed;
   }
   public renderTime() {
-    this.writeTextToCanvas(`Time left: ${Math.round(this.timeLeft / 1000)}`, 20, 100, 60);
+    this.writeTextToCanvas(`Time left: ${Math.round(this.timeLeft / 1000)}`, 20, 100, 60,"rgb(0,255,0)");
   }
 
   public alreadyFound(i: number) {
