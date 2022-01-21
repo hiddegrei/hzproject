@@ -8,12 +8,12 @@ export default class ScoreToDatabase {
    * @param score totalscore of current game
    */
   public update(score: number) {
-    console.log(score);
+    // console.log(score);
     let data: firebase.firestore.DocumentData | undefined;
     //db.collection("users").doc()
     //const[{user,username,password}]=useStateValue();
     let username = localStorage.getItem("username");
-    console.log(username);
+    // console.log(username);
     if (username) {
       db.collection("users")
         .doc(username)

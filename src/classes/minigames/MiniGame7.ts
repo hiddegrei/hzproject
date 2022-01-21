@@ -104,7 +104,7 @@ export default class MiniGame7 extends MGMain {
    * @param e Key pressed
    */
   public checkLocks(e: any) {
-    console.log(e.keyCode);
+    // console.log(e.keyCode);
     this.lockposition(e.keyCode);
     this.locknumber(e.keyCode);
   }
@@ -116,7 +116,7 @@ export default class MiniGame7 extends MGMain {
     for (let i = 0; i < Room.randomNumber(1, 4); i++) {
       this.combination.push(Room.randomNumber(0, 9));
     }
-    console.log(this.combination);
+    // console.log(this.combination);
   }
 
   /**
@@ -126,7 +126,7 @@ export default class MiniGame7 extends MGMain {
     for (let i = 0; i < this.combination.length; i++) {
       this.wheels[i] = 0;
     }
-    console.log(this.wheels);
+    // console.log(this.wheels);
   }
 
   /**

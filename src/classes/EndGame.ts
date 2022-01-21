@@ -60,7 +60,7 @@ export default class EndGame extends InfoDisplay {
   }
 
   private getData() {
-    console.log("i get the data");
+    // console.log("i get the data");
     db.collection("users")
       .orderBy("highscore", "desc")
       .limit(10)
