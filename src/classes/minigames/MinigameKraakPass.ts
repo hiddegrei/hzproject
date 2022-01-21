@@ -2,7 +2,7 @@ import Room from "../Room";
 import MGMain from "./MGMain";
 import Game from "../Game";
 
-export default class MiniGame12 extends MGMain {
+export default class MiniGameKraakPass extends MGMain {
   /**
    * Create an instance of this object
    * @param ctx canvas rendering context 2D
@@ -10,7 +10,7 @@ export default class MiniGame12 extends MGMain {
    * @param canvas canvas
    */
   constructor(ctx: CanvasRenderingContext2D, room: Room, canvas: HTMLCanvasElement) {
-    super(12, room, ctx, canvas);
+    super(2, room, ctx, canvas);
   }
 
   /**
@@ -20,12 +20,11 @@ export default class MiniGame12 extends MGMain {
     this.ctx.clearRect(0, 0, this.room.canvas.width, this.room.canvas.height);
     this.timer(elapsed);
     if (this.started) {
-    //   document.onkeydown = this.checkKey.bind(this);
-    //   this.started = false;
-	this.startGame()
+      
+      this.startGame()
     }
 
-    if (this.timeLeft <= 0) {
+    if (this.timeLeft < 0) {
       this.complete = 5;
       setTimeout(this.answerWrong.bind(this), 2000);
     }
@@ -35,9 +34,10 @@ export default class MiniGame12 extends MGMain {
    * Functie om de minigame te renderen
    */
   public render() {
-    // this.ctx.drawImage(this.image, 0, 0, this.image.width, this.image.height, 0, 0, window.innerWidth, window.innerHeight);
-	if(this.found){
-    this.renderAttemptsBlock();
+    // this.ctx.drawImage(this.image, 0, 0, this.image.width, this.image.height, 0, 0, window.innerWidth, window.innerHeight)
+
+    if(this.found){
+      this.renderAttemptsBlock();
     this.renderInfoBlock();
     this.renderPassBlocks();
     this.renderStreepIndex();
@@ -45,6 +45,8 @@ export default class MiniGame12 extends MGMain {
 
     //timer
     this.renderTime();
-	}
+
+    }
+    
   }
 }
