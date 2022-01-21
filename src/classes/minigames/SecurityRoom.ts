@@ -32,7 +32,7 @@ export default class Security extends MGMain {
     	super(15, room, ctx, canvas);
         this.width = 0;
         this.widthCop = 10;
-        this.status = `Hacking: ${Math.round(this.width/5)}%`;
+        this.status = `Hacking: ${Math.floor(this.width/5)}%`;
         this.testImg = Room.loadNewImage("./img/objects/gold_trophytest.png");
         this.flash = 1;
         this.count = 0;
@@ -149,7 +149,7 @@ export default class Security extends MGMain {
 	 */
      private checkKeyboard(keycode: number){
         if (keycode === 69) {
-            if (this.width > 500) {
+            if (this.width >= 500) {
                 setTimeout(this.answerWrong.bind(this),2000);
                 for (let i = 0; i < this.room.scene.cameraAgents.length; i++) {
                     this.room.scene.cameraAgents[i].setInActive()
