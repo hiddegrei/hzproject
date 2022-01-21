@@ -1,4 +1,5 @@
 import PasswordMeter from './PasswordStrengthChecker';
+import Scene from './Scene';
 
 export default class UserData{
     private timeLimitProperty: number;
@@ -9,11 +10,14 @@ export default class UserData{
 
     private passwordProperty: string;
 
-    public constructor() {
-    this.progressProperty = 0
+    private scene: Scene;
+
+    public constructor(scene: Scene) {
+    this.progressProperty = 0;
     this.usernameProperty = localStorage.getItem('username') as string;
     this.passwordProperty = localStorage.getItem('password') as string;
     this.timeLimitProperty = new PasswordMeter().getResult(this.passwordProperty).score * 500;
+    this.scene = scene;
     }
 
     public get username(): string {
@@ -30,6 +34,7 @@ export default class UserData{
 
     public decreaseTimeLimit(miliseconds: number) {
         this.timeLimitProperty -= miliseconds;
+        this.scene.hud.updateHUD();
     }
 
     public get progress(): number {

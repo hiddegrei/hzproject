@@ -49,8 +49,6 @@ history.push("/start")
            
                 
                 <canvas width="400px" height="400px" id="canvas"></canvas>
-                <div className="hud" id="progressBar"></div>
-    <div className="hud" id="progress">Voortgang: <span id="progressNumber"></span>%</div>
             
         </div>
     )

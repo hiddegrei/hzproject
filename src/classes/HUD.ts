@@ -1,7 +1,17 @@
+import Scene from "./Scene";
+
 export default class HUD {
     private isShown: boolean;
 
-    public constructor() {
+    private scene: Scene;
+
+    // private htmlElementArray: [string, string, string, string][];
+
+    public constructor(scene: Scene) {
+        this.scene = scene;
+        // this.htmlElementArray = [
+        //     ['class', 'id', 'style', 'content'],
+        // ]
         if (document.querySelectorAll('.hud').length === 0) {
             this.isShown = false;
         } else if (document.querySelectorAll('.hud').length === 4) {
@@ -22,7 +32,6 @@ export default class HUD {
         if (this.isShown) {
             //
         } else {
-            this.isShown = true;
             document.querySelector('canvas')?.insertAdjacentHTML('beforebegin',
             `
             <div class="hud" id="timeLimit">Tijd resterend: <span></span> seconden</div>
@@ -30,39 +39,51 @@ export default class HUD {
             <div class="hud" id="progressBar"></div>
             <div class="hud" id="progress">Voortgang: <span></span>%</div>
             `)
+            this.isShown = true;
         }
         this.updateHUD();
     }
 
     public removeHUD() {
         if (this.isShown) {
-            //
-        } else {
-            this.isShown = false;
             document.querySelectorAll('div.hud').forEach((element) => {element.remove();});
+            this.isShown = false;
+        } else {
+            //
         }
     }
 
     public toggleHUD() {
-        this.isShown = !this.isShown;
         if (this.isShown) {
             this.displayHUD();
         } else {
             this.removeHUD();
         }
+        this.isShown = !this.isShown;
     }
 
     public updateHUD() {
-        // document.querySelector<HTMLElement>('#progressBar').style.background = `linear-gradient(90deg, rgb(0, 255, 0) 0%, rgba(0,255,0) ${this.progress}%, rgba(255,0,0) ${this.progress}%, rgba(255,0,0) 100%)`;    
-        // document.querySelector<HTMLElement>('#progress span').innerText = JSON.stringify(this.progress);
-        // document.querySelector('div#timeLimit.hud span').innerHTML = (JSON.stringify(Math.floor(this.timeLeft / 1000)));
-        // document.querySelector('div#score.hud span').innerHTML = JSON.stringify(this.totalScore); //TODO goede score
-        // document.querySelector<HTMLElement>('#progressBar').style.background = `linear-gradient(90deg, rgb(0, 255, 0) 0%, rgba(0,255,0) ${this.progress}%, rgba(255,0,0) ${this.progress}%, rgba(255,0,0) 100%)`;    
-        // document.querySelector<HTMLElement>('#progress span').innerText = JSON.stringify(this.progress);
-        // document.querySelector('div#timeLimit.hud span').innerHTML = (JSON.stringify(Math.floor(this.timeLeft / 1000)));
-        // document.querySelector('div#score.hud span').innerHTML = JSON.stringify(this.totalScore); //TODO goede score
-        // console.warn(this.timeLimit);
-        // console.warn(this.progress);
-        // console.warn(this.score);
+        // if (document.querySelectorAll('#progressBar').length === 1) {
+        //     document.querySelectorAll as('#progressBar')[0].style.background = `linear-gradient(90deg, rgb(0, 255, 0) 0%, rgba(0,255,0) ${this.scene.userData.progress}%, rgba(255,0,0) ${this.scene.userData.progress}%, rgba(255,0,0) 100%)`;
+        // } else {
+        //     console.error();
+        // }
+        // document.querySelectorAll('#progressBar').forEach((element, index, array) => { 
+        //     if (array.length !== 1) {
+        //         console.error('');
+        //     }
+        //     element.style.background = `linear-gradient(90deg, rgb(0, 255, 0) 0%, rgba(0,255,0) ${this.scene.userData.progress}%, rgba(255,0,0) ${this.scene.userData.progress}%, rgba(255,0,0) 100%)`;
+        // } )
+        // document.querySelectorAll('#progressBar')[0].style.background = `linear-gradient(90deg, rgb(0, 255, 0) 0%, rgba(0,255,0) ${this.scene.userData.progress}%, rgba(255,0,0) ${this.scene.userData.progress}%, rgba(255,0,0) 100%)`;
+        // document.querySelectorAll('#progress span')[0].innerText = JSON.stringify(this.scene.userData.progress);
+        // document.querySelectorAll('div#timeLimit.hud span')[0].innerHTML = (JSON.stringify(Math.floor(this.scene.userData.timeLimit / 1000)));
+        // document.querySelectorAll('div#score.hud span')[0].innerHTML = JSON.stringify(this.scene.score); //TODO goede score
+        (document.querySelector('#progressBar') as HTMLElement).style.background = `linear-gradient(90deg, rgb(0, 255, 0) 0%, rgba(0,255,0) ${this.scene.userData.progress}%, rgba(255,0,0) ${this.scene.userData.progress}%, rgba(255,0,0) 100%)`;    
+        (document.querySelector('#progress span') as HTMLElement).innerText = JSON.stringify(this.scene.userData.progress);
+        (document.querySelector('div#timeLimit.hud span') as HTMLElement).innerHTML = (JSON.stringify(Math.floor(this.scene.userData.timeLimit / 1000)));
+        // (document.querySelector('div#score.hud span') as HTMLElement).innerHTML = JSON.stringify(this.scene.score); //TODO goede score
+        // console.warn(this.scene.userData.timeLimit);
+        // console.warn(this.scene.userData.progress);
+        // console.warn(this.scene.totalScore);
     }
 }

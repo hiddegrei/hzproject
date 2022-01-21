@@ -14,9 +14,12 @@ import Hints from "./Hints";
 import SceneInfo from "./SceneInfo";
 import CameraAgent from "./CameraAgent";
 import DarkSpot from "./DarkSpot";
+import HUD from "./HUD";
 
 export default class Scene {
   public userData: UserData;
+
+  public hud: HUD;
 
   public canvas: HTMLCanvasElement;
 
@@ -111,7 +114,9 @@ export default class Scene {
    * @param game
    */
   constructor(canvas: HTMLCanvasElement, game: Game, time: number) {
-    this.userData = new UserData();
+    this.userData = new UserData(this);
+    this.hud = new HUD(this);
+    this.hud.displayHUD();
     this.canvas = canvas;
     this.canvas.width = 1920;
     this.testImg = Game.loadNewImage("./img/objects/gold_trophytest.png");
@@ -547,17 +552,22 @@ export default class Scene {
    * @param elapsed time passed since last frame
    */
   public updateTime(elapsed: number) {
-    if (this.time >= 1000) {
+    if (this.userData.timeLimit - elapsed >= 0) {
       this.userData.decreaseTimeLimit(elapsed);
-      this.time = 0;
     } else {
-      this.time += elapsed;
-    }
-    //tijd om ? game over, score naar database
-    if (this.userData.timeLimit <= 0) {
-      // this.scoreToDatabase.update(this.score.scoreProperty);
       this.game.isEnd = true;
     }
+    // if (this.time >= 1000) {
+    //   this.userData.decreaseTimeLimit(elapsed);
+    //   this.time = 0;
+    // } else {
+    //   this.time += elapsed;
+    // }
+    //tijd om ? game over, score naar database
+    // if (this.userData.timeLimit <= 0) {
+    //   // this.scoreToDatabase.update(this.score.scoreProperty);
+    //   this.game.isEnd = true;
+    // }
   }
 
   /**
