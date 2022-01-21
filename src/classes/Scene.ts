@@ -117,6 +117,7 @@ export default class Scene {
    * @param game
    */
   constructor(canvas: HTMLCanvasElement, game: Game, time: number) {
+    this.game = game;
     this.userData = new UserData(this);
     this.hud = new HUD(this);
     this.hud.displayHUD();
@@ -150,8 +151,6 @@ export default class Scene {
     this.imgFloor = Game.loadNewImage("./img/background/backgroundGamehz.png");
 
     document.onkeydown = this.checkKeyScene.bind(this);
-
-    this.game = game;
 
     this.room = new Room(0, this.ctx, this, this.canvas);
     this.hints = this.room.getHintsGame();
