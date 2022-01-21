@@ -53,10 +53,7 @@ export default class SceneInfo {
     this.ctx.rect(0, 0, window.innerWidth, 90 - trans.y);
     this.ctx.closePath();
     this.ctx.fill();
-    this.writeTextToCanvas(`time left: ${timeLeft}`, 20, 100, 40 - trans.y);
-    this.writeTextToCanvas(`score: ${score}`, 20, window.innerWidth - 100, 40 - trans.y);
     //draw voortgang
-    this.writeTextToCanvas(`voortgang: ${progressNum}%`, 20, window.innerWidth - 300, 40 - trans.y);
 
     //draw hints
     this.writeTextToCanvas(`Verzamelde hints: `, 30, window.innerWidth / 6, window.innerHeight / 15 - trans.y);

@@ -1,7 +1,7 @@
 import Scene from "./Scene";
 
 export default class HUD {
-    private isShown: boolean;
+    private state!: boolean;
 
     private scene: Scene;
 
@@ -24,8 +24,12 @@ export default class HUD {
         }
     }
 
-    public get state() {
-        return this.isShown;
+    public get isShown() {
+        return this.state;
+    }
+
+    private set isShown(state: boolean) {
+        this.state = state;
     }
 
     public displayHUD() {
@@ -78,10 +82,12 @@ export default class HUD {
         // document.querySelectorAll('#progress span')[0].innerText = JSON.stringify(this.scene.userData.progress);
         // document.querySelectorAll('div#timeLimit.hud span')[0].innerHTML = (JSON.stringify(Math.floor(this.scene.userData.timeLimit / 1000)));
         // document.querySelectorAll('div#score.hud span')[0].innerHTML = JSON.stringify(this.scene.score); //TODO goede score
-        (document.querySelector('#progressBar') as HTMLElement).style.background = `linear-gradient(90deg, rgb(0, 255, 0) 0%, rgba(0,255,0) ${this.scene.userData.progress}%, rgba(255,0,0) ${this.scene.userData.progress}%, rgba(255,0,0) 100%)`;    
-        (document.querySelector('#progress span') as HTMLElement).innerText = JSON.stringify(this.scene.userData.progress);
-        (document.querySelector('div#timeLimit.hud span') as HTMLElement).innerHTML = (JSON.stringify(Math.floor(this.scene.userData.timeLimit / 1000)));
-        // (document.querySelector('div#score.hud span') as HTMLElement).innerHTML = JSON.stringify(this.scene.score); //TODO goede score
+        if (this.isShown) {
+            (document.querySelector('#progressBar') as HTMLElement).style.background = `linear-gradient(90deg, rgb(0, 255, 0) 0%, rgba(0,255,0) ${this.scene.userData.progress}%, rgba(255,0,0) ${this.scene.userData.progress}%, rgba(255,0,0) 100%)`;    
+            (document.querySelector('#progress span') as HTMLElement).innerText = JSON.stringify(this.scene.userData.progress);
+            (document.querySelector('div#timeLimit.hud span') as HTMLElement).innerHTML = (JSON.stringify(Math.floor(this.scene.userData.timeLimit / 1000)));
+            // (document.querySelector('div#score.hud span') as HTMLElement).innerHTML = JSON.stringify(this.scene.score); //TODO goede score
+        }   
         // console.warn(this.scene.userData.timeLimit);
         // console.warn(this.scene.userData.progress);
         // console.warn(this.scene.totalScore);

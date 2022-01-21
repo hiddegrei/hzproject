@@ -15,11 +15,14 @@ import SceneInfo from "./SceneInfo";
 import CameraAgent from "./CameraAgent";
 import DarkSpot from "./DarkSpot";
 import HUD from "./HUD";
+import PlaySound from "./PlaySound";
 
 export default class Scene {
   public userData: UserData;
 
   public hud: HUD;
+
+  public playSound: PlaySound;
 
   public canvas: HTMLCanvasElement;
 
@@ -117,6 +120,7 @@ export default class Scene {
     this.userData = new UserData(this);
     this.hud = new HUD(this);
     this.hud.displayHUD();
+    this.playSound = new PlaySound();
     this.canvas = canvas;
     this.canvas.width = 1920;
     this.testImg = Game.loadNewImage("./img/objects/gold_trophytest.png");
