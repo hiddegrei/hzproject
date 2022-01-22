@@ -33,7 +33,7 @@ export default class GameLoop {
   /**
    * The current state of this gameloop
    */
-  private state: number;
+  public state: number;
 
   /**
    * The game to animate
@@ -104,6 +104,8 @@ export default class GameLoop {
 
   private condition: boolean;
 
+  private isActive: boolean;
+
   /**
    * Construct a new instance of this class.
    *
@@ -116,6 +118,7 @@ export default class GameLoop {
     this.mode = mode;
     this.game = game;
     this.condition = true;
+    this.isActive = true;
   }
 
   /**
@@ -140,6 +143,14 @@ export default class GameLoop {
     this.state = GameLoop.STATE_STOPPING;
   }
 
+  public pause() {
+    this.isActive = false;
+  }
+
+  public unPause() {
+    this.isActive = true;
+  }
+
   /**
    * Returns `true` if the given state exactly matches the current state of
    * this object
@@ -162,6 +173,7 @@ export default class GameLoop {
    *   starts to execute callback functions
    */
   private step = (timestamp: number) => {
+
     // Handle first animation frame
     if (this.isInState(GameLoop.STATE_STARTING)) {
       this.state = GameLoop.STATE_RUNNING;
@@ -169,38 +181,43 @@ export default class GameLoop {
 
     this.game.processInput();
 
-    // Let the game update itself
     let shouldStop = false;
-    if (this.mode === GameLoop.PLAY_CATCH_UP) {
-      const step = 1;
-      while (this.previousElapsed < timestamp && !shouldStop) {
-        shouldStop = this.game.update(step);
-        this.previousElapsed += step;
+
+    if (this.isActive) {
+      // Let the game update itself
+      if (this.mode === GameLoop.PLAY_CATCH_UP) {
+        const step = 1;
+        while (this.previousElapsed < timestamp && !shouldStop) {
+          shouldStop = this.game.update(step);
+          this.previousElapsed += step;
+        }
+      } else {
+        const elapsed = timestamp - this.previousElapsed;
+        shouldStop = this.game.update(elapsed);
+        this.previousElapsed = timestamp;
       }
+
+      // Let the game render itself
+      this.game.render();
     } else {
-      const elapsed = timestamp - this.previousElapsed;
-      shouldStop = this.game.update(elapsed);
       this.previousElapsed = timestamp;
     }
 
-    // Let the game render itself
-    this.game.render();
+      // Check if a next animation frame needs to be requested
+      if (!shouldStop || this.isInState(GameLoop.STATE_STOPPING)) {
+        requestAnimationFrame(this.step);
+      } else {
+        this.state = GameLoop.STATE_IDLE;
+      }
 
-    // Check if a next animation frame needs to be requested
-    if (!shouldStop || this.isInState(GameLoop.STATE_STOPPING)) {
-      requestAnimationFrame(this.step);
-    } else {
-      this.state = GameLoop.STATE_IDLE;
-    }
-
-    // Handle time measurement and analysis
-    const now = performance.now();
-    const stepTime = timestamp - now;
-    const frameTime = now - this.frameEnd;
-    this.fps = Math.round(1000 / frameTime);
-    this.load = stepTime / frameTime;
-    this.frameEnd = now;
-    this.gameTime = now - this.gameStart;
-    this.frameCount += 1;
+      // Handle time measurement and analysis
+      const now = performance.now();
+      const stepTime = timestamp - now;
+      const frameTime = now - this.frameEnd;
+      this.fps = Math.round(1000 / frameTime);
+      this.load = stepTime / frameTime;
+      this.frameEnd = now;
+      this.gameTime = now - this.gameStart;
+      this.frameCount += 1;
   };
 }
