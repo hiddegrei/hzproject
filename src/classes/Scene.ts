@@ -14,6 +14,7 @@ import Hints from "./Hints";
 import SceneInfo from "./SceneInfo";
 import CameraAgent from "./CameraAgent";
 import DarkSpot from "./DarkSpot";
+import SpawnCookie from "./SpawnCookie";
 
 export default class Scene {
   public canvas: HTMLCanvasElement;
@@ -106,6 +107,10 @@ export default class Scene {
 
   private cameraLive: boolean
 
+  private spawnCookie:SpawnCookie;
+
+  private cookieTime:number;
+
   // private agentMid:Agent
 
   /**
@@ -114,6 +119,7 @@ export default class Scene {
    */
   constructor(canvas: HTMLCanvasElement, game: Game, time: number) {
     this.canvas = canvas;
+    this.cookieTime=0
     this.canvas.width = 1920;
     this.testImg = Game.loadNewImage("./img/objects/gold_trophytest.png");
     this.canvas.height =920 ;
@@ -155,6 +161,7 @@ export default class Scene {
     this.totalScore = 0;
     this.borders = [];
     this.level = new Level1map(this.canvas, this.ctx);
+    this.spawnCookie= new SpawnCookie(this.canvas,this.ctx,this.level.widthHall)
     this.darkSpots = new DarkSpot(0, this.ctx, this, this.canvas, this.level.widthHall);
     this.roomsIds = this.level.rooms;
 
@@ -284,6 +291,27 @@ export default class Scene {
     }
   }
 
+  public checkCookie(elapsed:number){
+    if(this.spawnCookie.eaten(this.particle.pos)){
+      this.score.eatCookie()
+    }
+    if(this.spawnCookie.sleeping){
+      if(this.spawnCookie.sleepTime>=30000){
+        this.spawnCookie.sleepTime=0
+        this.spawnCookie.sleeping=false
+      }else{
+        this.spawnCookie.sleepTime+=elapsed
+      }
+    }else{
+      this.cookieTime+=elapsed
+    }
+    if(this.cookieTime>30000){
+      this.spawnCookie.choosePos()
+      this.cookieTime=0
+    }
+
+  }
+
   /**
    * update the scene
    *@param elapsed time passed
@@ -295,7 +323,7 @@ export default class Scene {
       document.onmousemove = this.mouseDown.bind(this);
       this.specialCasesMinigame();
     } else {
-    
+      this.checkCookie(elapsed)
       //tijd aftellen
       this.updateTime(elapsed);
       // transform canvas en camera
@@ -407,6 +435,7 @@ export default class Scene {
           this.autoSearch = true;
         }
       }
+      this.spawnCookie.show()
     }
   }
 

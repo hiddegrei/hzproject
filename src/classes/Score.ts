@@ -5,6 +5,7 @@ export default class Score {
   public static readonly CAUGHT_AGENTS = 300;
   public static readonly WIN_BOSSLEVEL = 500;
   public static readonly SEEN_CAMERAS = 10;
+  public static readonly EAT_COOKIE = 50;
 
   /**
    * score
@@ -53,5 +54,9 @@ export default class Score {
 
   public winBossLevel() {
     this.scoreProperty += Score.WIN_BOSSLEVEL;
+  }
+
+  public eatCookie(){
+    this.scoreProperty += Score.EAT_COOKIE
   }
 }
