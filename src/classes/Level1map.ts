@@ -599,8 +599,15 @@ export default class Level1map {
       [this.canvas.width / 2 + 12 * this.widthHall, 100 + 3 * this.widthHall, this.canvas.width / 2 + 12 * this.widthHall, 100 + 4 * this.widthHall, "nodoor"],
 
       [this.canvas.width / 2 + 16 * this.widthHall, 100, this.canvas.width / 2 + 16 * this.widthHall, 100 + this.widthHall, "nodoor"],
+
+
+      //keep agents in center pad, zonder rondjes
+      [this.canvas.width / 2 +6 * this.widthHall, 100 +  this.widthHall, this.canvas.width / 2 +6 * this.widthHall, 100 + 3 * this.widthHall, "door"],
+
     ];
   }
+
+ 
 
   private loadRooms() {
     this.rooms = [
@@ -635,7 +642,7 @@ export default class Level1map {
         this.writeTextToCanvas("Grote kluis", 20, this.rooms[i][0], this.rooms[i][1] - 20,"start","white");
 
       }
-      else if (this.rooms[i][2] != "100" && room.visitedRooms[+this.rooms[i][2]] != true && room.timeoutRooms[i][1] != true) {
+      else if (this.rooms[i][2] != "100"&&this.rooms[i][2] != "90" && room.visitedRooms[+this.rooms[i][2]] != true && room.timeoutRooms[i][1] != true) {
         this.ctx.lineWidth = 1;
         this.ctx.fillStyle = "rgb(255,0,0)";
         this.ctx.beginPath();
