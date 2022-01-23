@@ -44,8 +44,8 @@ export default class MiniGameP extends MGMain {
   public render() {
     this.ctx.drawImage(this.image, 0, 0, this.image.width, this.image.height, 0, 0, window.innerWidth, window.innerHeight);
 
-    this.writeTextToCanvas("Je bent opgesloten door de bewakers! En de bewakers hebben een wachtwoord op de deur gezet! ", 16, 110, 90);
-    this.writeTextToCanvas("Hack het wachtwoord om vrij te komen", 16, 110, 110);
+    this.writeTextToCanvas("Je bent opgesloten door de bewakers! En de bewakers hebben een wachtwoord op de deur gezet! ", 16, 110, 90, "red");
+    this.writeTextToCanvas("Hack het wachtwoord om vrij te komen", 16, 110, 110, "red");
 
 	if(this.found){
     this.renderAttemptsBlock();
