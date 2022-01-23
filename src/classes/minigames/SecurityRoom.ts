@@ -18,6 +18,8 @@ export default class Security extends MGMain {
     private flash: number;
 
     private count: number;
+
+    private locked: boolean;
   
 
     
@@ -36,6 +38,7 @@ export default class Security extends MGMain {
         this.testImg = Room.loadNewImage("./img/objects/gold_trophytest.png");
         this.flash = 1;
         this.count = 0;
+        this.locked = false;
   	}
 
   	/**
@@ -45,7 +48,7 @@ export default class Security extends MGMain {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.status = `Hacking: ${Math.round(this.width/5)}%`;
 		  this.timer(elapsed)
-      	if(this.started){
+      	if(this.started && this.locked === false){
         	document.onkeydown = this.checkLocks.bind(this);
         	this.started=false;
       	}
@@ -53,6 +56,8 @@ export default class Security extends MGMain {
             if (this.widthCop>=0) {
                 if (this.widthCop >= 500) {
                     this.widthCop = 504;
+                    this.locked = true;
+                    console.log("1");
                     this.room.scene.particle.sendToJail(this.canvas,this.room.scene.level.widthHall)
                     setTimeout(this.answerWrong.bind(this),2000)
                     
@@ -72,15 +77,15 @@ export default class Security extends MGMain {
   	public render() {
         this.ctx.drawImage(Room.loadNewImage("./img/background/product-computer-1.png"),635,300,600,500)
         this.writeTextToCanvas("Dit is de bewakingskamer!",25,(this.canvas.width/2)-20,this.canvas.height/12,"center","white");
-        this.writeTextToCanvas("Houd E ingedrukt om het systeem te hacken",25,(this.canvas.width/2)-20,this.canvas.height/10,"center","white");
-        this.writeTextToCanvas(`${this.status}`,25,(this.canvas.width/2)-20,this.canvas.height/2.65,"center","green");
-        this.writeTextToCanvas(`gevaar niveau:`,25,(this.canvas.width/2)-20,this.canvas.height/1.75,"center","white");
+        this.writeTextToCanvas("Houd E ingedrukt om het systeem te hacken",25,(this.canvas.width/2)-30,this.canvas.height/10 + 10,"center","white");
+        this.writeTextToCanvas(`${this.status}`,25,(this.canvas.width/2)-20,this.canvas.height/1.1,"center","green");
+        this.writeTextToCanvas(`gevaar niveau`,25,(this.canvas.width/6),this.canvas.height/4,"center",`rgb(255,${255-(this.widthCop/2)},0)`);
         // hacking bar
-        this.createRec(500,"rgb(0,0,0)",680,580);
-        this.createRec(this.width,"rgb(0,255,0)",680,580);
+        this.createRec(500,"rgb(0,0,0)",680,580, 50);
+        this.createRec(this.width,"rgb(0,255,0)",680,580, 50);
         // agent bar
-        this.createRec(500,"rgb(0,0,0)",680,880);
-        this.createRec(this.widthCop,`rgb(255,${255-(this.widthCop/2)},0)` ,680,880);
+        this.createRec(50,"rgb(0,0,0)",this.canvas.height/4+ 50,this.canvas.width/2.4, -500);
+        this.createRec(50,`rgb(255,${255-(this.widthCop/2)},0)` ,this.canvas.height/4 + 50,this.canvas.width/2.4, -this.widthCop);
         
         if (this.width <=150) {
             for (let i = 0; i < 3; i++) {
@@ -116,7 +121,7 @@ export default class Security extends MGMain {
         }
     }
 
-    private createRec(width: number, color:string, dx: number, dy:number) {
+    private createRec(width: number, color:string, dx: number, dy:number, height: number) {
         //*******************************************************
         //                       |
         // Change color here     |
@@ -125,7 +130,7 @@ export default class Security extends MGMain {
         this.ctx.strokeStyle = "rgb(0,0,0)";
         this.ctx.fillStyle = color;
         this.ctx.beginPath();
-        this.ctx.rect(dx, dy, width, 50);
+        this.ctx.rect(dx, dy, width, height);
         this.ctx.closePath();
         this.ctx.stroke();
         this.ctx.fill();
@@ -148,7 +153,7 @@ export default class Security extends MGMain {
 	 * @param keycode Key pressed
 	 */
      private checkKeyboard(keycode: number){
-        if (keycode === 69) {
+        if (keycode === 69 && this.locked===false) {
             if (this.width >= 500) {
                 setTimeout(this.answerWrong.bind(this),2000);
                 for (let i = 0; i < this.room.scene.cameraAgents.length; i++) {
@@ -157,6 +162,8 @@ export default class Security extends MGMain {
             } else {
                 this.width++;
                 if (this.widthCop>500) {
+                  this.locked = true;
+                  console.log("2");
                     setTimeout(this.answerWrong.bind(this),2000)
                 } else {
                     this.widthCop += 3;
