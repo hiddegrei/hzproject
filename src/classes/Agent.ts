@@ -64,21 +64,29 @@ export default class Agent {
 
   public canTurnAround: boolean;
 
+  private checkRange: number;
+
   private imageSpriteYellow: HTMLImageElement;
   private imageSpriteOrange: HTMLImageElement;
   private imageSpriteBlue: HTMLImageElement;
   private images: Array<any> = [];
   private imgIndex: number;
 
+  private policeCap:HTMLImageElement
+  private policeCapFlip:HTMLImageElement
+
   constructor(x: number, y: number, ctx: CanvasRenderingContext2D, widthHall: number, mode: string, keyNum: number, status: string) {
     this.ctx = ctx;
     this.raysEnd = [];
+    this.checkRange=6
     this.canTurnAround = false;
     this.keyNum = keyNum;
     this.mode = mode;
     this.pos = new Vector(x, y);
     this.goldkeyImg = Game.loadNewImage("./img/objects/goldkey.png");
 
+    this.policeCap=Game.loadNewImage("./img/objects/policecap.png")
+    this.policeCapFlip=Game.loadNewImage("./img/objects/policecapflip.png")
     this.imageSpriteOrange = Game.loadNewImage("./img/players/bkspr01orange.png");
     this.imageSpriteYellow = Game.loadNewImage("./img/players/bkspr01yellow.png");
     this.imageSpriteBlue = Game.loadNewImage("./img/players/bkspr01blue.png");
@@ -301,7 +309,7 @@ export default class Agent {
           return false;
         }
       } else {
-        if (record > this.widthHall - 6 && this.inv(angle) != this.lastAngle) {
+        if (record > this.widthHall - this.checkRange && this.inv(angle) != this.lastAngle) {
         } else {
           return false;
         }
@@ -344,8 +352,10 @@ export default class Agent {
 
   public show(ctx: CanvasRenderingContext2D) {
     if (!this.sleeping) {
-      this.ctx.drawImage(this.goldkeyImg, 0, 0, this.goldkeyImg.width, this.goldkeyImg.height, this.pos.x - 20, this.pos.y - 35, 30, 30);
+      this.ctx.drawImage(this.goldkeyImg, 0, 0, this.goldkeyImg.width, this.goldkeyImg.height, this.pos.x - 20, this.pos.y - 55, 30, 30);
     }
+   
+   
     //this.writeTextToCanvas(`${this.keyNum}`,20,this.pos.x+15,this.pos.y-10)
     let color = "yellow";
     let colorSight = "blue";
@@ -381,6 +391,13 @@ export default class Agent {
       ctx.stroke();
       ctx.closePath();
       ctx.fill();
+    }
+    if(this.vel.x>0&&this.vel.y===0){
+      this.ctx.drawImage(this.policeCap,0,0,this.policeCap.width,this.policeCap.height,this.pos.x-10,this.pos.y-25,this.radius*2,this.radius*2)
+
+    }else{
+      this.ctx.drawImage(this.policeCapFlip,0,0,this.policeCap.width,this.policeCap.height,this.pos.x-10,this.pos.y-25,this.radius*2,this.radius*2)
+
     }
 
     for (let i = 0; i < this.raysEnd.length; i++) {
