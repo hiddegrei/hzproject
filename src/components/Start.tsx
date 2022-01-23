@@ -42,7 +42,7 @@ function Start(){
         <h2 className="description"> Welkom bij het spel Kraak de Kluis. Je begint het spel als een bankovervaller die een account aanmaakt op het DarkWeb.
              Om dit acccount aan te maken voer je een gebruikersnaam en wachtwoord in zodat je al je gestolen spulletjes kunt verkopen.<br></br>
              <br></br>
-                       Op het moment dat je de bank inloopt gaat er een alarm af. Nu begint je tijd te lopen, omdat de politie al onderweg is.
+                       Op het moment dat je de bank inloopt gaat er een alarm af. Nu begint je tijd te lopen, omdat de politie al onderweg is. Gebruik de muis om over de map te bewegen en zo bij de kluis te komen.
                         Om de kluis te kunnen openen moet je eerst puzzels oplossen. Die zijn verspreidt over het hele level. Maar pas wel
                 op! Er zijn bewakers die naar je opzoek zijn.</h2>
                 <div className='form'>
