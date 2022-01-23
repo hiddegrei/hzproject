@@ -78,7 +78,7 @@ export default class Agent {
   constructor(x: number, y: number, ctx: CanvasRenderingContext2D, widthHall: number, mode: string, keyNum: number, status: string) {
     this.ctx = ctx;
     this.raysEnd = [];
-    this.checkRange=7
+    this.checkRange=6
     this.canTurnAround = false;
     this.keyNum = keyNum;
     this.mode = mode;
@@ -116,7 +116,7 @@ export default class Agent {
     this.endTarget = new Vector(0, 0);
     this.viewRays = [];
     this.sight = 80;
-    this.checkAngle = 9;
+    this.checkAngle = 8;
     this.status = status;
 
     this.hackRange = 80;

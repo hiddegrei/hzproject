@@ -51,22 +51,22 @@ export default class MiniGame9 extends MGMain {
    */
   public render() {
     this.ctx.clearRect(0, 0, this.room.canvas.width, this.room.canvas.height);
-    this.ctx.fillStyle = "white";
-    this.ctx.beginPath();
-    this.ctx.rect(0, 0, window.innerWidth, window.innerHeight);
-    this.ctx.closePath();
-    this.ctx.fill();
+    // this.ctx.fillStyle = "white";
+    // this.ctx.beginPath();
+    // this.ctx.rect(0, 0, window.innerWidth, window.innerHeight);
+    // this.ctx.closePath();
+    // this.ctx.fill();
     // this.ctx.drawImage(this.image, 0, 0, this.image.width, this.image.height, 0, 0, window.innerWidth, window.innerHeight);
     for (let i = 0; i < 3; i++) {
       this.drawLines(i);
     }
     this.moveLine(this.line);
-    this.writeTextToCanvas(`pogingen over: ${this.attempts}`, 30, window.innerWidth / 7, window.innerHeight / 4);
-    this.writeTextToCanvas(`Gebruik "pijltje omlaag" om door te gaan naar het volgende blokje`, 20, window.innerWidth / 3, 70);
-    this.writeTextToCanvas(`Druk op "pijltje omlaag" als het blokje groen is`, 20, window.innerWidth / 3, 100);
+    this.writeTextToCanvas(`pogingen over: ${this.attempts}`, 30, window.innerWidth / 7, window.innerHeight / 4,"rgb(0,255,0)");
+    this.writeTextToCanvas(`Gebruik "pijltje omlaag" om door te gaan naar het volgende blokje`, 20, window.innerWidth / 3, 70,"rgb(0,255,0)");
+    this.writeTextToCanvas(`Druk op "pijltje omlaag" als het blokje groen is`, 20, window.innerWidth / 3, 100,"rgb(0,255,0)");
 
     if (this.locked === false) {
-      this.writeTextToCanvas(`Goed gedaan`, 30, window.innerWidth / 7, window.innerHeight / 2);
+      this.writeTextToCanvas(`Goed gedaan`, 30, window.innerWidth / 7, window.innerHeight / 2,"rgb(0,255,0)");
     }
     if (this.line === 1) {
       for (let i = 0; i < 3; i++) {
@@ -74,34 +74,37 @@ export default class MiniGame9 extends MGMain {
           `[${Room.randomNumber(0, 9)}] [${Room.randomNumber(0, 9)}] [${Room.randomNumber(0, 9)}] [${Room.randomNumber(0, 9)}] [${Room.randomNumber(0, 9)}]`,
           15,
           MiniGame9.LINECODE,
-          175 + 150 * i
+          175 + 150 * i,
+          "rgb(0,255,0)"
         );
       }
     } else if (this.line === 2) {
       for (let i = 1; i < 3; i++) {
-        this.writeTextToCanvas(`[5] [6] [2] [9] [1]`, 15, MiniGame9.LINECODE, 175 + 150 * 0);
+        this.writeTextToCanvas(`[5] [6] [2] [9] [1]`, 15, MiniGame9.LINECODE, 175 + 150 * 0,"rgb(0,255,0)");
         this.writeTextToCanvas(
           `[${Room.randomNumber(0, 9)}] [${Room.randomNumber(0, 9)}] [${Room.randomNumber(0, 9)}] [${Room.randomNumber(0, 9)}] [${Room.randomNumber(0, 9)}]`,
           15,
           MiniGame9.LINECODE,
-          175 + 150 * i
+          175 + 150 * i,
+          "rgb(0,255,0)"
         );
       }
     } else if (this.line === 3 && this.locked === true) {
       for (let i = 2; i < 3; i++) {
-        this.writeTextToCanvas(`[5] [6] [2] [9] [1]`, 15, MiniGame9.LINECODE, 175 + 150 * 0);
-        this.writeTextToCanvas(`[6] [8] [1] [0] [4]`, 15, MiniGame9.LINECODE, 175 + 150 * 1);
+        this.writeTextToCanvas(`[5] [6] [2] [9] [1]`, 15, MiniGame9.LINECODE, 175 + 150 * 0,"rgb(0,255,0)");
+        this.writeTextToCanvas(`[6] [8] [1] [0] [4]`, 15, MiniGame9.LINECODE, 175 + 150 * 1,"rgb(0,255,0)");
         this.writeTextToCanvas(
           `[${Room.randomNumber(0, 9)}] [${Room.randomNumber(0, 9)}] [${Room.randomNumber(0, 9)}] [${Room.randomNumber(0, 9)}] [${Room.randomNumber(0, 9)}]`,
           15,
           MiniGame9.LINECODE,
-          175 + 150 * i
+          175 + 150 * i,
+          "rgb(0,255,0)"
         );
       }
     } else {
-      this.writeTextToCanvas(`[5] [6] [2] [9] [1]`, 15, MiniGame9.LINECODE, 175 + 150 * 0);
-      this.writeTextToCanvas(`[6] [8] [1] [0] [4]`, 15, MiniGame9.LINECODE, 175 + 150 * 1);
-      this.writeTextToCanvas(`[2] [0] [4] [7] [3]`, 15, MiniGame9.LINECODE, 175 + 150 * 2);
+      this.writeTextToCanvas(`[5] [6] [2] [9] [1]`, 15, MiniGame9.LINECODE, 175 + 150 * 0,"rgb(0,255,0)");
+      this.writeTextToCanvas(`[6] [8] [1] [0] [4]`, 15, MiniGame9.LINECODE, 175 + 150 * 1,"rgb(0,255,0)");
+      this.writeTextToCanvas(`[2] [0] [4] [7] [3]`, 15, MiniGame9.LINECODE, 175 + 150 * 2,"rgb(0,255,0)");
     }
 
     //timer
@@ -147,13 +150,13 @@ export default class MiniGame9 extends MGMain {
   }
 
   private drawCube(dy: number, line: number) {
-    this.ctx.strokeStyle = "rgb(0,0,0)";
+    this.ctx.strokeStyle = "rgb(0,255,0)";
     if (this.line === 1 && this.counter[this.line - 1] >= 100 && this.counter[this.line - 1] <= 200) {
-      this.ctx.fillStyle = "rgb(0, 225, 0)";
+      this.ctx.fillStyle = "rgb(255, 0, 0)";
     } else if (this.line === 2 && this.counter[this.line - 1] >= 300 && this.counter[this.line - 1] <= 400) {
-      this.ctx.fillStyle = "rgb(0, 225, 0)";
+      this.ctx.fillStyle = "rgb(255, 0, 0)";
     } else if (this.line === 3 && this.counter[this.line - 1] >= 225 && this.counter[this.line - 1] <= 375) {
-      this.ctx.fillStyle = "rgb(0, 225, 0)";
+      this.ctx.fillStyle = "rgb(255, 0, 0)";
     } else {
       this.ctx.fillStyle = "rgb(255,255,255)";
     }
@@ -166,7 +169,7 @@ export default class MiniGame9 extends MGMain {
   }
 
   private drawNoMoveCube(line: number) {
-    this.ctx.strokeStyle = "rgb(0,0,0)";
+    this.ctx.strokeStyle = "rgb(0,255,0)";
     this.ctx.fillStyle = "rgb(255,255,255)";
     this.ctx.beginPath();
     this.ctx.rect(900, 150 + 150 * line, 20, 50);
@@ -184,7 +187,7 @@ export default class MiniGame9 extends MGMain {
   }
 
   private drawLines(line: number) {
-    this.ctx.strokeStyle = "rgb(0,0,0)";
+    this.ctx.strokeStyle = "rgb(0,255,0)";
     this.ctx.beginPath();
     this.ctx.moveTo(800, 175 + 150 * line);
     this.ctx.lineTo(1410, 175 + 150 * line);

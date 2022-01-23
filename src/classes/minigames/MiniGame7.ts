@@ -15,6 +15,7 @@ export default class MiniGame7 extends MGMain {
   private randomNumberPositionDX: number[];
   private randomNumberPositionDY: number[];
   private randomSize: number[];
+  private imgBoard:HTMLImageElement
 
   /**
    * Create an instance of this object
@@ -25,6 +26,8 @@ export default class MiniGame7 extends MGMain {
   constructor(ctx: CanvasRenderingContext2D, room: Room, canvas: HTMLCanvasElement) {
     super(7, room, ctx, canvas, [], []);
     this.roomId = 7;
+    this.lockImage = Room.loadNewImage("./img/objects/pngwing.com (500).png");
+    this.imgBoard=Room.loadNewImage("./img/objects/4541104.png");
     this.locked = true;
     this.combination = [];
     this.wheels = [];
@@ -78,17 +81,17 @@ export default class MiniGame7 extends MGMain {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     Room.drawImageScaled(this.ctx, "./img/background/bank-room-interior-backdrop-metal-safe-door-vault-background-racks-deposit-boxes-secure-currency-storage-inside-174243488.jpg", 1, 1, 0, 35);
 
-    this.lockImage = Room.loadNewImage("./img/objects/4541104.png");
-    this.ctx.drawImage(this.lockImage, -20, window.innerHeight / 6);
+    // this.lockImage = Room.loadNewImage("./img/objects/4541104.png");
+    this.ctx.drawImage(this.imgBoard, -20, window.innerHeight / 6);
     this.explanation();
-    this.lockImage = Room.loadNewImage("./img/objects/pngwing.com (500).png");
+    // this.lockImage = Room.loadNewImage("./img/objects/pngwing.com (500).png");
     this.ctx.drawImage(this.lockImage, this.canvas.width / 3, -12);
 
     this.wheels.forEach((value: number, index: number) => {
       if (this.position === index) {
-        this.writeTextToCanvas(`[${value}]`, 50, 997 - index * 54.5, 513);
+        this.writeTextToCanvas(`[${value}]`, 50, (this.canvas.width / 3)+330 - index * 54.5, 513);
       } else {
-        this.writeTextToCanvas(`${value}`, 50, 997 - index * 54.5, 513);
+        this.writeTextToCanvas(` ${value} `, 50, (this.canvas.width / 3)+330 - index * 54.5, 513);
       }
     });
 
@@ -172,12 +175,13 @@ export default class MiniGame7 extends MGMain {
    */
   private explanation() {
     this.writeTextToCanvas(`Dit is kamer ` + this.roomId, 20, window.innerWidth / 3, window.innerHeight / 1.1);
-    this.writeTextToCanvas(`Probeer de code te kraken`, 20, 225, 300);
-    this.writeTextToCanvas(`Gebruik de pijltestoetsen (en misschien ook wat hints)`, 20, 225, 325);
-    this.writeTextToCanvas(`Pijl omhoog = cijfer omhoog`, 20, 225, 400);
-    this.writeTextToCanvas(`Pijl omlaag = cijfer omlaag`, 20, 225, 450);
-    this.writeTextToCanvas(`Pijl naar links = positie naar links`, 20, 225, 500);
-    this.writeTextToCanvas(`Pijl naar rechts = positie naar rechts`, 20, 225, 550);
+    this.writeTextToCanvas(`Probeer de code te kraken`, 20, 70, 300);
+    this.writeTextToCanvas(`Gebruik de pijltestoetsen`, 20, 70, 325);
+    this.writeTextToCanvas(`(en misschien ook wat hints)`, 20, 70, 350);
+    this.writeTextToCanvas(`Pijl omhoog = cijfer omhoog`, 20, 70, 400);
+    this.writeTextToCanvas(`Pijl omlaag = cijfer omlaag`, 20, 70, 450);
+    this.writeTextToCanvas(`Pijl naar links = positie naar links`, 20, 70, 500);
+    this.writeTextToCanvas(`Pijl naar rechts = positie naar rechts`, 20, 70, 550);
   }
 
   /**
