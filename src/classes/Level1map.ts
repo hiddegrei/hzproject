@@ -602,7 +602,18 @@ export default class Level1map {
 
 
       //keep agents in center pad, zonder rondjes
-      [this.canvas.width / 2 +6 * this.widthHall, 100 +  this.widthHall, this.canvas.width / 2 +6 * this.widthHall, 100 + 3 * this.widthHall, "door"],
+      //rechts op map
+      [this.canvas.width / 2 +6 * this.widthHall, 100 +  this.widthHall, this.canvas.width / 2 +6 * this.widthHall, 100 + 3 * this.widthHall, "nodoor"],
+
+      //links
+      [this.canvas.width / 2 -18 * this.widthHall-10, 100 + 7*  this.widthHall, this.canvas.width / 2 -18 * this.widthHall-10, 100 + 8* this.widthHall, "nodoor"],
+      [this.canvas.width / 2 -18 * this.widthHall-10, 100 + 7*  this.widthHall, this.canvas.width / 2 -18 * this.widthHall-10, 100 + 8* this.widthHall, "nodoor"],
+      [this.canvas.width / 2 -18 * this.widthHall-10, 100 + 8*  this.widthHall, this.canvas.width / 2 -14 * this.widthHall, 100 + 8 * this.widthHall, "nodoor"],
+
+      [this.canvas.width / 2 -15 * this.widthHall, 100 + 8*  this.widthHall, this.canvas.width / 2 -15 * this.widthHall, 100 + 10* this.widthHall, "nodoor"],
+      [this.canvas.width / 2 -18 * this.widthHall-10, 100 + 9*  this.widthHall, this.canvas.width / 2 -18 * this.widthHall-10, 100 + 12* this.widthHall, "nodoor"],
+      [this.canvas.width / 2 -18 * this.widthHall-10, 100 + 9*  this.widthHall, this.canvas.width / 2 -18 * this.widthHall, 100 + 9 * this.widthHall, "nodoor"],
+      [this.canvas.width / 2 -18 * this.widthHall-10, 100 + 12*  this.widthHall, this.canvas.width / 2 -18 * this.widthHall, 100 + 12 * this.widthHall, "nodoor"],
 
     ];
   }
