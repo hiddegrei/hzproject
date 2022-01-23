@@ -1,6 +1,7 @@
 import EndGame from "./EndGame";
 import GameLoop from "./GameLoop";
 import Scene from "./Scene";
+import Tutorial from "./Tutorial";
 
 export default class Game {
   public canvas: HTMLCanvasElement;
@@ -13,15 +14,18 @@ export default class Game {
 
   public isEnd: boolean | undefined;
 
+  private tutorial: Tutorial;
+
   /**
    * @param canvas
    */
   constructor(canvas: any, time: number) {
     this.canvas = canvas as HTMLCanvasElement;
-    this.scene = new Scene(this.canvas, this, time);
     this.gameLoop = new GameLoop(this);
+    this.scene = new Scene(this.canvas, this, time);
     this.endGame = new EndGame(this.canvas, this, this.scene);
     this.isEnd = false;
+    this.tutorial = new Tutorial(this);
   }
 
   /**
@@ -42,10 +46,17 @@ export default class Game {
    * @param elapsed
    */
   public update(elapsed: number) {
-    if (this.isEnd) {
-      this.endGame.update();
+      let removeTutorial = () => { this.tutorial.removeTutorial(); };
+    if (this.gameLoop.frameCount === 1) {
+      this.gameLoop.pause();
+      this.tutorial.displayTutorial();
+      document.querySelector('#tutorialButton')?.addEventListener('click', removeTutorial);
     } else {
-      this.scene.update(elapsed);
+      if (this.isEnd) {
+        this.endGame.update();
+      } else {
+        this.scene.update(elapsed);
+      }
     }
     // this.scene.update()
 
