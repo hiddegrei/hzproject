@@ -168,7 +168,6 @@ export default class Security extends MGMain {
 
     public directorAlert(number: number) {
         let ctxAlert = this.canvas.getContext("2d") as CanvasRenderingContext2D;
-        
         if (number === 1) {
           ctxAlert.strokeStyle = "rgb(0,0,0)";
           ctxAlert.fillStyle = "rgb(255,0,0,0.5)";

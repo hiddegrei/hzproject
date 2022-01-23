@@ -636,7 +636,7 @@ export default class Level1map {
   public showRoomIds(room: Room) {
     for (let i = 0; i < this.rooms.length; i++) {
       if(this.rooms[i][2] ==="15"){
-        this.writeTextToCanvas("Bewakings kamer", 15, this.rooms[i][0]-10, this.rooms[i][1] );
+        this.writeTextToCanvas("Bewakings kamer", 15, this.rooms[i][0]-10, this.rooms[i][1]+40 );
 
       }else if(this.rooms[i][2] === "100"){
         this.writeTextToCanvas("Grote kluis", 20, this.rooms[i][0], this.rooms[i][1] - 20,"start","white");
