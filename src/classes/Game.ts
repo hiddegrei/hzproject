@@ -47,10 +47,12 @@ export default class Game {
    */
   public update(elapsed: number) {
       let removeTutorial = () => { this.tutorial.removeTutorial(); };
-    if (this.gameLoop.frameCount === 1) {
-      this.gameLoop.pause();
-      this.tutorial.displayTutorial();
-      document.querySelector('#tutorialButton')?.addEventListener('click', removeTutorial);
+    if (this.gameLoop.frameCount === 3) {
+      if (localStorage.getItem('tutorial') !== '0') {
+        this.gameLoop.pause();
+        this.tutorial.displayTutorial();
+        document.querySelector('#tutorialButton')?.addEventListener('click', removeTutorial);
+      }
     } else {
       if (this.isEnd) {
         this.endGame.update();
@@ -58,7 +60,6 @@ export default class Game {
         this.scene.update(elapsed);
       }
     }
-    // this.scene.update()
 
     return false;
   }
@@ -72,7 +73,6 @@ export default class Game {
     } else {
       this.scene.render();
     }
-    // this.scene.render();
   }
 
   /**

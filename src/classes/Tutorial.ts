@@ -5,6 +5,9 @@ export default class Tutorial {
 
     public constructor(game: Game) {
         this.game = game;
+        if (localStorage.getItem('tutorial') === null) {
+            localStorage.setItem('tutorial', '0')
+        }
     }
 
     public displayTutorial() {
@@ -37,6 +40,7 @@ export default class Tutorial {
         </div>
         </div>
         `)
+        localStorage.setItem('tutorial', JSON.stringify(parseInt(localStorage.getItem('tutorial')!) + 1));
     }
 
     public removeTutorial() {
