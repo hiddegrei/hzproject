@@ -32,7 +32,7 @@ export default class Security extends MGMain {
      */
   	constructor(ctx: CanvasRenderingContext2D, room: Room, canvas: HTMLCanvasElement) {
     	super(15, room, ctx, canvas);
-        this.width = 0;
+        this.width = 250;
         this.widthCop = 10;
         this.status = `Hacking: ${Math.floor(this.width/5)}%`;
         this.testImg = Room.loadNewImage("./img/objects/gold_trophytest.png");

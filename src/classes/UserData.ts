@@ -16,7 +16,7 @@ export default class UserData{
     this.progressProperty = 0;
     this.usernameProperty = localStorage.getItem('username') as string;
     this.passwordProperty = localStorage.getItem('password') as string;
-    this.timeLimitProperty = new PasswordMeter().getResult(this.passwordProperty).score * 1000;
+    this.timeLimitProperty = 20 + new PasswordMeter().getResult(this.passwordProperty).score * 2000;
     this.scene = scene;
     }
 
