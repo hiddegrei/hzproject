@@ -18,7 +18,7 @@ export default class SceneInfo {
   public loadAgents(widthHall: number) {
     let agents = [];
     agents.push(new Agent(1.5 * widthHall, 100 + 1.5 * widthHall, this.ctx, widthHall, "random", 0, "yellow"));
-    agents.push(new Agent(1.5 * widthHall, 100 + 8 * widthHall, this.ctx, widthHall, "random", 0, "yellow"));
+    agents.push(new Agent(1.5 * widthHall, 100 + 8.5 * widthHall, this.ctx, widthHall, "random", 0, "yellow"));
     agents.push(new Agent(this.canvas.width / 2 + 3.5 * widthHall, 300 + 2 * widthHall, this.ctx, widthHall, "random", 1, "orange"));
     agents.push(new Agent(this.canvas.width / 2 + 12.5 * widthHall, 300 + 8 * widthHall, this.ctx, widthHall, "random", 2, "yellow"));
     agents.push(new Agent(this.canvas.width / 2 - 0.5 * widthHall, 100 + 3 * widthHall, this.ctx, widthHall, "random", 3, "red"));
@@ -35,6 +35,8 @@ export default class SceneInfo {
     // array.push(new CameraAgent(100 +17* widthHall, 100+5*widthHall, this.ctx, widthHall, 80,100 +16* widthHall+15, 100+4*widthHall,"l"))
     array.push(new CameraAgent(100 + 22 * widthHall + 5, 100, this.ctx, widthHall, 80, 100 + 21 * widthHall + 5, 100 + widthHall, "l"));
     array.push(new CameraAgent(100 + 33 * widthHall + 5, 100, this.ctx, widthHall, 80, 100 + 32 * widthHall + 5, 100 + widthHall, "l"));
+    array.push(new CameraAgent(100 - widthHall+10, 100+7*widthHall, this.ctx, widthHall, 90, 100, 100 + 7.8*widthHall, "r"));
+    array.push(new CameraAgent(100 + 36 * widthHall + 5, 100+6*widthHall, this.ctx, widthHall, 80, 100 + 35 * widthHall + 5, 100 + 7*widthHall, "l"));
 
     return array;
   }

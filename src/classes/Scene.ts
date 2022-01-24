@@ -16,6 +16,7 @@ import CameraAgent from "./CameraAgent";
 import DarkSpot from "./DarkSpot";
 import HUD from "./HUD";
 import PlaySound from "./PlaySound";
+import SpawnCookie from "./SpawnCookie";
 
 export default class Scene {
   public userData: UserData;
@@ -110,6 +111,15 @@ export default class Scene {
 
   private cameraLive: boolean
 
+  private spawnCookie:SpawnCookie;
+
+  private cookieTime:number;
+
+  private showAgentAlert:boolean;
+
+  private seenCamera: boolean;
+  private seenCameraTime: number
+
   // private agentMid:Agent
 
   /**
@@ -125,6 +135,10 @@ export default class Scene {
     this.totalScore = 0;
     this.playSound = new PlaySound();
     this.canvas = canvas;
+    this.cookieTime=0
+    this.seenCamera=true
+    this.seenCameraTime=0
+    this.showAgentAlert=false
     this.canvas.width = 1920;
     this.testImg = Game.loadNewImage("./img/objects/gold_trophytest.png");
     this.canvas.height =920 ;
@@ -159,6 +173,7 @@ export default class Scene {
 
     this.borders = [];
     this.level = new Level1map(this.canvas, this.ctx);
+    this.spawnCookie= new SpawnCookie(this.canvas,this.ctx,this.level.widthHall)
     this.darkSpots = new DarkSpot(0, this.ctx, this, this.canvas, this.level.widthHall);
     this.roomsIds = this.level.rooms;
 
@@ -181,7 +196,8 @@ export default class Scene {
     // this.border= new Border(300,50,300,200,this.ctx)
     // this.ray=new Ray(50,150, this.ctx)
 
-    this.particle = new Particle(this.canvas.width / 2 - 12.5 * this.level.widthHall, 100 + 7.5 * this.level.widthHall, this.ctx);
+    // this.particle = new Particle(this.canvas.width / 2 - 12.5 * this.level.widthHall, 100 + 7.5 * this.level.widthHall, this.ctx);
+    this.particle = new Particle(this.canvas.width / 2 + 4 * this.level.widthHall, 100 + 12.5 * this.level.widthHall, this.ctx);
 
     this.agents = this.sceneInfo.loadAgents(this.level.widthHall);
 
@@ -281,18 +297,40 @@ export default class Scene {
     }
   }
 
+  public checkCookie(elapsed:number){
+    if(this.spawnCookie.eaten(this.particle.pos)){
+      this.score.eatCookie()
+    }
+    if(this.spawnCookie.sleeping){
+      if(this.spawnCookie.sleepTime>=30000){
+        this.spawnCookie.sleepTime=0
+        this.spawnCookie.sleeping=false
+      }else{
+        this.spawnCookie.sleepTime+=elapsed
+      }
+    }else{
+      this.cookieTime+=elapsed
+    }
+    if(this.cookieTime>30000){
+      this.spawnCookie.choosePos()
+      this.cookieTime=0
+    }
+
+  }
+
   /**
    * update the scene
    *@param elapsed time passed
    */
   public update(elapsed: number): void {
-    this.elapsed += elapsed;
+   // this.elapsed += elapsed;
     if (this.legalInsideRoom()) {
       this.room.update(this.mouse.x, this.mouse.y, elapsed);
       document.onmousemove = this.mouseDown.bind(this);
       this.specialCasesMinigame();
     } else {
-    
+      this.checkCookie(elapsed)
+      this.checkAgentAlert(elapsed)
       //tijd aftellen
       this.updateTime(elapsed);
       // transform canvas en camera
@@ -326,7 +364,7 @@ export default class Scene {
         this.cameraAgents[i].update();
         this.cameraAgents[i].look(this.borders, this.ctx);
       }
-      this.isPlayerInSightCameras();
+      this.isPlayerInSightCameras(elapsed);
       if (this.cameraLive !=  true) {
         this.countCameraTime++;
         if (this.countCameraTime >= 1000) {
@@ -393,18 +431,34 @@ export default class Scene {
 
       //show the keys on top screen
       this.keys.show(this.ctx, this.trans);
-      if (this.elapsed >= 100000) {
+
+      if(this.showAgentAlert){
         this.allAgentAlert();
-        if (this.elapsed >= 104000) {
-          this.elapsed = 0;
-          for(let i=2;i<this.agents.length;i++){
-            this.agents[i].updateMode("search");
-          }
-          this.count = 0;
-          this.autoSearch = true;
-        }
       }
+      
+      this.spawnCookie.show()
     }
+  }
+
+  public checkAgentAlert(elapsed: number){
+    if (this.elapsed >= 80000) {
+      this.showAgentAlert=true
+      this.elapsed+=elapsed
+      
+      if (this.elapsed >= 84000) {
+        this.elapsed = 0;
+        for(let i=2;i<this.agents.length;i++){
+          this.agents[i].updateMode("search");
+        }
+        this.count = 0;
+        this.autoSearch = true;
+
+      }
+    }else{
+      this.elapsed+=elapsed
+      this.showAgentAlert=false
+    }
+
   }
 
   public allAgentAlert() {
@@ -421,18 +475,31 @@ export default class Scene {
     
   }
 
-  public isPlayerInSightCameras() {
+  public isPlayerInSightCameras(elapsed: number) {
+    if(this.seenCameraTime>=10000){
+      this.seenCamera=true
+      this.seenCameraTime=0
+    }else{
+      this.seenCameraTime+=elapsed
+
+    }
     for (let i = 0; i < this.cameraAgents.length; i++) {
       if (Vector.dist(this.particle.pos, this.cameraAgents[i].pos) < 200) {
         let inSight = this.cameraAgents[i].inSight(this.particle, this.ctx, this.borders);
         if (inSight) {
           //this.totalScore-=Scene.CAUGHT_AGENTS
-          this.score.caughtAgents();
+          if(this.seenCamera){
+            this.score.seenCameras();
+            this.seenCamera=false
+
+          }
+         
           if (this.lockedUp === 2) {
             this.game.isEnd = true;
             this.howGameEnded = "caught";
           }
           this.sendAgents(this.cameraAgents[i].pos);
+         
           break;
         }
       }

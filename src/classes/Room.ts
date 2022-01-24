@@ -111,9 +111,11 @@ export default class Room {
   public checkDone() {
     if ((this.keyboard.isKeyDown(32) && this.roomId !== 80) || this.miniGameFinished) {
       this.scene.insideRoom = false;
+      this.miniGameKraakPass.started=true
 
       if (this.answer) {
         console.log(this.roomId);
+        
 
         this.visitsNew(this.roomId);
         if (this.roomId === 80) {

@@ -137,7 +137,7 @@ export default class HUD {
             if (this.scene.score.score === undefined) {
                 (document.querySelector('div#score.hud span') as HTMLElement).innerHTML = JSON.stringify(0); //TODO goede score
             } else {
-                (document.querySelector('div#score.hud span') as HTMLElement).innerHTML = JSON.stringify(this.scene.score.score); //TODO goede score
+                (document.querySelector('div#score.hud span') as HTMLElement).innerHTML = JSON.stringify(this.scene.score.scoreProperty); //TODO goede score
             }
         }
         // console.warn(this.scene.userData.timeLimit);

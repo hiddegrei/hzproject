@@ -116,7 +116,7 @@ export default class Agent {
     this.endTarget = new Vector(0, 0);
     this.viewRays = [];
     this.sight = 80;
-    this.checkAngle = 9;
+    this.checkAngle = 8;
     this.status = status;
 
     this.hackRange = 80;

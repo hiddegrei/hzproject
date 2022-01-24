@@ -92,11 +92,14 @@ export default class MGMain {
 
 
   public startGame(){
+    console.log("hi")
     document.onkeydown = this.checkKey.bind(this);
       this.started = false;
       this.loadInfo()
       this.bezig=true
       this.bezig2=true
+      this.attempts=5
+      this.attemptsArr=[]
 
   }
   /**
