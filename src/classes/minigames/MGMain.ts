@@ -1,9 +1,12 @@
 import Game from "../Game";
 import KeyboardListener from "../KeyboardListener";
+import PlaySound from "../PlaySound";
 import Room from "../Room";
 import MiniGameSecrets from "./MiniGameSecrets";
 
 export default class MGMain {
+  protected playSound: PlaySound;
+  public playedC: number;
   public roomId: number;
   public room: Room;
   public keyboard: KeyboardListener;
@@ -42,6 +45,8 @@ export default class MGMain {
    * @param canvas canvas
    */
   constructor(roomId: number, room: Room, ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElement, secret: string[] = [], found: any[] = []) {
+    this.playSound = new PlaySound();
+    this.playedC = 0;
     this.roomId = roomId;
     this.room = room;
     this.keyboard = new KeyboardListener();
@@ -119,6 +124,7 @@ export default class MGMain {
    * functie die bepaalt wat er gebeurt als het antwoord fout is
    */
   public answerWrong() {
+    console.trace('anserWrong function')
     if (this.bezig2) {
       this.bezig2 = false;
     this.room.answer = false;
@@ -244,6 +250,9 @@ export default class MGMain {
       }
 
       if (complete) {
+        console.trace('correct answer')
+        this.playSound.correctAnswer();
+        this.playedC++;
         this.complete = true;
 
         //setTimeout(this.answer,2000);
@@ -251,11 +260,18 @@ export default class MGMain {
         //this.answer();
       } else if (this.attempts === 1) {
         this.complete = 0;
-
         setTimeout(this.answerWrong.bind(this), 2000);
       }
       this.attempts--;
+      console.trace('wrong answer attempts === 1')
+      if (this.playedC === 0) {
+        this.playSound.wrongAnswer();
+      }
     } else {
+      console.trace('wrong answer else')
+      if (this.playedC === 0) {
+        this.playSound.wrongAnswer();
+      }
       this.complete = 0;
 
       setTimeout(this.answerWrong.bind(this), 2000);

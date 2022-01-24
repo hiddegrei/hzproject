@@ -47,12 +47,10 @@ export default class Game {
    */
   public update(elapsed: number) {
       let removeTutorial = () => { this.tutorial.removeTutorial(); };
-    if (this.gameLoop.frameCount === 3) {
-      if (localStorage.getItem('tutorial') !== '0') {
-        this.gameLoop.pause();
-        this.tutorial.displayTutorial();
-        document.querySelector('#tutorialButton')?.addEventListener('click', removeTutorial);
-      }
+    if (this.gameLoop.frameCount === 3 && localStorage.getItem('tutorial') === '0') {
+      this.gameLoop.pause();
+      this.tutorial.displayTutorial();
+      document.querySelector('#tutorialButton')?.addEventListener('click', removeTutorial);
     } else {
       if (this.isEnd) {
         this.endGame.update();

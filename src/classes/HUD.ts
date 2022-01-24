@@ -14,9 +14,14 @@ export default class HUD {
 
     private scene: Scene;
 
+    public averageFPS: number;
+
+    private fpsArray: number[];
     // private htmlElementArray: [string, string, string, string][];
 
     public constructor(scene: Scene) {
+        this.averageFPS = 0;
+        this.fpsArray = [];
         this.scene = scene;
         this.playPauseButtonState = PlayPauseButtonStates.Playing;
         // this.htmlElementArray = [
@@ -91,6 +96,24 @@ export default class HUD {
     }
 
     public updateHUD() {
+        // let fps;
+        // if (isNaN(this.scene.game.gameLoop.fps)) {
+        //     fps = 30;
+        // } else {
+        //     fps = this.scene.game.gameLoop.fps;
+        // }
+        // if (this.scene.game.gameLoop.frameCount < 100) {
+        //     this.fpsArray.push(fps);
+        // }
+        // if (this.scene.game.gameLoop.frameCount === 105) {
+        //     this.averageFPS = (this.fpsArray.reduce((previousValue, currentValue) => previousValue + currentValue) / this.scene.game.gameLoop.frameCount);
+        //     console.log(this.averageFPS);
+        //     this.fpsArray = [];
+        // }
+        // if (this.scene.game.gameLoop.frameCount > 110 || true) {
+        //     this.averageFPS = this.averageFPS + ((fps - this.averageFPS) / (20));
+        // }
+        // console.log(this.averageFPS);
         // if (document.querySelectorAll('#progressBar').length === 1) {
         //     document.querySelectorAll as('#progressBar')[0].style.background = `linear-gradient(90deg, rgb(0, 255, 0) 0%, rgba(0,255,0) ${this.scene.userData.progress}%, rgba(255,0,0) ${this.scene.userData.progress}%, rgba(255,0,0) 100%)`;
         // } else {
@@ -107,11 +130,15 @@ export default class HUD {
         // } else {
         //     console.error('');
         // }
-        if (this.isShown) {
+        if (this.isShown) { 
             (document.querySelector('div#progressBar') as HTMLElement).style.background = `linear-gradient(90deg, rgb(0, 255, 0) 0%, rgba(0,255,0) ${this.scene.userData.progress}%, rgba(255,0,0) ${this.scene.userData.progress}%, rgba(255,0,0) 100%)`;
-            (document.querySelector('div#progress span') as HTMLElement).innerText = JSON.stringify(this.scene.userData.progress);
+            (document.querySelector('div#progress.hud span') as HTMLElement).innerText = JSON.stringify(Math.round(this.averageFPS * 1000) / 1000);
             (document.querySelector('div#timeLimit.hud span') as HTMLElement).innerHTML = (JSON.stringify(Math.floor(this.scene.userData.timeLimit / 1000)));
-            // (document.querySelector('div#score.hud span') as HTMLElement).innerHTML = JSON.stringify(this.scene.score); //TODO goede score
+            if (this.scene.score.score === undefined) {
+                (document.querySelector('div#score.hud span') as HTMLElement).innerHTML = JSON.stringify(0); //TODO goede score
+            } else {
+                (document.querySelector('div#score.hud span') as HTMLElement).innerHTML = JSON.stringify(this.scene.score.score); //TODO goede score
+            }
         }
         // console.warn(this.scene.userData.timeLimit);
         // console.warn(this.scene.userData.progress);

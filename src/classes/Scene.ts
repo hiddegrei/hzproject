@@ -119,8 +119,10 @@ export default class Scene {
   constructor(canvas: HTMLCanvasElement, game: Game, time: number) {
     this.game = game;
     this.userData = new UserData(this);
+    this.score = new Score(0);
     this.hud = new HUD(this);
     this.hud.displayHUD();
+    this.totalScore = 0;
     this.playSound = new PlaySound();
     this.canvas = canvas;
     this.canvas.width = 1920;
@@ -155,9 +157,6 @@ export default class Scene {
     this.room = new Room(0, this.ctx, this, this.canvas);
     this.hints = this.room.getHintsGame();
 
-    this.score = new Score(0);
-
-    this.totalScore = 0;
     this.borders = [];
     this.level = new Level1map(this.canvas, this.ctx);
     this.darkSpots = new DarkSpot(0, this.ctx, this, this.canvas, this.level.widthHall);
