@@ -60,7 +60,7 @@ export default class Scene {
 
   public currentTrans: Vector;
 
-  private room: Room;
+  public room: Room;
 
   private keyboard: KeyboardListener;
 

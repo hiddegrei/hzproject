@@ -109,6 +109,11 @@ export default class Room {
   }
 
   public checkDone() {
+    if (this.roomId !== 0) {
+      this.scene.hud.removeHUD();
+    } else {
+      this.scene.hud.displayHUD();
+    }
     if ((this.keyboard.isKeyDown(32) && this.roomId !== 80) || this.miniGameFinished) {
       this.scene.insideRoom = false;
       this.miniGameKraakPass.started=true
