@@ -141,7 +141,7 @@ export default class Scene {
     this.showAgentAlert=false
     this.canvas.width = 1920;
     this.testImg = Game.loadNewImage("./img/objects/gold_trophytest.png");
-    this.canvas.height =920 ;
+    this.canvas.height =1000 ;
     this.playerRadius = 200;
     this.timeTurnAroundAgents = 0;
     this.ctx = this.canvas.getContext("2d") as CanvasRenderingContext2D;
@@ -150,7 +150,7 @@ export default class Scene {
     this.currentTrans = new Vector(0, 0);
     this.sceneInfo = new SceneInfo(this.canvas, this.ctx);
     // this.canvas.width = window.innerWidth;
-    this.canvas.height = window.innerHeight;
+    // this.canvas.height = window.innerHeight;
     this.keyboard = new KeyboardListener();
     this.insideRoom = false;
     this.inRoomNum = -1;
@@ -197,7 +197,7 @@ export default class Scene {
     // this.ray=new Ray(50,150, this.ctx)
 
     // this.particle = new Particle(this.canvas.width / 2 - 12.5 * this.level.widthHall, 100 + 7.5 * this.level.widthHall, this.ctx);
-    this.particle = new Particle(this.canvas.width / 2 + 4 * this.level.widthHall, 100 + 12.5 * this.level.widthHall, this.ctx);
+    this.particle = new Particle(this.canvas.width / 2 + 4 * this.level.widthHall, 100 + 9.5 * this.level.widthHall, this.ctx);
 
     this.agents = this.sceneInfo.loadAgents(this.level.widthHall);
 
@@ -324,9 +324,10 @@ export default class Scene {
    */
   public update(elapsed: number): void {
    // this.elapsed += elapsed;
+   document.onmousemove = this.mouseDown.bind(this);
     if (this.legalInsideRoom()) {
       this.room.update(this.mouse.x, this.mouse.y, elapsed);
-      document.onmousemove = this.mouseDown.bind(this);
+      // document.onmousemove = this.mouseDown.bind(this);
       this.specialCasesMinigame();
     } else {
       this.checkCookie(elapsed)
@@ -336,10 +337,11 @@ export default class Scene {
       // transform canvas en camera
       this.ctx.setTransform(1, 0, 0, 1, 0, 0);
       this.trans = this.camera.checkScaling(this.canvas, this.particle);
+      
       this.camera.createMatrix(this.trans.x, this.trans.y, 0, 0);
       this.ctx.translate(this.trans.x, this.trans.y);
       //register mouse position to move the player
-      document.onmousemove = this.mouseDown.bind(this);
+      // document.onmousemove = this.mouseDown.bind(this);
       //Developers
       if (this.keyboard.isKeyDown(82)) {
         this.game.isEnd = true;

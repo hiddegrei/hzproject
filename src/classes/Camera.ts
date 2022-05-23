@@ -12,6 +12,7 @@ export default class Camera {
 
   public checkScaling(canvas: HTMLCanvasElement, particle: Particle) {
     let ret = { x: 0, y: 0 };
+    
     if (window.innerWidth >= canvas.width && window.innerHeight >= canvas.height) {
       return { x: 0, y: 0 };
     } else {
@@ -23,8 +24,10 @@ export default class Camera {
       if (particle.pos.x > window.innerWidth / 2 + offsetX) {
         ret.x = -offsetX;
       }
-      if (particle.pos.y > window.innerHeight / 2 && particle.pos.y < window.innerHeight / 2 + offsetY) {
+      console.log( offsetY)
+      if ((particle.pos.y > window.innerHeight/2) && (particle.pos.y < window.innerHeight / 2 + offsetY)) {
         ret.y = -(offsetY - (window.innerHeight / 2 + offsetY - particle.pos.y));
+        
       }
       if (particle.pos.y > window.innerHeight / 2 + offsetY) {
         ret.y = -offsetY;
